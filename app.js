@@ -1,5 +1,5 @@
-import {sampleAutoDemo} from './motion.js?v=cage-4';
-import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=cage-4';
+import {sampleAutoDemo} from './motion.js?v=cage-4a';
+import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=cage-4a';
 const $=s=>document.querySelector(s);
 const rig=await fetch('rig.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
 const commonParts=rig.parts;

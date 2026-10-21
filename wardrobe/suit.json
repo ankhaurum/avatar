@@ -197,8 +197,7 @@
       "mask": {
         "mode": "texture-alpha",
         "featherPixels": 0.65
-      },
-      "attachment": "neck-tie"
+      }
     }
   ],
   "corrections": {
@@ -208,5 +207,6 @@
   "occlusion": [
     "neckline",
     "lapel-over-shirt"
-  ]
+  ],
+  "secondaryField": "shared-garment-center"
 }

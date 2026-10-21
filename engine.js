@@ -1,4 +1,4 @@
-import {BODY_CAGE,solveBodyCage,sampleBodyCage} from './body-cage.js?v=cage-4';
+import {BODY_CAGE,solveBodyCage,sampleBodyCage} from './body-cage.js?v=cage-4a';
 export const clamp=(v,a=-1,b=1)=>Math.max(a,Math.min(b,v));
 export const mix=(a,b,t)=>a+(b-a)*t;
 export const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t);};
@@ -35,7 +35,7 @@ const VERT=`#version 300 es
 precision highp float;precision highp int;
 in vec2 aRest;in vec2 aUV;out vec2 vUV;out vec2 vLocal;
 uniform vec2 uSize;uniform vec4 uProjection;uniform vec4 uPose;uniform vec4 uFace;uniform vec4 uHair;
-uniform vec2 uBodyCage[49];uniform float uBodyX[7];uniform float uBodyY[7];uniform float uCloth;uniform int uClothRole;uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
+uniform vec2 uBodyCage[49];uniform float uBodyX[7];uniform float uBodyY[7];uniform float uCloth;uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
 uniform int uKind;uniform int uEye;uniform int uHairGroup;
 uniform vec4 uEyeCurve[2];uniform vec4 uEyeShape[2];
 float sm(float a,float b,float v){return smoothstep(a,b,v);}
@@ -82,8 +82,8 @@ vec2 project(vec2 q){
  vec2 hp=vec2(583.+dx*cos(a)+z*sin(a),560.+dy*cos(b)+(z*cos(a)-dx*sin(a))*sin(b));
  vec2 d=hp-vec2(583.,821.);hp=vec2(583.,821.)+mat2(cos(r),sin(r),-sin(r),cos(r))*d;
  vec2 p=mix(q,hp,h)+bodyOffset(aRest);
- // Tie knot stays attached; only the free fabric below it lags.
- if(uClothRole==1)p.x+=uCloth*pow(sm(1040.,1390.,aRest.y),2.);
+ // All overlapping garment photos share this field: no ghost tie underneath.
+ if(uKind==1)p.x+=uCloth*exp(-pow((aRest.x-605.)/130.,2.))*pow(sm(1040.,1390.,aRest.y),2.);
  if(uKind==3){
  // All adjoining hair textures sample the same continuous lag field.
  float side=mix(uHair.z,uHair.w,sm(570.,590.,q.x));
@@ -123,7 +123,7 @@ export class Renderer{
  const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
  this.program=gl.createProgram();gl.attachShader(this.program,compile(gl.VERTEX_SHADER,VERT));gl.attachShader(this.program,compile(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(this.program);
  if(!gl.getProgramParameter(this.program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(this.program));
- this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uHair','uBodyCage[0]','uBodyX[0]','uBodyY[0]','uCloth','uClothRole','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
+ this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uHair','uBodyCage[0]','uBodyX[0]','uBodyY[0]','uCloth','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
  if(this.loc['uBodyCage[0]']===null)throw Error('身体リグのGPU接続がありません');
  this.aRest=gl.getAttribLocation(this.program,'aRest');this.aUV=gl.getAttribLocation(this.program,'aUV');
  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;canvas.dispatchEvent(new CustomEvent('riglost'));});
@@ -168,7 +168,7 @@ export class Renderer{
  for(const n of ['uEyeCurve[0]','uEyeInfo[0]'])gl.uniform4fv(L[n],endpoints);
  for(const n of ['uEyeShape[0]','uEyeShapeInfo[0]'])gl.uniform4fv(L[n],shape);
  gl.uniform1i(L.uImage,0);
- for(const r of this.resources){const k=KINDS[r.part.kind]??0;gl.uniform1i(L.uKind,k);gl.uniform1i(L.uEye,r.part.eye??0);gl.uniform1i(L.uHairGroup,r.part.hairGroup??0);gl.uniform1i(L.uClothRole,r.part.attachment==='neck-tie'?1:0);
+ for(const r of this.resources){const k=KINDS[r.part.kind]??0;gl.uniform1i(L.uKind,k);gl.uniform1i(L.uEye,r.part.eye??0);gl.uniform1i(L.uHairGroup,r.part.hairGroup??0);
  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,r.texture);gl.bindVertexArray(r.vao);gl.drawElements(gl.TRIANGLES,r.count,gl.UNSIGNED_SHORT,0);}
  gl.bindVertexArray(null);this.frames++;this.drawMs=performance.now()-begin;
  }
