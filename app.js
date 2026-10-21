@@ -1,5 +1,5 @@
 import {sampleAutoDemo} from './motion.js?v=autodemo-3';
-import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=autodemo-3';
+import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=autodemo-3b';
 const $=s=>document.querySelector(s);
 const rig=await fetch('rig.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
 const commonParts=rig.parts;
@@ -89,7 +89,7 @@ function blinkCurve(age){
 }
 function frame(now){
  raf=0;if(document.hidden||staticMode()||disposed)return;
- const elapsed=Math.max(0,(now-last)/1000),dt=Math.min(elapsed,.1);last=now;time+=elapsed;
+ const elapsed=Math.max(0,(now-last)/1000),dt=elapsed;last=now;time+=elapsed;
  if(demoAt===null&&time>nextBlink){blinkAt=time;nextBlink=time+3.4+Math.random()*2.8;}
  const d=demoAt===null?null:time-demoAt;
  const auto=d===null?null:sampleAutoDemo(d);

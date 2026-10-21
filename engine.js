@@ -3,8 +3,17 @@ export const mix=(a,b,t)=>a+(b-a)*t;
 export const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t);};
 export class Spring{
  constructor(x=0,frequency=3,damping=1){Object.assign(this,{x,v:0,frequency,damping});}
- step(target,dt){dt=clamp(dt,0,.05);const n=Math.max(1,Math.ceil(dt/.006)),h=dt/n,w=2*Math.PI*this.frequency;
- for(let i=0;i<n;i++){this.v+=((target-this.x)*w*w-2*this.damping*w*this.v)*h;this.x+=this.v*h;}return this.x;}
+ // Exact damped oscillator over a frame; no discarded elapsed simulation time.
+ step(target,dt){
+ if(dt<=0)return this.x;
+ const w=2*Math.PI*this.frequency,z=this.damping,e=this.x-target,v=this.v;
+ if(Math.abs(z-1)<.0001){const k=v+w*e,d=Math.exp(-w*dt);this.x=target+(e+k*dt)*d;this.v=(v-w*k*dt)*d;}
+ else if(z<1){const wd=w*Math.sqrt(1-z*z),d=Math.exp(-z*w*dt),c=Math.cos(wd*dt),s=Math.sin(wd*dt);
+ this.x=target+d*(e*c+(v+z*w*e)/wd*s);this.v=d*(v*c-(w*w*e+z*w*v)/wd*s);}
+ else{const q=Math.sqrt(z*z-1),r1=-w*(z-q),r2=-w*(z+q),a=(v-r2*e)/(r1-r2),b=e-a,d1=Math.exp(r1*dt),d2=Math.exp(r2*dt);
+ this.x=target+a*d1+b*d2;this.v=a*r1*d1+b*r2*d2;}
+ return this.x;
+ }
  reset(x=0){this.x=x;this.v=0;}
 }
 export function contactTarget(x,y,width,height){
