@@ -1,0 +1,157 @@
+{
+  "headYaw": {
+    "range": [
+      -1,
+      1
+    ],
+    "keys": [
+      {
+        "at": -1,
+        "noseX": -19,
+        "cheekCompression": 0.055
+      },
+      {
+        "at": 0,
+        "noseX": 0,
+        "cheekCompression": 0
+      },
+      {
+        "at": 1,
+        "noseX": 19,
+        "cheekCompression": 0.055
+      }
+    ]
+  },
+  "headPitch": {
+    "range": [
+      -1,
+      1
+    ],
+    "keys": [
+      {
+        "at": -1,
+        "noseY": -12,
+        "chinY": -5
+      },
+      {
+        "at": 0,
+        "noseY": 0,
+        "chinY": 0
+      },
+      {
+        "at": 1,
+        "noseY": 13,
+        "chinY": 8
+      }
+    ]
+  },
+  "expressions": {
+    "neutral": {},
+    "joy": {
+      "brow": 0.12,
+      "smile": 0.8,
+      "squint": 0.12,
+      "shoulders": 0.15
+    },
+    "concern": {
+      "brow": -0.3,
+      "smile": -0.35,
+      "squint": 0,
+      "shoulders": -0.12
+    },
+    "anger": {
+      "brow": -0.55,
+      "smile": -0.22,
+      "squint": 0.14,
+      "shoulders": 0.08
+    },
+    "sadness": {
+      "brow": -0.28,
+      "smile": -0.5,
+      "squint": 0.08,
+      "shoulders": -0.22
+    },
+    "surprise": {
+      "brow": 0.65,
+      "smile": 0,
+      "squint": -0.12,
+      "shoulders": 0.08
+    },
+    "thinking": {
+      "brow": 0.16,
+      "smile": -0.08,
+      "squint": 0.08,
+      "shoulders": -0.04
+    }
+  },
+  "compatibility": {
+    "idle": "neutral",
+    "attention": "neutral",
+    "thinking": "thinking",
+    "speaking": "neutral",
+    "happy": "joy",
+    "notify": "surprise",
+    "concern": "concern",
+    "error": "concern",
+    "sleep": "neutral",
+    "wake": "neutral"
+  },
+  "spring": {
+    "head": {
+      "frequency": 3.1,
+      "damping": 1
+    },
+    "gaze": {
+      "frequency": 7,
+      "damping": 1
+    },
+    "hair": {
+      "frequency": 2.2,
+      "damping": 0.62
+    }
+  },
+  "seams": [
+    {
+      "id": "head-neck",
+      "point": [
+        583,
+        785
+      ]
+    },
+    {
+      "id": "neck-body",
+      "point": [
+        583,
+        900
+      ]
+    },
+    {
+      "id": "shoulder-left",
+      "point": [
+        270,
+        958
+      ]
+    },
+    {
+      "id": "shoulder-right",
+      "point": [
+        895,
+        955
+      ]
+    },
+    {
+      "id": "shirt-tie",
+      "point": [
+        596,
+        1048
+      ]
+    },
+    {
+      "id": "hair-root",
+      "point": [
+        580,
+        380
+      ]
+    }
+  ]
+}

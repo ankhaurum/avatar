@@ -1,0 +1,211 @@
+{
+  "id": "suit",
+  "label": "承認画像のスーツ",
+  "rigVersion": "hibiki-bust-rig-1",
+  "parts": [
+    {
+      "id": "suit-sleeve-left",
+      "url": "assets/suit-sleeve-left.png",
+      "rect": [
+        0,
+        875,
+        252,
+        527
+      ],
+      "kind": "garment",
+      "order": 3,
+      "mesh": {
+        "columns": 8,
+        "rows": 17,
+        "restRect": [
+          0,
+          875,
+          252,
+          527
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    },
+    {
+      "id": "suit-sleeve-right",
+      "url": "assets/suit-sleeve-right.png",
+      "rect": [
+        946,
+        871,
+        176,
+        531
+      ],
+      "kind": "garment",
+      "order": 3,
+      "mesh": {
+        "columns": 6,
+        "rows": 17,
+        "restRect": [
+          946,
+          871,
+          176,
+          531
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    },
+    {
+      "id": "suit-jacket",
+      "url": "assets/suit-jacket.png",
+      "rect": [
+        238,
+        867,
+        722,
+        535
+      ],
+      "kind": "garment",
+      "order": 4,
+      "mesh": {
+        "columns": 23,
+        "rows": 17,
+        "restRect": [
+          238,
+          867,
+          722,
+          535
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    },
+    {
+      "id": "suit-shirt",
+      "url": "assets/suit-shirt.png",
+      "rect": [
+        393,
+        837,
+        373,
+        565
+      ],
+      "kind": "garment",
+      "order": 5,
+      "mesh": {
+        "columns": 12,
+        "rows": 18,
+        "restRect": [
+          393,
+          837,
+          373,
+          565
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    },
+    {
+      "id": "suit-lapel-left",
+      "url": "assets/suit-lapel-left.png",
+      "rect": [
+        223,
+        837,
+        295,
+        565
+      ],
+      "kind": "garment",
+      "order": 7,
+      "mesh": {
+        "columns": 10,
+        "rows": 18,
+        "restRect": [
+          223,
+          837,
+          295,
+          565
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    },
+    {
+      "id": "suit-lapel-right",
+      "url": "assets/suit-lapel-right.png",
+      "rect": [
+        672,
+        834,
+        279,
+        568
+      ],
+      "kind": "garment",
+      "order": 7,
+      "mesh": {
+        "columns": 9,
+        "rows": 18,
+        "restRect": [
+          672,
+          834,
+          279,
+          568
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    },
+    {
+      "id": "suit-tie",
+      "url": "assets/suit-tie.png",
+      "rect": [
+        509,
+        1009,
+        212,
+        393
+      ],
+      "kind": "garment",
+      "order": 8,
+      "mesh": {
+        "columns": 7,
+        "rows": 13,
+        "restRect": [
+          509,
+          1009,
+          212,
+          393
+        ],
+        "uv": "local-unit-square",
+        "binding": "body"
+      },
+      "mask": {
+        "mode": "texture-alpha",
+        "featherPixels": 0.65
+      }
+    }
+  ],
+  "corrections": {
+    "shoulderScale": 1,
+    "collarFollow": 1
+  },
+  "occlusion": [
+    "neckline",
+    "lapel-over-shirt"
+  ]
+}

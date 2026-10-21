@@ -1,0 +1,1 @@
+import('./app.js').catch(error=>{document.querySelector('#poster').hidden=false;document.querySelector('#avatar').hidden=true;document.querySelector('#motionStatus').textContent='静止表示';const status=document.querySelector('#error');status.hidden=false;status.textContent='動作素材を読み込めません。承認済み画像を表示します。 '+error.message;});
