@@ -1,4 +1,5 @@
-import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=anatomical-2a';
+import {sampleAutoDemo} from './motion.js?v=autodemo-3';
+import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=autodemo-3';
 const $=s=>document.querySelector(s);
 const rig=await fetch('rig.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
 const commonParts=rig.parts;
@@ -13,6 +14,7 @@ const springs=Object.fromEntries(['yaw','pitch','roll','gazeX','gazeY','brow','b
 springs.bodyTurn=new Spring(0,controls.spring.body.frequency,controls.spring.body.damping);
 for(const [n,f] of Object.entries({hairBack:2,hairFringe:3.2,hairLeft:2.5,hairRight:2.3}))springs[n]=new Spring(0,f,.67);
 springs.mouth=new Spring(0,controls.spring.mouth.frequency,controls.spring.mouth.damping);
+for(const n of ['bodyLean','chest'])springs[n]=new Spring(0,n==='chest'?1.5:1.8,1);
 let contact=null,contactUntil=0,contactCount=0,activePointer=null;
 let renderer,ready=false,raf=0,last=performance.now(),time=0,nextBlink=3.2,blinkAt=-100,winkAt=-100,demoAt=null,expression='neutral',state='idle',phase='normal',transition=0,phaseTimer=0,wardrobe='suit',disposed=false;
 let pose={},renderError=null,frameTimes=[],lastMetric=0;
@@ -48,8 +50,15 @@ $('#state').addEventListener('change',e=>setState(e.target.value,{duration:0,cal
 $('#placement').addEventListener('click',e=>{const b=e.target.closest('[data-placement]');if(!b)return;$('#placement').querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x===b));setValue('yaw',({left:.65,center:0,right:-.65})[b.dataset.placement]);});
 $('#blink').onclick=()=>{blinkAt=time;};
 $('#wink').onclick=()=>{winkAt=time;};
-$('#demo').onclick=()=>{demoAt=demoAt===null?time:null;$('#demo').textContent=demoAt===null?'複合動作デモ':'デモを停止';};
-$('#reset').onclick=()=>{contact=null;activePointer=null;contactUntil=0;for(const id of ids)if(id!=='intensity')setValue(id,0);demoAt=null;$('#demo').textContent='複合動作デモ';setState('idle');$('#pointer').checked=false;$('#placement').querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x.dataset.placement==='center'));};
+function toggleDemo(){
+ demoAt=demoAt===null?time:null;contact=null;contactUntil=0;
+ if(demoAt!==null){audio.stop();audioMessage=null;blinkAt=-100;}
+ $('#demo').textContent=demoAt===null?'オートデモ':'オートデモを停止';
+ $('#demo').setAttribute('aria-pressed',String(demoAt!==null));
+ $('#demoStatus').textContent=demoAt===null?'音声なし・24秒で一巡、繰り返し再生':'オートデモを開始';
+}
+$('#demo').onclick=toggleDemo;
+$('#reset').onclick=()=>{contact=null;activePointer=null;contactUntil=0;for(const id of ids)if(id!=='intensity')setValue(id,0);demoAt=null;$('#demo').textContent='オートデモ';$('#demo').setAttribute('aria-pressed','false');$('#demoStatus').textContent='音声なし・24秒で一巡、繰り返し再生';setState('idle');$('#pointer').checked=false;$('#placement').querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x.dataset.placement==='center'));};
 $('#static').onchange=policy;
 $('#background').onchange=e=>$('#stage').classList.toggle('dark',e.target.checked);
 function contactInput(e){
@@ -80,46 +89,47 @@ function blinkCurve(age){
 }
 function frame(now){
  raf=0;if(document.hidden||staticMode()||disposed)return;
- const dt=clamp((now-last)/1000,0,.04);last=now;time+=dt;
- if(time>nextBlink){blinkAt=time;nextBlink=time+3.4+Math.random()*2.8;}
+ const elapsed=Math.max(0,(now-last)/1000),dt=Math.min(elapsed,.1);last=now;time+=elapsed;
+ if(demoAt===null&&time>nextBlink){blinkAt=time;nextBlink=time+3.4+Math.random()*2.8;}
  const d=demoAt===null?null:time-demoAt;
+ const auto=d===null?null:sampleAutoDemo(d);
  const settings=controls.expressions[expression]||{};
  const strength=values.intensity;
- const breathe=$('#breathing').checked;
+ const breathe=$('#breathing').checked||auto!==null;
  const breath=breathe?Math.sin(time*Math.PI*2/5.3):0;
- const demoYaw=d===null?0:Math.sin(d*.55)*.55;
- const motion=d===null?0:Math.sin(d*.9);
  const interacting=contact&&time<contactUntil;
  const idleYaw=breathe?Math.sin(time*.43)*.055+Math.sin(time*.19)*.025:0;
- const headYaw=interacting?contact.yaw:clamp(values.yaw+demoYaw+idleYaw);
- const bodyTarget=headYaw*.28;
+ const headYaw=interacting?contact.yaw:clamp(auto?auto.yaw:values.yaw+idleYaw);
+ const bodyTarget=headYaw*.45;
  const target={
  yaw:headYaw,
  bodyTurn:bodyTarget,
- pitch:interacting?contact.pitch:clamp(values.pitch+(d===null?(breathe?Math.sin(time*.57)*.025:0):Math.sin(d*.73)*.25)),
- roll:interacting?contact.roll:clamp(values.roll+(d===null?0:Math.sin(d*.44)*.2)),
- gazeX:interacting?contact.gazeX:clamp(values.gazeX+(d===null?(breathe?Math.sin(time*.43)*.09:0):Math.sin(d*1.2)*.65)),
- gazeY:interacting?contact.gazeY:clamp(values.gazeY+(d===null?0:Math.cos(d*.8)*.28)),
- brow:(settings.brow||0)*strength,
- browTilt:(expression==='concern'||expression==='sadness'?-.45:expression==='anger'?.35:0)*strength,
- smile:(settings.smile||0)*strength,
- squint:(settings.squint||0)*strength,
- shoulderL:clamp(values.shoulderL+(settings.shoulders||0)*strength+(d===null?0:motion*.12+bodyTarget*.2)),
- shoulderR:clamp(values.shoulderR+(settings.shoulders||0)*strength+(d===null?0:Math.sin(d*.9-.4)*.12-bodyTarget*.2)),
+ bodyLean:(auto?.bodyLean||0)-headYaw*.16+(breathe?Math.sin(time*.55)*.14:0),
+ chest:breathe||auto?(.5+.5*breath):0,
+ pitch:interacting?contact.pitch:(auto?auto.pitch:clamp(values.pitch+(breathe?Math.sin(time*.57)*.025:0))),
+ roll:interacting?contact.roll:(auto?auto.roll:values.roll),
+ gazeX:interacting?contact.gazeX:(auto?auto.gazeX:clamp(values.gazeX+(breathe?Math.sin(time*.43)*.09:0))),
+ gazeY:interacting?contact.gazeY:(auto?auto.gazeY:values.gazeY),
+ brow:auto?auto.smile*.15:(settings.brow||0)*strength,
+ browTilt:auto?0:(expression==='concern'||expression==='sadness'?-.45:expression==='anger'?.35:0)*strength,
+ smile:auto?auto.smile:(settings.smile||0)*strength,
+ squint:auto?auto.smile*.16:(settings.squint||0)*strength,
+ shoulderL:clamp(auto?auto.shoulderL+bodyTarget*.22:values.shoulderL+(settings.shoulders||0)*strength),
+ shoulderR:clamp(auto?auto.shoulderR-bodyTarget*.22:values.shoulderR+(settings.shoulders||0)*strength),
  leanX:breathe?Math.sin(time*.55)*.14:0,
- mouth:Math.max(values.mouth,audio.value(dt),(state==='speaking'||d!==null)&&!audio.playing?Math.max(0,Math.sin(time*10))*.45:0)
+ mouth:auto?Math.max(auto.mouth,audio.value(dt)):Math.max(values.mouth,audio.value(dt),state==='speaking'&&!audio.playing?Math.max(0,Math.sin(time*10))*.85:0)
  };
  for(const [id,t]of Object.entries(target))pose[id]=springs[id].step(t,dt);
- const hairTarget=$('#hair').checked?clamp(-springs.yaw.v*4-springs.roll.v*4-springs.bodyTurn.v*2,-10,10):0;
+ const hairTarget=($('#hair').checked||auto)?clamp(-springs.yaw.v*4-springs.roll.v*4-springs.bodyTurn.v*2-springs.bodyLean.v*5,-10,10):0;
  for(const [n,k]of Object.entries({hairBack:.85,hairFringe:.45,hairLeft:1,hairRight:.9}))pose[n]=springs[n].step(hairTarget*k,dt);
  pose.hair=pose.hairLeft;
  pose.breath=breath;
- const blink=blinkCurve(time-blinkAt),wink=blinkCurve(time-winkAt);
- pose.eyeL=state==='sleep'?0:clamp((1-blink-wink)*(1-pose.squint),0,1.12);
- pose.eyeR=state==='sleep'?0:clamp((1-blink)*(1-pose.squint),0,1.12);
+ const blink=Math.max(blinkCurve(time-blinkAt),auto?.blink||0),wink=blinkCurve(time-winkAt);
+ pose.eyeL=state==='sleep'&&!auto?0:clamp((1-blink-wink)*(1-pose.squint),0,1.12);
+ pose.eyeR=state==='sleep'&&!auto?0:clamp((1-blink)*(1-pose.squint),0,1.12);
  pose.eyeOpen=1-blink;
  try{if(!Object.values(pose).every(Number.isFinite))throw Error('姿勢に不正な値を検出');renderer.render(pose);}catch(e){renderError=e.message;$('#error').hidden=false;$('#error').textContent=e.message;$('#static').checked=true;policy();return;}
- if(dt>.001)frameTimes.push(dt);if(frameTimes.length>90)frameTimes.shift();
+ if(dt>.001)frameTimes.push(elapsed);if(frameTimes.length>90)frameTimes.shift();
  if(now-lastMetric>500){
  const fps=1/Math.max(.001,frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length);
  $('#metrics').textContent=(frameTimes.length<5?'計測中':fps.toFixed(0)+' fps')+' · CPU '+renderer.drawMs.toFixed(1)+' ms';
@@ -129,8 +139,9 @@ function frame(now){
  $('#audioStatus').dataset.peakRms=String(audio.peakRms);
  $('#audioStatus').dataset.peakEnvelope=String(audio.peakEnvelope);
  lastMetric=now;policyLabel(pose.yaw);
+ if(auto){$('#demoStatus').textContent=auto.phase+' · '+Math.floor(d%24)+' / 24秒';$('#demoStatus').dataset.cycle=String(auto.cycle);$('#demoStatus').dataset.phase=auto.phase;}
  $('#avatar').dataset.frames=String(renderer.frames);
- $('#avatar').dataset.pose=JSON.stringify({yaw:pose.yaw,pitch:pose.pitch,gazeX:pose.gazeX,gazeY:pose.gazeY,mouth:pose.mouth,eyeL:pose.eyeL,eyeR:pose.eyeR,hair:pose.hair,bodyTurn:pose.bodyTurn,contactCount});
+ $('#avatar').dataset.pose=JSON.stringify({yaw:pose.yaw,pitch:pose.pitch,gazeX:pose.gazeX,gazeY:pose.gazeY,mouth:pose.mouth,eyeL:pose.eyeL,eyeR:pose.eyeR,hair:pose.hair,bodyTurn:pose.bodyTurn,bodyLean:pose.bodyLean,chest:pose.chest,smile:pose.smile,shoulderL:pose.shoulderL,shoulderR:pose.shoulderR,demoTime:d,contactCount});
  }
  schedule();
 }

@@ -18,13 +18,20 @@ export function projectPoint(x,y,p){
  const a=p.yaw*.27,b=p.pitch*.16,r=p.roll*.07;
  const hx=583+dx*Math.cos(a)+z*Math.sin(a),hy=560+dy*Math.cos(b)+(z*Math.cos(a)-dx*Math.sin(a))*Math.sin(b);
  const rx=583+(hx-583)*Math.cos(r)-(hy-821)*Math.sin(r),ry=821+(hx-583)*Math.sin(r)+(hy-821)*Math.cos(r);
- const bt=p.bodyTurn||0;return [mix(x,rx,h)+p.leanX*(8+5*(1-h))+bt*5+(1-h)*((x-583)*(Math.cos(bt*.35)-1)+Math.sin(bt*.35)*18),mix(y,ry,h)+(1-h)*(x-583)*bt*.012-p.breath*2.3*Math.exp(-1*((y-1090)/250)**2)];
+ const bt=p.bodyTurn||0,cv=p.chest||0,lean=p.bodyLean||0;
+ let px=mix(x,rx,h)+p.leanX*(8+5*(1-h))+bt*5+(1-h)*((x-583)*(Math.cos(bt*.35)-1)+Math.sin(bt*.35)*18);
+ let py=mix(y,ry,h)+(1-h)*(x-583)*bt*.012;
+ const cw=Math.exp(-1*((y-1090)/250)**2),sw=Math.exp(-1*((y-960)/155)**2);
+ px+=(x-583)*cv*.012*cw;
+ py-=cv*7*cw+9*sw*((p.shoulderL||0)*Math.exp(-1*((x-270)/230)**2)+(p.shoulderR||0)*Math.exp(-1*((x-895)/230)**2));
+ const ta=lean*.035,tx=px-583,ty=py-1402;
+ return [583+tx*Math.cos(ta)-ty*Math.sin(ta),1402+tx*Math.sin(ta)+ty*Math.cos(ta)-cv*5*(1-smooth(1240,1480,y))];
 }
 const VERT=`#version 300 es
 precision highp float;precision highp int;
 in vec2 aRest;in vec2 aUV;out vec2 vUV;out vec2 vLocal;
 uniform vec2 uSize;uniform vec4 uProjection;uniform vec4 uPose;uniform vec4 uFace;uniform vec4 uBody;uniform vec4 uHair;
-uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
+uniform vec4 uTorso;uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
 uniform int uKind;uniform int uEye;uniform int uHairGroup;
 uniform vec4 uEyeCurve[2];uniform vec4 uEyeShape[2];
 float sm(float a,float b,float v){return smoothstep(a,b,v);}
@@ -40,20 +47,20 @@ vec2 localFeature(vec2 q){
  if(uKind==6)q.y+=closed*(e.y-3.-e.x)*sm(e.x-32.,e.x+1.,q.y);
  else q.y-=closed*3.*(1.-sm(e.y,e.y+22.,q.y));}
  if(uKind==9||uKind==10){float s=seam(q.x),t=clamp((q.x-522.)/144.,0.,1.),w=pow(max(0.,sin(t*3.14159265)),.8);
- if(uKind==9)q.y-=uFace.x*4.*w*sm(615.,s,q.y);
- else q.y+=uFace.x*20.*w*(1.-sm(s,702.,q.y));}
- if(uKind==11||uKind==12){float s=seam(q.x);q.y=s+((q.y-649.)*.8-4.)*max(.015,uFace.x);}
+ if(uKind==9)q.y-=uFace.x*6.*w*sm(615.,s,q.y);
+ else q.y+=uFace.x*28.*w*(1.-sm(s,702.,q.y));}
+ if(uKind==11||uKind==12){float s=seam(q.x);q.y=s+((q.y-649.)*(34./30.)-6.)*max(.015,uFace.x);}
  return q;
 }
 vec2 expressionWarp(vec2 q){
  float mouth=gauss(q,vec2(594.,650.),vec2(130.,95.));
  float corners=exp(-pow((abs(q.x-594.)-67.)/27.,2.)-pow((q.y-647.)/40.,2.));
- q.y-=uFace.y*7.*corners;q.x+=(q.x-594.)*uFace.y*.025*mouth;
+ q.y-=uFace.y*12.*corners;q.x+=(q.x-594.)*uFace.y*.045*mouth;
  float browL=gauss(q,vec2(497.,420.),vec2(76.,31.)),browR=gauss(q,vec2(680.,416.),vec2(76.,31.));
  float inner=1.-clamp(abs(q.x-590.)/120.,0.,1.);
  q.y-=uFace.z*5.*(browL+browR)+uBrowTilt*5.*inner*(browL+browR);
- q.y-=uFace.y*2.4*(gauss(q,vec2(498.,538.),vec2(66.,60.))+gauss(q,vec2(680.,534.),vec2(66.,60.)));
- q.y+=uFace.x*3.5*sm(665.,755.,q.y)*(1.-sm(790.,850.,q.y))*exp(-pow((q.x-594.)/165.,2.));
+ q.y-=uFace.y*4.*(gauss(q,vec2(498.,538.),vec2(66.,60.))+gauss(q,vec2(680.,534.),vec2(66.,60.)));
+ q.y+=uFace.x*6.5*sm(665.,755.,q.y)*(1.-sm(790.,850.,q.y))*exp(-pow((q.x-594.)/165.,2.));
  return q;
 }
 vec2 project(vec2 q){
@@ -67,8 +74,12 @@ vec2 project(vec2 q){
  p.y+=(1.-h)*(q.x-583.)*uBody.w*.012;
  float chest=exp(-pow((q.y-1090.)/250.,2.));
  float shoulders=exp(-pow((q.y-960.)/155.,2.));
- p.x+=(q.x-583.)*uBody.x*.0035*chest;
- p.y-=uBody.x*2.3*chest+6.*shoulders*(uBody.y*exp(-pow((q.x-270.)/230.,2.))+uBody.z*exp(-pow((q.x-895.)/230.,2.)));
+ p.x+=(q.x-583.)*uTorso.y*.012*chest;
+ p.y-=uTorso.y*7.*chest+9.*shoulders*(uBody.y*exp(-pow((q.x-270.)/230.,2.))+uBody.z*exp(-pow((q.x-895.)/230.,2.)));
+ // Shared parent torso rotation/lift applies to skin, head and every garment.
+ float torsoAngle=uTorso.x*.035;vec2 td=p-vec2(583.,1402.);
+ p=vec2(583.,1402.)+mat2(cos(torsoAngle),sin(torsoAngle),-sin(torsoAngle),cos(torsoAngle))*td;
+ p.y-=uTorso.y*5.*(1.-sm(1240.,1480.,q.y));
  if(uKind==3){
  // All adjoining hair textures sample the same continuous lag field.
  float side=mix(uHair.z,uHair.w,sm(570.,590.,q.x));
@@ -94,7 +105,7 @@ void main(){
  }
  if(uKind==11||uKind==12){
  float t=clamp((vLocal.x-522.)/144.,0.,1.),w=pow(max(0.,sin(t*3.14159265)),.8),s=646.-8.*t+7.*sin(t*3.14159265);
- float top=s-uMouth*4.*w,bot=s+uMouth*20.*w;
+ float top=s-uMouth*6.*w,bot=s+uMouth*28.*w;
  coverage=smoothstep(top-.5,top+.5,vLocal.y)*(1.-smoothstep(bot-.5,bot+.5,vLocal.y))*smoothstep(0.,.035,uMouth);
  }
  outColor=vec4(c.rgb,c.a*coverage);
@@ -108,7 +119,7 @@ export class Renderer{
  const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
  this.program=gl.createProgram();gl.attachShader(this.program,compile(gl.VERTEX_SHADER,VERT));gl.attachShader(this.program,compile(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(this.program);
  if(!gl.getProgramParameter(this.program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(this.program));
- this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uBody','uHair','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
+ this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uBody','uHair','uTorso','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
  this.aRest=gl.getAttribLocation(this.program,'aRest');this.aUV=gl.getAttribLocation(this.program,'aUV');
  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;canvas.dispatchEvent(new CustomEvent('riglost'));});
  canvas.addEventListener('webglcontextrestored',()=>location.reload());
@@ -140,7 +151,7 @@ export class Renderer{
  this.resize();gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.useProgram(this.program);
  gl.uniform2f(L.uSize,this.rig.width,this.rig.height);const pr=this.rig.projection;gl.uniform4f(L.uProjection,pr.yawRadians,pr.pitchRadians,...pr.neckTransition);gl.uniform4f(L.uPose,p.yaw,p.pitch,p.roll,p.leanX);gl.uniform4f(L.uFace,p.mouth,p.smile,p.brow,p.squint);
  gl.uniform4f(L.uBody,p.breath,p.shoulderL,p.shoulderR,p.bodyTurn||0);gl.uniform4f(L.uHair,p.hairBack||0,p.hairFringe||0,p.hairLeft||0,p.hairRight||0);
- gl.uniform2f(L.uGaze,p.gazeX,p.gazeY);gl.uniform2f(L.uOpen,p.eyeL,p.eyeR);gl.uniform1f(L.uMouth,p.mouth);gl.uniform1f(L.uBrowTilt,p.browTilt);
+ gl.uniform4f(L.uTorso,p.bodyLean||0,p.chest||0,0,0);gl.uniform2f(L.uGaze,p.gazeX,p.gazeY);gl.uniform2f(L.uOpen,p.eyeL,p.eyeR);gl.uniform1f(L.uMouth,p.mouth);gl.uniform1f(L.uBrowTilt,p.browTilt);
  const endpoints=this.rig.eyes.flatMap(e=>[e.x0,e.y0,e.x1,e.y1]),shape=this.rig.eyes.flatMap(e=>[e.up,e.down,e.cx,e.cy]);
  for(const n of ['uEyeCurve[0]','uEyeInfo[0]'])gl.uniform4fv(L[n],endpoints);
  for(const n of ['uEyeShape[0]','uEyeShapeInfo[0]'])gl.uniform4fv(L[n],shape);
