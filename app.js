@@ -1,5 +1,5 @@
-import {sampleAutoDemo} from './motion.js?v=autodemo-3';
-import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=autodemo-3b';
+import {sampleAutoDemo} from './motion.js?v=cage-4';
+import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=cage-4';
 const $=s=>document.querySelector(s);
 const rig=await fetch('rig.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
 const commonParts=rig.parts;
@@ -14,6 +14,7 @@ const springs=Object.fromEntries(['yaw','pitch','roll','gazeX','gazeY','brow','b
 springs.bodyTurn=new Spring(0,controls.spring.body.frequency,controls.spring.body.damping);
 for(const [n,f] of Object.entries({hairBack:2,hairFringe:3.2,hairLeft:2.5,hairRight:2.3}))springs[n]=new Spring(0,f,.67);
 springs.mouth=new Spring(0,controls.spring.mouth.frequency,controls.spring.mouth.damping);
+springs.cloth=new Spring(0,2.4,.8);
 for(const n of ['bodyLean','chest'])springs[n]=new Spring(0,n==='chest'?1.5:1.8,1);
 let contact=null,contactUntil=0,contactCount=0,activePointer=null;
 let renderer,ready=false,raf=0,last=performance.now(),time=0,nextBlink=3.2,blinkAt=-100,winkAt=-100,demoAt=null,expression='neutral',state='idle',phase='normal',transition=0,phaseTimer=0,wardrobe='suit',disposed=false;
@@ -100,7 +101,7 @@ function frame(now){
  const interacting=contact&&time<contactUntil;
  const idleYaw=breathe?Math.sin(time*.43)*.055+Math.sin(time*.19)*.025:0;
  const headYaw=interacting?contact.yaw:clamp(auto?auto.yaw:values.yaw+idleYaw);
- const bodyTarget=headYaw*.45;
+ const bodyTarget=interacting?headYaw*.65:(auto?auto.bodyYaw:headYaw*.65);
  const target={
  yaw:headYaw,
  bodyTurn:bodyTarget,
@@ -122,6 +123,7 @@ function frame(now){
  for(const [id,t]of Object.entries(target))pose[id]=springs[id].step(t,dt);
  const hairTarget=($('#hair').checked||auto)?clamp(-springs.yaw.v*4-springs.roll.v*4-springs.bodyTurn.v*2-springs.bodyLean.v*5,-10,10):0;
  for(const [n,k]of Object.entries({hairBack:.85,hairFringe:.45,hairLeft:1,hairRight:.9}))pose[n]=springs[n].step(hairTarget*k,dt);
+ pose.cloth=springs.cloth.step(clamp(-springs.bodyTurn.v*3-springs.bodyLean.v*2,-5,5),dt);
  pose.hair=pose.hairLeft;
  pose.breath=breath;
  const blink=Math.max(blinkCurve(time-blinkAt),auto?.blink||0),wink=blinkCurve(time-winkAt);
@@ -164,6 +166,6 @@ window.hibikiV3={
 };
 try{
  if(new URLSearchParams(location.search).has('fallback'))throw Error('静止fallbackの確認モード');
- renderer=new Renderer($('#avatar'),rig);await renderer.load();ready=true;
+ renderer=new Renderer($('#avatar'),rig);await renderer.load();ready=true;$('#avatar').dataset.rigVersion=rig.version;
  $('#error').hidden=true;policy();
 }catch(e){renderError=e.message;ready=true;$('#error').hidden=false;$('#error').textContent=e.message;policy();}

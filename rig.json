@@ -1,5 +1,5 @@
 {
-  "version": "hibiki-v3-anatomical-rig-3",
+  "version": "hibiki-v3-body-cage-4",
   "width": 1122,
   "height": 1402,
   "approvedSourceSha256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96",
@@ -553,8 +553,45 @@
   },
   "motion": {
     "demo": "independent-24-second-cue-loop",
-    "parentBody": "shared-torso-rotation-and-breath",
+    "parentBody": "anatomical-cage-neck-clavicles-ribs-waist",
     "clock": "visible-elapsed-time",
     "secondary": "velocity-driven-hair-springs"
+  },
+  "bodyCage": {
+    "version": "hibiki-body-cage-1",
+    "x": [
+      0,
+      250,
+      390,
+      583,
+      780,
+      930,
+      1122
+    ],
+    "y": [
+      0,
+      790,
+      870,
+      960,
+      1080,
+      1230,
+      1402
+    ],
+    "neck": [
+      583,
+      870
+    ],
+    "shoulderL": [
+      250,
+      960
+    ],
+    "shoulderR": [
+      930,
+      960
+    ],
+    "waist": [
+      583,
+      1402
+    ]
   }
 }

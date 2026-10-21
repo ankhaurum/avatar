@@ -1,3 +1,4 @@
+import {BODY_CAGE,solveBodyCage,sampleBodyCage} from './body-cage.js?v=cage-4';
 export const clamp=(v,a=-1,b=1)=>Math.max(a,Math.min(b,v));
 export const mix=(a,b,t)=>a+(b-a)*t;
 export const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t);};
@@ -27,20 +28,14 @@ export function projectPoint(x,y,p){
  const a=p.yaw*.27,b=p.pitch*.16,r=p.roll*.07;
  const hx=583+dx*Math.cos(a)+z*Math.sin(a),hy=560+dy*Math.cos(b)+(z*Math.cos(a)-dx*Math.sin(a))*Math.sin(b);
  const rx=583+(hx-583)*Math.cos(r)-(hy-821)*Math.sin(r),ry=821+(hx-583)*Math.sin(r)+(hy-821)*Math.cos(r);
- const bt=p.bodyTurn||0,cv=p.chest||0,lean=p.bodyLean||0;
- let px=mix(x,rx,h)+p.leanX*(8+5*(1-h))+bt*5+(1-h)*((x-583)*(Math.cos(bt*.35)-1)+Math.sin(bt*.35)*18);
- let py=mix(y,ry,h)+(1-h)*(x-583)*bt*.012;
- const cw=Math.exp(-1*((y-1090)/250)**2),sw=Math.exp(-1*((y-960)/155)**2);
- px+=(x-583)*cv*.012*cw;
- py-=cv*7*cw+9*sw*((p.shoulderL||0)*Math.exp(-1*((x-270)/230)**2)+(p.shoulderR||0)*Math.exp(-1*((x-895)/230)**2));
- const ta=lean*.035,tx=px-583,ty=py-1402;
- return [583+tx*Math.cos(ta)-ty*Math.sin(ta),1402+tx*Math.sin(ta)+ty*Math.cos(ta)-cv*5*(1-smooth(1240,1480,y))];
+ const delta=sampleBodyCage(x,y,solveBodyCage(p));
+ return [mix(x,rx,h)+delta[0],mix(y,ry,h)+delta[1]];
 }
 const VERT=`#version 300 es
 precision highp float;precision highp int;
 in vec2 aRest;in vec2 aUV;out vec2 vUV;out vec2 vLocal;
-uniform vec2 uSize;uniform vec4 uProjection;uniform vec4 uPose;uniform vec4 uFace;uniform vec4 uBody;uniform vec4 uHair;
-uniform vec4 uTorso;uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
+uniform vec2 uSize;uniform vec4 uProjection;uniform vec4 uPose;uniform vec4 uFace;uniform vec4 uHair;
+uniform vec2 uBodyCage[49];uniform float uBodyX[7];uniform float uBodyY[7];uniform float uCloth;uniform int uClothRole;uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
 uniform int uKind;uniform int uEye;uniform int uHairGroup;
 uniform vec4 uEyeCurve[2];uniform vec4 uEyeShape[2];
 float sm(float a,float b,float v){return smoothstep(a,b,v);}
@@ -72,23 +67,23 @@ vec2 expressionWarp(vec2 q){
  q.y+=uFace.x*6.5*sm(665.,755.,q.y)*(1.-sm(790.,850.,q.y))*exp(-pow((q.x-594.)/165.,2.));
  return q;
 }
+vec2 bodyOffset(vec2 q){
+ int col=0,row=0;
+ for(int i=1;i<6;i++){if(q.x>=uBodyX[i])col=i;if(q.y>=uBodyY[i])row=i;}
+ float u=clamp((q.x-uBodyX[col])/(uBodyX[col+1]-uBodyX[col]),0.,1.);
+ float v=clamp((q.y-uBodyY[row])/(uBodyY[row+1]-uBodyY[row]),0.,1.);
+ int k=row*7+col;
+ return mix(mix(uBodyCage[k],uBodyCage[k+1],u),mix(uBodyCage[k+7],uBodyCage[k+8],u),v);
+}
 vec2 project(vec2 q){
  float h=1.-sm(uProjection.z,uProjection.w,q.y),dx=q.x-583.,dy=q.y-560.;
  float z=18.+110.*sqrt(max(0.,1.-pow(dx/250.,2.)-pow(dy/330.,2.)))+42.*gauss(q,vec2(594.,562.),vec2(48.,78.));
  float a=uPose.x*uProjection.x,b=uPose.y*uProjection.y,r=uPose.z*.07;
  vec2 hp=vec2(583.+dx*cos(a)+z*sin(a),560.+dy*cos(b)+(z*cos(a)-dx*sin(a))*sin(b));
  vec2 d=hp-vec2(583.,821.);hp=vec2(583.,821.)+mat2(cos(r),sin(r),-sin(r),cos(r))*d;
- vec2 p=mix(q,hp,h);p.x+=uPose.w*(8.+5.*(1.-h))+uBody.w*5.;
- p.x+=(1.-h)*((q.x-583.)*(cos(uBody.w*.35)-1.)+sin(uBody.w*.35)*18.);
- p.y+=(1.-h)*(q.x-583.)*uBody.w*.012;
- float chest=exp(-pow((q.y-1090.)/250.,2.));
- float shoulders=exp(-pow((q.y-960.)/155.,2.));
- p.x+=(q.x-583.)*uTorso.y*.012*chest;
- p.y-=uTorso.y*7.*chest+9.*shoulders*(uBody.y*exp(-pow((q.x-270.)/230.,2.))+uBody.z*exp(-pow((q.x-895.)/230.,2.)));
- // Shared parent torso rotation/lift applies to skin, head and every garment.
- float torsoAngle=uTorso.x*.035;vec2 td=p-vec2(583.,1402.);
- p=vec2(583.,1402.)+mat2(cos(torsoAngle),sin(torsoAngle),-sin(torsoAngle),cos(torsoAngle))*td;
- p.y-=uTorso.y*5.*(1.-sm(1240.,1480.,q.y));
+ vec2 p=mix(q,hp,h)+bodyOffset(aRest);
+ // Tie knot stays attached; only the free fabric below it lags.
+ if(uClothRole==1)p.x+=uCloth*pow(sm(1040.,1390.,aRest.y),2.);
  if(uKind==3){
  // All adjoining hair textures sample the same continuous lag field.
  float side=mix(uHair.z,uHair.w,sm(570.,590.,q.x));
@@ -128,7 +123,8 @@ export class Renderer{
  const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
  this.program=gl.createProgram();gl.attachShader(this.program,compile(gl.VERTEX_SHADER,VERT));gl.attachShader(this.program,compile(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(this.program);
  if(!gl.getProgramParameter(this.program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(this.program));
- this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uBody','uHair','uTorso','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
+ this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uHair','uBodyCage[0]','uBodyX[0]','uBodyY[0]','uCloth','uClothRole','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
+ if(this.loc['uBodyCage[0]']===null)throw Error('身体リグのGPU接続がありません');
  this.aRest=gl.getAttribLocation(this.program,'aRest');this.aUV=gl.getAttribLocation(this.program,'aUV');
  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;canvas.dispatchEvent(new CustomEvent('riglost'));});
  canvas.addEventListener('webglcontextrestored',()=>location.reload());
@@ -140,8 +136,15 @@ export class Renderer{
  const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
  for(const k of [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T])gl.texParameteri(gl.TEXTURE_2D,k,gl.CLAMP_TO_EDGE);
  for(const k of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,k,gl.LINEAR);
- const {columns:nx,rows:ny}=part.mesh,[x,y,w,h]=part.rect,verts=[],indices=[];
- for(let j=0;j<=ny;j++)for(let i=0;i<=nx;i++)verts.push(x+w*i/nx,y+h*j/ny,i/nx,j/ny);
+ const [x,y,w,h]=part.rect,verts=[],indices=[];
+ const cage=this.rig.bodyCage||BODY_CAGE;
+ const axis=(start,length,keys)=>Array.from(new Set([start,start+length,...keys.filter(v=>v>start&&v<start+length),...Array.from({length:Math.ceil(length/28)+1},(_,i)=>Math.ceil(start/28)*28+i*28).filter(v=>v>start&&v<start+length)])).sort((a,b)=>a-b);
+ // Body layers share global lattice edges and cage joints, instead of unrelated grids.
+ const bound=y+h>790;
+ const xs=bound?axis(x,w,cage.x):Array.from({length:part.mesh.columns+1},(_,i)=>x+w*i/part.mesh.columns);
+ const ys=bound?axis(y,h,cage.y):Array.from({length:part.mesh.rows+1},(_,j)=>y+h*j/part.mesh.rows);
+ const nx=xs.length-1,ny=ys.length-1;
+ for(const yy of ys)for(const xx of xs)verts.push(xx,yy,(xx-x)/w,(yy-y)/h);
  for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const a=j*(nx+1)+i,b=a+1,c=a+nx+1,d=c+1;indices.push(a,c,b,b,c,d);}
  const vao=gl.createVertexArray();gl.bindVertexArray(vao);
  const vb=gl.createBuffer(),ib=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(verts),gl.STATIC_DRAW);
@@ -159,13 +162,13 @@ export class Renderer{
  const begin=performance.now(),gl=this.gl,L=this.loc;
  this.resize();gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.useProgram(this.program);
  gl.uniform2f(L.uSize,this.rig.width,this.rig.height);const pr=this.rig.projection;gl.uniform4f(L.uProjection,pr.yawRadians,pr.pitchRadians,...pr.neckTransition);gl.uniform4f(L.uPose,p.yaw,p.pitch,p.roll,p.leanX);gl.uniform4f(L.uFace,p.mouth,p.smile,p.brow,p.squint);
- gl.uniform4f(L.uBody,p.breath,p.shoulderL,p.shoulderR,p.bodyTurn||0);gl.uniform4f(L.uHair,p.hairBack||0,p.hairFringe||0,p.hairLeft||0,p.hairRight||0);
- gl.uniform4f(L.uTorso,p.bodyLean||0,p.chest||0,0,0);gl.uniform2f(L.uGaze,p.gazeX,p.gazeY);gl.uniform2f(L.uOpen,p.eyeL,p.eyeR);gl.uniform1f(L.uMouth,p.mouth);gl.uniform1f(L.uBrowTilt,p.browTilt);
+ gl.uniform4f(L.uHair,p.hairBack||0,p.hairFringe||0,p.hairLeft||0,p.hairRight||0);
+ this.cageNodes=solveBodyCage(p,this.rig.bodyCage||BODY_CAGE);gl.uniform2fv(L['uBodyCage[0]'],this.cageNodes);gl.uniform1fv(L['uBodyX[0]'],(this.rig.bodyCage||BODY_CAGE).x);gl.uniform1fv(L['uBodyY[0]'],(this.rig.bodyCage||BODY_CAGE).y);gl.uniform1f(L.uCloth,p.cloth||0);gl.uniform2f(L.uGaze,p.gazeX,p.gazeY);gl.uniform2f(L.uOpen,p.eyeL,p.eyeR);gl.uniform1f(L.uMouth,p.mouth);gl.uniform1f(L.uBrowTilt,p.browTilt);
  const endpoints=this.rig.eyes.flatMap(e=>[e.x0,e.y0,e.x1,e.y1]),shape=this.rig.eyes.flatMap(e=>[e.up,e.down,e.cx,e.cy]);
  for(const n of ['uEyeCurve[0]','uEyeInfo[0]'])gl.uniform4fv(L[n],endpoints);
  for(const n of ['uEyeShape[0]','uEyeShapeInfo[0]'])gl.uniform4fv(L[n],shape);
  gl.uniform1i(L.uImage,0);
- for(const r of this.resources){const k=KINDS[r.part.kind]??0;gl.uniform1i(L.uKind,k);gl.uniform1i(L.uEye,r.part.eye??0);gl.uniform1i(L.uHairGroup,r.part.hairGroup??0);
+ for(const r of this.resources){const k=KINDS[r.part.kind]??0;gl.uniform1i(L.uKind,k);gl.uniform1i(L.uEye,r.part.eye??0);gl.uniform1i(L.uHairGroup,r.part.hairGroup??0);gl.uniform1i(L.uClothRole,r.part.attachment==='neck-tie'?1:0);
  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,r.texture);gl.bindVertexArray(r.vao);gl.drawElements(gl.TRIANGLES,r.count,gl.UNSIGNED_SHORT,0);}
  gl.bindVertexArray(null);this.frames++;this.drawMs=performance.now()-begin;
  }
