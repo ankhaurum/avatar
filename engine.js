@@ -42,7 +42,7 @@ vec2 localFeature(vec2 q){
  if(uKind==9||uKind==10){float s=seam(q.x),t=clamp((q.x-522.)/144.,0.,1.),w=pow(max(0.,sin(t*3.14159265)),.8);
  if(uKind==9)q.y-=uFace.x*4.*w*sm(615.,s,q.y);
  else q.y+=uFace.x*20.*w*(1.-sm(s,702.,q.y));}
- if(uKind==11||uKind==12){float s=seam(q.x);q.y=s+(q.y-s)*max(.015,uFace.x);}
+ if(uKind==11||uKind==12){float s=seam(q.x);q.y=s+((q.y-649.)*.8-4.)*max(.015,uFace.x);}
  return q;
 }
 vec2 expressionWarp(vec2 q){

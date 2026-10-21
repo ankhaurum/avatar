@@ -1,4 +1,4 @@
-import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=anatomical-2';
+import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=anatomical-2a';
 const $=s=>document.querySelector(s);
 const rig=await fetch('rig.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
 const commonParts=rig.parts;
@@ -119,10 +119,10 @@ function frame(now){
  pose.eyeR=state==='sleep'?0:clamp((1-blink)*(1-pose.squint),0,1.12);
  pose.eyeOpen=1-blink;
  try{if(!Object.values(pose).every(Number.isFinite))throw Error('姿勢に不正な値を検出');renderer.render(pose);}catch(e){renderError=e.message;$('#error').hidden=false;$('#error').textContent=e.message;$('#static').checked=true;policy();return;}
- frameTimes.push(dt);if(frameTimes.length>90)frameTimes.shift();
+ if(dt>.001)frameTimes.push(dt);if(frameTimes.length>90)frameTimes.shift();
  if(now-lastMetric>500){
  const fps=1/Math.max(.001,frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length);
- $('#metrics').textContent=fps.toFixed(0)+' fps · CPU '+renderer.drawMs.toFixed(1)+' ms';
+ $('#metrics').textContent=(frameTimes.length<5?'計測中':fps.toFixed(0)+' fps')+' · CPU '+renderer.drawMs.toFixed(1)+' ms';
  $('#audioStatus').textContent=audioMessage??(audio.playing?(audio.mode==='test-tone'?'テスト音量で同期中（音声ではありません）':'端末内の音声で同期中'):state==='speaking'||d!==null?'音声なし · 疑似発話':'音声なし · 手動開口');
  $('#audioStatus').dataset.audioContext=audio.context?.state||'not-created';
  $('#audioStatus').dataset.audioMode=audio.mode;
