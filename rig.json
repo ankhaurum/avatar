@@ -1,5 +1,5 @@
 {
-  "version": "hibiki-v3-independent-prototype-1",
+  "version": "hibiki-v3-anatomical-rig-2",
   "width": 1122,
   "height": 1402,
   "approvedSourceSha256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96",
@@ -59,434 +59,418 @@
   },
   "parts": [
     {
-      "id": "hair-back",
-      "url": "assets/hair-back.png",
-      "rect": [
-        55,
-        782,
-        1005,
-        99
-      ],
-      "kind": "hair",
-      "order": 1,
-      "mesh": {
-        "columns": 32,
-        "rows": 4,
-        "restRect": [
-          55,
-          782,
-          1005,
-          99
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 0.65
-      }
-    },
-    {
       "id": "neck-skin",
-      "url": "assets/neck-skin.png",
+      "url": "assets/rig2/neck-skin.png",
       "rect": [
-        412,
-        724,
-        329,
-        205
+        414,
+        728,
+        328,
+        319
       ],
       "kind": "neck",
-      "order": 10,
+      "order": 9,
       "mesh": {
-        "columns": 11,
-        "rows": 7,
-        "restRect": [
-          412,
-          724,
-          329,
-          205
-        ],
-        "uv": "local-unit-square",
-        "binding": "body"
+        "columns": 9,
+        "rows": 9
       },
       "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 0.65
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
       }
     },
     {
-      "id": "face",
-      "url": "assets/face.png",
+      "id": "hair-back",
+      "url": "assets/rig2/hair-back.png",
       "rect": [
-        325,
-        333,
-        469,
-        420
+        55,
+        781,
+        1005,
+        96
+      ],
+      "kind": "hair",
+      "order": 10,
+      "mesh": {
+        "columns": 27,
+        "rows": 3
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      },
+      "hairGroup": 0
+    },
+    {
+      "id": "face-skin",
+      "url": "assets/rig2/face-skin.png",
+      "rect": [
+        326,
+        274,
+        465,
+        516
       ],
       "kind": "face",
       "order": 12,
       "mesh": {
-        "columns": 15,
-        "rows": 14,
-        "restRect": [
-          325,
-          333,
-          469,
-          420
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
+        "columns": 20,
+        "rows": 22
       },
       "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 0.65
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      }
+    },
+    {
+      "id": "mouth-cavity",
+      "url": "assets/rig2/mouth-cavity.png",
+      "rect": [
+        522,
+        642,
+        146,
+        45
+      ],
+      "kind": "mouthCavity",
+      "order": 18,
+      "mesh": {
+        "columns": 21,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      }
+    },
+    {
+      "id": "teeth",
+      "url": "assets/rig2/teeth.png",
+      "rect": [
+        522,
+        642,
+        146,
+        45
+      ],
+      "kind": "teeth",
+      "order": 19,
+      "mesh": {
+        "columns": 21,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      }
+    },
+    {
+      "id": "sclera-left",
+      "url": "assets/rig2/sclera-left.png",
+      "rect": [
+        426,
+        452,
+        132,
+        47
+      ],
+      "kind": "sclera",
+      "order": 20,
+      "mesh": {
+        "columns": 19,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 0
+      },
+      "eye": 0
+    },
+    {
+      "id": "sclera-right",
+      "url": "assets/rig2/sclera-right.png",
+      "rect": [
+        632,
+        446,
+        127,
+        48
+      ],
+      "kind": "sclera",
+      "order": 20,
+      "mesh": {
+        "columns": 19,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 1
+      },
+      "eye": 1
+    },
+    {
+      "id": "iris-left",
+      "url": "assets/rig2/iris-left.png",
+      "rect": [
+        474,
+        451,
+        47,
+        47
+      ],
+      "kind": "iris",
+      "order": 21,
+      "mesh": {
+        "columns": 7,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 0
+      },
+      "eye": 0
+    },
+    {
+      "id": "iris-right",
+      "url": "assets/rig2/iris-right.png",
+      "rect": [
+        657,
+        445,
+        47,
+        47
+      ],
+      "kind": "iris",
+      "order": 21,
+      "mesh": {
+        "columns": 7,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 1
+      },
+      "eye": 1
+    },
+    {
+      "id": "lid-lower-left",
+      "url": "assets/rig2/lid-lower-left.png",
+      "rect": [
+        429,
+        476,
+        126,
+        45
+      ],
+      "kind": "lidLower",
+      "order": 23,
+      "mesh": {
+        "columns": 18,
+        "rows": 7
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 0
+      },
+      "eye": 0
+    },
+    {
+      "id": "lid-lower-right",
+      "url": "assets/rig2/lid-lower-right.png",
+      "rect": [
+        635,
+        462,
+        121,
+        54
+      ],
+      "kind": "lidLower",
+      "order": 23,
+      "mesh": {
+        "columns": 18,
+        "rows": 8
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 1
+      },
+      "eye": 1
+    },
+    {
+      "id": "lid-upper-left",
+      "url": "assets/rig2/lid-upper-left.png",
+      "rect": [
+        429,
+        421,
+        126,
+        70
+      ],
+      "kind": "lidUpper",
+      "order": 24,
+      "mesh": {
+        "columns": 18,
+        "rows": 10
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 0
+      },
+      "eye": 0
+    },
+    {
+      "id": "lid-upper-right",
+      "url": "assets/rig2/lid-upper-right.png",
+      "rect": [
+        635,
+        415,
+        121,
+        76
+      ],
+      "kind": "lidUpper",
+      "order": 24,
+      "mesh": {
+        "columns": 18,
+        "rows": 11
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": 1
+      },
+      "eye": 1
+    },
+    {
+      "id": "lip-lower",
+      "url": "assets/rig2/lip-lower.png",
+      "rect": [
+        492,
+        635,
+        204,
+        80
+      ],
+      "kind": "lipLower",
+      "order": 25,
+      "mesh": {
+        "columns": 30,
+        "rows": 12
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      }
+    },
+    {
+      "id": "lip-upper",
+      "url": "assets/rig2/lip-upper.png",
+      "rect": [
+        492,
+        598,
+        204,
+        55
+      ],
+      "kind": "lipUpper",
+      "order": 26,
+      "mesh": {
+        "columns": 30,
+        "rows": 8
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
       }
     },
     {
       "id": "brow-left",
-      "url": "assets/brow-left.png",
+      "url": "assets/rig2/brow-left.png",
       "rect": [
-        403,
-        381,
-        181,
-        78
+        411,
+        384,
+        169,
+        69
       ],
       "kind": "brow",
-      "order": 22,
-      "side": "left",
-      "center": [
-        498,
-        421
-      ],
+      "order": 27,
       "mesh": {
-        "columns": 13,
-        "rows": 6,
-        "restRect": [
-          403,
-          381,
-          181,
-          78
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
+        "columns": 25,
+        "rows": 10
       },
       "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      },
+      "side": "left"
     },
     {
       "id": "brow-right",
-      "url": "assets/brow-right.png",
+      "url": "assets/rig2/brow-right.png",
       "rect": [
-        597,
-        377,
-        183,
-        77
+        601,
+        379,
+        175,
+        70
       ],
       "kind": "brow",
-      "order": 22,
-      "side": "right",
-      "center": [
-        680,
-        418
-      ],
+      "order": 27,
       "mesh": {
-        "columns": 14,
-        "rows": 6,
-        "restRect": [
-          597,
-          377,
-          183,
-          77
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
+        "columns": 25,
+        "rows": 10
       },
       "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "eye-left",
-      "url": "assets/eye-left.png",
-      "rect": [
-        400,
-        420,
-        187,
-        114
-      ],
-      "kind": "eye",
-      "order": 23,
-      "side": "left",
-      "center": [
-        498,
-        476
-      ],
-      "mesh": {
-        "columns": 14,
-        "rows": 9,
-        "restRect": [
-          400,
-          420,
-          187,
-          114
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
       },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "eye-right",
-      "url": "assets/eye-right.png",
-      "rect": [
-        595,
-        415,
-        191,
-        118
-      ],
-      "kind": "eye",
-      "order": 23,
-      "side": "right",
-      "center": [
-        681,
-        471
-      ],
-      "mesh": {
-        "columns": 14,
-        "rows": 9,
-        "restRect": [
-          595,
-          415,
-          191,
-          118
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "eye-closed-left",
-      "url": "assets/eye-closed-left.png",
-      "rect": [
-        400,
-        420,
-        187,
-        114
-      ],
-      "kind": "eyelid",
-      "order": 24,
-      "side": "left",
-      "center": [
-        498,
-        476
-      ],
-      "mesh": {
-        "columns": 14,
-        "rows": 9,
-        "restRect": [
-          400,
-          420,
-          187,
-          114
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "eye-closed-right",
-      "url": "assets/eye-closed-right.png",
-      "rect": [
-        595,
-        415,
-        191,
-        118
-      ],
-      "kind": "eyelid",
-      "order": 24,
-      "side": "right",
-      "center": [
-        681,
-        471
-      ],
-      "mesh": {
-        "columns": 14,
-        "rows": 9,
-        "restRect": [
-          595,
-          415,
-          191,
-          118
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "mouth-closed",
-      "url": "assets/mouth-closed.png",
-      "rect": [
-        481,
-        597,
-        228,
-        126
-      ],
-      "kind": "mouthClosed",
-      "order": 25,
-      "center": [
-        596,
-        650
-      ],
-      "mesh": {
-        "columns": 17,
-        "rows": 9,
-        "restRect": [
-          481,
-          597,
-          228,
-          126
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "mouth-open",
-      "url": "assets/mouth-open.png",
-      "rect": [
-        481,
-        597,
-        228,
-        136
-      ],
-      "kind": "mouthOpen",
-      "order": 26,
-      "center": [
-        596,
-        656
-      ],
-      "mesh": {
-        "columns": 17,
-        "rows": 10,
-        "restRect": [
-          481,
-          597,
-          228,
-          136
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 5
-      }
-    },
-    {
-      "id": "hair-screen-left",
-      "url": "assets/hair-screen-left.png",
-      "rect": [
-        0,
-        428,
-        475,
-        368
-      ],
-      "kind": "hair",
-      "order": 39,
-      "mesh": {
-        "columns": 15,
-        "rows": 12,
-        "restRect": [
-          0,
-          428,
-          475,
-          368
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 0.65
-      }
-    },
-    {
-      "id": "hair-screen-right",
-      "url": "assets/hair-screen-right.png",
-      "rect": [
-        676,
-        428,
-        398,
-        368
-      ],
-      "kind": "hair",
-      "order": 39,
-      "mesh": {
-        "columns": 13,
-        "rows": 12,
-        "restRect": [
-          676,
-          428,
-          398,
-          368
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
-      },
-      "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 0.65
-      }
+      "side": "right"
     },
     {
       "id": "hair-fringe",
-      "url": "assets/hair-fringe.png",
+      "url": "assets/rig2/hair-fringe.png",
       "rect": [
         0,
         18,
         1070,
-        424
+        438
       ],
       "kind": "hair",
-      "order": 40,
+      "order": 38,
       "mesh": {
-        "columns": 34,
-        "rows": 14,
-        "restRect": [
-          0,
-          18,
-          1070,
-          424
-        ],
-        "uv": "local-unit-square",
-        "binding": "head"
+        "columns": 29,
+        "rows": 12
       },
       "mask": {
-        "mode": "texture-alpha",
-        "featherPixels": 0.65
-      }
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      },
+      "hairGroup": 1
+    },
+    {
+      "id": "hair-left",
+      "url": "assets/rig2/hair-left.png",
+      "rect": [
+        0,
+        452,
+        522,
+        333
+      ],
+      "kind": "hair",
+      "order": 38,
+      "mesh": {
+        "columns": 14,
+        "rows": 9
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      },
+      "hairGroup": 2
+    },
+    {
+      "id": "hair-right",
+      "url": "assets/rig2/hair-right.png",
+      "rect": [
+        657,
+        452,
+        417,
+        333
+      ],
+      "kind": "hair",
+      "order": 38,
+      "mesh": {
+        "columns": 11,
+        "rows": 9
+      },
+      "mask": {
+        "mode": "precise-source-alpha",
+        "eyeClip": -1
+      },
+      "hairGroup": 3
     }
   ],
   "wardrobe": {
@@ -508,9 +492,63 @@
     "selectionExamplesAreNotImplemented": true
   },
   "limitations": [
-    "Photographic parts have limited yaw/pitch range.",
-    "No unseen-side corrective source art yet.",
-    "Local generated patches require human quality review.",
-    "Only suit garment artwork exists."
-  ]
+    "Analytic shallow depth warp is not measured anatomy or a full profile view.",
+    "Opposite-side occlusion and expression art remain subject to visual review.",
+    "Suit is the only completed garment artwork."
+  ],
+  "eyes": [
+    {
+      "side": "left",
+      "x0": 438,
+      "y0": 480,
+      "x1": 545,
+      "y1": 486,
+      "up": 25,
+      "down": 9,
+      "cx": 497,
+      "cy": 474,
+      "radius": 19.6
+    },
+    {
+      "side": "right",
+      "x0": 644,
+      "y0": 486,
+      "x1": 746,
+      "y1": 466,
+      "up": 24,
+      "down": 9,
+      "cx": 680,
+      "cy": 468,
+      "radius": 19.6
+    }
+  ],
+  "mouth": {
+    "x0": 522,
+    "x1": 666,
+    "y0": 646,
+    "y1": 638,
+    "arch": 7,
+    "upperOpening": 4,
+    "lowerOpening": 20
+  },
+  "projection": {
+    "kind": "2d-depth-field",
+    "yawRadians": 0.27,
+    "pitchRadians": 0.16,
+    "neckTransition": [
+      740,
+      970
+    ],
+    "faceCenter": [
+      583,
+      560
+    ],
+    "depthNose": 170,
+    "depthCheek": 128
+  },
+  "input": {
+    "tapDefault": true,
+    "drag": true,
+    "mouseOptional": true
+  }
 }

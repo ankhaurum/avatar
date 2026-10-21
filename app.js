@@ -1,16 +1,19 @@
-import {Renderer,Spring,AudioDriver,clamp,mix,smooth} from './engine.js';
+import {Renderer,Spring,AudioDriver,clamp,mix,smooth,contactTarget} from './engine.js?v=anatomical-2';
 const $=s=>document.querySelector(s);
-const rig=await fetch('rig.json').then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
+const rig=await fetch('rig.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('rig read failed');return r.json();});
 const commonParts=rig.parts;
-const wardrobePacks=await Promise.all(rig.wardrobe.packs.map(async entry=>{const pack=await fetch(entry.url).then(r=>r.json());if(pack.rigVersion!==rig.wardrobe.rigVersion)throw Error('衣装リグ版が一致しません');return pack;}));
+const wardrobePacks=await Promise.all(rig.wardrobe.packs.map(async entry=>{const pack=await fetch(entry.url,{cache:'no-store'}).then(r=>r.json());if(pack.rigVersion!==rig.wardrobe.rigVersion)throw Error('衣装リグ版が一致しません');return pack;}));
 rig.parts=[...commonParts,...wardrobePacks.find(p=>p.id===rig.wardrobe.default).parts].sort((a,b)=>a.order-b.order);
-const controls=await fetch('controls.json').then(r=>r.json());
-rig.deformationKeys=controls;
+const controls=await fetch('controls.json',{cache:'no-store'}).then(r=>r.json());
+rig.controls=controls;
 const audio=new AudioDriver();
 const ids=['yaw','pitch','roll','gazeX','gazeY','mouth','shoulderL','shoulderR','intensity'];
 const values=Object.fromEntries(ids.map(id=>[id,Number($('#'+id).value)]));
 const springs=Object.fromEntries(['yaw','pitch','roll','gazeX','gazeY','brow','browTilt','smile','squint','shoulderL','shoulderR','mouth','leanX'].map(n=>{const k=controls.spring[n.startsWith('gaze')?'gaze':'head'];return [n,new Spring(0,k.frequency,k.damping)];}));
-springs.hair=new Spring(0,controls.spring.hair.frequency,controls.spring.hair.damping);
+springs.bodyTurn=new Spring(0,controls.spring.body.frequency,controls.spring.body.damping);
+for(const [n,f] of Object.entries({hairBack:2,hairFringe:3.2,hairLeft:2.5,hairRight:2.3}))springs[n]=new Spring(0,f,.67);
+springs.mouth=new Spring(0,controls.spring.mouth.frequency,controls.spring.mouth.damping);
+let contact=null,contactUntil=0,contactCount=0,activePointer=null;
 let renderer,ready=false,raf=0,last=performance.now(),time=0,nextBlink=3.2,blinkAt=-100,winkAt=-100,demoAt=null,expression='neutral',state='idle',phase='normal',transition=0,phaseTimer=0,wardrobe='suit',disposed=false;
 let pose={},renderError=null,frameTimes=[],lastMetric=0;
 let audioMessage=null;
@@ -20,10 +23,13 @@ function schedule(){if(!raf&&!document.hidden&&!disposed&&!staticMode())raf=requ
 function policy(){
  if(document.hidden||staticMode()){cancelAnimationFrame(raf);raf=0;if(document.hidden)audio.stop();}
  $('#poster').hidden=!staticMode();$('#avatar').hidden=staticMode();
+ $('.touch-hint').textContent=staticMode()?'静止表示中です。動作の操作は休止しています。':'左右をタップ。横になぞると、眼・頭・首が追いかけます。';
+ if(staticMode())$('#metrics').textContent='静止中';
+ for(const id of ['demo','blink','wink'])$('#'+id).disabled=staticMode();
  $('#motionStatus').textContent=staticMode()?'静止表示':'独立メッシュ · 動作中';
  last=performance.now();nextBlink=time+2.5;policyLabel();schedule();
 }
-function policyLabel(){$('#stageLabel').textContent='スーツ · '+(Math.abs(values.yaw)<.15?'正面':values.yaw>0?'画面右向き':'画面左向き');}
+function policyLabel(yaw=values.yaw){$('#stageLabel').textContent='スーツ · '+(Math.abs(yaw)<.15?'正面':yaw>0?'画面右向き':'画面左向き');}
 function setValue(id,v){const el=$('#'+id);values[id]=clamp(Number(v),Number(el.min),Number(el.max));el.value=values[id];document.querySelector('output[for="'+id+'"]').value=values[id].toFixed(2);policyLabel();}
 for(const id of ids)$('#'+id).addEventListener('input',e=>{setValue(id,e.target.value);});
 function selectExpression(v){if(!Object.hasOwn(controls.expressions,v))return false;expression=v;$('#expression').value=v;return true;}
@@ -43,11 +49,19 @@ $('#placement').addEventListener('click',e=>{const b=e.target.closest('[data-pla
 $('#blink').onclick=()=>{blinkAt=time;};
 $('#wink').onclick=()=>{winkAt=time;};
 $('#demo').onclick=()=>{demoAt=demoAt===null?time:null;$('#demo').textContent=demoAt===null?'複合動作デモ':'デモを停止';};
-$('#reset').onclick=()=>{for(const id of ids)if(id!=='intensity')setValue(id,0);demoAt=null;$('#demo').textContent='複合動作デモ';setState('idle');$('#pointer').checked=false;$('#placement').querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x.dataset.placement==='center'));};
+$('#reset').onclick=()=>{contact=null;activePointer=null;contactUntil=0;for(const id of ids)if(id!=='intensity')setValue(id,0);demoAt=null;$('#demo').textContent='複合動作デモ';setState('idle');$('#pointer').checked=false;$('#placement').querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x.dataset.placement==='center'));};
 $('#static').onchange=policy;
 $('#background').onchange=e=>$('#stage').classList.toggle('dark',e.target.checked);
-$('#avatar').addEventListener('pointermove',e=>{if(!$('#pointer').checked)return;const r=e.target.getBoundingClientRect();setValue('gazeX',((e.clientX-r.left)/r.width-.5)*2);setValue('gazeY',((e.clientY-r.top)/r.height-.5)*2);});
-$('#avatar').addEventListener('pointerleave',()=>{if($('#pointer').checked){setValue('gazeX',0);setValue('gazeY',0);}});
+function contactInput(e){
+ if(staticMode())return;
+ const r=$('#avatar').getBoundingClientRect();contact=contactTarget(e.clientX-r.left,e.clientY-r.top,r.width,r.height);contactUntil=time+3.5;
+ $('#avatar').dataset.input=e.pointerType||'pointer';$('#avatar').dataset.contactCount=String(contactCount);
+ $('#avatar').dataset.target=JSON.stringify(contact);
+}
+$('#avatar').addEventListener('pointerdown',e=>{if(e.button!==0)return;activePointer=e.pointerId;contactCount++;contactInput(e);e.target.setPointerCapture(e.pointerId);});
+$('#avatar').addEventListener('pointermove',e=>{if(activePointer===e.pointerId||($('#pointer').checked&&e.pointerType==='mouse'))contactInput(e);});
+for(const name of ['pointerup','pointercancel','lostpointercapture'])$('#avatar').addEventListener(name,e=>{if(activePointer===e.pointerId)activePointer=null;});
+$('#avatar').addEventListener('pointerleave',()=>{if(activePointer===null&&$('#pointer').checked)contactUntil=time;});
 $('#tone').onclick=async()=>{audioMessage='音声を準備中';try{await audio.tone();audioMessage=null;}catch(e){audioMessage='音声を開始できません: '+e.message;}};
 $('#audioFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;audioMessage='音声を準備中';try{await audio.attach(file);audioMessage=null;}catch(err){audio.stop();audioMessage='音声を開始できません: '+err.message;}e.target.value='';};
 $('#chooseAudio').onclick=()=>$('#audioFile').click();
@@ -61,8 +75,8 @@ async function setWardrobe(id){
 $('#wardrobe').onchange=e=>setWardrobe(e.target.value).catch(e=>{renderError=e.message;});
 function blinkCurve(age){
  if(age<0||age>.33)return 0;
- if(age<.11)return smooth(0,.11,age);
- if(age<.17)return 1;return 1-smooth(.17,.33,age);
+ if(age<.09)return smooth(0,.09,age);
+ if(age<.13)return 1;return 1-smooth(.13,.33,age);
 }
 function frame(now){
  raf=0;if(document.hidden||staticMode()||disposed)return;
@@ -75,42 +89,48 @@ function frame(now){
  const breath=breathe?Math.sin(time*Math.PI*2/5.3):0;
  const demoYaw=d===null?0:Math.sin(d*.55)*.55;
  const motion=d===null?0:Math.sin(d*.9);
+ const interacting=contact&&time<contactUntil;
+ const idleYaw=breathe?Math.sin(time*.43)*.055+Math.sin(time*.19)*.025:0;
+ const headYaw=interacting?contact.yaw:clamp(values.yaw+demoYaw+idleYaw);
+ const bodyTarget=headYaw*.28;
  const target={
- yaw:clamp(values.yaw+demoYaw),
- pitch:clamp(values.pitch+(d===null?0:Math.sin(d*.73)*.25)),
- roll:clamp(values.roll+(d===null?0:Math.sin(d*.44)*.2)),
- gazeX:clamp(values.gazeX+(d===null?0:Math.sin(d*1.2)*.65)),
- gazeY:clamp(values.gazeY+(d===null?0:Math.cos(d*.8)*.28)),
+ yaw:headYaw,
+ bodyTurn:bodyTarget,
+ pitch:interacting?contact.pitch:clamp(values.pitch+(d===null?(breathe?Math.sin(time*.57)*.025:0):Math.sin(d*.73)*.25)),
+ roll:interacting?contact.roll:clamp(values.roll+(d===null?0:Math.sin(d*.44)*.2)),
+ gazeX:interacting?contact.gazeX:clamp(values.gazeX+(d===null?(breathe?Math.sin(time*.43)*.09:0):Math.sin(d*1.2)*.65)),
+ gazeY:interacting?contact.gazeY:clamp(values.gazeY+(d===null?0:Math.cos(d*.8)*.28)),
  brow:(settings.brow||0)*strength,
  browTilt:(expression==='concern'||expression==='sadness'?-.45:expression==='anger'?.35:0)*strength,
  smile:(settings.smile||0)*strength,
  squint:(settings.squint||0)*strength,
- shoulderL:clamp(values.shoulderL+(settings.shoulders||0)*strength+(d===null?0:motion*.25)),
- shoulderR:clamp(values.shoulderR+(settings.shoulders||0)*strength+(d===null?0:Math.sin(d*.9-.4)*.23)),
+ shoulderL:clamp(values.shoulderL+(settings.shoulders||0)*strength+(d===null?0:motion*.12+bodyTarget*.2)),
+ shoulderR:clamp(values.shoulderR+(settings.shoulders||0)*strength+(d===null?0:Math.sin(d*.9-.4)*.12-bodyTarget*.2)),
  leanX:breathe?Math.sin(time*.55)*.14:0,
  mouth:Math.max(values.mouth,audio.value(dt),(state==='speaking'||d!==null)&&!audio.playing?Math.max(0,Math.sin(time*10))*.45:0)
  };
  for(const [id,t]of Object.entries(target))pose[id]=springs[id].step(t,dt);
- const hairTarget=$('#hair').checked?(-springs.yaw.v*2.2-springs.roll.v*3+(breathe?Math.sin(time*1.8)*.38:0)):0;
- pose.hair=springs.hair.step(clamp(hairTarget,-5,5),dt);
+ const hairTarget=$('#hair').checked?clamp(-springs.yaw.v*4-springs.roll.v*4-springs.bodyTurn.v*2,-10,10):0;
+ for(const [n,k]of Object.entries({hairBack:.85,hairFringe:.45,hairLeft:1,hairRight:.9}))pose[n]=springs[n].step(hairTarget*k,dt);
+ pose.hair=pose.hairLeft;
  pose.breath=breath;
  const blink=blinkCurve(time-blinkAt),wink=blinkCurve(time-winkAt);
- pose.eyeL=state==='sleep'?.03:clamp(1-blink-wink,0,1);
- pose.eyeR=state==='sleep'?.03:clamp(1-blink,0,1);
+ pose.eyeL=state==='sleep'?0:clamp((1-blink-wink)*(1-pose.squint),0,1.12);
+ pose.eyeR=state==='sleep'?0:clamp((1-blink)*(1-pose.squint),0,1.12);
  pose.eyeOpen=1-blink;
  try{if(!Object.values(pose).every(Number.isFinite))throw Error('姿勢に不正な値を検出');renderer.render(pose);}catch(e){renderError=e.message;$('#error').hidden=false;$('#error').textContent=e.message;$('#static').checked=true;policy();return;}
  frameTimes.push(dt);if(frameTimes.length>90)frameTimes.shift();
  if(now-lastMetric>500){
- const fps=1/(frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length);
+ const fps=1/Math.max(.001,frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length);
  $('#metrics').textContent=fps.toFixed(0)+' fps · CPU '+renderer.drawMs.toFixed(1)+' ms';
  $('#audioStatus').textContent=audioMessage??(audio.playing?(audio.mode==='test-tone'?'テスト音量で同期中（音声ではありません）':'端末内の音声で同期中'):state==='speaking'||d!==null?'音声なし · 疑似発話':'音声なし · 手動開口');
  $('#audioStatus').dataset.audioContext=audio.context?.state||'not-created';
  $('#audioStatus').dataset.audioMode=audio.mode;
  $('#audioStatus').dataset.peakRms=String(audio.peakRms);
  $('#audioStatus').dataset.peakEnvelope=String(audio.peakEnvelope);
- lastMetric=now;
+ lastMetric=now;policyLabel(pose.yaw);
  $('#avatar').dataset.frames=String(renderer.frames);
- $('#avatar').dataset.pose=JSON.stringify({yaw:pose.yaw,pitch:pose.pitch,gazeX:pose.gazeX,gazeY:pose.gazeY,mouth:pose.mouth,eyeL:pose.eyeL,eyeR:pose.eyeR,hair:pose.hair});
+ $('#avatar').dataset.pose=JSON.stringify({yaw:pose.yaw,pitch:pose.pitch,gazeX:pose.gazeX,gazeY:pose.gazeY,mouth:pose.mouth,eyeL:pose.eyeL,eyeR:pose.eyeR,hair:pose.hair,bodyTurn:pose.bodyTurn,contactCount});
  }
  schedule();
 }
@@ -127,7 +147,7 @@ window.hibikiV3={
  snapshot(){return {ready,state,phase,expression,wardrobe,pose:{...pose},partCount:rig.parts.length,wardrobeParts:rig.parts.filter(x=>x.kind==='garment').length,
  frames:renderer?.frames||0,rafActive:!!raf,staticMode:staticMode(),error:renderError,audioMode:audio.mode,audioPlaying:audio.playing,
  gpuTextureBytes:rig.parts.reduce((a,p)=>a+p.rect[2]*p.rect[3]*4,0),
- triangles:renderer?.resources.reduce((a,r)=>a+r.count/3,0)||0,headVertex:renderer?renderer.resources.find(r=>r.part.id==='face')?.live.slice(0,2):null};},
+ triangles:renderer?.resources.reduce((a,r)=>a+r.count/3,0)||0,contactCount,contactTarget:contact,bodyTurn:pose.bodyTurn};},
  debugRig:rig,
  exportPose(){return JSON.stringify({rig:rig.version,state,expression,wardrobe,pose},null,2);}
 };

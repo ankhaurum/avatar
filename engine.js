@@ -1,132 +1,158 @@
 export const clamp=(v,a=-1,b=1)=>Math.max(a,Math.min(b,v));
 export const mix=(a,b,t)=>a+(b-a)*t;
 export const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t);};
-export class Spring {
- constructor(value=0,frequency=3,damping=1){this.x=value;this.v=0;this.frequency=frequency;this.damping=damping;}
- step(target,dt){dt=clamp(dt,0,.05);const n=Math.max(1,Math.ceil(dt/.008));const h=dt/n,w=2*Math.PI*this.frequency;
+export class Spring{
+ constructor(x=0,frequency=3,damping=1){Object.assign(this,{x,v:0,frequency,damping});}
+ step(target,dt){dt=clamp(dt,0,.05);const n=Math.max(1,Math.ceil(dt/.006)),h=dt/n,w=2*Math.PI*this.frequency;
  for(let i=0;i<n;i++){this.v+=((target-this.x)*w*w-2*this.damping*w*this.v)*h;this.x+=this.v*h;}return this.x;}
- reset(v=0){this.x=v;this.v=0;}
+ reset(x=0){this.x=x;this.v=0;}
 }
-export function bodyPoint(x,y,p){
- const chest=Math.exp(-1*((y-1120)/270)**2),left=Math.exp(-1*((x-270)/230)**2),right=Math.exp(-1*((x-895)/230)**2);
- const shoulderBand=Math.exp(-1*((y-960)/170)**2);
- const dx=p.leanX*5*clamp((y-780)/500,0,1)+(x-583)*p.breath*.003*chest;
- const dy=-p.breath*2.1*chest-(p.shoulderL*left+p.shoulderR*right)*4*shoulderBand;
- return [x+dx,y+dy];
+export function contactTarget(x,y,width,height){
+ const nx=clamp((x/width-.5)*2),ny=clamp((y/height-.42)*2);
+ return {gazeX:nx,gazeY:ny,yaw:nx*.88,pitch:ny*.42,roll:-nx*.09};
 }
-export function configurePart(part,keys){return {...part,correction:{yaw:keys?.headYaw?.keys.at(-1).noseX??19,pitchUp:Math.abs(keys?.headPitch?.keys[0].noseY??12),pitchDown:keys?.headPitch?.keys.at(-1).noseY??13,compression:keys?.headYaw?.keys.at(-1).cheekCompression??.055}};}
-export function deformPoint(x,y,p,part){
- const kind=part.kind;
- if(kind==='brow'){const side=part.side==='left'?-1:1;x+=side*p.browTilt*1.5;y-=p.brow*7+p.browTilt*(x-part.center[0])*.08;}
- if(kind==='eye'){const cy=part.center[1];y=cy+(y-cy)*(1-p.squint*.2);}
- if(kind==='mouthClosed'||kind==='mouthOpen'){
- const dx=x-596,dy=y-650;
- x=596+dx*(1+.045*p.smile);y-=p.smile*3.8*(Math.abs(dx)/85)**1.7;
- if(kind==='mouthOpen'){const dy=y-656;y-=Math.sign(dy)*(1-p.mouth)*6*smooth(0,14,Math.abs(dy))*(1-smooth(35,65,Math.abs(dy)));}
+// CPU reference of the common GPU field, for attachment/continuity diagnostics.
+export function projectPoint(x,y,p){
+ const h=1-smooth(740,970,y),dx=x-583,dy=y-560;
+ const z=18+110*Math.sqrt(Math.max(0,1-(dx/250)**2-(dy/330)**2))+42*Math.exp(-1*((x-594)/48)**2-((y-562)/78)**2);
+ const a=p.yaw*.27,b=p.pitch*.16,r=p.roll*.07;
+ const hx=583+dx*Math.cos(a)+z*Math.sin(a),hy=560+dy*Math.cos(b)+(z*Math.cos(a)-dx*Math.sin(a))*Math.sin(b);
+ const rx=583+(hx-583)*Math.cos(r)-(hy-821)*Math.sin(r),ry=821+(hx-583)*Math.sin(r)+(hy-821)*Math.cos(r);
+ const bt=p.bodyTurn||0;return [mix(x,rx,h)+p.leanX*(8+5*(1-h))+bt*5+(1-h)*((x-583)*(Math.cos(bt*.35)-1)+Math.sin(bt*.35)*18),mix(y,ry,h)+(1-h)*(x-583)*bt*.012-p.breath*2.3*Math.exp(-1*((y-1090)/250)**2)];
+}
+const VERT=`#version 300 es
+precision highp float;precision highp int;
+in vec2 aRest;in vec2 aUV;out vec2 vUV;out vec2 vLocal;
+uniform vec2 uSize;uniform vec4 uProjection;uniform vec4 uPose;uniform vec4 uFace;uniform vec4 uBody;uniform vec4 uHair;
+uniform vec2 uGaze;uniform vec2 uOpen;uniform float uBrowTilt;
+uniform int uKind;uniform int uEye;uniform int uHairGroup;
+uniform vec4 uEyeCurve[2];uniform vec4 uEyeShape[2];
+float sm(float a,float b,float v){return smoothstep(a,b,v);}
+float gauss(vec2 p,vec2 c,vec2 s){vec2 d=(p-c)/s;return exp(-dot(d,d));}
+vec3 eyeShape(float x,int i){
+ vec4 e=uEyeCurve[i],s=uEyeShape[i];float t=clamp((x-e.x)/(e.z-e.x),0.,1.),wave=sin(t*3.14159265);
+ float mid=mix(e.y,e.w,t);return vec3(mid-s.x*wave,mid+s.y*wave,t);
+}
+float seam(float x){float t=clamp((x-522.)/144.,0.,1.);return 646.-8.*t+7.*sin(t*3.14159265);}
+vec2 localFeature(vec2 q){
+ if(uKind==5){q+=uGaze*vec2(10.,6.);}
+ if(uKind==6||uKind==7){vec3 e=eyeShape(q.x,uEye);float closed=1.-uOpen[uEye];
+ if(uKind==6)q.y+=closed*(e.y-3.-e.x)*sm(e.x-32.,e.x+1.,q.y);
+ else q.y-=closed*3.*(1.-sm(e.y,e.y+22.,q.y));}
+ if(uKind==9||uKind==10){float s=seam(q.x),t=clamp((q.x-522.)/144.,0.,1.),w=pow(max(0.,sin(t*3.14159265)),.8);
+ if(uKind==9)q.y-=uFace.x*4.*w*sm(615.,s,q.y);
+ else q.y+=uFace.x*20.*w*(1.-sm(s,702.,q.y));}
+ if(uKind==11||uKind==12){float s=seam(q.x);q.y=s+(q.y-s)*max(.015,uFace.x);}
+ return q;
+}
+vec2 expressionWarp(vec2 q){
+ float mouth=gauss(q,vec2(594.,650.),vec2(130.,95.));
+ float corners=exp(-pow((abs(q.x-594.)-67.)/27.,2.)-pow((q.y-647.)/40.,2.));
+ q.y-=uFace.y*7.*corners;q.x+=(q.x-594.)*uFace.y*.025*mouth;
+ float browL=gauss(q,vec2(497.,420.),vec2(76.,31.)),browR=gauss(q,vec2(680.,416.),vec2(76.,31.));
+ float inner=1.-clamp(abs(q.x-590.)/120.,0.,1.);
+ q.y-=uFace.z*5.*(browL+browR)+uBrowTilt*5.*inner*(browL+browR);
+ q.y-=uFace.y*2.4*(gauss(q,vec2(498.,538.),vec2(66.,60.))+gauss(q,vec2(680.,534.),vec2(66.,60.)));
+ q.y+=uFace.x*3.5*sm(665.,755.,q.y)*(1.-sm(790.,850.,q.y))*exp(-pow((q.x-594.)/165.,2.));
+ return q;
+}
+vec2 project(vec2 q){
+ float h=1.-sm(uProjection.z,uProjection.w,q.y),dx=q.x-583.,dy=q.y-560.;
+ float z=18.+110.*sqrt(max(0.,1.-pow(dx/250.,2.)-pow(dy/330.,2.)))+42.*gauss(q,vec2(594.,562.),vec2(48.,78.));
+ float a=uPose.x*uProjection.x,b=uPose.y*uProjection.y,r=uPose.z*.07;
+ vec2 hp=vec2(583.+dx*cos(a)+z*sin(a),560.+dy*cos(b)+(z*cos(a)-dx*sin(a))*sin(b));
+ vec2 d=hp-vec2(583.,821.);hp=vec2(583.,821.)+mat2(cos(r),sin(r),-sin(r),cos(r))*d;
+ vec2 p=mix(q,hp,h);p.x+=uPose.w*(8.+5.*(1.-h))+uBody.w*5.;
+ p.x+=(1.-h)*((q.x-583.)*(cos(uBody.w*.35)-1.)+sin(uBody.w*.35)*18.);
+ p.y+=(1.-h)*(q.x-583.)*uBody.w*.012;
+ float chest=exp(-pow((q.y-1090.)/250.,2.));
+ float shoulders=exp(-pow((q.y-960.)/155.,2.));
+ p.x+=(q.x-583.)*uBody.x*.0035*chest;
+ p.y-=uBody.x*2.3*chest+6.*shoulders*(uBody.y*exp(-pow((q.x-270.)/230.,2.))+uBody.z*exp(-pow((q.x-895.)/230.,2.)));
+ if(uKind==3){
+ // All adjoining hair textures sample the same continuous lag field.
+ float side=mix(uHair.z,uHair.w,sm(570.,590.,q.x));
+ float lag=mix(uHair.y,side,sm(420.,500.,q.y));lag=mix(lag,uHair.x,sm(740.,820.,q.y));
+ float w=sm(300.,850.,q.y);p.x+=lag*w;p.y+=lag*w*(q.x-583.)*.0008;
  }
- let [xx,yy]=bodyPoint(x,y,p);
- const neckWeight=kind==='garment'?0:1-smooth(790,940,y);
- const headWeight=neckWeight;
- const faceW=Math.exp(-1*((x-592)/220)**2-((y-564)/275)**2);
- const c=part.correction||{yaw:19,pitchUp:12,pitchDown:13,compression:.055};
- const yawX=p.yaw*(13+(c.yaw-13)*faceW),pitchY=p.pitch*(6+((p.pitch<0?c.pitchUp:c.pitchDown)-6)*faceW);
- const compression=1-c.compression*Math.abs(p.yaw)*faceW;
- let hx=583+(x-583)*compression+yawX;
- let hy=y+pitchY+p.yaw*(x-583)*.009;
- const angle=p.roll*.045;
- const cx=hx-583,cy=hy-821;
- hx=583+cx*Math.cos(angle)-cy*Math.sin(angle);
- hy=821+cx*Math.sin(angle)+cy*Math.cos(angle);
- hx+=p.leanX*1.4;hy-=p.breath*.35;
- xx=mix(xx,hx,headWeight); yy=mix(yy,hy,headWeight);
- if(kind==='hair'){
- const root=part.id==='hair-fringe'?270:420,weight=smooth(root,865,y);
- xx+=p.hair*weight*(part.id==='hair-fringe'?.35:1);
- yy+=Math.abs(p.hair)*.12*weight;
- }
- return [xx,yy];
+ return p;
 }
-const VS=`#version 300 es
-in vec2 aPosition;in vec2 aUV;out vec2 vUV;
-uniform vec2 uSize;
-void main(){vUV=aUV;gl_Position=vec4(aPosition.x/uSize.x*2.-1.,1.-aPosition.y/uSize.y*2.,0.,1.);}`;
-const FS=`#version 300 es
-precision highp float;in vec2 vUV;out vec4 outColor;
-uniform sampler2D uImage;uniform float uOpacity;uniform vec2 uGaze;uniform vec2 uEyeCenter;
+void main(){vUV=aUV;vLocal=localFeature(aRest);vec2 p=project(expressionWarp(vLocal));gl_Position=vec4(p.x/uSize.x*2.-1.,1.-p.y/uSize.y*2.,0.,1.);}
+`;
+const FRAG=`#version 300 es
+precision highp float;precision highp int;in vec2 vUV;in vec2 vLocal;out vec4 outColor;
+uniform sampler2D uImage;uniform int uKind;uniform int uEye;
+uniform vec2 uOpen;uniform float uMouth;uniform vec4 uEyeInfo[2];uniform vec4 uEyeShapeInfo[2];
 void main(){
- vec2 uv=vUV;
- // Local gaze displacement: edges stay fixed; only ocular pixels are resampled.
- vec2 d=(uv-uEyeCenter)/vec2(.26,.23);
- float w=exp(-dot(d,d)*2.);
- uv-=uGaze*w;
- vec4 c=texture(uImage,uv);
- outColor=vec4(c.rgb,c.a*uOpacity);
+ vec4 c=texture(uImage,vUV);float coverage=1.;
+ if(uKind==4||uKind==5){
+ vec4 e=uEyeInfo[uEye],s=uEyeShapeInfo[uEye];float open=uOpen[uEye];
+ float t=clamp((vLocal.x-e.x)/(e.z-e.x),0.,1.),wave=sin(t*3.14159265),base=mix(e.y,e.w,t);
+ float top=base-s.x*wave,bot=base+s.y*wave;top=mix(top,bot-3.,1.-open);bot-=3.*(1.-open);
+ coverage=smoothstep(top-.6,top+.6,vLocal.y)*(1.-smoothstep(bot-.6,bot+.6,vLocal.y));
+ coverage*=smoothstep(e.x-1.,e.x+1.,vLocal.x)*(1.-smoothstep(e.z-1.,e.z+1.,vLocal.x))*smoothstep(0.,.07,open);
+ }
+ if(uKind==11||uKind==12){
+ float t=clamp((vLocal.x-522.)/144.,0.,1.),w=pow(max(0.,sin(t*3.14159265)),.8),s=646.-8.*t+7.*sin(t*3.14159265);
+ float top=s-uMouth*4.*w,bot=s+uMouth*20.*w;
+ coverage=smoothstep(top-.5,top+.5,vLocal.y)*(1.-smoothstep(bot-.5,bot+.5,vLocal.y))*smoothstep(0.,.035,uMouth);
+ }
+ outColor=vec4(c.rgb,c.a*coverage);
 }`;
-export class Renderer {
+const KINDS={face:0,garment:1,neck:2,hair:3,sclera:4,iris:5,lidUpper:6,lidLower:7,brow:8,lipUpper:9,lipLower:10,mouthCavity:11,teeth:12};
+export class Renderer{
  constructor(canvas,rig){
- this.canvas=canvas;this.rig=rig;this.lost=false;this.frames=0;this.drawMs=0;
- this.gl=canvas.getContext('webgl2',{alpha:true,premultipliedAlpha:true,antialias:true});
- if(!this.gl)throw Error('WebGL2を利用できません。静止画像を表示します。');
- const gl=this.gl;
- const shader=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
- this.program=gl.createProgram();gl.attachShader(this.program,shader(gl.VERTEX_SHADER,VS));gl.attachShader(this.program,shader(gl.FRAGMENT_SHADER,FS));gl.linkProgram(this.program);
+ Object.assign(this,{canvas,rig,frames:0,drawMs:0,lost:false,resources:[]});
+ const gl=this.gl=canvas.getContext('webgl2',{alpha:true,premultipliedAlpha:true,antialias:true});
+ if(!gl)throw Error('WebGL2を利用できません。静止画像を表示します。');
+ const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
+ this.program=gl.createProgram();gl.attachShader(this.program,compile(gl.VERTEX_SHADER,VERT));gl.attachShader(this.program,compile(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(this.program);
  if(!gl.getProgramParameter(this.program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(this.program));
- this.aPos=gl.getAttribLocation(this.program,'aPosition');this.aUV=gl.getAttribLocation(this.program,'aUV');
- this.uniforms=Object.fromEntries(['uSize','uImage','uOpacity','uGaze','uEyeCenter'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
- this.resources=[];
+ this.loc=Object.fromEntries(['uSize','uProjection','uPose','uFace','uBody','uHair','uGaze','uOpen','uBrowTilt','uKind','uEye','uHairGroup','uEyeCurve[0]','uEyeShape[0]','uEyeInfo[0]','uEyeShapeInfo[0]','uMouth','uImage'].map(n=>[n,gl.getUniformLocation(this.program,n)]));
+ this.aRest=gl.getAttribLocation(this.program,'aRest');this.aUV=gl.getAttribLocation(this.program,'aUV');
  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;canvas.dispatchEvent(new CustomEvent('riglost'));});
  canvas.addEventListener('webglcontextrestored',()=>location.reload());
  }
  async load(){
  const gl=this.gl;
- for(const rawPart of this.rig.parts){
- const part=configurePart(rawPart,this.rig.deformationKeys);
+ for(const part of this.rig.parts){
  const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>reject(Error('素材読込失敗: '+part.url));i.src=part.url;});
- const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);
- gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);
- gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
+ const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
  for(const k of [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T])gl.texParameteri(gl.TEXTURE_2D,k,gl.CLAMP_TO_EDGE);
  for(const k of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,k,gl.LINEAR);
- const {columns:nx,rows:ny}=part.mesh,[x,y,w,h]=part.rect;
- const rest=[],uv=[],index=[];
- for(let j=0;j<=ny;j++)for(let i=0;i<=nx;i++){rest.push(x+w*i/nx,y+h*j/ny);uv.push(i/nx,j/ny);}
- for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const a=j*(nx+1)+i,b=a+1,c=a+nx+1,d=c+1;index.push(a,c,b,b,c,d);}
- const pos=gl.createBuffer(),uvb=gl.createBuffer(),ib=gl.createBuffer();
- gl.bindBuffer(gl.ARRAY_BUFFER,uvb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(uv),gl.STATIC_DRAW);
- gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(index),gl.STATIC_DRAW);
- this.resources.push({part,texture,pos,uvb,ib,rest:new Float32Array(rest),live:new Float32Array(rest.length),count:index.length});
+ const {columns:nx,rows:ny}=part.mesh,[x,y,w,h]=part.rect,verts=[],indices=[];
+ for(let j=0;j<=ny;j++)for(let i=0;i<=nx;i++)verts.push(x+w*i/nx,y+h*j/ny,i/nx,j/ny);
+ for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const a=j*(nx+1)+i,b=a+1,c=a+nx+1,d=c+1;indices.push(a,c,b,b,c,d);}
+ const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+ const vb=gl.createBuffer(),ib=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(verts),gl.STATIC_DRAW);
+ gl.enableVertexAttribArray(this.aRest);gl.vertexAttribPointer(this.aRest,2,gl.FLOAT,false,16,0);
+ gl.enableVertexAttribArray(this.aUV);gl.vertexAttribPointer(this.aUV,2,gl.FLOAT,false,16,8);
+ gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(indices),gl.STATIC_DRAW);
+ this.resources.push({part,texture,vao,vb,ib,count:indices.length,vertices:verts.length/4});
  }
+ gl.bindVertexArray(null);
  }
- resize(){const {canvas,gl}=this,dpr=Math.min(devicePixelRatio||1,1.6),r=canvas.getBoundingClientRect();const w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));
- if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}gl.viewport(0,0,w,h);}
+ resize(){const r=this.canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.7),w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));
+ if(this.canvas.width!==w||this.canvas.height!==h){this.canvas.width=w;this.canvas.height=h;}this.gl.viewport(0,0,w,h);}
  render(p){
  if(this.lost)return;
- const started=performance.now(),gl=this.gl;
- this.resize();gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
- gl.useProgram(this.program);gl.uniform2f(this.uniforms.uSize,this.rig.width,this.rig.height);gl.uniform1i(this.uniforms.uImage,0);
- const blink=smooth(.1,.9,p.eyeOpen),mouth=smooth(.015,.18,p.mouth);
- for(const r of this.resources){
- const part=r.part;let opacity=1;
- const open=part.side==='left'?p.eyeL:p.eyeR;
- if(part.kind==='eye')opacity=smooth(.12,.92,open);
- if(part.kind==='eyelid')opacity=1-smooth(.12,.92,open);
- if(part.kind==='mouthClosed')opacity=1-mouth;
- if(part.kind==='mouthOpen')opacity=mouth;
- if(opacity<.002)continue;
- for(let i=0;i<r.rest.length;i+=2){const q=deformPoint(r.rest[i],r.rest[i+1],p,part);r.live[i]=q[0];r.live[i+1]=q[1];}
- gl.bindBuffer(gl.ARRAY_BUFFER,r.pos);gl.bufferData(gl.ARRAY_BUFFER,r.live,gl.DYNAMIC_DRAW);gl.enableVertexAttribArray(this.aPos);gl.vertexAttribPointer(this.aPos,2,gl.FLOAT,false,0,0);
- gl.bindBuffer(gl.ARRAY_BUFFER,r.uvb);gl.enableVertexAttribArray(this.aUV);gl.vertexAttribPointer(this.aUV,2,gl.FLOAT,false,0,0);
- gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,r.ib);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,r.texture);
- gl.uniform1f(this.uniforms.uOpacity,opacity);
- const gaze=part.kind==='eye';
- gl.uniform2f(this.uniforms.uGaze,gaze?p.gazeX*.045:0,gaze?p.gazeY*.025:0);
- gl.uniform2f(this.uniforms.uEyeCenter,part.center?(part.center[0]-part.rect[0])/part.rect[2]:.5,part.center?(part.center[1]-part.rect[1])/part.rect[3]:.5);
- gl.drawElements(gl.TRIANGLES,r.count,gl.UNSIGNED_SHORT,0);
+ const begin=performance.now(),gl=this.gl,L=this.loc;
+ this.resize();gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.useProgram(this.program);
+ gl.uniform2f(L.uSize,this.rig.width,this.rig.height);const pr=this.rig.projection;gl.uniform4f(L.uProjection,pr.yawRadians,pr.pitchRadians,...pr.neckTransition);gl.uniform4f(L.uPose,p.yaw,p.pitch,p.roll,p.leanX);gl.uniform4f(L.uFace,p.mouth,p.smile,p.brow,p.squint);
+ gl.uniform4f(L.uBody,p.breath,p.shoulderL,p.shoulderR,p.bodyTurn||0);gl.uniform4f(L.uHair,p.hairBack||0,p.hairFringe||0,p.hairLeft||0,p.hairRight||0);
+ gl.uniform2f(L.uGaze,p.gazeX,p.gazeY);gl.uniform2f(L.uOpen,p.eyeL,p.eyeR);gl.uniform1f(L.uMouth,p.mouth);gl.uniform1f(L.uBrowTilt,p.browTilt);
+ const endpoints=this.rig.eyes.flatMap(e=>[e.x0,e.y0,e.x1,e.y1]),shape=this.rig.eyes.flatMap(e=>[e.up,e.down,e.cx,e.cy]);
+ for(const n of ['uEyeCurve[0]','uEyeInfo[0]'])gl.uniform4fv(L[n],endpoints);
+ for(const n of ['uEyeShape[0]','uEyeShapeInfo[0]'])gl.uniform4fv(L[n],shape);
+ gl.uniform1i(L.uImage,0);
+ for(const r of this.resources){const k=KINDS[r.part.kind]??0;gl.uniform1i(L.uKind,k);gl.uniform1i(L.uEye,r.part.eye??0);gl.uniform1i(L.uHairGroup,r.part.hairGroup??0);
+ gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,r.texture);gl.bindVertexArray(r.vao);gl.drawElements(gl.TRIANGLES,r.count,gl.UNSIGNED_SHORT,0);}
+ gl.bindVertexArray(null);this.frames++;this.drawMs=performance.now()-begin;
  }
- this.frames++;this.drawMs=performance.now()-started;
- }
- dispose(){const gl=this.gl;for(const r of this.resources){gl.deleteTexture(r.texture);[r.pos,r.uvb,r.ib].forEach(b=>gl.deleteBuffer(b));}gl.deleteProgram(this.program);this.resources=[];}
+ dispose(){const g=this.gl;for(const r of this.resources){g.deleteTexture(r.texture);g.deleteVertexArray(r.vao);g.deleteBuffer(r.vb);g.deleteBuffer(r.ib);}g.deleteProgram(this.program);this.resources=[];}
 }
+
+
 export class AudioDriver {
  constructor(){this.mode='none';this.envelope=0;this.playing=false;this.audio=null;this.ownedUrl=null;this.peakRms=0;this.peakEnvelope=0;}
  async attach(file){this.stop();this.peakRms=0;this.peakEnvelope=0;this.context??=new AudioContext();await this.context.resume();
