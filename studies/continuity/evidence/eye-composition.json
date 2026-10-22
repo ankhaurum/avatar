@@ -2,27 +2,27 @@
   "reports": [
     {
       "emotion": "smile",
-      "minEye": 0.006494689711613006,
+      "minEye": 0,
       "endEye": 0.98,
       "mouth": 0.72
     },
     {
       "emotion": "concern",
-      "minEye": 0.006281229461512014,
-      "endEye": 0.9199999972824434,
+      "minEye": 0,
+      "endEye": 0.9200000005356291,
       "mouth": 0
     },
     {
       "emotion": "shy",
       "minEye": 0,
-      "endEye": 0.8600000001427873,
+      "endEye": 0.8600000009178692,
       "mouth": 0
     },
     {
       "emotion": "surprise",
-      "minEye": 0.0066270097099121305,
-      "endEye": 0.9999999996448133,
-      "mouth": 0.32000000183928157
+      "minEye": 0.006828978657666154,
+      "endEye": 0.999999999803817,
+      "mouth": 0.320000006106585
     }
   ],
   "errors": [],

@@ -1,0 +1,18 @@
+{
+  "baseline": "1636cb8ac4f5e55119d77e9089fc4edad80125e7",
+  "reports": [
+    {
+      "before": true,
+      "errors": []
+    },
+    {
+      "before": false,
+      "errors": []
+    }
+  ],
+  "hair": "bounded five strand responses; face/root/collar pinned; pause rebased",
+  "sleeve": "three original contour keys; cuff anchor shared; no folded cells in sampled bends",
+  "video": "Deterministic 10fps comparison rendered by actual WebGL engine, not measured real-time device performance",
+  "phone": "UNVERIFIED",
+  "newMaterialBytes": 82072
+}

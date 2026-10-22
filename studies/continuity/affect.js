@@ -1,4 +1,4 @@
-import {track} from './presence.js?v=natoriarm-20261023';
+import {track} from './presence.js?v=presence-shapes-20261023';
 // Hibiki-authored intentions, evaluated before joint response and secondary physics.
 // No Cubism model values, geometry or implementation are used.
 const posture={

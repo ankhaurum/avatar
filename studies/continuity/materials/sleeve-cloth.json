@@ -1,0 +1,52 @@
+{
+  "producer": "Built-in image_gen, source-matched cloth only; Canvas registered material atlas",
+  "sourceSHA256": "3690b5164eaf3f2ecbbce5bf87cead7208866ce87ae4176ee181ecd18782ac27",
+  "sourceDimensions": [
+    1003,
+    1568
+  ],
+  "atlas": [
+    256,
+    256
+  ],
+  "rows": [
+    [
+      1220,
+      152.8515625,
+      366.171875
+    ],
+    [
+      1240,
+      141.09375,
+      364.4921875
+    ],
+    [
+      1270,
+      122.6171875,
+      352.734375
+    ],
+    [
+      1300,
+      105.8203125,
+      342.65625
+    ],
+    [
+      1340,
+      78.9453125,
+      327.5390625
+    ],
+    [
+      1380,
+      35.2734375,
+      312.421875
+    ],
+    [
+      1400,
+      16.796875,
+      304.0234375
+    ]
+  ],
+  "reference": "assets/approved-front.png and existing right-greeting.png",
+  "scope": "No generated face or hand pixels. Independent sleeve shape keys. Original assets preserved.",
+  "generationPrompt": "sleeve-generation-prompt.txt"
+}

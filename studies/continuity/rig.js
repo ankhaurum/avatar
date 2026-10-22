@@ -1,7 +1,8 @@
-import {upperArmSkin} from './arm-rig.js?v=natoriarm-20261023';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=natoriarm-20261023';
+import {upperArmSkin} from './arm-rig.js?v=presence-shapes-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=presence-shapes-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
+import {hairOffset} from './hair-motion.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 export const smooth=(a,b,v)=>{let t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -101,10 +102,8 @@ export function createSkin(p){
  // Continuous thoracic breathing: shoulders rise, ribcage widens, waist stays put.
  // These fields act on the shared surface, including collar and suit, not separate cutouts.
  const thorax=root.vector(...thoraxOffset(x,y,p));px+=thorax[0];py+=thorax[1];
- const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
  const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
- const sideHair=x<583?(p.hairLeft??p.hair??0):(p.hairRight??p.hair??0);
- const hairA=root.angle+headA+neckA,hx=sideHair*hairSide*tip*4.5,hy=(p.hairY||0)*hairSide*tip*3;
+ const hairA=root.angle+headA+neckA,[hx,hy]=hairOffset(x,y,p);
  px+=Math.cos(hairA)*hx-Math.sin(hairA)*hy;py+=Math.sin(hairA)*hx+Math.cos(hairA)*hy;
  if(armTransform){const weight=(1-smooth(160,285,x))*smooth(990,1110,y)*smooth(0,.05,p.armLift);if(weight>0){const q=armParent.point(...armTransform(x,y));px+=(q[0]-px)*weight;py+=(q[1]-py)*weight;}}
  return [px,py];
