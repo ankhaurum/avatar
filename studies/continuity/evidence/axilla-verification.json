@@ -1,0 +1,13 @@
+{
+  "baseline": "63c4c2f1c9fdfe049931e1b293ff6de8e60a57f0",
+  "armRotationExcludedFromTorso": true,
+  "shoulderBreathingRetained": true,
+  "poses": [
+    0.9,
+    1.1,
+    1.3,
+    2.4,
+    5.4
+  ],
+  "scope": "PC Chrome 390px touch; physical phone unverified"
+}

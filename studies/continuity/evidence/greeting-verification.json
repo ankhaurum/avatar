@@ -1,5 +1,5 @@
 {
-  "baseMain": "8f0b43d8a4823cf4c5dd515c19f07f2123614217",
+  "baseMain": "63c4c2f1c9fdfe049931e1b293ff6de8e60a57f0",
   "onDemand": true,
   "faceROI": [
     330,
@@ -46,7 +46,7 @@
       "parentAngle": -0.006236809733838623
     },
     "drawRegions": [
-      "shared-body-upper-arm",
+      "chest-supported-body",
       "elbow-sleeve",
       "cuff",
       "hand"
@@ -67,7 +67,7 @@
       "lift": 1,
       "upperLift": 1,
       "support": 1,
-      "wrist": -0.022605040114656506,
+      "wrist": -0.025873585156355586,
       "prepare": 0,
       "phase": "wave",
       "opacity": 1,
@@ -83,23 +83,23 @@
       ],
       "joints": {
         "shoulder": [
-          135.78442626321635,
-          988.8990503297198
+          135.79056223214198,
+          988.8793830188075
         ],
         "elbow": [
-          118.84623559401558,
-          1448.587094221285
+          118.60705946707597,
+          1448.558322315272
         ],
         "wrist": [
-          207.20073208705256,
-          1153.3825330277598
+          207.18024918000134,
+          1153.4193041152414
         ],
-        "upperAngle": 1.6165239881776656,
-        "forearmAngle": -1.2710853870933103,
-        "parentAngle": -0.008897181657939396
+        "upperAngle": 1.6170416611113738,
+        "forearmAngle": -1.270360467039189,
+        "parentAngle": -0.008881200252239409
       },
       "drawRegions": [
-        "shared-body-upper-arm",
+        "chest-supported-body",
         "elbow-sleeve",
         "cuff",
         "hand"
@@ -113,7 +113,7 @@
       "triangles": 784,
       "textureBytes": 671744
     },
-    "shoulderL": 0.21975338545573406,
+    "shoulderL": 0.21960739962302367,
     "state": "speaking",
     "emotion": "gentle"
   },
@@ -123,7 +123,7 @@
   "resetCancelsPending": true,
   "video": {
     "saved": false,
-    "note": "Separate arm-reach-comparison.webm contains the complete deterministic comparison; physical device performance is unverified."
+    "note": "Not recorded in this run; existing video is historical. Current phase images show the coordinated reach; arm-reach-comparison.webm contains the comparison."
   },
   "errors": [],
   "scope": "Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance"
