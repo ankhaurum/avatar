@@ -1,0 +1,59 @@
+{
+  "baseMain": "c338ab6fd78d7dd703ffcea4b9e9abcb18867da4",
+  "onDemand": true,
+  "faceROI": [
+    330,
+    280,
+    490,
+    550
+  ],
+  "faceChangedChannels": 0,
+  "gesture": {
+    "side": "character-right/screen-left",
+    "active": true,
+    "lift": 0.7355570193275793,
+    "wrist": 0,
+    "phase": "lower",
+    "chain": [
+      "chest",
+      "right-shoulder",
+      "right-elbow",
+      "right-wrist"
+    ],
+    "vertices": 325,
+    "triangles": 576,
+    "textureBytes": 409600
+  },
+  "live": {
+    "gesture": {
+      "side": "character-right/screen-left",
+      "active": true,
+      "lift": 1,
+      "wrist": 0.01724380632444643,
+      "phase": "wave",
+      "chain": [
+        "chest",
+        "right-shoulder",
+        "right-elbow",
+        "right-wrist"
+      ],
+      "vertices": 325,
+      "triangles": 576,
+      "textureBytes": 409600
+    },
+    "shoulderL": 0.05995515069563318,
+    "state": "speaking",
+    "emotion": "gentle"
+  },
+  "staticStopsGesture": true,
+  "reducedMotion": true,
+  "missingGesturePreservesAvatar": true,
+  "resetCancelsPending": true,
+  "video": {
+    "bytes": 133717,
+    "draws": 47,
+    "ended": true
+  },
+  "errors": [],
+  "scope": "Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance"
+}

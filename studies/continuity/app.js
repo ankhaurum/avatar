@@ -27,6 +27,26 @@ for(const [x,y]of [[475,559],[709,550]]){const g=cheekContext.createRadialGradie
 const cheekIds=[];for(let j=0;j<surface.indices.length;j+=3){const tri=surface.indices.slice(j,j+3);if([...tri].some(k=>surface.rest[k*2]>410&&surface.rest[k*2]<770&&surface.rest[k*2+1]>505&&surface.rest[k*2+1]<625))cheekIds.push(...tri);}
 const cheekMesh=makeMesh(cheekCanvas,surface.rest,surface.uvs,cheekIds,[408,503,364,124]);
 const wire=new Graphics();world.addChild(wire);
+let greeting=null,greetingLoad=null,greetingError=null,greetingLoading=false,greetingRequest=0,gestureClock=0;
+async function loadGreeting(){
+ if(greeting)return greeting;
+ if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=right-greeting-20261022');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image,skin});})().catch(error=>{greetingLoad=null;throw error;});
+ return greetingLoad;
+}
+async function startGreeting(){
+ if($('#static').checked||greetingLoading||(greeting&&greeting.started!==null))return false;
+ const request=++greetingRequest;fixed=false;greetingLoading=true;$('#greet').disabled=true;$('#greetingStatus').textContent='右手の素材を読み込み中…';
+ try{const rig=await loadGreeting();if(request!==greetingRequest||$('#static').checked)return false;greetingError=null;return rig.play(gestureClock);}
+ catch(error){if(request!==greetingRequest)return false;greetingError='挨拶素材を読み込めません。顔と身体の動作は継続します。';$('#greetingStatus').textContent=greetingError;$('#greet').disabled=false;return false;}
+ finally{if(request===greetingRequest)greetingLoading=false;}
+}
+function stopGreeting(){greetingRequest++;greetingLoading=false;greeting?.stop();}
+function greetingStatus(){
+ if(greetingError)return;
+ if(greetingLoading)return;
+ const g=greeting?.pose;$('#greet').disabled=$('#static').checked||!!(greeting&&greeting.started!==null);
+ $('#greetingStatus').textContent=g?.active?({raise:'右手を軽く上げています',wave:'右手で小さく挨拶',lower:'右手を下ろしています'})[g.phase]:'右手（画面左側）だけの挨拶 · 約6秒';
+}
 const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,gazeX:0,gazeY:0,breath:0,breathGain:1,body:0,hair:0,browRaise:0,browInner:0,browLower:0,cheek:0,frown:0,round:0,blush:0,shoulder:0,shoulderL:0,shoulderR:0};
 const controller=new PerformanceController(),audio=new AudioDriver();let demoBeat=-1,audioMessage=null;
 let current={...initial},target={...initial},time=0,last=performance.now(),demo=false,fixed=false,blinkAt=-99,nextBlink=3.4,contactUntil=-1,pointer=null,velocity=0,oldYaw=0,drawCount=0,staticRendered=false;
@@ -44,6 +64,7 @@ function draw(p){
   const corrective=closedCorrectives[i];corrective.alpha=1-smooth(.01,.18,p['eye'+i]);corrective.visible=corrective.alpha>.001;if(corrective.visible){corrective.vertices.set(pos);corrective.geometry.getBuffer('aPosition').update();}
  }
  wire.clear();if($('#wire').checked){for(let j=0;j<surface.indices.length;j+=3){const ids=surface.indices.slice(j,j+3);wire.moveTo(pos[ids[0]*2],pos[ids[0]*2+1]);for(let k=1;k<=3;k++)wire.lineTo(pos[ids[k%3]*2],pos[ids[k%3]*2+1]);}wire.stroke({color:0x2a7699,alpha:.32,width:.6});}
+ greeting?.draw(p);
  applyZoom();app.renderer.render(app.stage);drawCount++;
 }
 function sample(t){
@@ -53,13 +74,14 @@ function sample(t){
 function frame(now){
  requestAnimationFrame(frame);if(fixed||document.hidden)return;
  const dt=Math.max(0,(now-last)/1000);last=now;controller.tick();$('#state').value=controller.state;$('#phase').textContent=controller.state+' / '+controller.phase;$('#emotion').value=controller.emotion||'auto';if($('#static').checked){if(!staticRendered){current={...initial};draw(initial);}staticRendered=true;return;}staticRendered=false;
- time+=dt;if(time>nextBlink){blinkAt=time;const intervals={thinking:2.6,attention:6,speaking:3.2,sleep:12};nextBlink=time+(intervals[controller.state]||4.5)+Math.sin(time*2)*.5;}
- if(demo){const beat=emotionDemo(time);if(beat.index!==demoBeat){demoBeat=beat.index;controller.setEmotion(beat.emotion);controller.speech=beat.speaking;}$('#demoStatus').textContent=beat.label+' · 40秒で一巡';}
+ time+=dt;gestureClock+=dt;greeting?.update(gestureClock);greetingStatus();if(time>nextBlink){blinkAt=time;const intervals={thinking:2.6,attention:6,speaking:3.2,sleep:12};nextBlink=time+(intervals[controller.state]||4.5)+Math.sin(time*2)*.5;}
+ if(demo){const beat=emotionDemo(time);if(beat.index!==demoBeat){demoBeat=beat.index;controller.setEmotion(beat.emotion);controller.speech=beat.speaking;if(beat.index===0)startGreeting();}$('#demoStatus').textContent=beat.label+' · 40秒で一巡';}
  const b=blink(time-blinkAt);let p={...initial,...target,...controller.sample(time,b,audio.value(dt),audio.playing)};
  p.eye0*=1-blink(time-winkAt);
  if(demo){p.yaw=Math.sin(time*.38)*.55;p.pitch+=Math.sin(time*.32)*.15;p.gazeX+=Math.sin(time*.38+.12)*.25;p.body=Math.sin(time*.38-.32)*.36;}
  else if(controller.inputs.body===undefined)p.body=(p.yaw||0)*.45;
  if($('#idle').checked||demo){p.breath=Math.sin(time*1.18)*p.breathGain;p.roll+=Math.sin(time*.6)*.08;}
+ p.shoulderL+=(greeting?.pose.lift||0)*.06;
  for(const name of Object.keys(initial)){const speed=name==='body'?2.2:name.startsWith('gaze')?14:name.startsWith('eye')?100:6;current[name]+=(p[name]-current[name])*(1-Math.exp(-speed*dt));}
  const headVelocity=(current.yaw-oldYaw)/Math.max(.001,dt);oldYaw=current.yaw;velocity+=(headVelocity*.28-velocity)*Math.min(1,dt*7);current.hair+=(velocity-current.hair)*Math.min(1,dt*4);
  if(contactUntil>=0&&time>contactUntil){for(const k of ['yaw','pitch','gazeX','gazeY'])delete controller.inputs[k];contactUntil=-1;}
@@ -71,9 +93,10 @@ function stopDemo(){demo=false;demoBeat=-1;$('#demo').setAttribute('aria-pressed
 for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).oninput=e=>{fixed=false;stopDemo();controller.setPose({[id]:Number(e.target.value)});};
 $('#demo').onclick=()=>{fixed=false;if(demo){stopDemo();controller.reset();}else{controller.reset();audio.stop();demo=true;demoBeat=-1;time=0;$('#demo').setAttribute('aria-pressed','true');$('#demo').textContent='オートデモを停止';}};
 $('#blink').onclick=()=>{fixed=false;blinkAt=time;};
-$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
+$('#greet').onclick=()=>startGreeting();
+$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();stopGreeting();greetingError=null;target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
 $('#dark').onchange=e=>stage.classList.toggle('dark',e.target.checked);
-function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked)audio.stop();for(const id of ['demo','blink','tone','chooseAudio'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
+function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked){audio.stop();stopGreeting();}for(const id of ['demo','blink','tone','chooseAudio','greet'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
 $('#static').onchange=policy;reduced.addEventListener('change',e=>{$('#static').checked=e.matches;policy();});
 for(const id of ['zoom','wire'])$('#'+id).onchange=()=>draw($('#static').checked?initial:current);
 document.addEventListener('visibilitychange',()=>last=performance.now());
@@ -92,11 +115,14 @@ window.addEventListener('pagehide',()=>audio.dispose(),{once:true});
 const api={states:[...STATES],setState(state,options){activate();return controller.setState(state,options);},setInputs(input){activate();return controller.setInputs(input);},setPose(input){activate();return controller.setPose(input);},setEmotion(name,intensity){activate();return controller.setEmotion(name,intensity);},setExpression(name){return this.setEmotion(name);},setVolume(value){return controller.setVolume(value);},blink(){fixed=false;blinkAt=time;},wink(){fixed=false;winkAt=time;},async setWardrobe(id){if(id!=='suit')throw Error('共有表面に対応する衣装はsuitのみです');return id;},snapshot(){return {...controller.snapshot(),ready:true,pose:{...current},wardrobe:'suit',supportedWardrobes:['suit'],audioMode:audio.mode,audioPlaying:audio.playing,peakEnvelope:audio.peakEnvelope,frames:drawCount,staticMode:$('#static').checked};}};
 let winkAt=-99;
 window.hibikiV3=api;
+api.greet=startGreeting;api.stopGesture=stopGreeting;api.setGesture=name=>name==='right-greeting'?startGreeting():Promise.resolve(false);
+const baseSnapshot=api.snapshot;api.snapshot=()=>({...baseSnapshot(),gesture:greeting?.stats()||{loaded:false,active:false,error:greetingError}});
 window.addEventListener('aifate:companion-state',e=>api.setState(e.detail?.state,e.detail?.options));
 policy();
 window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=>{if(!author)throw Error('素材制作モードでのみPSDを書き出せます');return exportPSD(materials);},surface,boneRig,app,
+ async previewGreeting(seconds,p={}){const rig=await loadGreeting();fixed=true;rig.preview(seconds);current={...initial,...p};draw(current);return rig.stats();},
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
- stats(){return {renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...current},performance:controller.snapshot(),static:$('#static').checked};}
+ stats(){return {renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...current},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
 };draw(initial);requestAnimationFrame(frame);
