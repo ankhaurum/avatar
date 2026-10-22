@@ -8,11 +8,22 @@ export class MotionResponse{
   const h=Number.isFinite(dt)?Math.max(0,Math.min(.5,dt)):0;
   for(const key of Object.keys(current)){
    const goal=Number.isFinite(target[key])?target[key]:0;
-   // Eyelids and phonation retain the authored closures rather than spring overshoot.
-   if(!Object.hasOwn(rates,key)){const speed=(key==='eye0'||key==='eye1')?100:key==='mouth'?24:key==='eyeSmile'?8:10;current[key]+=(goal-current[key])*(-Math.expm1(-speed*h));continue;}
+   // Emotional lid openness follows the face; fast blink closure is composed afterwards.
+   if(!Object.hasOwn(rates,key)){const speed=(key==='eye0'||key==='eye1'||key==='eyeSmile')?8:key==='mouth'?24:10;current[key]+=(goal-current[key])*(-Math.expm1(-speed*h));continue;}
    const w=rates[key],offset=current[key]-goal,v=this.velocity[key]||0,j=v+w*offset,e=Math.exp(-w*h);
    current[key]=goal+(offset+j*h)*e;this.velocity[key]=(v-w*j*h)*e;
   }
   return current;
  }
+}
+// Closure is an independent action, not a new expression target. It must not
+// erase the smile, leave a residual slit, or kick the emotional lid on reopening.
+export function composeEyeClosure(p,blink=0,wink=0){
+ const closed=x=>1-Math.max(0,Math.min(1,x));
+ return {...p,eye0:p.eye0*closed(blink)*closed(wink),eye1:p.eye1*closed(blink)};
+}
+// Preserve the authored contact phase when a slow frame skips across it.
+// A long background pause must not replay an old blink on return.
+export function crossedBlinkContact(age,dt){
+ return dt>0&&dt<=.5&&age>=.09&&age-dt<.12;
 }

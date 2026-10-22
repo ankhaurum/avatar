@@ -1,5 +1,5 @@
-import {upperArmSkin} from './arm-rig.js?v=emotionfix-20261023';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=emotionfix-20261023';
+import {upperArmSkin} from './arm-rig.js?v=eyecompose-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=eyecompose-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));

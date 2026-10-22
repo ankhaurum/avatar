@@ -1,21 +1,21 @@
-import {presencePose,blinkInterval} from './presence.js?v=emotionfix-20261023';
-import {affectPose,blinkContext} from './affect.js?v=emotionfix-20261023';
-import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=emotionfix-20261023';
+import {presencePose,blinkInterval} from './presence.js?v=eyecompose-20261023';
+import {affectPose,blinkContext} from './affect.js?v=eyecompose-20261023';
+import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=eyecompose-20261023';
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=emotionfix-20261023';
-import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=emotionfix-20261023';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=eyecompose-20261023';
+import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=eyecompose-20261023';
 import {AudioDriver} from '../../engine.js?v=cage-4a';
-import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=emotionfix-20261023';
-import {MotionResponse} from './motion-response.js?v=emotionfix-20261023';
-import {makeSmileMaterial} from './smile-material.js?v=emotionfix-20261023';
+import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=eyecompose-20261023';
+import {MotionResponse,composeEyeClosure,crossedBlinkContact} from './motion-response.js?v=eyecompose-20261023';
+import {makeSmileMaterial} from './smile-material.js?v=eyecompose-20261023';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
 app.canvas.style.width='100%';app.canvas.style.height='100%';
 stage.prepend(app.canvas);app.canvas.setAttribute('aria-label','響V3 連続メッシュの比較試作');
 const world=new Container();app.stage.addChild(world);
-const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=emotionfix-20261023').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
+const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=eyecompose-20261023').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
 if(author)await import('./vendor/bundle.js');
 if(author)bakeKeys(surface);
 function makeMesh(texture,rest,uvs,indices,crop){
@@ -39,7 +39,7 @@ const wire=new Graphics();world.addChild(wire);
 let greeting=null,greetingLoad=null,greetingError=null,greetingLoading=false,greetingRequest=0,gestureClock=0;
 async function loadGreeting(){
  if(greeting)return greeting;
- if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=emotionfix-20261023');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
+ if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=eyecompose-20261023');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
  return greetingLoad;
 }
 async function startGreeting(){
@@ -92,8 +92,7 @@ function frame(now){
  const dt=Math.max(0,(now-last)/1000);last=now;controller.tick();$('#state').value=controller.state;$('#phase').textContent=controller.state+' / '+controller.phase;$('#emotion').value=controller.emotion||'auto';if($('#static').checked){const pose={...initial,...controller.sample(0,0,0,false,true)},key=JSON.stringify(pose);if(!staticRendered||key!==staticPoseKey){current=pose;draw(pose);staticPoseKey=key;}staticRendered=true;return;}staticRendered=false;
  time+=dt;gestureClock+=dt;greeting?.update(gestureClock);greetingStatus();if(time>nextBlink){const s=controller.snapshot();blinkAt=time;nextBlink=time+blinkInterval(blinkContext(s.state,s.emotion,s.speaking),blinkCount++);}
  if(demo){const beat=emotionDemo(time);if(beat.index!==demoBeat){demoBeat=beat.index;controller.setEmotion(beat.emotion);controller.speech=beat.speaking;if(beat.index===0)startGreeting();}$('#demoStatus').textContent=beat.label+' · 40秒で一巡';}
- const b=blink(time-blinkAt);let p={...initial,...target,...controller.sample(time,b,audio.value(dt),audio.playing)};
- p.eye0*=1-blink(time-winkAt);
+ const b=crossedBlinkContact(time-blinkAt,dt)?1:blink(time-blinkAt);let p={...initial,...target,...controller.sample(time,0,audio.value(dt),audio.playing)};
  if(demo){const beat=emotionDemo(time);p={...p,...beat.pose};p.body=(p.yaw||0)*.45;}
  else if(controller.inputs.body===undefined)p.body=(p.yaw||0)*.45;
  if($('#idle').checked||demo)p=presencePose(p,time,{state:controller.state,inputs:controller.inputs,demo});
@@ -105,7 +104,9 @@ function frame(now){
  if(contactUntil>=0&&time>contactUntil){for(const k of ['yaw','pitch','gazeX','gazeY'])delete controller.inputs[k];contactUntil=-1;}
  $('#state').value=controller.state;$('#phase').textContent=controller.state+' / '+controller.phase;
  $('#audioStatus').textContent=audioMessage??(audio.playing?(audio.mode==='test-tone'?'テスト音量で同期中':'端末内の音声で同期中'):'音声なし · 発話状態では疑似口パク');
- draw(bustDynamics.apply(current,dt));
+ const visiblePose=composeEyeClosure(current,b,crossedBlinkContact(time-winkAt,dt)?1:blink(time-winkAt));
+ if(controller.state==='sleep')visiblePose.eye0=visiblePose.eye1=0;
+ draw(bustDynamics.apply(visiblePose,dt));
 }
 function stopDemo(){demo=false;demoBeat=-1;$('#demo').setAttribute('aria-pressed','false');$('#demo').textContent='オートデモ';$('#demoStatus').textContent='感情・発話・身体を組み合わせて再生';}
 for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).oninput=e=>{fixed=false;stopDemo();controller.setPose({[id]:Number(e.target.value)});};
@@ -143,5 +144,5 @@ window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
- stats(){return {rigVersion:'emotionfix-20261023',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+smileMaterial.textureBytes+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
+ stats(){return {rigVersion:'eyecompose-20261023',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+smileMaterial.textureBytes+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
 };draw(resting);requestAnimationFrame(frame);

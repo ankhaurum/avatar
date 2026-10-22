@@ -29,7 +29,7 @@ try{
  const page=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8794/studies/continuity/');await page.waitForFunction(()=>window.study?.ready);
  const geometry=await page.evaluate(async()=>{
-  const {deformSurface}=await import('./rig.js?v=emotionfix-20261023'),{EMOTIONS}=await import('./emotion.js?v=emotionfix-20261023');
+  const {deformSurface}=await import('./rig.js?v=eyecompose-20261023'),{EMOTIONS}=await import('./emotion.js?v=eyecompose-20261023');
   const s=study.surface,area=(v,a,b,c)=>(v[b*2]-v[a*2])*(v[c*2+1]-v[a*2+1])-(v[b*2+1]-v[a*2+1])*(v[c*2]-v[a*2]);let inverted=0;
   for(const e of Object.values(EMOTIONS))for(const closed of [false,true]){
    const v=deformSurface(s,{...e,eye0:closed?0:e.eyeOpen??1,eye1:closed?0:e.eyeOpen??1,mouth:.7,yaw:.8,breath:1,body:.5});
@@ -56,7 +56,7 @@ try{
  // Freeze authored combined poses for close visual inspection of each expression.
  const captures=[];await page.selectOption('#zoom','face');
  for(const [name,label]of [['neutral','中立'],['gentle','微笑み'],['joy','喜び＋発話'],['surprise','驚き'],['concern','困惑'],['sadness','悲しみ'],['thinking','思考'],['shy','照れ'],['smile','笑顔＋発話']]){
-  await page.evaluate(async name=>{const {PerformanceController}=await import('./emotion.js?v=emotionfix-20261023');const c=new PerformanceController(()=>0);c.setEmotion(name);study.pose({...c.sample(0),mouth:['joy','smile','shy'].includes(name)?.55:name==='surprise'?.35:0,breath:.4});},name);
+  await page.evaluate(async name=>{const {PerformanceController}=await import('./emotion.js?v=eyecompose-20261023');const c=new PerformanceController(()=>0);c.setEmotion(name);study.pose({...c.sample(0),mouth:['joy','smile','shy'].includes(name)?.55:name==='surprise'?.35:0,breath:.4});},name);
   captures.push({name,label,data:(await page.locator('#stage').screenshot()).toString('base64')});
  }
  const gallery=await browser.newPage({viewport:{width:810,height:1080}});await gallery.setContent('<style>body{margin:0;background:#edf0f5;font:16px system-ui}.grid{display:grid;grid-template-columns:repeat(3,270px)}figure{margin:7px;background:white}img{display:block;width:256px;height:320px}figcaption{text-align:center;padding:4px}</style><div class="grid">'+captures.map(x=>'<figure><img src="data:image/png;base64,'+x.data+'"><figcaption>'+x.label+'</figcaption></figure>').join('')+'</div>');await gallery.screenshot({path:path.join(out,'emotion-gallery.png'),fullPage:true});await gallery.close();
