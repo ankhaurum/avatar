@@ -1,5 +1,5 @@
-import {upperArmSkin} from './arm-rig.js?v=mouth-20261023';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=mouth-20261023';
+import {upperArmSkin} from './arm-rig.js?v=emotionfix-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=emotionfix-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
@@ -38,7 +38,7 @@ export function localShape(x,y,p){
   const weights=expressionWeights(p),corner=Math.pow(Math.cos(Math.PI*.5*clamp(Math.abs(Math.abs(x-594)-49)/35)),2),smile=weights.smile,o=weights.open;
   // Paired lip contours: the opening flattens before the commissure rather
   // than pulling the contact point into a sharp triangular slit.
-  const aperture=Math.pow(w,1.65),upper=-2.8*o*aperture,lower=(16-1.5*smile)*o*aperture;
+  const aperture=Math.pow(w,1.65),upper=.45*w*(1-o)-2.8*o*aperture,lower=-.45*w*(1-o)+(16-1.5*smile)*o*aperture;
   yy+=profile(y,[[605,0],[s-.45*w,upper],[s+.45*w,lower],[730,0]]);
   yy-=smile*2.4*corner*(1-smooth(14,55,Math.abs(y-s)));
   xx+=(x-594)*smile*.006*(1-smooth(12,60,Math.abs(y-s)));
@@ -75,8 +75,8 @@ export function expressionShape(x,y,p){
  const roundY=profile(y,[[605,0],[s-2,.5],[s+10,1],[710,0]]);
  const mouthX=1-smooth(65,95,Math.abs(x-594));
  dx-=(x-594)*(p.round||0)*.32*roundY*mouthX;
- const roundedLip=profile(y,[[605,0],[s-.45,-2],[s+.45,9],[710,0]]);
- dy+=(p.round||0)*roundedLip*Math.sin(Math.PI*clamp((x-522)/144));
+ // Rounding changes lip width; opening belongs exclusively to the mouth channel.
+ // An independent vertical round offset kept surprised/rounded mouths open at mouth=0.
  return [dx,dy];
 }
 // Authored smile key: lift the lower lid while preserving alert upper lids.

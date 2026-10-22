@@ -1,0 +1,31 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {createRequire} from 'node:module';
+import {PerformanceController,EMOTIONS,STATES} from './emotion.js';
+const c=new PerformanceController(()=>0);c.setPose({mouth:0});assert.equal(c.sample(0).mouth,0);c.setState('sleep');c.setPose({mouth:1});assert.equal(c.sample(0).mouth,0);
+const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright'),browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-webgl']});
+try{const page=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true}),errors=[],shots=[],results=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(process.env.AVATAR_URL||'http://127.0.0.1:8794/studies/continuity/');await page.waitForFunction(()=>window.study?.ready,{},{timeout:60000});await page.selectOption('#zoom','face');
+const snapshot=()=>page.evaluate(()=>({...hibikiV3.snapshot(),slider:Number(document.querySelector('#mouth').value)}));
+for(const still of [false,true]){await page.locator('#static').setChecked(still);for(const name of Object.keys(EMOTIONS)){await page.locator('#reset').click();await page.evaluate(name=>hibikiV3.setEmotion(name),name);await page.waitForTimeout(still?180:750);const s=await snapshot(),expected=EMOTIONS[name].mouth||0;assert(Math.abs(s.pose.mouth-expected)<.015,`${name}/${still}: ${s.pose.mouth}`);assert(Math.abs(s.slider-s.pose.mouth)<.011);results.push({mode:still?'static':'live',name,mouth:s.pose.mouth,smile:s.pose.smile});if(!still||name==='concern')shots.push({name:name+(still?' static':''),img:(await page.locator('#stage').screenshot()).toString('base64')});}}
+await page.locator('#static').uncheck();
+for(const name of Object.keys(EMOTIONS)){
+ await page.locator('#reset').click();await page.evaluate(name=>{hibikiV3.setState('speaking',{calm:false,duration:0});hibikiV3.setEmotion(name);},name);
+ for(const volume of [1,0]){
+  await page.evaluate(volume=>{clearInterval(window.captureVolumeTimer);hibikiV3.setVolume(volume);window.captureVolumeTimer=setInterval(()=>hibikiV3.setVolume(volume),50)},volume);
+  await page.waitForFunction(volume=>Math.abs(hibikiV3.snapshot().pose.mouth-volume)<.02,volume,{timeout:10000});
+  const s=await snapshot();assert(Math.abs(s.pose.mouth-volume)<.02,name+' speech '+volume);results.push({mode:'volume-driven speech',name,mouth:s.pose.mouth,volume});
+  if(volume===0)shots.push({name:name+' speech closed',img:(await page.locator('#stage').screenshot()).toString('base64')});
+  await page.evaluate(()=>clearInterval(window.captureVolumeTimer));
+ }
+}
+await page.locator('#reset').click();await page.locator('#mouth').fill('1');await page.locator('#mouth').dispatchEvent('input');await page.selectOption('#emotion','concern');await page.waitForTimeout(800);assert.equal((await snapshot()).pose.mouth,0);
+await page.selectOption('#emotion','smile');await page.locator('#mouth').fill('0');await page.locator('#mouth').dispatchEvent('input');await page.waitForTimeout(750);assert.equal((await snapshot()).pose.mouth,0);
+// State presets intentionally restore auto expression; API emotion/state remain independently composable.
+for(const state of STATES){await page.selectOption('#state',state);await page.waitForTimeout(state==='wake'?850:700);const s=await snapshot();assert.equal(s.state,state);assert.equal(s.emotionOverride,null);if(['attention','thinking','concern','error','sleep','wake'].includes(state))assert.equal(s.pose.mouth,0,state);results.push({mode:'state',name:state,mouth:s.pose.mouth});}
+await page.selectOption('#state','speaking');await page.selectOption('#emotion','concern');assert.equal((await snapshot()).speaking,true);
+await page.locator('#reset').click();await page.locator('#demo').click();await page.locator('#stage').scrollIntoViewIfNeeded();const samples=[];const start=Date.now();while(Date.now()-start<42000){samples.push(await page.evaluate(()=>({...hibikiV3.snapshot(),slider:Number(document.querySelector('#mouth').value),label:document.querySelector('#demoStatus').textContent})));await page.waitForTimeout(100);}
+for(const name of ['smile','joy','shy']){const a=samples.filter(x=>x.emotion===name&&x.speaking);assert(a.length>3,name);assert(Math.max(...a.map(x=>x.pose.mouth))>.2,name+' open');assert(Math.min(...a.map(x=>x.pose.mouth))<.02,name+' closure');}
+assert(samples.every(x=>Math.abs(x.slider-x.pose.mouth)<.011),'slider/render mismatch');
+const worried=samples.filter(x=>x.emotion==='concern'&&!x.speaking).slice(5);assert(worried.length>0);assert(worried.every(x=>x.pose.mouth<.02));
+await page.locator('#demo').click();await page.locator('#static').check();await page.selectOption('#emotion','concern');await page.waitForTimeout(200);const frames=(await snapshot()).frames;await page.waitForTimeout(250);assert.equal((await snapshot()).frames,frames);assert.equal((await snapshot()).pose.mouth,0);
+const gallery=await browser.newPage({viewport:{width:1098,height:1900}});await gallery.setContent('<style>body{margin:0;display:grid;grid-template-columns:repeat(3,366px)}figure{margin:0}img{width:366px}figcaption{text-align:center}</style>'+shots.map(s=>'<figure><img src="data:image/png;base64,'+s.img+'"><figcaption>'+s.name+'</figcaption></figure>').join(''));await gallery.screenshot({path:new URL('./evidence/emotion-controls.png',import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1'),fullPage:true});assert.deepEqual(errors,[]);
+fs.writeFileSync(new URL('./evidence/emotion-controls.json',import.meta.url),JSON.stringify({results,manualClose:true,presetClearsManual:true,staticConcern:true,staticStopsDrawing:true,demo:samples.map(s=>({emotion:s.emotion,speaking:s.speaking,mouth:s.pose.mouth,slider:s.slider,label:s.label})),errors,scope:'PC Chrome 390px touch emulation, not physical phone'},null,2));console.log({emotions:Object.keys(EMOTIONS).length,states:STATES.length,demoSamples:samples.length,errors});
+}finally{await browser.close()}

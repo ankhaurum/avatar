@@ -1,4 +1,4 @@
-import {createSkin,clamp,smooth} from './rig.js?v=mouth-20261023';
+import {createSkin,clamp,smooth} from './rig.js?v=emotionfix-20261023';
 // Landmarks traced on the registered smile material, not an equal-tooth template.
 const upper=[[514,638],[530,640],[550,642],[575,642],[594,642],[615,640],[638,636],[659,631],[674,627]];
 const lower=[[514,638],[530,648],[550,656],[575,661],[594,662],[615,659],[638,651],[659,639],[674,627]];
@@ -6,7 +6,7 @@ function at(points,x){if(x<=points[0][0])return points[0][1];for(let i=1;i<point
 export const smileBounds=x=>[at(upper,x),at(lower,x)];
 const xs=Array.from({length:53},(_,i)=>490+i*4),bands=[0,1,2,3,4,5];
 export async function makeSmileMaterial({MeshSimple,Texture,Graphics,world}){
- const image=new Image();image.src='materials/smile-local.png?v=mouth-20261023';await image.decode();
+ const image=new Image();image.src='materials/smile-local.png?v=emotionfix-20261023';await image.decode();
  const rest=[],uv=[],indices=[];
  for(const band of bands)for(const x of xs){const [a,b]=smileBounds(x),y=[600,615,a,b,689,720][band];rest.push(x,y);uv.push((x-490)/208,(y-600+(band===2?-1.4:band===3?1.4:0))/120);}
  for(let row=0;row<5;row++)for(let j=0;j<52;j++){if(row===2&&xs[j]>=514&&xs[j+1]<=674)continue;const i=row*53+j;indices.push(i,i+53,i+1,i+1,i+53,i+54);}

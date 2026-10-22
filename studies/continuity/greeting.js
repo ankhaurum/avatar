@@ -1,6 +1,6 @@
-import {track} from './presence.js?v=mouth-20261023';
-import {ARM,armChain} from './arm-rig.js?v=mouth-20261023';
-import {shoulderFrame} from './bust-rig.js?v=mouth-20261023';
+import {track} from './presence.js?v=emotionfix-20261023';
+import {ARM,armChain} from './arm-rig.js?v=emotionfix-20261023';
+import {shoulderFrame} from './bust-rig.js?v=emotionfix-20261023';
 // Character's RIGHT hand = screen left. Forearm/elbow stay separate from the face rig.
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=v=>{const t=clamp(v);return t*t*t*(t*(t*6-15)+10);};
