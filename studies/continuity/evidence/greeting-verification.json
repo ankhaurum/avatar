@@ -1,5 +1,5 @@
 {
-  "baseMain": "771b99d096b2e7f8fa5385bf9b6431b51b791099",
+  "baseMain": "4f9d58eb54d541422eb3a94cb7db149863516d19",
   "onDemand": true,
   "faceROI": [
     330,
@@ -13,6 +13,7 @@
     "active": true,
     "lift": 0.06632368091905883,
     "wrist": 0.005171439881217356,
+    "prepare": 0,
     "phase": "lower",
     "opacity": 1,
     "entry": "articulated shoulder upper-arm forearm hand; hierarchical joint tracks",
@@ -27,19 +28,20 @@
     ],
     "joints": {
       "shoulder": [
-        150,
-        1000
+        146.59609859737557,
+        995.7437325699635
       ],
       "elbow": [
-        59.929482860611756,
-        1451.0956682814003
+        56.79486241480089,
+        1446.8930847584393
       ],
       "wrist": [
-        171.73210825663116,
-        1738.2409676588363
+        168.76886868162921,
+        1733.9715965292723
       ],
       "upperAngle": 1.7678750812382766,
-      "forearmAngle": 1.1994966921758778
+      "forearmAngle": 1.1994966921758778,
+      "parentAngle": -0.0005969131282715294
     },
     "drawRegions": [
       "shared-body-upper-arm",
@@ -55,7 +57,8 @@
       "side": "character-right/screen-left",
       "active": true,
       "lift": 1,
-      "wrist": 0.008644287710685298,
+      "wrist": -0.03952089764592931,
+      "prepare": 0,
       "phase": "wave",
       "opacity": 1,
       "entry": "articulated shoulder upper-arm forearm hand; hierarchical joint tracks",
@@ -70,19 +73,20 @@
       ],
       "joints": {
         "shoulder": [
-          150,
-          1000
+          135.5131464462523,
+          989.41547160058
         ],
         "elbow": [
-          58.92910777125209,
-          1450.8947688637113
+          48.54078579914194,
+          1441.1187021441183
         ],
         "wrist": [
-          209.8338338453898,
-          1182.2313853361277
+          196.78981150373824,
+          1170.9808181336784
         ],
-        "upperAngle": 1.7700932304292074,
-        "forearmAngle": -1.0590246823671088
+        "upperAngle": 1.7700111956949813,
+        "forearmAngle": -1.0598828777718092,
+        "parentAngle": -0.008999535168331798
       },
       "drawRegions": [
         "shared-body-upper-arm",
@@ -93,7 +97,7 @@
       "triangles": 648,
       "textureBytes": 409600
     },
-    "shoulderL": 0.21991133476064625,
+    "shoulderL": 0.21999052265005437,
     "state": "speaking",
     "emotion": "gentle"
   },
