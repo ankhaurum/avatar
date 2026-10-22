@@ -6,7 +6,7 @@ export function greetingPose(seconds){
  if(seconds<0||seconds>=GREETING_DURATION)return {active:false,lift:0,wrist:0,phase:'rest'};
  const lift=seconds<1.7?ease(seconds/1.7):seconds<4.5?1:1-ease((seconds-4.5)/1.9);
  const t=clamp((seconds-1.7)/2.8);
- const wrist=seconds>=1.7&&seconds<=4.5?Math.sin(t*Math.PI*4)*Math.sin(t*Math.PI)*.045:0;
+ const wrist=seconds>=1.7&&seconds<=4.5?Math.sin(t*Math.PI*4)*Math.sin(t*Math.PI)*.045:Math.sin(lift*Math.PI)*.025;
  return {active:true,lift,wrist,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
 }
 export class RightGreeting {
@@ -24,11 +24,11 @@ export class RightGreeting {
  preview(seconds){this.started=null;this.pose=greetingPose(seconds);return this.pose;}
  stop(){this.started=null;this.pose=greetingPose(-1);this.mesh.visible=false;}
  draw(p){
-  const g=this.pose;this.mesh.alpha=ease((g.lift-.05)/.7);this.mesh.visible=g.active&&this.mesh.alpha>.001;if(!this.mesh.visible)return;
-  // Maintain palm proportions. A small elbow-pivot arc plus visibility easing
-  // replaces sagittal flattening of the photographic hand during entry/exit.
+  const g=this.pose;this.mesh.alpha=1;this.mesh.visible=g.active;if(!this.mesh.visible)return;
+  // The elbow remains below the bust crop. Rotate the forearm in from screen left
+  // at full opacity; uniform scale preserves palm proportions throughout the arc.
   const shoulder=this.skin(115,1000,p),rootX=shoulder[0]+20,rootY=shoulder[1]+640;
-  const angle=(1-g.lift)*.24,c=Math.cos(angle),s=Math.sin(angle),scale=.9;
+  const angle=-(1-g.lift)*1.35,c=Math.cos(angle),s=Math.sin(angle),scale=.9;
   const wc=Math.cos(g.wrist),ws=Math.sin(g.wrist),v=this.mesh.vertices;
   for(let i=0;i<this.rest.length;i+=2){
    let x=this.rest[i],y=this.rest[i+1];
@@ -40,5 +40,5 @@ export class RightGreeting {
   }
   this.mesh.geometry.getBuffer('aPosition').update();
  }
- stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'small elbow arc with fade; uniform palm scale',chain:['chest','right-shoulder','right-elbow','right-wrist'],vertices:this.rest.length/2,triangles:this.indices.length/3,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4};}
+ stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'left-to-right elbow arc; opaque uniform palm scale',chain:['chest','right-shoulder','right-elbow','right-wrist'],vertices:this.rest.length/2,triangles:this.indices.length/3,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4};}
 }

@@ -1,0 +1,161 @@
+{
+  "baseMain": "5f32f4720b4b3941952bef2226ee59a1b5dbb795",
+  "frames": [
+    {
+      "t": 0.55,
+      "label": "画面左から登場",
+      "stats": {
+        "side": "character-right/screen-left",
+        "active": true,
+        "lift": 0.19556890236129412,
+        "wrist": 0.014411664468350502,
+        "phase": "raise",
+        "opacity": 1,
+        "entry": "left-to-right elbow arc; opaque uniform palm scale",
+        "chain": [
+          "chest",
+          "right-shoulder",
+          "right-elbow",
+          "right-wrist"
+        ],
+        "vertices": 325,
+        "triangles": 576,
+        "textureBytes": 409600
+      }
+    },
+    {
+      "t": 0.9,
+      "label": "肘を支点に差し出す",
+      "stats": {
+        "side": "character-right/screen-left",
+        "active": true,
+        "lift": 0.5550199773639176,
+        "wrist": 0.02462746334542848,
+        "phase": "raise",
+        "opacity": 1,
+        "entry": "left-to-right elbow arc; opaque uniform palm scale",
+        "chain": [
+          "chest",
+          "right-shoulder",
+          "right-elbow",
+          "right-wrist"
+        ],
+        "vertices": 325,
+        "triangles": 576,
+        "textureBytes": 409600
+      }
+    },
+    {
+      "t": 1.25,
+      "label": "胸の横へ",
+      "stats": {
+        "side": "character-right/screen-left",
+        "active": true,
+        "lift": 0.8803703471546782,
+        "wrist": 0.009176063187828256,
+        "phase": "raise",
+        "opacity": 1,
+        "entry": "left-to-right elbow arc; opaque uniform palm scale",
+        "chain": [
+          "chest",
+          "right-shoulder",
+          "right-elbow",
+          "right-wrist"
+        ],
+        "vertices": 325,
+        "triangles": 576,
+        "textureBytes": 409600
+      }
+    },
+    {
+      "t": 2.4,
+      "label": "小さな挨拶",
+      "stats": {
+        "side": "character-right/screen-left",
+        "active": true,
+        "lift": 1,
+        "wrist": 3.896802253059719e-18,
+        "phase": "wave",
+        "opacity": 1,
+        "entry": "left-to-right elbow arc; opaque uniform palm scale",
+        "chain": [
+          "chest",
+          "right-shoulder",
+          "right-elbow",
+          "right-wrist"
+        ],
+        "vertices": 325,
+        "triangles": 576,
+        "textureBytes": 409600
+      }
+    },
+    {
+      "t": 5.4,
+      "label": "元へ戻す途中",
+      "stats": {
+        "side": "character-right/screen-left",
+        "active": true,
+        "lift": 0.5492510598324216,
+        "wrist": 0.024701341887875303,
+        "phase": "lower",
+        "opacity": 1,
+        "entry": "left-to-right elbow arc; opaque uniform palm scale",
+        "chain": [
+          "chest",
+          "right-shoulder",
+          "right-elbow",
+          "right-wrist"
+        ],
+        "vertices": 325,
+        "triangles": 576,
+        "textureBytes": 409600
+      }
+    },
+    {
+      "t": 6,
+      "label": "画面左へ退く",
+      "stats": {
+        "side": "character-right/screen-left",
+        "active": true,
+        "lift": 0.06632368091905883,
+        "wrist": 0.005171439881217356,
+        "phase": "lower",
+        "opacity": 1,
+        "entry": "left-to-right elbow arc; opaque uniform palm scale",
+        "chain": [
+          "chest",
+          "right-shoulder",
+          "right-elbow",
+          "right-wrist"
+        ],
+        "vertices": 325,
+        "triangles": 576,
+        "textureBytes": 409600
+      }
+    }
+  ],
+  "raised": {
+    "gesture": {
+      "side": "character-right/screen-left",
+      "active": true,
+      "lift": 0.9450182632423885,
+      "wrist": 0.004296814467267258,
+      "phase": "raise",
+      "opacity": 1,
+      "entry": "left-to-right elbow arc; opaque uniform palm scale",
+      "chain": [
+        "chest",
+        "right-shoulder",
+        "right-elbow",
+        "right-wrist"
+      ],
+      "vertices": 325,
+      "triangles": 576,
+      "textureBytes": 409600
+    },
+    "shoulderL": 0.19056500411098282
+  },
+  "ended": true,
+  "errors": [],
+  "scope": "PC Chrome 390px touch emulation, software WebGL; physical smartphone unverified"
+}

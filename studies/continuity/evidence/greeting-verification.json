@@ -1,5 +1,5 @@
 {
-  "baseMain": "ca5d3c860bc80ff37052489091f930002c6279c2",
+  "baseMain": "5f32f4720b4b3941952bef2226ee59a1b5dbb795",
   "onDemand": true,
   "faceROI": [
     330,
@@ -11,11 +11,11 @@
   "gesture": {
     "side": "character-right/screen-left",
     "active": true,
-    "lift": 0.7355570193275793,
-    "wrist": 0,
+    "lift": 0.06632368091905883,
+    "wrist": 0.005171439881217356,
     "phase": "lower",
-    "opacity": 0.9999148592731198,
-    "entry": "small elbow arc with fade; uniform palm scale",
+    "opacity": 1,
+    "entry": "left-to-right elbow arc; opaque uniform palm scale",
     "chain": [
       "chest",
       "right-shoulder",
@@ -31,10 +31,10 @@
       "side": "character-right/screen-left",
       "active": true,
       "lift": 1,
-      "wrist": 0.019611704614420154,
+      "wrist": 0.013700013332943295,
       "phase": "wave",
       "opacity": 1,
-      "entry": "small elbow arc with fade; uniform palm scale",
+      "entry": "left-to-right elbow arc; opaque uniform palm scale",
       "chain": [
         "chest",
         "right-shoulder",
@@ -45,7 +45,7 @@
       "triangles": 576,
       "textureBytes": 409600
     },
-    "shoulderL": 0.05991306664168986,
+    "shoulderL": 0.059970098171077395,
     "state": "speaking",
     "emotion": "gentle"
   },
@@ -55,10 +55,7 @@
   "resetCancelsPending": true,
   "video": {
     "saved": false,
-    "bytes": 110,
-    "draws": 47,
-    "ended": true,
-    "note": "Recording unavailable; existing video belongs to prior version. Use current phase images and live preview."
+    "note": "Not recorded in this run; existing video is historical. Current phase images and live preview show the elbow arc."
   },
   "errors": [],
   "scope": "Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance"
