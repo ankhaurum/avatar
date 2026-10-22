@@ -2,7 +2,49 @@
 
 2026-10-22 身体連動を修正：従来の呼吸は小さな一括上下動だけで、タップ入力には身体追従がありませんでした。共有表面上の連続した胸郭の拡張・肩の挙上を追加し、頭へ少し遅れて上半身が追従するよう変更。腰側は固定し、顔・眼・口の形状キーは変更していません。[吸気](evidence/body-inhale.png)／[呼気](evidence/body-exhale.png)を390px幅で比較し、動作動画と検証記録を更新しました。実機での自然さは引き続き未確認です。
 
-Issue [#94](https://github.com/ankhaurum/Ankhaurum-Development/issues/94)。公開ページの置換・品質完成・正式採用を意味しない、独立した比較実装です。リポジトリ直下の既存ランタイムと素材は変更していません。
+Issue [#94](https://github.com/ankhaurum/Ankhaurum-Development/issues/94)。GitHub Pagesで確認する独立試作です。品質完成・本体への正式統合を意味しません。従来ランタイムは `/legacy.html` に保全しています。
+
+## V2互換と感情表現（2026-10-22）
+
+対象はこの独立プレビューの入力互換・表情・複合デモ・公開までです。Twinow/HUBへの接続、会話内容からの自動感情推定、通知や会話の業務ロジックの変更は含みません。既存の承認画像、接続する表面、親子リグを維持し、局所形状キーと独立した制御層を追加しました。
+
+V2現物はTwinowの `wordpress/themes/twinow-original/assets/aifate-companion.js`（参照HEAD `24b13afe49672b50db273d834b094a24214d2896`、ファイルSHA256 `675ce4f974bcac6706d9d028ef7e0626e02807855c1b432607059f114a0f110f`）と `retarget-motion-renderer.js`。読み取りのみで、変更していません。独立旧V3の `app.js`、`controls.json`、衣装台帳も照合しました。
+
+|V2状態|V3の既定表現・動作|
+|---|---|
+|idle|中立、呼吸、瞬き|
+|attention|控えめな微笑み、注目の小さな姿勢変化|
+|thinking|内眉、控えめな口角、思考視線、抑えた呼吸と瞬き|
+|speaking|独立した発話チャンネル。明示した感情を保持|
+|happy|喜び：口角・頬・まぶた・眉と肩が連動|
+|notify|驚きの局所口形と眉、短い肩の反応|
+|concern / error|困惑・心配。通知処理やエラーの意味は変更しない|
+|sleep|閉眼、首と肩を落ち着かせた休息|
+|wake|閉眼から開眼し、既定時間で待機へ復帰|
+
+`emotion.js`がV2入力を翻訳し、描画器や素材と独立して状態遷移を扱います。`setState(state,{duration,next,phase,calm})`の戻り値・既定時間（attention 920ms / happy 1100ms / notify 1500ms / error 2300ms / wake 760ms）、speaking→1800msでcalm→さらに3200msでhappyを維持。`duration:0,calm:false`で持続指定できます。同じstateを含む反復`setInputs`は遷移を再開始しません。隠れたタブから戻った場合は経過した遷移を追いつかせます。
+
+独立ページのAPIは `window.hibikiV3`：
+
+```js
+hibikiV3.setState('speaking', {duration:0, calm:false});
+hibikiV3.setEmotion('joy', .8); // 発話と共存。auto/nullで状態由来の感情に戻す
+hibikiV3.setInputs({state:'thinking', gazeX:.55, gazeY:-.35, strength:.34});
+hibikiV3.setPose({yaw:.3, gazeX:-.2, shoulderL:.1});
+hibikiV3.setVolume(.5); // 0..1の外部音量。更新停止300ms後は口を保持しない
+hibikiV3.blink(); hibikiV3.wink();
+hibikiV3.snapshot();
+```
+
+V2の `aifate:companion-state` CustomEventも同じ`detail.state/options`で受けます。本体の`aifateCompanion`オブジェクトを上書きしたり、ページ間通信や本体連携を新設したりはしません。V2 rendererの `gazeX/gazeY/strength/state/speaking`、独立旧V3の `yaw/pitch/roll/gazeX/gazeY/mouth/shoulderL/shoulderR/intensity`を扱います。`eyeL/eyeR`等の別名にも対応。未知の状態はfalse、未知の低レベルパラメータは`setPose`結果のunsupportedで明示し、数値でない入力は適用しません。`setExpression`は既存neutral/joy/concern/anger/sadness/surprise/thinking名を維持します。
+
+**表現拡張**：微笑み、笑顔、喜び、驚き、困惑、悲しみ、思考、照れ。眉上げ・内眉・眉寄せ・頬上げ・下向き口形・丸め口形を素材の輪郭に対応する独立キーとして保存しました。悲しみは原画の微笑みを残したまま角だけ動かさず、別に作った接触曲線に沿って上下唇を変形します。照れの色は透明な局所グラデーションを同じ面へ載せる手続き的素材です。完成顔の画像切替は行いません。感情・発話・視線・瞬き・首肩と呼吸を別に合成し、切替と復帰を平滑化します。
+
+**音量・衣装**：既存AudioDriverを再利用し、端末内音声ファイルとテスト音の音量同期をプレビューへ戻しました。マイクを要求せず、ファイルを外部へ送りません。音声なしのspeakingは疑似口パクです。現物の衣装パックはsuit一種なので `setWardrobe('suit')`を維持し、未知の衣装は明示的に拒否します。他のパック画像をこの共有表面へ自動変換できる実装ではありません。
+
+**実描画確認**：[表情比較](evidence/emotion-gallery.png)、[喜び＋発話](evidence/joy-speaking.png)、[検証記録](evidence/emotion-verification.json)。10状態・時間経過、感情と発話、複合姿勢と閉眼、タップの身体追従、静止を確認。端末内合成WAVとテスト音で音量同期を検証しています。PC Chromeの390px幅・タッチ再現であり、実機・Safariの確認ではありません。特に強い悲しみ、前髪に隠れる眉、歯／舌／口内の立体感、大きな顔向きは引き続き品質上の制約です。本人らしさや自然さの人間承認を代替しません。
+
+再制作は既存画像を変更せず `bake-expression-keys.mjs`、確認は `verify-emotion.mjs`（いずれも既存Playwright/Chromeとローカルサーバー）を使います。オートデモは40秒で微笑み→喜びと発話→思考→驚き→落ち着き→困惑→悲しみ→照れと発話→笑顔で発話→中立を再生します。プレビューの状態選択は確認用に持続指定し、APIの既定復帰時間は変更しません。
 
 ## 確認するもの
 
@@ -72,4 +114,4 @@ node studies/continuity/verify.mjs
 
 **残る制約**：正面からの小さな頭部追従・傾きが対象で、大きな横顔の造形は未制作。閉眼補正の中間材質、歯や口内の立体感、写真の陰影の自然さは人間の目視評価が必要。首・髪・衣装をつながる表面にしたため、独立した大きな髪束や衣装交換には、今回の共有境界を守る素材・対応形状の追加制作が必要です。今回の素材はスーツ固定です。
 
-従来公開版の音量同期、V2状態互換、衣装pack等は既存ページ側に保持し、この比較ページへ移植したとは報告しません。正式置換時には機能移行と利用先別衣装契約の継続が必要です。今回の比較試作だけでLive2D同等品質・Identityの人間承認・V3完成とは判断しません。
+従来公開版も保持しています。2026-10-22の追加で音量同期・V2状態入力はこのページへ対応しましたが、Twinow本体や利用先別衣装設定への接続は行っていません。Live2D同等品質・Identityの人間承認・V3完成とは判断しません。

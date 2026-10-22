@@ -1,6 +1,8 @@
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=body-20261022';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=emotion-20261022';
+import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=emotion-20261022';
+import {AudioDriver} from '../../engine.js?v=cage-4a';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
@@ -19,14 +21,21 @@ const cavityRest=rect(510,620,180,100),cavity=makeMesh(materials.cavity,cavityRe
 const main=makeMesh(materials.base,surface.rest,surface.uvs,surface.indices);
 const irises=eyes.map((e,i)=>{const rest=rect(e.cx-24,e.cy-24,48,48),mesh=makeMesh(materials.irises[i],rest,rest.map((v,j)=>v/(j%2?HEIGHT:WIDTH)),quadIndices,i?[657,445,47,47]:[474,451,47,47]),mask=new Graphics();world.addChild(mask);mesh.mask=mask;return {mesh,mask,rest};});
 const closedCorrectives=eyes.map((e,i)=>{const ids=[];for(let j=0;j<surface.indices.length;j+=3){const tri=surface.indices.slice(j,j+3);if([...tri].some(k=>surface.rest[k*2]>e.x0-45&&surface.rest[k*2]<e.x1+45&&surface.rest[k*2+1]>410&&surface.rest[k*2+1]<545))ids.push(...tri);}return makeMesh(materials.closedEyes[i],surface.rest,surface.uvs,ids,[e.x0-20,428,e.x1-e.x0+40,93]);});
+const cheekCanvas=document.createElement('canvas');cheekCanvas.width=WIDTH;cheekCanvas.height=HEIGHT;
+const cheekContext=cheekCanvas.getContext('2d');
+for(const [x,y]of [[475,559],[709,550]]){const g=cheekContext.createRadialGradient(x,y,4,x,y,43);g.addColorStop(0,'rgba(210,72,94,.24)');g.addColorStop(.55,'rgba(210,72,94,.12)');g.addColorStop(1,'rgba(210,72,94,0)');cheekContext.fillStyle=g;cheekContext.fillRect(x-44,y-44,88,88);}
+const cheekIds=[];for(let j=0;j<surface.indices.length;j+=3){const tri=surface.indices.slice(j,j+3);if([...tri].some(k=>surface.rest[k*2]>410&&surface.rest[k*2]<770&&surface.rest[k*2+1]>505&&surface.rest[k*2+1]<625))cheekIds.push(...tri);}
+const cheekMesh=makeMesh(cheekCanvas,surface.rest,surface.uvs,cheekIds,[408,503,364,124]);
 const wire=new Graphics();world.addChild(wire);
-const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,gazeX:0,gazeY:0,breath:0,body:0,hair:0};
+const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,gazeX:0,gazeY:0,breath:0,breathGain:1,body:0,hair:0,browRaise:0,browInner:0,browLower:0,cheek:0,frown:0,round:0,blush:0,shoulder:0,shoulderL:0,shoulderR:0};
+const controller=new PerformanceController(),audio=new AudioDriver();let demoBeat=-1,audioMessage=null;
 let current={...initial},target={...initial},time=0,last=performance.now(),demo=false,fixed=false,blinkAt=-99,nextBlink=3.4,contactUntil=-1,pointer=null,velocity=0,oldYaw=0,drawCount=0,staticRendered=false;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');$('#static').checked=reduced.matches;
 function blink(t){if(t<0||t>.3)return 0;if(t<.09)return Math.sin(t/.09*Math.PI/2);if(t<.12)return 1;return .5+.5*Math.cos((t-.12)/.18*Math.PI);}
 function applyZoom(){const mode=$('#zoom').value,box=({full:[0,0,WIDTH,HEIGHT],neck:[300,625,550,450],face:[375,385,420,370],body:[195,820,740,580]})[mode];const s=Math.min(WIDTH/box[2],HEIGHT/box[3]);world.scale.set(s);world.position.set((WIDTH-box[2]*s)/2-box[0]*s,(HEIGHT-box[3]*s)/2-box[1]*s);}
 function draw(p){
  const pos=deformSurface(surface,p);main.vertices.set(pos);main.geometry.getBuffer('aPosition').update();
+ cheekMesh.alpha=p.blush||0;cheekMesh.visible=cheekMesh.alpha>.001;if(cheekMesh.visible){cheekMesh.vertices.set(pos);cheekMesh.geometry.getBuffer('aPosition').update();}
  for(let j=0;j<8;j+=2)cavity.vertices.set(skin(cavityRest[j],cavityRest[j+1],p),j);cavity.geometry.getBuffer('aPosition').update();
  for(const [i,r]of irises.entries()){
   r.mesh.visible=p['eye'+i]>.1;
@@ -38,37 +47,56 @@ function draw(p){
  applyZoom();app.renderer.render(app.stage);drawCount++;
 }
 function sample(t){
- return {yaw:Math.sin(t*.48)*.65,pitch:Math.sin(t*.32+.5)*.32,roll:Math.sin(t*.35)*.4,gazeX:Math.sin(t*.48+.12)*.6,gazeY:Math.sin(t*.32+.5)*.2,smile:.28+.2*Math.sin(t*.31),mouth:t%18>8&&t%18<14?Math.max(0,Math.sin(t*8))*.65:0,breath:Math.sin(t*1.18),body:Math.sin(t*.48-.32)*.42};
+ const beat=emotionDemo(t),c=new PerformanceController(()=>t*1000);c.setEmotion(beat.emotion);c.speech=beat.speaking;
+ return {...initial,...c.sample(t,blink((t%4)-3)),yaw:Math.sin(t*.38)*.55,breath:Math.sin(t*1.18),body:Math.sin(t*.38-.32)*.36};
 }
 function frame(now){
  requestAnimationFrame(frame);if(fixed||document.hidden)return;
- const dt=Math.max(0,(now-last)/1000);last=now;if($('#static').checked){if(!staticRendered)draw(initial);staticRendered=true;return;}staticRendered=false;
- time+=dt;if(time>nextBlink){blinkAt=time;nextBlink=time+3.4+(Math.sin(time*2)+1)*1.3;}
- let p={...target};if(demo)p={...p,...sample(time)};
- if(!demo)p.body=(p.yaw||0)*.45;
- if($('#idle').checked||demo){p.breath=Math.sin(time*1.18);p.roll+=Math.sin(time*.6)*.08;}
- const b=blink(time-blinkAt);p.eye0=p.eye1=1-b;
+ const dt=Math.max(0,(now-last)/1000);last=now;controller.tick();$('#state').value=controller.state;$('#phase').textContent=controller.state+' / '+controller.phase;$('#emotion').value=controller.emotion||'auto';if($('#static').checked){if(!staticRendered){current={...initial};draw(initial);}staticRendered=true;return;}staticRendered=false;
+ time+=dt;if(time>nextBlink){blinkAt=time;const intervals={thinking:2.6,attention:6,speaking:3.2,sleep:12};nextBlink=time+(intervals[controller.state]||4.5)+Math.sin(time*2)*.5;}
+ if(demo){const beat=emotionDemo(time);if(beat.index!==demoBeat){demoBeat=beat.index;controller.setEmotion(beat.emotion);controller.speech=beat.speaking;}$('#demoStatus').textContent=beat.label+' · 40秒で一巡';}
+ const b=blink(time-blinkAt);let p={...initial,...target,...controller.sample(time,b,audio.value(dt),audio.playing)};
+ p.eye0*=1-blink(time-winkAt);
+ if(demo){p.yaw=Math.sin(time*.38)*.55;p.pitch+=Math.sin(time*.32)*.15;p.gazeX+=Math.sin(time*.38+.12)*.25;p.body=Math.sin(time*.38-.32)*.36;}
+ else if(controller.inputs.body===undefined)p.body=(p.yaw||0)*.45;
+ if($('#idle').checked||demo){p.breath=Math.sin(time*1.18)*p.breathGain;p.roll+=Math.sin(time*.6)*.08;}
  for(const name of Object.keys(initial)){const speed=name==='body'?2.2:name.startsWith('gaze')?14:name.startsWith('eye')?100:6;current[name]+=(p[name]-current[name])*(1-Math.exp(-speed*dt));}
  const headVelocity=(current.yaw-oldYaw)/Math.max(.001,dt);oldYaw=current.yaw;velocity+=(headVelocity*.28-velocity)*Math.min(1,dt*7);current.hair+=(velocity-current.hair)*Math.min(1,dt*4);
- if(contactUntil>=0&&time>contactUntil){target.yaw=target.pitch=target.gazeX=target.gazeY=0;contactUntil=-1;}
+ if(contactUntil>=0&&time>contactUntil){for(const k of ['yaw','pitch','gazeX','gazeY'])delete controller.inputs[k];contactUntil=-1;}
+ $('#state').value=controller.state;$('#phase').textContent=controller.state+' / '+controller.phase;
+ $('#audioStatus').textContent=audioMessage??(audio.playing?(audio.mode==='test-tone'?'テスト音量で同期中':'端末内の音声で同期中'):'音声なし · 発話状態では疑似口パク');
  draw(current);
 }
-for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).oninput=e=>{fixed=false;demo=false;$('#demo').setAttribute('aria-pressed','false');target[id]=Number(e.target.value);};
-$('#demo').onclick=()=>{fixed=false;demo=!demo;time=0;$('#demo').setAttribute('aria-pressed',String(demo));$('#demo').textContent=demo?'オートデモを停止':'オートデモ';};
+function stopDemo(){demo=false;demoBeat=-1;$('#demo').setAttribute('aria-pressed','false');$('#demo').textContent='オートデモ';$('#demoStatus').textContent='感情・発話・身体を組み合わせて再生';}
+for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).oninput=e=>{fixed=false;stopDemo();controller.setPose({[id]:Number(e.target.value)});};
+$('#demo').onclick=()=>{fixed=false;if(demo){stopDemo();controller.reset();}else{controller.reset();audio.stop();demo=true;demoBeat=-1;time=0;$('#demo').setAttribute('aria-pressed','true');$('#demo').textContent='オートデモを停止';}};
 $('#blink').onclick=()=>{fixed=false;blinkAt=time;};
-$('#reset').onclick=()=>{fixed=false;demo=false;target={...initial};current={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#demo').textContent='オートデモ';$('#demo').setAttribute('aria-pressed','false');};
+$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
 $('#dark').onchange=e=>stage.classList.toggle('dark',e.target.checked);
-function policy(){fixed=false;staticRendered=false;last=performance.now();for(const id of ['demo','blink'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュで動作中 · 音声なし';}
+function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked)audio.stop();for(const id of ['demo','blink','tone','chooseAudio'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
 $('#static').onchange=policy;reduced.addEventListener('change',e=>{$('#static').checked=e.matches;policy();});
 for(const id of ['zoom','wire'])$('#'+id).onchange=()=>draw($('#static').checked?initial:current);
 document.addEventListener('visibilitychange',()=>last=performance.now());
 stage.addEventListener('pointerdown',e=>{if($('#static').checked)return;pointer=e.pointerId;stage.setPointerCapture(e.pointerId);contact(e);});
 stage.addEventListener('pointermove',e=>{if(pointer===e.pointerId)contact(e);});for(const n of ['pointerup','pointercancel','lostpointercapture'])stage.addEventListener(n,()=>pointer=null);
-function contact(e){fixed=false;demo=false;$('#demo').setAttribute('aria-pressed','false');const r=stage.getBoundingClientRect();target.yaw=clamp((e.clientX-r.left)/r.width*2-1,-1,1);target.pitch=clamp((e.clientY-r.top)/r.height*2-1,-1,1)*.5;target.gazeX=target.yaw;target.gazeY=target.pitch;contactUntil=time+3.5;}
+function contact(e){fixed=false;stopDemo();const r=stage.getBoundingClientRect(),yaw=clamp((e.clientX-r.left)/r.width*2-1,-1,1),pitch=clamp((e.clientY-r.top)/r.height*2-1,-1,1)*.5;controller.setPose({yaw,pitch,gazeX:yaw,gazeY:pitch});contactUntil=time+3.5;}
+function activate(){fixed=false;if(demo){controller.setEmotion('auto');controller.speech=null;}stopDemo();last=performance.now();}
+$('#state').onchange=e=>{activate();controller.setState(e.target.value,{duration:0,calm:false});};
+$('#emotion').onchange=e=>{activate();controller.setEmotion(e.target.value);};
+$('#tone').onclick=async()=>{activate();audioMessage=null;try{await audio.tone();}catch(e){audioMessage='音声を開始できません: '+e.message;}};
+$('#chooseAudio').onclick=()=>$('#audioFile').click();
+$('#audioFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;activate();audioMessage=null;try{await audio.attach(file);}catch(error){audio.stop();audioMessage='音声を開始できません: '+error.message;}e.target.value='';};
+$('#stopAudio').onclick=()=>{audio.stop();audioMessage=null;};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.stop();});
+window.addEventListener('pagehide',()=>audio.dispose(),{once:true});
+const api={states:[...STATES],setState(state,options){activate();return controller.setState(state,options);},setInputs(input){activate();return controller.setInputs(input);},setPose(input){activate();return controller.setPose(input);},setEmotion(name,intensity){activate();return controller.setEmotion(name,intensity);},setExpression(name){return this.setEmotion(name);},setVolume(value){return controller.setVolume(value);},blink(){fixed=false;blinkAt=time;},wink(){fixed=false;winkAt=time;},async setWardrobe(id){if(id!=='suit')throw Error('共有表面に対応する衣装はsuitのみです');return id;},snapshot(){return {...controller.snapshot(),ready:true,pose:{...current},wardrobe:'suit',supportedWardrobes:['suit'],audioMode:audio.mode,audioPlaying:audio.playing,peakEnvelope:audio.peakEnvelope,frames:drawCount,staticMode:$('#static').checked};}};
+let winkAt=-99;
+window.hibikiV3=api;
+window.addEventListener('aifate:companion-state',e=>api.setState(e.detail?.state,e.detail?.options));
 policy();
 window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=>{if(!author)throw Error('素材制作モードでのみPSDを書き出せます');return exportPSD(materials);},surface,boneRig,app,
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
- stats(){return {renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...current},static:$('#static').checked};}
+ stats(){return {renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...current},performance:controller.snapshot(),static:$('#static').checked};}
 };draw(initial);requestAnimationFrame(frame);

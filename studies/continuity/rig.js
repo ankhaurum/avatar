@@ -40,7 +40,38 @@ export function localShape(x,y,p){
  }
  // Small coupled expression, no global Gaussian warp or artificial face-depth sphere.
  if(y>390&&y<445&&x>420&&x<770)yy-=.8*(p.smile||0)*Math.sin(Math.PI*clamp((y-390)/55));
+ const extra=expressionShape(x,y,p);xx+=extra[0];yy+=extra[1];
  return [xx,yy];
+}
+// Authored local keyforms, anchored at each feature boundary. No whole-face warp.
+export const expressionKeys=['browRaise','browInner','browLower','cheek','frown','round'];
+export function expressionShape(x,y,p){
+ let dx=0,dy=0;
+ for(const [i,e]of eyes.entries()){
+  const tx=clamp((x-(e.x0-12))/(e.x1-e.x0+24)),side=Math.sin(Math.PI*tx);
+  const browY=i?407:413,vertical=profile(y,[[browY-38,0],[browY-8,1],[browY+6,1],[browY+40,0]]);
+  const inner=i?1-tx:tx;
+  dy+=side*vertical*(-7*(p.browRaise||0)-9*inner*inner*(p.browInner||0)+5*inner*(p.browLower||0));
+  const cx=i?704:479,cheekX=profile(x,[[cx-65,0],[cx-20,1],[cx+20,1],[cx+65,0]]);
+  const cheekY=profile(y,[[505,0],[548,1],[587,.65],[625,0]]);
+  dy-=4.5*(p.cheek||0)*cheekX*cheekY;
+ }
+ const s=seam(x),lipY=1-smooth(10,50,Math.abs(y-s));
+ const corner=profile(Math.abs(x-594),[[0,0],[43,0],[68,1],[95,0]]);
+ if(x>505&&x<683){
+  // A separately authored downturned contact curve, preserving the surrounding lip volume.
+  const worried=profile(x,[[505,seam(505)],[522,654],[550,650],[594,646],[638,647],[666,650],[683,seam(683)]]);
+  const support=profile(y,[[605,0],[s-10,.8],[s,1],[s+16,.9],[730,0]]);
+  dy+=(p.frown||0)*(worried-s)*support;
+ }
+ dy-=(p.cheek||0)*4*corner*lipY;
+ dx+=(x<594?-1:1)*(p.cheek||0)*2.5*corner*lipY;
+ const roundY=profile(y,[[605,0],[s-2,.5],[s+10,1],[710,0]]);
+ const mouthX=1-smooth(65,95,Math.abs(x-594));
+ dx-=(x-594)*(p.round||0)*.32*roundY*mouthX;
+ const roundedLip=profile(y,[[605,0],[s-.45,-2],[s+.45,9],[710,0]]);
+ dy+=(p.round||0)*roundedLip*Math.sin(Math.PI*clamp((x-522)/144));
+ return [dx,dy];
 }
 export function createSkin(p){
  const breath=p.breath||0;
@@ -59,6 +90,8 @@ export function createSkin(p){
  const shoulder=Math.exp(-(((y-1015)/145)**2))*(1-Math.exp(-(((x-583)/175)**2)));
  px+=(x-583)*.017*breath*torso;
  py-=breath*(3.2*torso+5.8*shoulder);
+ const shoulderCue=(p.shoulder||0)+(x<583?(p.shoulderL||0):(p.shoulderR||0));
+ py-=shoulderCue*9*shoulder;
  const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
  const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
  px+=(p.hair||0)*hairSide*tip*.8;
@@ -67,7 +100,7 @@ export function createSkin(p){
 }
 export function skin(x,y,p){return createSkin(p)(x,y);}
 export function bakeKeys(surface){
- const poses={neutral:{},mouthOpen:{mouth:1},smile:{smile:1},smileOpen:{mouth:1,smile:1},blinkLeft:{eye0:0},blinkRight:{eye1:0}};
+ const poses={neutral:{},mouthOpen:{mouth:1},smile:{smile:1},smileOpen:{mouth:1,smile:1},blinkLeft:{eye0:0},blinkRight:{eye1:0},...Object.fromEntries(expressionKeys.map(k=>[k,{[k]:1}]))};
  surface.keys=Object.fromEntries(Object.entries(poses).map(([name,p])=>[name,Array.from(surface.rest,(_,i)=>localShape(surface.rest[i-i%2],surface.rest[i-i%2+1],p)[i%2])]));
  return {version:'hibiki-continuity-keyforms-1',width:WIDTH,height:HEIGHT,bones:boneRig,rest:Array.from(surface.rest),indices:Array.from(surface.indices),uvs:Array.from(surface.uvs),keys:surface.keys,shapeAuthoring:'source-aligned eyelid contours and lip contact boundary; bilinear smile/open corners; no Cubism data'};
 }
@@ -75,7 +108,7 @@ export function readRig(data){return {...data,rest:new Float32Array(data.rest),i
 export function deformSurface(surface,p){
  const out=new Float32Array(surface.rest.length),keys=surface.keys,m=clamp(p.mouth||0),s=clamp(p.smile||0),bl=1-clamp(p.eye0??1),br=1-clamp(p.eye1??1),project=createSkin(p);
  for(let i=0;i<out.length;i+=2){
-  const q=[0,1].map(c=>{const k=i+c;return keys?lerp(lerp(keys.neutral[k],keys.mouthOpen[k],m),lerp(keys.smile[k],keys.smileOpen[k],m),s)+bl*(keys.blinkLeft[k]-keys.neutral[k])+br*(keys.blinkRight[k]-keys.neutral[k]):localShape(surface.rest[i],surface.rest[i+1],p)[c];});
+  const q=[0,1].map(c=>{const k=i+c;if(!keys)return localShape(surface.rest[i],surface.rest[i+1],p)[c];let v=lerp(lerp(keys.neutral[k],keys.mouthOpen[k],m),lerp(keys.smile[k],keys.smileOpen[k],m),s)+bl*(keys.blinkLeft[k]-keys.neutral[k])+br*(keys.blinkRight[k]-keys.neutral[k]);for(const name of expressionKeys)if(keys[name]&&p[name])v+=clamp(p[name])*(keys[name][k]-keys.neutral[k]);return v;});
   out.set(project(...q),i);
  }return out;
 }
