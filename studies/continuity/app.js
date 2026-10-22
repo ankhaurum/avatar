@@ -1,6 +1,6 @@
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=emotion-20261022';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=joint-arm-20261022';
 import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=emotion-20261022';
 import {AudioDriver} from '../../engine.js?v=cage-4a';
 const $=s=>document.querySelector(s),stage=$('#stage');
@@ -30,7 +30,7 @@ const wire=new Graphics();world.addChild(wire);
 let greeting=null,greetingLoad=null,greetingError=null,greetingLoading=false,greetingRequest=0,gestureClock=0;
 async function loadGreeting(){
  if(greeting)return greeting;
- if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=elbow-arc-20261022');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image,skin});})().catch(error=>{greetingLoad=null;throw error;});
+ if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=joint-arm-20261022');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image,skin});})().catch(error=>{greetingLoad=null;throw error;});
  return greetingLoad;
 }
 async function startGreeting(){
@@ -47,7 +47,7 @@ function greetingStatus(){
  const g=greeting?.pose;$('#greet').disabled=$('#static').checked||!!(greeting&&greeting.started!==null);
  $('#greetingStatus').textContent=g?.active?({raise:'右手をそっと差し出しています',wave:'右手で小さく挨拶',lower:'右手を元へ戻しています'})[g.phase]:'右手（画面左側）だけの挨拶 · 約6秒';
 }
-const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,gazeX:0,gazeY:0,breath:0,breathGain:1,body:0,hair:0,browRaise:0,browInner:0,browLower:0,cheek:0,frown:0,round:0,blush:0,shoulder:0,shoulderL:0,shoulderR:0};
+const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,gazeX:0,gazeY:0,breath:0,breathGain:1,body:0,hair:0,browRaise:0,browInner:0,browLower:0,cheek:0,frown:0,round:0,blush:0,shoulder:0,shoulderL:0,shoulderR:0,armLift:0};
 const controller=new PerformanceController(),audio=new AudioDriver();let demoBeat=-1,audioMessage=null;
 let current={...initial},target={...initial},time=0,last=performance.now(),demo=false,fixed=false,blinkAt=-99,nextBlink=3.4,contactUntil=-1,pointer=null,velocity=0,oldYaw=0,drawCount=0,staticRendered=false;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');$('#static').checked=reduced.matches;
@@ -81,7 +81,7 @@ function frame(now){
  if(demo){p.yaw=Math.sin(time*.38)*.55;p.pitch+=Math.sin(time*.32)*.15;p.gazeX+=Math.sin(time*.38+.12)*.25;p.body=Math.sin(time*.38-.32)*.36;}
  else if(controller.inputs.body===undefined)p.body=(p.yaw||0)*.45;
  if($('#idle').checked||demo){p.breath=Math.sin(time*1.18)*p.breathGain;p.roll+=Math.sin(time*.6)*.08;}
- p.shoulderL+=(greeting?.pose.lift||0)*.22;
+ p.armLift=greeting?.pose.lift||0;p.shoulderL+=p.armLift*.22;
  for(const name of Object.keys(initial)){const speed=name==='body'?2.2:name.startsWith('gaze')?14:name.startsWith('eye')?100:6;current[name]+=(p[name]-current[name])*(1-Math.exp(-speed*dt));}
  const headVelocity=(current.yaw-oldYaw)/Math.max(.001,dt);oldYaw=current.yaw;velocity+=(headVelocity*.28-velocity)*Math.min(1,dt*7);current.hair+=(velocity-current.hair)*Math.min(1,dt*4);
  if(contactUntil>=0&&time>contactUntil){for(const k of ['yaw','pitch','gazeX','gazeY'])delete controller.inputs[k];contactUntil=-1;}
@@ -120,7 +120,7 @@ const baseSnapshot=api.snapshot;api.snapshot=()=>({...baseSnapshot(),gesture:gre
 window.addEventListener('aifate:companion-state',e=>api.setState(e.detail?.state,e.detail?.options));
 policy();
 window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=>{if(!author)throw Error('素材制作モードでのみPSDを書き出せます');return exportPSD(materials);},surface,boneRig,app,
- async previewGreeting(seconds,p={}){const rig=await loadGreeting();fixed=true;rig.preview(seconds);current={...initial,...p};current.shoulderL+=rig.pose.lift*.22;draw(current);return rig.stats();},
+ async previewGreeting(seconds,p={}){const rig=await loadGreeting();fixed=true;rig.preview(seconds);current={...initial,...p};current.armLift=rig.pose.lift;current.shoulderL+=rig.pose.lift*.22;draw(current);return rig.stats();},
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
