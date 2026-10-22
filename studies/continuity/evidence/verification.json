@@ -1,0 +1,120 @@
+{
+  "renderer": {
+    "renderer": "webgl",
+    "materialSource": "saved PNG layers",
+    "vertices": 8010,
+    "triangles": 15626,
+    "drawCount": 158,
+    "pose": {
+      "yaw": 0.4104887664547294,
+      "pitch": 0.013575446990440058,
+      "roll": -0.044031704279460335,
+      "smile": 0.16079262226658905,
+      "mouth": 2.80458085956874e-13,
+      "eye0": 0.9999999920825156,
+      "eye1": 0.9999999920825156,
+      "gazeX": 0.3013524713958837,
+      "gazeY": 0.013795379649862027,
+      "breath": 0.47581458982621433,
+      "body": -0.2036654035917071,
+      "hair": -0.04816520899508253
+    },
+    "static": false
+  },
+  "psd": {
+    "layerOrder": [
+      "Closed eyelid corrective 1 - rest UV / hidden at neutral",
+      "Closed eyelid corrective 0 - rest UV / hidden at neutral",
+      "Iris right - aperture mask at runtime",
+      "Iris left - aperture mask at runtime",
+      "Continuous skin hair neck suit surface",
+      "Mouth interior extension - occluded by surface",
+      "Approved source - hidden reference"
+    ],
+    "maxChannelDifference": 1,
+    "meanChannelDifference": 0.0002444305435830148
+  },
+  "topology": {
+    "inverted": 0,
+    "minRatio": 0.00498035459559162,
+    "note": "Geometry guard only; not a naturalness score"
+  },
+  "mobileTap": {
+    "renderer": "webgl",
+    "materialSource": "saved PNG layers",
+    "vertices": 8010,
+    "triangles": 15626,
+    "drawCount": 32,
+    "pose": {
+      "yaw": 0.6984303398441968,
+      "pitch": -0.09977577139702462,
+      "roll": 7.849341779316131e-8,
+      "smile": 0,
+      "mouth": 0,
+      "eye0": 1,
+      "eye1": 1,
+      "gazeX": 0.6999995726323337,
+      "gazeY": -0.09999994752885304,
+      "breath": 5.069054912947608e-7,
+      "body": 0,
+      "hair": 0.0064374148956152285
+    },
+    "static": false
+  },
+  "mobileDemo": {
+    "renderer": "webgl",
+    "materialSource": "saved PNG layers",
+    "vertices": 8010,
+    "triangles": 15626,
+    "drawCount": 53,
+    "pose": {
+      "yaw": 0.2477106527546128,
+      "pitch": 0.2187145906323155,
+      "roll": 0.14839286291592385,
+      "smile": 0.32830885332921045,
+      "mouth": 0,
+      "eye0": 1,
+      "eye1": 1,
+      "gazeX": 0.3126092680083714,
+      "gazeY": 0.14141207245927837,
+      "breath": 0.8012105143630586,
+      "body": 0.04923880393401431,
+      "hair": 0.04792232049456805
+    },
+    "static": false
+  },
+  "staticDrawStopped": true,
+  "reducedMotion": true,
+  "missingAssetFallback": true,
+  "requestOrigins": [
+    "http://127.0.0.1:8794"
+  ],
+  "errors": [],
+  "scope": "Headless desktop Chrome WebGL software renderer + mobile viewport/touch emulation. No real phone, Safari, hardware GPU or thermal acceptance.",
+  "followup": {
+    "scope": "Corrective texture transparent padding; closed/intermediate/dark-neck visual captures",
+    "stats": {
+      "renderer": "webgl",
+      "materialSource": "saved PNG layers",
+      "materialTextureBytes": 6489356,
+      "vertices": 8010,
+      "triangles": 15626,
+      "drawCount": 10,
+      "pose": {
+        "yaw": 1,
+        "pitch": 0,
+        "roll": 0.4,
+        "smile": 0.5,
+        "mouth": 0.7,
+        "eye0": 1,
+        "eye1": 1,
+        "gazeX": 0,
+        "gazeY": 0,
+        "breath": 1,
+        "body": 0,
+        "hair": 0
+      },
+      "static": false
+    }
+  }
+}

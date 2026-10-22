@@ -1,0 +1,88 @@
+{
+  "approvedSourceSHA256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96",
+  "closedReferenceSHA256": "f4d3d207de79910b4851b7cff46eb8bf4e072a8bc61b292a2ba205d7c6196afb",
+  "production": "Canvas 2D + ag-psd 31.0.3 + PixiJS 8.22.0 authoring preview",
+  "adobeOperation": false,
+  "newAIGeneration": false,
+  "dimensions": [
+    1122,
+    1402
+  ],
+  "layers": [
+    {
+      "name": "Approved source - hidden reference",
+      "hidden": true
+    },
+    {
+      "name": "Mouth interior extension - occluded by surface",
+      "hidden": false
+    },
+    {
+      "name": "Continuous skin hair neck suit surface",
+      "hidden": false
+    },
+    {
+      "name": "Iris left - aperture mask at runtime",
+      "hidden": false
+    },
+    {
+      "name": "Iris right - aperture mask at runtime",
+      "hidden": false
+    },
+    {
+      "name": "Closed eyelid corrective 0 - rest UV / hidden at neutral",
+      "hidden": true
+    },
+    {
+      "name": "Closed eyelid corrective 1 - rest UV / hidden at neutral",
+      "hidden": true
+    }
+  ],
+  "files": [
+    {
+      "name": "closed-left.png",
+      "sha256": "923926dcdcbdd78e437a7514b528951e02989b74e35f36bc32c9bcf278c513d9",
+      "bytes": 65206
+    },
+    {
+      "name": "closed-right.png",
+      "sha256": "17dfc77293141c402861614b41c29582af609c551b05fdf9f4480219cdd5f3f3",
+      "bytes": 63775
+    },
+    {
+      "name": "hibiki-continuity.psd",
+      "sha256": "2942c57e078b8d1b5be23e6c460001c8d359c54efdfe06652b69880d2f779338",
+      "bytes": 10851390
+    },
+    {
+      "name": "iris-left.png",
+      "sha256": "769bf19bb79e1d369cd42396b86b6973c01110820ac6c531b47835d92e718304",
+      "bytes": 42445
+    },
+    {
+      "name": "iris-right.png",
+      "sha256": "4daa0c357d9699da42b305a20550e4283936ce197047ca0c669de0063ef1df27",
+      "bytes": 42440
+    },
+    {
+      "name": "mouth-underlay.png",
+      "sha256": "a36e3d90db9f467344645a7deb3f809fbe386f56012c3f70f8b7d60f04f694b0",
+      "bytes": 48781
+    },
+    {
+      "name": "neutral-composite.png",
+      "sha256": "bd5e2866febaa3804c7cb232fd4766bf80e62ba60ca137032d1aaf7ff9f51faa",
+      "bytes": 2305319
+    },
+    {
+      "name": "rig.json",
+      "sha256": "7733b2fedf213d164554c827aa7e8cdfb957b9009d12a28bef7f5089861dbc76",
+      "bytes": 1033846
+    },
+    {
+      "name": "surface.png",
+      "sha256": "7de82b6fa5b4fe84c327917e889ef663195e708f4091f1d1be380e63f23cef6d",
+      "bytes": 2304491
+    }
+  ]
+}

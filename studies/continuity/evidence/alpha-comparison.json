@@ -1,0 +1,42 @@
+{
+  "old-neutral": {
+    "neck": {
+      "sourceOpaquePixels": 73500,
+      "alphaLossOver20": 1100,
+      "maxAlphaLoss": 251.0,
+      "meanAlphaLoss": -0.17096598639455782
+    },
+    "hair-cut": {
+      "sourceOpaquePixels": 7213,
+      "alphaLossOver20": 344,
+      "maxAlphaLoss": 107.0,
+      "meanAlphaLoss": 2.783307916262304
+    },
+    "collar": {
+      "sourceOpaquePixels": 68400,
+      "alphaLossOver20": 0,
+      "maxAlphaLoss": 0.0,
+      "meanAlphaLoss": -1.5125730994152047
+    }
+  },
+  "new-neutral": {
+    "neck": {
+      "sourceOpaquePixels": 73500,
+      "alphaLossOver20": 0,
+      "maxAlphaLoss": 0.0,
+      "meanAlphaLoss": 0.0
+    },
+    "hair-cut": {
+      "sourceOpaquePixels": 7213,
+      "alphaLossOver20": 0,
+      "maxAlphaLoss": 0.0,
+      "meanAlphaLoss": 0.0
+    },
+    "collar": {
+      "sourceOpaquePixels": 68400,
+      "alphaLossOver20": 0,
+      "maxAlphaLoss": 0.0,
+      "meanAlphaLoss": 0.0
+    }
+  }
+}

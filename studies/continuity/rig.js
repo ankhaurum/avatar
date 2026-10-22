@@ -1,0 +1,76 @@
+import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
+export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+export const smooth=(a,b,v)=>{let t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
+const lerp=(a,b,t)=>a+(b-a)*t;
+// Piecewise shape profiles are explicit authoring landmarks, separate from bone skinning.
+function profile(y,points){if(y<=points[0][0])return points[0][1];for(let i=1;i<points.length;i++)if(y<=points[i][0])return lerp(points[i-1][1],points[i][1],(y-points[i-1][0])/(points[i][0]-points[i-1][0]));return points.at(-1)[1];}
+export const boneRig={version:'continuity-study-1',bones:[{id:'chest',parent:null,pivot:[583,1150]},{id:'neck',parent:'chest',pivot:[583,930]},{id:'head',parent:'neck',pivot:[583,790]}],motionScope:'small frontal poses',materialSlots:['approved-suit-surface','eye-left','eye-right','mouth-interior'],join:'shared vertices across head neck collar; no feathered alpha seams'};
+export function buildSurface(){
+ const xs=[...new Set([0,WIDTH,...Array.from({length:58},(_,i)=>i*20),...Array.from({length:31},(_,i)=>420+i*12),522,666,...eyes.flatMap(e=>[e.x0,e.x1,e.cx])].filter(x=>x<=WIDTH))].sort((a,b)=>a-b);
+ const ys=[...new Set([0,HEIGHT,...Array.from({length:48},(_,i)=>i*30),...Array.from({length:21},(_,i)=>420+i*5),...Array.from({length:15},(_,i)=>600+i*8),...Array.from({length:18},(_,i)=>740+i*12)].filter(y=>y<640||y>660))].sort((a,b)=>a-b);
+ const eyeBands=[0,.25,.5,.75,1].map(t=>({eye:t}));
+ const bands=[...ys.filter(y=>y<450),...eyeBands,...ys.filter(y=>y>500&&y<640),{lip:-1},{lip:1},...ys.filter(y=>y>660)],rest=[],indices=[],topIndex=bands.findIndex(x=>x.lip===-1);
+ for(const band of bands)for(const x of xs){
+  const w=clamp(Math.sin(Math.PI*clamp((x-522)/144)));let y;
+  if(typeof band==='number')y=band;
+  else if('lip' in band)y=seam(x)+band.lip*.45*w;
+  else {y=450+band.eye*50;for(const e of eyes)if(x>=e.x0-12&&x<=e.x1+12){const [a,b]=eyeBounds(x,e),weight=smooth(e.x0-12,e.x0,x)*(1-smooth(e.x1,e.x1+12,x));y=lerp(y,lerp(a,b,band.eye),weight);}}
+  rest.push(x,y);
+ }
+ for(let j=0;j<bands.length-1;j++)for(let i=0;i<xs.length-1;i++){
+  if(j===topIndex&&xs[i]>=522&&xs[i+1]<=666)continue;
+  const a=j*xs.length+i,b=a+1,c=a+xs.length,d=c+1;indices.push(a,c,b,b,c,d);
+ }
+ return {rest:new Float32Array(rest),indices:new Uint32Array(indices),uvs:new Float32Array(rest.map((x,i)=>x/(i%2?HEIGHT:WIDTH))),xs,bands,topIndex};
+}
+export function localShape(x,y,p){
+ let yy=y,xx=x;
+ for(const [i,e]of eyes.entries())if(x>=e.x0-12&&x<=e.x1+12&&y>425&&y<530){
+  const edge=smooth(e.x0-12,e.x0+3,x)*(1-smooth(e.x1-3,e.x1+12,x));
+  const [a,b]=eyeBounds(x,e),[ca,cb]=eyeBounds(x,e,Math.max(.005,p['eye'+i]??1));
+  yy+=edge*(profile(y,[[425,425],[a,ca],[b,cb],[530,530]])-y);
+ }
+ const tx=clamp((x-522)/144),w=Math.sin(Math.PI*tx),s=seam(x);
+ if(x>=505&&x<=683&&y>605&&y<730){
+  const corner=Math.max(0,1-Math.abs(Math.abs(x-594)-66)/24),smile=(p.smile||0),o=(p.mouth||0);
+  const upper=-2.2*o*w,lower=11*o*w;
+  yy+=profile(y,[[605,0],[s-.45*w,upper],[s+.45*w,lower],[730,0]]);
+  yy-=smile*3.2*corner*(1-smooth(20,55,Math.abs(y-s)));
+  xx+=(x-594)*smile*.018*(1-smooth(12,60,Math.abs(y-s)));
+ }
+ // Small coupled expression, no global Gaussian warp or artificial face-depth sphere.
+ if(y>390&&y<445&&x>420&&x<770)yy-=.8*(p.smile||0)*Math.sin(Math.PI*clamp((y-390)/55));
+ return [xx,yy];
+}
+export function createSkin(p){
+ const breath=p.breath||0;
+ const chestA=(p.body||0)*.004,headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
+ const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
+ const bodyTransform=transform(583,1250,chestA,0,-breath*1.7),neckTransform=transform(583,930,neckA),headTransform=transform(583,790,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
+ return (x,y)=>{
+ const headWeight=1-smooth(770,965,y),neckWeight=(1-smooth(875,1000,y))*(1-headWeight);
+ const body=bodyTransform(x,y),neck=bodyTransform(...neckTransform(x,y));
+ const head=bodyTransform(...neckTransform(...headTransform(x,y)));
+ let px=body[0]+neckWeight*(neck[0]-body[0])+headWeight*(head[0]-body[0]);
+ let py=body[1]+neckWeight*(neck[1]-body[1])+headWeight*(head[1]-body[1]);
+ const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
+ const pinned=1-smooth(1150,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
+ px+=(p.hair||0)*hairSide*tip*.8;
+ return [px,py];
+ };
+}
+export function skin(x,y,p){return createSkin(p)(x,y);}
+export function bakeKeys(surface){
+ const poses={neutral:{},mouthOpen:{mouth:1},smile:{smile:1},smileOpen:{mouth:1,smile:1},blinkLeft:{eye0:0},blinkRight:{eye1:0}};
+ surface.keys=Object.fromEntries(Object.entries(poses).map(([name,p])=>[name,Array.from(surface.rest,(_,i)=>localShape(surface.rest[i-i%2],surface.rest[i-i%2+1],p)[i%2])]));
+ return {version:'hibiki-continuity-keyforms-1',width:WIDTH,height:HEIGHT,bones:boneRig,rest:Array.from(surface.rest),indices:Array.from(surface.indices),uvs:Array.from(surface.uvs),keys:surface.keys,shapeAuthoring:'source-aligned eyelid contours and lip contact boundary; bilinear smile/open corners; no Cubism data'};
+}
+export function readRig(data){return {...data,rest:new Float32Array(data.rest),indices:new Uint32Array(data.indices),uvs:new Float32Array(data.uvs)};}
+export function deformSurface(surface,p){
+ const out=new Float32Array(surface.rest.length),keys=surface.keys,m=clamp(p.mouth||0),s=clamp(p.smile||0),bl=1-clamp(p.eye0??1),br=1-clamp(p.eye1??1),project=createSkin(p);
+ for(let i=0;i<out.length;i+=2){
+  const q=[0,1].map(c=>{const k=i+c;return keys?lerp(lerp(keys.neutral[k],keys.mouthOpen[k],m),lerp(keys.smile[k],keys.smileOpen[k],m),s)+bl*(keys.blinkLeft[k]-keys.neutral[k])+br*(keys.blinkRight[k]-keys.neutral[k]):localShape(surface.rest[i],surface.rest[i+1],p)[c];});
+  out.set(project(...q),i);
+ }return out;
+}
+export function aperture(e,open,p){const points=[];for(let j=0;j<=24;j++){const x=e.x0+(e.x1-e.x0)*j/24;points.push(...skin(x,eyeBounds(x,e,Math.max(.005,open))[0]+2*open,p));}for(let j=24;j>=0;j--){const x=e.x0+(e.x1-e.x0)*j/24;points.push(...skin(x,eyeBounds(x,e,Math.max(.005,open))[1]-.5*open,p));}return points;}
