@@ -44,7 +44,7 @@ export function localShape(x,y,p){
 }
 export function createSkin(p){
  const breath=p.breath||0;
- const chestA=(p.body||0)*.004,headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
+ const chestA=(p.body||0)*.012,headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
  const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
  const bodyTransform=transform(583,1250,chestA,0,-breath*1.7),neckTransform=transform(583,930,neckA),headTransform=transform(583,790,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
  return (x,y)=>{
@@ -53,8 +53,14 @@ export function createSkin(p){
  const head=bodyTransform(...neckTransform(...headTransform(x,y)));
  let px=body[0]+neckWeight*(neck[0]-body[0])+headWeight*(head[0]-body[0]);
  let py=body[1]+neckWeight*(neck[1]-body[1])+headWeight*(head[1]-body[1]);
+ // Continuous thoracic breathing: shoulders rise, ribcage widens, waist stays put.
+ // These fields act on the shared surface, including collar and suit, not separate cutouts.
+ const torso=smooth(810,1010,y)*(1-smooth(1170,1390,y));
+ const shoulder=Math.exp(-(((y-1015)/145)**2))*(1-Math.exp(-(((x-583)/175)**2)));
+ px+=(x-583)*.017*breath*torso;
+ py-=breath*(3.2*torso+5.8*shoulder);
  const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
- const pinned=1-smooth(1150,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
+ const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
  px+=(p.hair||0)*hairSide*tip*.8;
  return [px,py];
  };

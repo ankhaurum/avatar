@@ -1,6 +1,6 @@
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=body-20261022';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
@@ -38,16 +38,17 @@ function draw(p){
  applyZoom();app.renderer.render(app.stage);drawCount++;
 }
 function sample(t){
- return {yaw:Math.sin(t*.48)*.65,pitch:Math.sin(t*.32+.5)*.32,roll:Math.sin(t*.35)*.4,gazeX:Math.sin(t*.48+.12)*.6,gazeY:Math.sin(t*.32+.5)*.2,smile:.28+.2*Math.sin(t*.31),mouth:t%18>8&&t%18<14?Math.max(0,Math.sin(t*8))*.65:0,breath:Math.sin(t*1.18),body:Math.sin(t*.28)*.22};
+ return {yaw:Math.sin(t*.48)*.65,pitch:Math.sin(t*.32+.5)*.32,roll:Math.sin(t*.35)*.4,gazeX:Math.sin(t*.48+.12)*.6,gazeY:Math.sin(t*.32+.5)*.2,smile:.28+.2*Math.sin(t*.31),mouth:t%18>8&&t%18<14?Math.max(0,Math.sin(t*8))*.65:0,breath:Math.sin(t*1.18),body:Math.sin(t*.48-.32)*.42};
 }
 function frame(now){
  requestAnimationFrame(frame);if(fixed||document.hidden)return;
  const dt=Math.max(0,(now-last)/1000);last=now;if($('#static').checked){if(!staticRendered)draw(initial);staticRendered=true;return;}staticRendered=false;
  time+=dt;if(time>nextBlink){blinkAt=time;nextBlink=time+3.4+(Math.sin(time*2)+1)*1.3;}
  let p={...target};if(demo)p={...p,...sample(time)};
+ if(!demo)p.body=(p.yaw||0)*.45;
  if($('#idle').checked||demo){p.breath=Math.sin(time*1.18);p.roll+=Math.sin(time*.6)*.08;}
  const b=blink(time-blinkAt);p.eye0=p.eye1=1-b;
- for(const name of Object.keys(initial)){const speed=name.startsWith('gaze')?14:name.startsWith('eye')?100:6;current[name]+=(p[name]-current[name])*(1-Math.exp(-speed*dt));}
+ for(const name of Object.keys(initial)){const speed=name==='body'?2.2:name.startsWith('gaze')?14:name.startsWith('eye')?100:6;current[name]+=(p[name]-current[name])*(1-Math.exp(-speed*dt));}
  const headVelocity=(current.yaw-oldYaw)/Math.max(.001,dt);oldYaw=current.yaw;velocity+=(headVelocity*.28-velocity)*Math.min(1,dt*7);current.hair+=(velocity-current.hair)*Math.min(1,dt*4);
  if(contactUntil>=0&&time>contactUntil){target.yaw=target.pitch=target.gazeX=target.gazeY=0;contactUntil=-1;}
  draw(current);
