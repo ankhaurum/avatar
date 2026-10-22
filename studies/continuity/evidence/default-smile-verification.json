@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:8794/studies/continuity/",
+  "version": "smile-20261022",
+  "initialSmile": true,
+  "explicitNeutral": true,
+  "resetSmile": true,
+  "staticSmile": true,
+  "errors": [],
+  "scope": "PC Chrome 390px touch emulation, not physical smartphone or aesthetic acceptance"
+}

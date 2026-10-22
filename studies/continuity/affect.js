@@ -1,4 +1,4 @@
-import {track} from './presence.js?v=inertia-20261022';
+import {track} from './presence.js?v=smile-20261022';
 // Hibiki-authored intentions, evaluated before joint response and secondary physics.
 // No Cubism model values, geometry or implementation are used.
 const posture={
