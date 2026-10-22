@@ -1,5 +1,5 @@
 import {seam} from './materials.js';
-import {localShape,createSkin} from './rig.js?v=affect-20261022';
+import {localShape,createSkin} from './rig.js?v=inertia-20261022';
 // Original Canvas-authored oral tissues. No second face or mouth photograph.
 export function authorOralMaterials(){
  const canvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};

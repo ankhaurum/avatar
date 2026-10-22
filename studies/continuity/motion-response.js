@@ -5,7 +5,7 @@ export class MotionResponse{
  constructor(){this.velocity={};}
  reset(){this.velocity={};}
  step(current,target,dt){
-  const h=Math.max(0,Math.min(.1,dt));
+  const h=Number.isFinite(dt)?Math.max(0,Math.min(.5,dt)):0;
   for(const key of Object.keys(current)){
    const goal=Number.isFinite(target[key])?target[key]:0;
    // Eyelids and phonation retain the authored closures rather than spring overshoot.
