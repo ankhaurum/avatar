@@ -2,7 +2,7 @@ import fs from 'node:fs';import path from 'node:path';import assert from 'node:a
 import {greetingPose,GREETING_DURATION} from './greeting.js';
 import {ARM,armChain} from './arm-rig.js';
 for(let i=0;i<=100;i++){const q=armChain(i/100);assert(Math.abs(Math.hypot(q.elbow[0]-q.shoulder[0],q.elbow[1]-q.shoulder[1])-ARM.upper)<1e-8);assert(Math.abs(Math.hypot(q.wrist[0]-q.elbow[0],q.wrist[1]-q.elbow[1])-ARM.forearm)<1e-8);}
-assert.equal(greetingPose(-1).active,false);assert.equal(greetingPose(GREETING_DURATION).active,false);assert.equal(greetingPose(1.7).lift,1);
+assert.equal(greetingPose(-1).active,false);assert.equal(greetingPose(GREETING_DURATION).active,false);assert.equal(greetingPose(2.05).lift,1);
 const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright');
 const out=path.join(import.meta.dirname,'evidence'),browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-webgl','--mute-audio']});
 try{
@@ -27,5 +27,5 @@ try{
  await page.bringToFront();await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForFunction(()=>!document.querySelector('#static').checked);await page.locator('#reset').click();await page.locator('#greet').click();
  await page.waitForFunction(()=>!study.stats().gesture.active,{},{timeout:20000});
  assert.equal(errors.length,0,errors.join('\n'));
- fs.writeFileSync(path.join(out,'greeting-verification.json'),JSON.stringify({baseMain:'4f9d58eb54d541422eb3a94cb7db149863516d19',onDemand:true,faceROI:[330,280,490,550],faceChangedChannels:faceDifference,gesture:stats,live:{gesture:live.gesture,shoulderL:live.pose.shoulderL,state:live.performance.state,emotion:live.performance.emotion},staticStopsGesture:true,reducedMotion:true,missingGesturePreservesAvatar:true,resetCancelsPending:true,video:{saved:false,note:'Not recorded in this run; existing video is historical. Current phase images and live preview show the elbow arc.'},errors,scope:'Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance'},null,2));console.log({faceDifference,gesture:stats,errors});
+ fs.writeFileSync(path.join(out,'greeting-verification.json'),JSON.stringify({baseMain:'b8ce10b4a6aea623523281bdc0a803afa1fd89c6',onDemand:true,faceROI:[330,280,490,550],faceChangedChannels:faceDifference,gesture:stats,live:{gesture:live.gesture,shoulderL:live.pose.shoulderL,state:live.performance.state,emotion:live.performance.emotion},staticStopsGesture:true,reducedMotion:true,missingGesturePreservesAvatar:true,resetCancelsPending:true,video:{saved:false,note:'Not recorded in this run; existing video is historical. Current phase images and live preview show the elbow arc.'},errors,scope:'Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance'},null,2));console.log({faceDifference,gesture:stats,errors});
 }finally{await browser.close();}

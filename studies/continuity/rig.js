@@ -1,5 +1,5 @@
-import {upperArmSkin} from './arm-rig.js?v=bust-20261022';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=bust-20261022';
+import {upperArmSkin} from './arm-rig.js?v=presence-20261022';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=presence-20261022';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 export const smooth=(a,b,v)=>{let t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
@@ -75,8 +75,16 @@ export function expressionShape(x,y,p){
  dy+=(p.round||0)*roundedLip*Math.sin(Math.PI*clamp((x-522)/144));
  return [dx,dy];
 }
+// Authored smile key: lift the lower lid while preserving alert upper lids.
+// The same contour correction drives both skin vertices and the iris aperture.
+export function smileEyeDelta(x,y,p){
+ if(!p.eyeSmile||y<425||y>530)return 0;
+ let delta=0;
+ for(const [i,e]of eyes.entries())if(x>=e.x0&&x<=e.x1){const [a,b]=eyeBounds(x,e,1),edge=Math.sin(Math.PI*clamp((x-e.x0)/(e.x1-e.x0)));delta+=profile(y,[[425,0],[a,-.6],[b,-4],[530,0]])*edge*clamp(p.eyeSmile)*clamp(p['eye'+i]??1);}
+ return delta;
+}
 export function createSkin(p){
- const armTransform=p.armLift?upperArmSkin(p.armLift):null,root=chestFrame(p),armParent=p.armLift?shoulderFrame(p):null;
+ const armTransform=p.armLift?upperArmSkin(p.armLift,p.armUpper??p.armLift):null,root=chestFrame(p),armParent=p.armLift?shoulderFrame(p):null;
  const headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
  const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
  const bodyTransform=root.point,neckTransform=transform(...BUST_HIERARCHY.neck.pivot,neckA),headTransform=transform(...BUST_HIERARCHY.head.pivot,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
@@ -108,7 +116,7 @@ export function deformSurface(surface,p){
  const out=new Float32Array(surface.rest.length),keys=surface.keys,m=clamp(p.mouth||0),s=clamp(p.smile||0),bl=1-clamp(p.eye0??1),br=1-clamp(p.eye1??1),project=createSkin(p);
  for(let i=0;i<out.length;i+=2){
   const q=[0,1].map(c=>{const k=i+c;if(!keys)return localShape(surface.rest[i],surface.rest[i+1],p)[c];let v=lerp(lerp(keys.neutral[k],keys.mouthOpen[k],m),lerp(keys.smile[k],keys.smileOpen[k],m),s)+bl*(keys.blinkLeft[k]-keys.neutral[k])+br*(keys.blinkRight[k]-keys.neutral[k]);for(const name of expressionKeys)if(keys[name]&&p[name])v+=clamp(p[name])*(keys[name][k]-keys.neutral[k]);return v;});
-  out.set(project(...q),i);
+  q[1]+=smileEyeDelta(surface.rest[i],surface.rest[i+1],p);out.set(project(...q),i);
  }return out;
 }
-export function aperture(e,open,p){const points=[];for(let j=0;j<=24;j++){const x=e.x0+(e.x1-e.x0)*j/24;points.push(...skin(x,eyeBounds(x,e,Math.max(.005,open))[0]+2*open,p));}for(let j=24;j>=0;j--){const x=e.x0+(e.x1-e.x0)*j/24;points.push(...skin(x,eyeBounds(x,e,Math.max(.005,open))[1]-.5*open,p));}return points;}
+export function aperture(e,open,p){const points=[],smile=clamp(p.eyeSmile||0)*clamp(open);for(let j=0;j<=24;j++){const x=e.x0+(e.x1-e.x0)*j/24,w=Math.sin(Math.PI*j/24);points.push(...skin(x,eyeBounds(x,e,Math.max(.005,open))[0]+2*open-.6*smile*w,p));}for(let j=24;j>=0;j--){const x=e.x0+(e.x1-e.x0)*j/24,w=Math.sin(Math.PI*j/24);points.push(...skin(x,eyeBounds(x,e,Math.max(.005,open))[1]-.5*open-4*smile*w,p));}return points;}

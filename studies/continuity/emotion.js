@@ -1,10 +1,11 @@
+import {speechShape} from './presence.js?v=presence-20261022';
 // V2 input translation is separate from V3 expression, speech and secondary motion.
 export const STATES = ['idle','attention','thinking','speaking','happy','notify','concern','error','sleep','wake'];
 export const EMOTIONS = {
   neutral: {},
-  gentle: {smile:.32, cheek:.18, eyeOpen:.96},
-  smile: {smile:.68, cheek:.5, eyeOpen:.82},
-  joy: {smile:.95, cheek:.8, eyeOpen:.7, browRaise:.18, roll:.12, shoulder:.12},
+  gentle: {smile:.32, cheek:.18, eyeOpen:.98, eyeSmile:.18},
+  smile: {smile:.68, cheek:.5, eyeOpen:.96, eyeSmile:.65},
+  joy: {smile:.95, cheek:.8, eyeOpen:.94, eyeSmile:1, browRaise:.18, roll:.12, shoulder:.12},
   surprise: {browRaise:.95, round:.85, mouth:.32, pitch:-.12, shoulder:.2},
   concern: {browInner:.8, frown:.55, eyeOpen:.92, roll:-.18, shoulder:-.12},
   sadness: {browInner:.9, frown:.85, eyeOpen:.85, gazeY:.15, pitch:.14, shoulder:-.24},
@@ -80,7 +81,7 @@ export class PerformanceController {
   sample(t,blink=0,audio=0,audioActive=false) {
     this.tick();
     const name=this.emotion||stateEmotion[this.state],e=EMOTIONS[name],a=this.intensity;
-    const out={smile:0,cheek:0,browRaise:0,browInner:0,browLower:0,frown:0,round:0,blush:0,shoulder:0,mouth:0,roll:0,pitch:0,gazeX:0,gazeY:0};
+    const out={smile:0,cheek:0,browRaise:0,browInner:0,browLower:0,frown:0,round:0,blush:0,eyeSmile:0,shoulder:0,mouth:0,roll:0,pitch:0,gazeX:0,gazeY:0};
     for(const k of Object.keys(out))out[k]=(e[k]||0)*a;
     const eye=1+((e.eyeOpen??1)-1)*a;
     out.breathGain=this.state==='sleep'?.4:({thinking:.45,joy:1.05,concern:.75,sadness:.65,surprise:.6,shy:.75}[name]??1);
@@ -92,7 +93,8 @@ export class PerformanceController {
     if(this.state==='wake'){const w=clamp(age/.76);out.eye0=out.eye1=w*(1-blink);}
     const speaking=this.speech??(this.state==='speaking');
     const external=this.now()-this.volumeAt<300?this.volume:0;
-    out.mouth=Math.max(out.mouth,audio,external,speaking&&!audioActive&&this.now()-this.volumeAt>=300?Math.max(0,Math.sin(t*10)+.18*Math.sin(t*17))*.65:0);
+    const speech=speaking&&!audioActive&&this.now()-this.volumeAt>=300?speechShape(t):{open:0,round:0};
+    out.mouth=Math.max(out.mouth,audio,external,speech.open);out.round=Math.max(out.round,speech.round);
     for(const [k,v]of Object.entries(this.inputs))if(k!=='mouth'&&k!=='eye0'&&k!=='eye1')out[k]=v;
     out.mouth=Math.max(out.mouth,this.inputs.mouth||0);
     for(const k of ['eye0','eye1'])if(this.inputs[k]!==undefined)out[k]*=this.inputs[k];
@@ -102,8 +104,19 @@ export class PerformanceController {
 }
 
 // Authored emotion beats are independent of application-state transitions.
-export const DEMO_BEATS=[['gentle','微笑み',false],['joy','喜びながら発話',true],['thinking','考えながら瞬き',false],['surprise','驚き',false],['gentle','驚きから落ち着く',false],['concern','困惑',false],['sadness','悲しみ',false],['shy','照れながら発話',true],['smile','笑顔で発話',true],['neutral','穏やかに正面へ',false]];
-export function emotionDemo(t) {
-  const index=Math.floor(t/4)%DEMO_BEATS.length,[emotion,label,speaking]=DEMO_BEATS[index];
-  return {emotion,label,speaking,index,duration:DEMO_BEATS.length*4};
+export const DEMO_BEATS=[
+ ['gentle','目が合う・小さく挨拶',false,6.4,{yaw:.12,gazeX:0}],
+ ['thinking','少し視線を外して考える',false,4.6,{yaw:-.45,gazeX:-.55,gazeY:-.2}],
+ ['smile','相手を見て微笑みながら話す',true,5.2,{yaw:.06,gazeX:0}],
+ ['joy','嬉しそうに話す',true,4,{yaw:.24,gazeX:.05}],
+ ['surprise','気づく・驚く',false,2.2,{yaw:.3,gazeX:.3}],
+ ['gentle','驚きから落ち着く',false,3,{yaw:0,gazeX:0}],
+ ['concern','少し考え込む',false,3.6,{yaw:-.22,gazeX:-.2,gazeY:.1}],
+ ['sadness','寄り添う',false,3.4,{yaw:.05,gazeY:.15}],
+ ['shy','照れた微笑みと発話',true,3.6,{yaw:.2,gazeX:-.15}],
+ ['neutral','相手へ視線を戻す',false,4,{yaw:0,gazeX:0}]
+];
+export function emotionDemo(t){
+ const duration=DEMO_BEATS.reduce((n,b)=>n+b[3],0),clock=((t%duration)+duration)%duration;let start=0;
+ for(let index=0;index<DEMO_BEATS.length;index++){const [emotion,label,speaking,length,pose]=DEMO_BEATS[index];if(clock<start+length)return {emotion,label,speaking,index,duration,pose,age:clock-start};start+=length;}
 }
