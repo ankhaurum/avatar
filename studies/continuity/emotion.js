@@ -1,4 +1,4 @@
-import {speechShape} from './presence.js?v=mouth-20261023';
+import {speechShape} from './presence.js?v=emotionfix-20261023';
 // V2 input translation is separate from V3 expression, speech and secondary motion.
 export const STATES = ['idle','attention','thinking','speaking','happy','notify','concern','error','sleep','wake'];
 export const EMOTIONS = {
@@ -79,7 +79,7 @@ export class PerformanceController {
     for(let i=0;i<3&&this.deadline&&now>=this.deadline;i++){const due=this.deadline;this.setState(this.next,{},due);}
     return this.state;
   }
-  sample(t,blink=0,audio=0,audioActive=false) {
+  sample(t,blink=0,audio=0,audioActive=false,still=false) {
     this.tick();
     const name=this.emotion||stateEmotion[this.state],e=EMOTIONS[name],a=this.intensity;
     const out={smile:0,cheek:0,browRaise:0,browInner:0,browLower:0,frown:0,round:0,blush:0,eyeSmile:0,shoulder:0,mouth:0,roll:0,pitch:0,gazeX:0,gazeY:0};
@@ -87,19 +87,21 @@ export class PerformanceController {
     const eye=1+((e.eyeOpen??1)-1)*a;
     out.breathGain=this.state==='sleep'?.4:({thinking:.45,joy:1.05,concern:.75,sadness:.65,surprise:.6,shy:.75}[name]??1);
     out.eye0=out.eye1=eye*(1-blink);
-    const age=(this.now()-this.started)/1000,pulse=Math.sin(Math.min(age/1.05,1)*Math.PI);
+    const age=still?100:(this.now()-this.started)/1000,pulse=Math.sin(Math.min(age/1.05,1)*Math.PI);
     if(this.state==='attention'){out.pitch-=pulse*.12;out.shoulder+=pulse*.15;}
     if(this.state==='notify')out.shoulder+=pulse*.2;
     if(this.state==='sleep'){out.eye0=out.eye1=0;out.pitch=.18;out.shoulder=-.1;}
     if(this.state==='wake'){const w=clamp(age/.76);out.eye0=out.eye1=w*(1-blink);}
     const speaking=this.speech??(this.state==='speaking');
     // A resting smile exposes teeth; phonation must still be able to close the lips.
-    if(speaking||audioActive||this.now()-this.volumeAt<300)out.mouth=0;
-    const external=this.now()-this.volumeAt<300?this.volume:0;
-    const speech=speaking&&!audioActive&&this.now()-this.volumeAt>=300?speechShape(t):{open:0,round:0};
+    if(!still&&(speaking||audioActive||this.now()-this.volumeAt<300))out.mouth=0;
+    const external=!still&&this.now()-this.volumeAt<300?this.volume:0;
+    const speech=!still&&speaking&&!audioActive&&this.now()-this.volumeAt>=300?speechShape(t):{open:0,round:0};
     out.mouth=Math.max(out.mouth,audio,external,speech.open);out.round=Math.max(out.round,speech.round);
     for(const [k,v]of Object.entries(this.inputs))if(k!=='mouth'&&k!=='eye0'&&k!=='eye1')out[k]=v;
-    out.mouth=Math.max(out.mouth,this.inputs.mouth||0);
+    // Explicit input includes zero: closing the mouth must override a smile's rest opening.
+    if(this.inputs.mouth!==undefined)out.mouth=this.inputs.mouth;
+    if(this.state==='sleep'){out.mouth=0;out.round=0;}
     for(const k of ['eye0','eye1'])if(this.inputs[k]!==undefined)out[k]*=this.inputs[k];
     return out;
   }

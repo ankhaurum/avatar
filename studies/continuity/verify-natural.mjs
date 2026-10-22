@@ -26,7 +26,7 @@ try{
   fs.writeFileSync(path.join(out,'natural-motion.webm'),Buffer.from(video));
  }
  const speech=await page.evaluate(()=>hibikiV3.snapshot());await page.locator('#demo').click();
- const stats=await page.evaluate(()=>study.stats());assert.equal(stats.rigVersion,'mouth-20261023');assert.equal(errors.length,0,errors.join('\n'));
+ const stats=await page.evaluate(()=>study.stats());assert.equal(stats.rigVersion,'emotionfix-20261023');assert.equal(errors.length,0,errors.join('\n'));
  fs.writeFileSync(path.join(out,'natural-verification.json'),JSON.stringify({responseAtOneSecond:a,frameRateIndependentForConstantTarget:true,unscaledBones:true,faceChangedChannels:faceDifference,poses:frames.map(({png,...f})=>f),liveDemoAfter42Seconds:speech,stats,videoSaved:stream.supported,errors,scope:'Desktop Chrome software WebGL, 390px touch emulation. Live canvas capture is not phone performance. Anatomy and naturalness remain subject to human visual evaluation.'},null,2));
  console.log({faceDifference,video:stream.supported,errors});
 }finally{await browser.close();}
