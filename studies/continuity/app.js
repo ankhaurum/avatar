@@ -1,21 +1,22 @@
-import {presencePose,blinkInterval} from './presence.js?v=natoriarm-20261023';
-import {affectPose,blinkContext} from './affect.js?v=natoriarm-20261023';
-import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=natoriarm-20261023';
+import {presencePose,blinkInterval} from './presence.js?v=presence-shapes-20261023';
+import {affectPose,blinkContext} from './affect.js?v=presence-shapes-20261023';
+import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=presence-shapes-20261023';
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=natoriarm-20261023';
-import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=natoriarm-20261023';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=presence-shapes-20261023';
+import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=presence-shapes-20261023';
 import {AudioDriver} from '../../engine.js?v=cage-4a';
-import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=natoriarm-20261023';
-import {MotionResponse,composeEyeClosure,crossedBlinkContact} from './motion-response.js?v=natoriarm-20261023';
-import {makeSmileMaterial} from './smile-material.js?v=natoriarm-20261023';
+import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=presence-shapes-20261023';
+import {MotionResponse,composeEyeClosure,crossedBlinkContact} from './motion-response.js?v=presence-shapes-20261023';
+import {makeSmileMaterial} from './smile-material.js?v=presence-shapes-20261023';
+import {HairMotion} from './hair-motion.js';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
 app.canvas.style.width='100%';app.canvas.style.height='100%';
 stage.prepend(app.canvas);app.canvas.setAttribute('aria-label','響V3 連続メッシュの比較試作');
 const world=new Container();app.stage.addChild(world);
-const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=natoriarm-20261023').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
+const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=presence-shapes-20261023').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
 if(author)await import('./vendor/bundle.js');
 if(author)bakeKeys(surface);
 function makeMesh(texture,rest,uvs,indices,crop){
@@ -39,7 +40,7 @@ const wire=new Graphics();world.addChild(wire);
 let greeting=null,greetingLoad=null,greetingError=null,greetingLoading=false,greetingRequest=0,gestureClock=0;
 async function loadGreeting(){
  if(greeting)return greeting;
- if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=natoriarm-20261023');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
+ if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=presence-shapes-20261023');const image=new Image();image.src='materials/right-greeting.png';const sleeveImage=new Image();sleeveImage.src='materials/sleeve-cloth.png';await Promise.all([image.decode(),sleeveImage.decode()]);return greeting=new RightGreeting({MeshSimple,Texture,world,image,sleeveImage});})().catch(error=>{greetingLoad=null;throw error;});
  return greetingLoad;
 }
 async function startGreeting(){
@@ -57,7 +58,7 @@ function greetingStatus(){
  $('#greetingStatus').textContent=g?.active?({raise:'右手をそっと差し出しています',wave:'右手で小さく挨拶',lower:'右手を元へ戻しています'})[g.phase]:'右手（画面左側）だけの挨拶 · 約6秒';
 }
 const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,eyeSmile:0,gazeX:0,gazeY:0,breath:0,breathGain:1,body:0,hair:0,browRaise:0,browInner:0,browLower:0,cheek:0,frown:0,round:0,blush:0,shoulder:0,shoulderL:0,shoulderR:0,armLift:0,armUpper:0,scapulaL:0,scapulaR:0,postureX:0,postureY:0,postureRoll:0,hairY:0};
-const controller=new PerformanceController(),audio=new AudioDriver(),bustDynamics=new BustDynamics(),motion=new MotionResponse();let demoBeat=-1,audioMessage=null;
+const controller=new PerformanceController(),audio=new AudioDriver(),bustDynamics=new BustDynamics(),motion=new MotionResponse(),hairMotion=new HairMotion();let demoBeat=-1,audioMessage=null;
 const resting={...initial,...controller.sample(0)};
 let current={...resting},target={...initial},time=0,last=performance.now(),demo=false,fixed=false,blinkAt=-99,nextBlink=3.4,blinkCount=0,contactUntil=-1,pointer=null,rendered={...initial},drawCount=0,staticRendered=false;
 let staticPoseKey='';
@@ -106,19 +107,19 @@ function frame(now){
  $('#audioStatus').textContent=audioMessage??(audio.playing?(audio.mode==='test-tone'?'テスト音量で同期中':'端末内の音声で同期中'):'音声なし · 発話状態では疑似口パク');
  const visiblePose=composeEyeClosure(current,b,crossedBlinkContact(time-winkAt,dt)?1:blink(time-winkAt));
  if(controller.state==='sleep')visiblePose.eye0=visiblePose.eye1=0;
- draw(bustDynamics.apply(visiblePose,dt));
+ draw(hairMotion.apply({...bustDynamics.apply(visiblePose,dt),wind:($('#idle').checked||demo)?1:0},dt));
 }
 function stopDemo(){demo=false;demoBeat=-1;$('#demo').setAttribute('aria-pressed','false');$('#demo').textContent='オートデモ';$('#demoStatus').textContent='感情・発話・身体を組み合わせて再生';}
 for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).oninput=e=>{fixed=false;stopDemo();controller.setPose({[id]:Number(e.target.value)});};
 $('#demo').onclick=()=>{fixed=false;if(demo){stopDemo();stopGreeting();controller.reset();}else{controller.reset();audio.stop();demo=true;demoBeat=-1;time=0;$('#demo').setAttribute('aria-pressed','true');$('#demo').textContent='オートデモを停止';}};
 $('#blink').onclick=()=>{fixed=false;blinkAt=time;};
 $('#greet').onclick=()=>startGreeting();
-$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();stopGreeting();bustDynamics.reset();motion.reset();greetingError=null;target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
+$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();stopGreeting();bustDynamics.reset();hairMotion.reset();motion.reset();greetingError=null;target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
 $('#dark').onchange=e=>stage.classList.toggle('dark',e.target.checked);
-function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked){audio.stop();stopGreeting();bustDynamics.reset();motion.reset();}for(const id of ['demo','blink','tone','chooseAudio','greet'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
+function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked){audio.stop();stopGreeting();bustDynamics.reset();hairMotion.reset();motion.reset();}for(const id of ['demo','blink','tone','chooseAudio','greet'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
 $('#static').onchange=policy;reduced.addEventListener('change',e=>{$('#static').checked=e.matches;policy();});
 for(const id of ['zoom','wire'])$('#'+id).onchange=()=>draw(current);
-document.addEventListener('visibilitychange',()=>{last=performance.now();bustDynamics.reset();motion.reset();});
+document.addEventListener('visibilitychange',()=>{last=performance.now();bustDynamics.reset();hairMotion.reset();motion.reset();});
 stage.addEventListener('pointerdown',e=>{if($('#static').checked)return;pointer=e.pointerId;stage.setPointerCapture(e.pointerId);contact(e);});
 stage.addEventListener('pointermove',e=>{if(pointer===e.pointerId)contact(e);});for(const n of ['pointerup','pointercancel','lostpointercapture'])stage.addEventListener(n,()=>pointer=null);
 function contact(e){activate();const r=stage.getBoundingClientRect(),yaw=clamp((e.clientX-r.left)/r.width*2-1,-1,1),pitch=clamp((e.clientY-r.top)/r.height*2-1,-1,1)*.5;controller.setPose({yaw,pitch,gazeX:yaw,gazeY:pitch});contactUntil=time+3.5;}
@@ -144,5 +145,5 @@ window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
- stats(){return {rigVersion:'natoriarm-20261023',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+smileMaterial.textureBytes+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
+ stats(){return {rigVersion:'presence-shapes-20261023',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+smileMaterial.textureBytes+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
 };draw(resting);requestAnimationFrame(frame);

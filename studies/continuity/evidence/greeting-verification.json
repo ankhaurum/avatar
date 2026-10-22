@@ -1,5 +1,5 @@
 {
-  "baseMain": "262b6ba976dfb52e31d68e3ec9e477ac4aa1ae8c",
+  "baseMain": "1636cb8ac4f5e55119d77e9089fc4edad80125e7",
   "onDemand": true,
   "faceROI": [
     330,
@@ -47,12 +47,18 @@
     },
     "drawRegions": [
       "shared-body-upper-arm",
-      "forearm",
+      "elbow-sleeve",
+      "cuff",
       "hand"
     ],
-    "vertices": 364,
-    "triangles": 648,
-    "textureBytes": 409600
+    "sleeveKeys": [
+      "extended",
+      "mid-bend",
+      "bent"
+    ],
+    "vertices": 461,
+    "triangles": 784,
+    "textureBytes": 671744
   },
   "live": {
     "gesture": {
@@ -61,7 +67,7 @@
       "lift": 1,
       "upperLift": 1,
       "support": 1,
-      "wrist": -0.014240725644746478,
+      "wrist": -0.01346398932681183,
       "prepare": 0,
       "phase": "wave",
       "opacity": 1,
@@ -77,31 +83,37 @@
       ],
       "joints": {
         "shoulder": [
-          145.38518668682048,
-          1003.5769984063793
+          138.33903154433207,
+          994.0933722232544
         ],
         "elbow": [
-          124.56798235519794,
-          1463.1057178612305
+          117.55181551788708,
+          1453.6234492039346
         ],
         "wrist": [
-          216.5023214918324,
-          1168.9963380592421
+          209.46699394351822,
+          1159.5080807258757
         ],
-        "upperAngle": 1.6250000676569596,
-        "forearmAngle": 5.024285263664766,
-        "parentAngle": -0.008933487643185013
+        "upperAngle": 1.6250000000265998,
+        "forearmAngle": 5.024285307179583,
+        "parentAngle": -0.008998678743350882
       },
       "drawRegions": [
         "shared-body-upper-arm",
-        "forearm",
+        "elbow-sleeve",
+        "cuff",
         "hand"
       ],
-      "vertices": 364,
-      "triangles": 648,
-      "textureBytes": 409600
+      "sleeveKeys": [
+        "extended",
+        "mid-bend",
+        "bent"
+      ],
+      "vertices": 461,
+      "triangles": 784,
+      "textureBytes": 671744
     },
-    "shoulderL": 0.2198611597230999,
+    "shoulderL": 0.21999964492532978,
     "state": "speaking",
     "emotion": "gentle"
   },

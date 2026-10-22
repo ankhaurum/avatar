@@ -1,4 +1,4 @@
-import {speechShape} from './presence.js?v=natoriarm-20261023';
+import {speechShape} from './presence.js?v=presence-shapes-20261023';
 // V2 input translation is separate from V3 expression, speech and secondary motion.
 export const STATES = ['idle','attention','thinking','speaking','happy','notify','concern','error','sleep','wake'];
 export const EMOTIONS = {
@@ -110,7 +110,7 @@ export class PerformanceController {
 
 // Authored emotion beats are independent of application-state transitions.
 export const DEMO_BEATS=[
- ['gentle','目が合う・小さく挨拶',false,6.4,{yaw:.12,gazeX:0}],
+ ['smile','笑顔で挨拶しながら話す',true,6.4,{yaw:.12,gazeX:0}],
  ['thinking','少し視線を外して考える',false,4.6,{yaw:-.45,gazeX:-.55,gazeY:-.2}],
  ['smile','相手を見て微笑みながら話す',true,5.2,{yaw:.06,gazeX:0}],
  ['joy','嬉しそうに話す',true,4,{yaw:.24,gazeX:.05}],

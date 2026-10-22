@@ -4,61 +4,61 @@
       "mode": "live",
       "name": "neutral",
       "mouth": 0,
-      "smile": 0.0010782010086878308
+      "smile": 0.0005445987029964079
     },
     {
       "mode": "live",
       "name": "gentle",
       "mouth": 0,
-      "smile": 0.3201058095414312
+      "smile": 0.32000661906016686
     },
     {
       "mode": "live",
       "name": "smile",
-      "mouth": 0.719999995080722,
-      "smile": 0.7798178224486378
+      "mouth": 0.7199999999887887,
+      "smile": 0.7799855602940667
     },
     {
       "mode": "live",
       "name": "joy",
       "mouth": 0.779999977653826,
-      "smile": 0.9496437781482202
+      "smile": 0.9496437781481777
     },
     {
       "mode": "live",
       "name": "surprise",
-      "mouth": 0.32000004508615004,
-      "smile": 0.000993338985996936
+      "mouth": 0.32000000055132827,
+      "smile": 0.00015859070707889772
     },
     {
       "mode": "live",
       "name": "concern",
       "mouth": 0,
-      "smile": 0.0006819539914211053
+      "smile": 0.00030921746347667715
     },
     {
       "mode": "live",
       "name": "sadness",
       "mouth": 0,
-      "smile": 0.00002144613897859629
+      "smile": 0.000004059300956246691
     },
     {
       "mode": "live",
       "name": "thinking",
       "mouth": 0,
-      "smile": 0.0011697491793361452
+      "smile": 0.001633642346542518
     },
     {
       "mode": "live",
       "name": "shy",
       "mouth": 0,
-      "smile": 0.4015419383986644
+      "smile": 0.40003314856660854
     },
     {
       "mode": "live",
       "name": "anger",
       "mouth": 0,
-      "smile": 0.00036344301772039554
+      "smile": 0.00016543098512751965
     },
     {
       "mode": "static",
@@ -123,7 +123,7 @@
     {
       "mode": "volume-driven speech",
       "name": "neutral",
-      "mouth": 1,
+      "mouth": 0.9941028973041434,
       "volume": 1
     },
     {
@@ -135,7 +135,7 @@
     {
       "mode": "volume-driven speech",
       "name": "gentle",
-      "mouth": 1,
+      "mouth": 0.999936978944784,
       "volume": 1
     },
     {
@@ -147,7 +147,7 @@
     {
       "mode": "volume-driven speech",
       "name": "smile",
-      "mouth": 0.9999999999648121,
+      "mouth": 0.9999059803836683,
       "volume": 1
     },
     {
@@ -159,7 +159,7 @@
     {
       "mode": "volume-driven speech",
       "name": "joy",
-      "mouth": 0.9999578284896801,
+      "mouth": 0.9993059490909129,
       "volume": 1
     },
     {
@@ -171,7 +171,7 @@
     {
       "mode": "volume-driven speech",
       "name": "surprise",
-      "mouth": 0.9999999998837602,
+      "mouth": 0.9999998947649537,
       "volume": 1
     },
     {
@@ -183,7 +183,7 @@
     {
       "mode": "volume-driven speech",
       "name": "concern",
-      "mouth": 0.9999716182910245,
+      "mouth": 0.9999999151809323,
       "volume": 1
     },
     {
@@ -195,7 +195,7 @@
     {
       "mode": "volume-driven speech",
       "name": "sadness",
-      "mouth": 0.9997909559736544,
+      "mouth": 0.9992946102062337,
       "volume": 1
     },
     {
@@ -207,7 +207,7 @@
     {
       "mode": "volume-driven speech",
       "name": "thinking",
-      "mouth": 0.9999392814693916,
+      "mouth": 0.9999988467637808,
       "volume": 1
     },
     {
@@ -219,7 +219,7 @@
     {
       "mode": "volume-driven speech",
       "name": "shy",
-      "mouth": 0.9998494628800522,
+      "mouth": 0.9927823443330047,
       "volume": 1
     },
     {
@@ -231,19 +231,19 @@
     {
       "mode": "volume-driven speech",
       "name": "anger",
-      "mouth": 0.9999923323481577,
+      "mouth": 0.999996465269346,
       "volume": 1
     },
     {
       "mode": "volume-driven speech",
       "name": "anger",
-      "mouth": 0,
+      "mouth": 0.012287164909936976,
       "volume": 0
     },
     {
       "mode": "state",
       "name": "idle",
-      "mouth": 0.7199995996409497
+      "mouth": 0.7199998195305033
     },
     {
       "mode": "state",
@@ -258,17 +258,17 @@
     {
       "mode": "state",
       "name": "speaking",
-      "mouth": 0.2321901381772591
+      "mouth": 0.35947829236109485
     },
     {
       "mode": "state",
       "name": "happy",
-      "mouth": 0.7799999992085668
+      "mouth": 0.7799998160046718
     },
     {
       "mode": "state",
       "name": "notify",
-      "mouth": 0.3200000770409461
+      "mouth": 0.32000025639956986
     },
     {
       "mode": "state",
@@ -402,879 +402,11 @@
       "label": "目が合う・小さく挨拶 · 40秒で一巡"
     },
     {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "thinking",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し視線を外して考える · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.1258505880814471,
-      "slider": 0.13,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.33427821468620494,
-      "slider": 0.33,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.23392951597281336,
-      "slider": 0.23,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.07448033612763857,
-      "slider": 0.07,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.561456530075247,
-      "slider": 0.56,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.0134273831062168,
-      "slider": 0.01,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.2827205861514188,
-      "slider": 0.28,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.01147830901649144,
-      "slider": 0.01,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.3122229039369845,
-      "slider": 0.31,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.1422567404159483,
-      "slider": 0.14,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.4719022489831346,
-      "slider": 0.47,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.3767098661052365,
-      "slider": 0.38,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.021509942478377925,
-      "slider": 0.02,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0.46810410764095606,
-      "slider": 0.47,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "相手を見て微笑みながら話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0.05240664632161217,
-      "slider": 0.05,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0.5767787230816853,
-      "slider": 0.58,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0.291960516438921,
-      "slider": 0.29,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0.22284664838683155,
-      "slider": 0.22,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0.31790128023260306,
-      "slider": 0.32,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "joy",
-      "speaking": true,
-      "mouth": 0.01603609472568998,
-      "slider": 0.02,
-      "label": "嬉しそうに話す · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.3161351438494772,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.3199971145532466,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.31999999970822285,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.31999999999990203,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.3199999999999911,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.32,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
-      "emotion": "surprise",
-      "speaking": false,
-      "mouth": 0.32,
-      "slider": 0.32,
-      "label": "気づく・驚く · 40秒で一巡"
-    },
-    {
       "emotion": "gentle",
       "speaking": false,
       "mouth": 0,
       "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "gentle",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "驚きから落ち着く · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "concern",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "少し考え込む · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "sadness",
-      "speaking": false,
-      "mouth": 0,
-      "slider": 0,
-      "label": "寄り添う · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.057900707507236054,
-      "slider": 0.06,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.344135111910465,
-      "slider": 0.34,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.036051197485150704,
-      "slider": 0.04,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.3614797809239969,
-      "slider": 0.36,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.2205489357159173,
-      "slider": 0.22,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.24534520360836498,
-      "slider": 0.25,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.07016388629147986,
-      "slider": 0.07,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.4915306889965607,
-      "slider": 0.49,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0,
-      "slider": 0,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "shy",
-      "speaking": true,
-      "mouth": 0.23770040682012272,
-      "slider": 0.24,
-      "label": "照れた微笑みと発話 · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.622746205102969,
-      "slider": 0.62,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.7182158823062491,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.7199672704191284,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.7199995988102281,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.7199999999728279,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.7199999999999981,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
-    },
-    {
-      "emotion": "smile",
-      "speaking": false,
-      "mouth": 0.72,
-      "slider": 0.72,
-      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
     },
     {
       "emotion": "gentle",
@@ -1282,6 +414,1126 @@
       "mouth": 0,
       "slider": 0,
       "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "目が合う・小さく挨拶 · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "thinking",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し視線を外して考える · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.17889576271163957,
+      "slider": 0.18,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.4253021403510463,
+      "slider": 0.43,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.02913379287642079,
+      "slider": 0.03,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.1557506904872395,
+      "slider": 0.16,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.4407360335136917,
+      "slider": 0.44,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.047307789756329516,
+      "slider": 0.05,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.0811494430610098,
+      "slider": 0.08,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.2679993992346745,
+      "slider": 0.27,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.2831768615998621,
+      "slider": 0.28,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.12168379850882066,
+      "slider": 0.12,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.4976267665634564,
+      "slider": 0.5,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.41625169162577413,
+      "slider": 0.42,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": true,
+      "mouth": 0.11428888891424191,
+      "slider": 0.11,
+      "label": "相手を見て微笑みながら話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0.5241735182317581,
+      "slider": 0.52,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0.03307902888462172,
+      "slider": 0.03,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0.3141717013002033,
+      "slider": 0.31,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0.2450421219281339,
+      "slider": 0.25,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0.23227185528723357,
+      "slider": 0.23,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "joy",
+      "speaking": true,
+      "mouth": 0.012134177701958182,
+      "slider": 0.01,
+      "label": "嬉しそうに話す · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.2774294408851072,
+      "slider": 0.28,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.3199291533138171,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.3199999469797736,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.3199999985547628,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.3199999999735507,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.31999999999998674,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.31999999999999995,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "surprise",
+      "speaking": false,
+      "mouth": 0.32,
+      "slider": 0.32,
+      "label": "気づく・驚く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "gentle",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "驚きから落ち着く · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "concern",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "少し考え込む · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "sadness",
+      "speaking": false,
+      "mouth": 0,
+      "slider": 0,
+      "label": "寄り添う · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.28100220319254254,
+      "slider": 0.28,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.010648724634021611,
+      "slider": 0.01,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.3076180737568902,
+      "slider": 0.31,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.01342977931369091,
+      "slider": 0.01,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.5363124778548672,
+      "slider": 0.54,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.41232937867135,
+      "slider": 0.41,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.4204270111933709,
+      "slider": 0.42,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.012748012576894119,
+      "slider": 0.01,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.20793797819918303,
+      "slider": 0.21,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.07601388709302868,
+      "slider": 0.08,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0.3178662418578465,
+      "slider": 0.32,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "shy",
+      "speaking": true,
+      "mouth": 0,
+      "slider": 0,
+      "label": "照れた微笑みと発話 · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.7197759652949481,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.7199972472484554,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.7199999495008628,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.7199999999438452,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.7199999999995389,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
+    },
+    {
+      "emotion": "smile",
+      "speaking": false,
+      "mouth": 0.72,
+      "slider": 0.72,
+      "label": "笑顔で相手へ視線を戻す · 40秒で一巡"
     },
     {
       "emotion": "gentle",
