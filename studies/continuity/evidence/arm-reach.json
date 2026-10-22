@@ -1,0 +1,17 @@
+{
+  "baseline": "8f0b43d8a4823cf4c5dd515c19f07f2123614217",
+  "reports": [
+    {
+      "before": true,
+      "errors": []
+    },
+    {
+      "before": false,
+      "errors": []
+    }
+  ],
+  "reach": "authored wrist curve with coupled shoulder/elbow inverse kinematics; monotonic lift, fixed segment lengths, no post-solve clamp",
+  "video": "Deterministic 10fps comparison rendered by actual WebGL engine, not measured real-time device performance",
+  "phone": "UNVERIFIED",
+  "newMaterialBytes": 82072
+}

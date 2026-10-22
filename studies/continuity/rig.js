@@ -1,5 +1,5 @@
-import {upperArmSkin} from './arm-rig.js?v=presence-shapes-20261023';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=presence-shapes-20261023';
+import {upperArmSkin} from './arm-rig.js?v=arm-reach-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=arm-reach-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 import {hairOffset} from './hair-motion.js';
