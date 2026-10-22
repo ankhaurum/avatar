@@ -1,0 +1,26 @@
+{
+  "producer": "built-in image_gen: connected full-body pose reference, then isolated forearm cutout; Canvas texture packing",
+  "sourceSHA256": "52da81897b159c932a6c71667de73dbdc3ddf64d3b8a8c483c68912d9802c0ee",
+  "sourceDimensions": [
+    1122,
+    1402
+  ],
+  "crop": [
+    0,
+    740,
+    430,
+    662
+  ],
+  "dimensions": [
+    256,
+    400
+  ],
+  "sha256": "c551fb9a57645136bfe2703bb0791bc56a12a1f8e58bbf30f3b94b4f2a510102",
+  "bytes": 89496,
+  "gpuRGBABytes": 409600,
+  "reference": "../../../assets/approved-front.png",
+  "referenceSHA256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96",
+  "scope": "Relaxed character right hand, cuff and forearm only. Generated head/body pixels are NOT used. Approved face/body source unchanged.",
+  "generated": true,
+  "externalCLIorAPI": false
+}
