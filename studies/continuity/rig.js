@@ -1,5 +1,4 @@
-import {upperArmSkin} from './arm-rig.js?v=arm-reach-20261023';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=arm-reach-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=axilla-binding-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 import {hairOffset} from './hair-motion.js';
@@ -89,7 +88,7 @@ export function smileEyeDelta(x,y,p){
  return delta;
 }
 export function createSkin(p){
- const armTransform=p.armLift?upperArmSkin(p.armLift,p.armUpper??p.armLift):null,root=chestFrame(p),armParent=p.armLift?shoulderFrame(p):null;
+ const root=chestFrame(p);
  const headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
  const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
  const bodyTransform=root.point,neckTransform=transform(...BUST_HIERARCHY.neck.pivot,neckA),headTransform=transform(...BUST_HIERARCHY.head.pivot,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
@@ -105,7 +104,10 @@ export function createSkin(p){
  const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
  const hairA=root.angle+headA+neckA,[hx,hy]=hairOffset(x,y,p);
  px+=Math.cos(hairA)*hx-Math.sin(hairA)*hy;py+=Math.sin(hairA)*hx+Math.cos(hairA)*hy;
- if(armTransform){const weight=(1-smooth(160,285,x))*smooth(990,1110,y)*smooth(0,.05,p.armLift);if(weight>0){const q=armParent.point(...armTransform(x,y));px+=(q[0]-px)*weight;py+=(q[1]-py)*weight;}}
+ // The source surface includes the sleeve seam, axilla and chest in one image.
+ // A rectangular arm weight rotates torso pixels and stretches that seam.
+ // Keep this surface on chest/scapular support; articulated rotation belongs
+ // to the independent arm mesh. Breathing and shoulder support above remain.
  return [px,py];
  };
 }

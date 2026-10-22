@@ -1,5 +1,5 @@
 // Shoulder -> upper arm -> elbow -> forearm -> wrist. Character right, screen left.
-import {BUST_HIERARCHY} from './bust-rig.js?v=arm-reach-20261023';
+import {BUST_HIERARCHY} from './bust-rig.js?v=axilla-binding-20261023';
 const clamp=v=>Math.max(0,Math.min(1,v));
 export const ARM={shoulder:BUST_HIERARCHY.shoulderRight.pivot,upper:460,forearm:Math.hypot(165,300)*.9,sourceWrist:[285,1160],sourceElbow:[120,1460],scale:.9};
 export function armChain(lift=0,upperLift=lift){
@@ -16,9 +16,4 @@ export function armChain(lift=0,upperLift=lift){
  const upperAngle=Math.atan2(elbow[1]-sy,elbow[0]-sx);
  const forearmAngle=Math.atan2(wrist[1]-elbow[1],wrist[0]-elbow[0]);
  return {shoulder:[sx,sy],elbow,wrist,upperAngle,forearmAngle};
-}
-export const ARM_REST=armChain(0);
-export function upperArmSkin(lift,upperLift=lift){
- const [cx,cy]=ARM.shoulder,a=armChain(lift,upperLift).upperAngle-ARM_REST.upperAngle,c=Math.cos(a),s=Math.sin(a);return (x,y)=>{const dx=x-cx,dy=y-cy;
- return [cx+c*dx-s*dy,cy+s*dx+c*dy];};
 }

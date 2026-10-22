@@ -1,6 +1,6 @@
-import {track} from './presence.js?v=arm-reach-20261023';
-import {ARM,armChain} from './arm-rig.js?v=arm-reach-20261023';
-import {shoulderFrame} from './bust-rig.js?v=arm-reach-20261023';
+import {track} from './presence.js?v=axilla-binding-20261023';
+import {ARM,armChain} from './arm-rig.js?v=axilla-binding-20261023';
+import {shoulderFrame} from './bust-rig.js?v=axilla-binding-20261023';
 import {Sleeve} from './sleeve.js';
 // Character's RIGHT hand = screen left. Forearm/elbow stay separate from the face rig.
 const clamp=v=>Math.max(0,Math.min(1,v));
@@ -46,5 +46,5 @@ export class RightGreeting {
   for(const m of this.meshes){if(m!==this.mesh)m.vertices.set(v);m.geometry.getBuffer('aPosition').update();}
   this.chain={...chain,shoulder:parent.point(...chain.shoulder),elbow:parent.point(...chain.elbow),wrist,parentAngle:parent.angle};
  }
- stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['shared-body-upper-arm','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162,triangles:this.indices.length/3+256,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4};}
+ stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162,triangles:this.indices.length/3+256,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4};}
 }
