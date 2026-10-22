@@ -8,6 +8,10 @@ assert.equal(explicit.pitch,.4);assert.equal(explicit.shoulder,.2);assert.equal(
 assert.deepEqual(affectPose({pitch:.4},1,{emotion:'joy',speaking:true,state:'sleep'}),{pitch:.4});
 assert(affectPose({browRaise:1},1,{emotion:'surprise',age:2}).browRaise<affectPose({browRaise:1},1,{emotion:'surprise',age:.1}).browRaise);
 let now=0;const c=new PerformanceController(()=>now);
+assert.equal(c.snapshot().emotion,'smile');assert(c.sample(0).mouth>0);
+c.setEmotion('neutral');assert.equal(c.sample(0).mouth,0);c.reset();
+c.setState('speaking',{calm:false});c.setEmotion('smile');c.setVolume(0);
+assert.equal(c.sample(0).mouth,0);assert(c.sample(0).smile>0);c.reset();
 for(const state of STATES){assert(c.setState(state,{duration:0,calm:false}));assert.equal(c.snapshot().state,state);}
 assert.equal(c.setState('unknown'),false);assert.equal(c.setState('happy',{duration:NaN}),false);
 c.setState('attention');now=919;c.tick();assert.equal(c.state,'attention');now=920;c.tick();assert.equal(c.state,'idle');
@@ -16,7 +20,7 @@ c.reset();c.setEmotion('joy');c.setState('speaking',{calm:false});const coexist=
 c.setState('sleep');assert.equal(c.sample(0).eye0,0);c.setState('wake',{duration:0});assert.equal(c.sample(0).eye0,0);now+=760;assert.equal(c.sample(0).eye0,1);
 c.reset();c.setInputs({gazeX:1,gazeY:-1,strength:.34});assert.equal(c.inputs.gazeX,.34);assert.equal(c.inputs.gazeY,-.34);
 c.setInputs({gazeX:1});assert.equal(c.inputs.gazeX,1);
-c.setVolume(1);assert.equal(c.sample(0).mouth,1);now+=301;assert.equal(c.sample(0).mouth,0);assert.equal(c.setVolume(NaN),false);
+c.setEmotion('neutral');c.setVolume(1);assert.equal(c.sample(0).mouth,1);now+=301;assert.equal(c.sample(0).mouth,0);assert.equal(c.setVolume(NaN),false);
 now=0;c.reset();c.setState('speaking');now=20000;c.tick();assert.equal(c.state,'idle');
 if(process.argv.includes('--contract-only')){console.log('V2 state timing, input validation and independent speech contract verified');process.exit(0);}
 const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright');
@@ -25,7 +29,7 @@ try{
  const page=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8794/studies/continuity/');await page.waitForFunction(()=>window.study?.ready);
  const geometry=await page.evaluate(async()=>{
-  const {deformSurface}=await import('./rig.js?v=inertia-20261022'),{EMOTIONS}=await import('./emotion.js?v=inertia-20261022');
+  const {deformSurface}=await import('./rig.js?v=smile-20261022'),{EMOTIONS}=await import('./emotion.js?v=smile-20261022');
   const s=study.surface,area=(v,a,b,c)=>(v[b*2]-v[a*2])*(v[c*2+1]-v[a*2+1])-(v[b*2+1]-v[a*2+1])*(v[c*2]-v[a*2]);let inverted=0;
   for(const e of Object.values(EMOTIONS))for(const closed of [false,true]){
    const v=deformSurface(s,{...e,eye0:closed?0:e.eyeOpen??1,eye1:closed?0:e.eyeOpen??1,mouth:.7,yaw:.8,breath:1,body:.5});
@@ -52,7 +56,7 @@ try{
  // Freeze authored combined poses for close visual inspection of each expression.
  const captures=[];await page.selectOption('#zoom','face');
  for(const [name,label]of [['neutral','中立'],['gentle','微笑み'],['joy','喜び＋発話'],['surprise','驚き'],['concern','困惑'],['sadness','悲しみ'],['thinking','思考'],['shy','照れ'],['smile','笑顔＋発話']]){
-  await page.evaluate(async name=>{const {PerformanceController}=await import('./emotion.js?v=inertia-20261022');const c=new PerformanceController(()=>0);c.setEmotion(name);study.pose({...c.sample(0),mouth:['joy','smile','shy'].includes(name)?.55:name==='surprise'?.35:0,breath:.4});},name);
+  await page.evaluate(async name=>{const {PerformanceController}=await import('./emotion.js?v=smile-20261022');const c=new PerformanceController(()=>0);c.setEmotion(name);study.pose({...c.sample(0),mouth:['joy','smile','shy'].includes(name)?.55:name==='surprise'?.35:0,breath:.4});},name);
   captures.push({name,label,data:(await page.locator('#stage').screenshot()).toString('base64')});
  }
  const gallery=await browser.newPage({viewport:{width:810,height:1080}});await gallery.setContent('<style>body{margin:0;background:#edf0f5;font:16px system-ui}.grid{display:grid;grid-template-columns:repeat(3,270px)}figure{margin:7px;background:white}img{display:block;width:256px;height:320px}figcaption{text-align:center;padding:4px}</style><div class="grid">'+captures.map(x=>'<figure><img src="data:image/png;base64,'+x.data+'"><figcaption>'+x.label+'</figcaption></figure>').join('')+'</div>');await gallery.screenshot({path:path.join(out,'emotion-gallery.png'),fullPage:true});await gallery.close();

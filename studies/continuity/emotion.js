@@ -1,11 +1,11 @@
-import {speechShape} from './presence.js?v=inertia-20261022';
+import {speechShape} from './presence.js?v=smile-20261022';
 // V2 input translation is separate from V3 expression, speech and secondary motion.
 export const STATES = ['idle','attention','thinking','speaking','happy','notify','concern','error','sleep','wake'];
 export const EMOTIONS = {
   neutral: {},
   gentle: {smile:.32, cheek:.18, eyeOpen:.98, eyeSmile:.18},
-  smile: {smile:.68, cheek:.5, eyeOpen:.96, eyeSmile:.65},
-  joy: {smile:.95, cheek:.8, eyeOpen:.94, eyeSmile:1, browRaise:.18, roll:.12, shoulder:.12},
+  smile: {smile:.78, mouth:.72, cheek:.56, eyeOpen:.98, eyeSmile:.48},
+  joy: {smile:.95, mouth:.78, cheek:.8, eyeOpen:.94, eyeSmile:1, browRaise:.18, roll:.12, shoulder:.12},
   surprise: {browRaise:.95, round:.85, mouth:.32, pitch:-.12, shoulder:.2},
   concern: {browInner:.8, frown:.55, eyeOpen:.92, roll:-.18, shoulder:-.12},
   sadness: {browInner:.9, frown:.85, eyeOpen:.85, gazeY:.15, pitch:.14, shoulder:-.24},
@@ -14,7 +14,7 @@ export const EMOTIONS = {
   anger: {browLower:.8, frown:.4, eyeOpen:.86, shoulder:.08}
 };
 const aliases = {happy:'joy',confusion:'concern',sad:'sadness',blushing:'shy'};
-const stateEmotion = {idle:'neutral',attention:'gentle',thinking:'thinking',speaking:'neutral',happy:'joy',notify:'surprise',concern:'concern',error:'concern',sleep:'neutral',wake:'gentle'};
+const stateEmotion = {idle:'smile',attention:'gentle',thinking:'thinking',speaking:'neutral',happy:'joy',notify:'surprise',concern:'concern',error:'concern',sleep:'neutral',wake:'gentle'};
 const durations = {attention:920,happy:1100,notify:1500,error:2300,wake:760};
 const finite = v => typeof v==='number' && Number.isFinite(v);
 const clamp = (v,a=0,b=1) => Math.max(a,Math.min(b,v));
@@ -93,6 +93,8 @@ export class PerformanceController {
     if(this.state==='sleep'){out.eye0=out.eye1=0;out.pitch=.18;out.shoulder=-.1;}
     if(this.state==='wake'){const w=clamp(age/.76);out.eye0=out.eye1=w*(1-blink);}
     const speaking=this.speech??(this.state==='speaking');
+    // A resting smile exposes teeth; phonation must still be able to close the lips.
+    if(speaking||audioActive||this.now()-this.volumeAt<300)out.mouth=0;
     const external=this.now()-this.volumeAt<300?this.volume:0;
     const speech=speaking&&!audioActive&&this.now()-this.volumeAt>=300?speechShape(t):{open:0,round:0};
     out.mouth=Math.max(out.mouth,audio,external,speech.open);out.round=Math.max(out.round,speech.round);
@@ -115,7 +117,7 @@ export const DEMO_BEATS=[
  ['concern','少し考え込む',false,3.6,{yaw:-.22,gazeX:-.2,gazeY:.1}],
  ['sadness','寄り添う',false,3.4,{yaw:.05,gazeY:.15}],
  ['shy','照れた微笑みと発話',true,3.6,{yaw:.2,gazeX:-.15}],
- ['neutral','相手へ視線を戻す',false,4,{yaw:0,gazeX:0}]
+ ['smile','笑顔で相手へ視線を戻す',false,4,{yaw:0,gazeX:0}]
 ];
 export function emotionDemo(t){
  const duration=DEMO_BEATS.reduce((n,b)=>n+b[3],0),clock=((t%duration)+duration)%duration;let start=0;
