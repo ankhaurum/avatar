@@ -11,7 +11,7 @@ try{
  assert(!requests.some(u=>u.includes('right-greeting.png')),'gesture image must load only on demand');
  await page.evaluate(()=>study.pose({breath:.4}));
  const captures=[];let stats;
- for(const [seconds,label]of [[.55,'腕を上げる準備'],[.9,'肘を曲げて持ち上げる'],[1.25,'胸の横へ'],[2.4,'小さな挨拶'],[5.4,'元へ戻す途中'],[6,'元の姿勢へ']]){
+ for(const [seconds,label]of [[.9,'画面外から持ち上げる'],[1.1,'左側から入る途中'],[1.3,'胸の横へ'],[2.4,'小さな挨拶'],[5.1,'元へ戻す途中'],[5.4,'画面左へ戻る']]){
   stats=await page.evaluate(async seconds=>study.previewGreeting(seconds,{breath:.4}),seconds);
   const image=await page.locator('#stage').screenshot();captures.push({label,data:image.toString('base64')});
  }
@@ -27,5 +27,5 @@ try{
  await page.bringToFront();await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForFunction(()=>!document.querySelector('#static').checked);await page.locator('#reset').click();await page.locator('#greet').click();
  await page.waitForFunction(()=>!study.stats().gesture.active,{},{timeout:20000});
  assert.equal(errors.length,0,errors.join('\n'));
- fs.writeFileSync(path.join(out,'greeting-verification.json'),JSON.stringify({baseMain:'b8ce10b4a6aea623523281bdc0a803afa1fd89c6',onDemand:true,faceROI:[330,280,490,550],faceChangedChannels:faceDifference,gesture:stats,live:{gesture:live.gesture,shoulderL:live.pose.shoulderL,state:live.performance.state,emotion:live.performance.emotion},staticStopsGesture:true,reducedMotion:true,missingGesturePreservesAvatar:true,resetCancelsPending:true,video:{saved:false,note:'Not recorded in this run; existing video is historical. Current phase images and live preview show the elbow arc.'},errors,scope:'Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance'},null,2));console.log({faceDifference,gesture:stats,errors});
+ fs.writeFileSync(path.join(out,'greeting-verification.json'),JSON.stringify({baseMain:'262b6ba976dfb52e31d68e3ec9e477ac4aa1ae8c',onDemand:true,faceROI:[330,280,490,550],faceChangedChannels:faceDifference,gesture:stats,live:{gesture:live.gesture,shoulderL:live.pose.shoulderL,state:live.performance.state,emotion:live.performance.emotion},staticStopsGesture:true,reducedMotion:true,missingGesturePreservesAvatar:true,resetCancelsPending:true,video:{saved:false,note:'Not recorded in this run; existing video is historical. Current phase images and live preview show the elbow arc.'},errors,scope:'Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance'},null,2));console.log({faceDifference,gesture:stats,errors});
 }finally{await browser.close();}
