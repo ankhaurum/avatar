@@ -5,7 +5,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const page=await browser.newPage();await page.goto('http://127.0.0.1:8794/studies/continuity/');
  const artwork=await page.evaluate(async()=>{
-  const {authorOralMaterials}=await import('./mouth.js?v=smile-20261022'),materials=authorOralMaterials();
+  const {authorOralMaterials}=await import('./mouth.js?v=mouth-20261023'),materials=authorOralMaterials();
   await import('./vendor/bundle.js');
   const psd=document.createElement('canvas');psd.width=288;psd.height=100;const g=psd.getContext('2d');g.drawImage(materials.cavity,54,0);g.drawImage(materials.tongue,56,50);g.drawImage(materials.teeth,0,28);
   const children=Object.entries(materials).map(([name,canvas])=>({name,canvas,left:name==='cavity'?54:name==='tongue'?56:0,top:name==='tongue'?50:name==='teeth'?28:0}));

@@ -1,5 +1,5 @@
-import {upperArmSkin} from './arm-rig.js?v=smile-20261022';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=smile-20261022';
+import {upperArmSkin} from './arm-rig.js?v=mouth-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=mouth-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
@@ -35,11 +35,13 @@ export function localShape(x,y,p){
  }
  const tx=clamp((x-522)/144),w=Math.sin(Math.PI*tx),s=seam(x);
  if(x>=505&&x<=683&&y>605&&y<730){
-  const weights=expressionWeights(p),corner=Math.max(0,1-Math.abs(Math.abs(x-594)-66)/24),smile=weights.smile,o=weights.open;
-  const upper=-2.8*o*w,lower=(16-1.5*smile)*o*w;
+  const weights=expressionWeights(p),corner=Math.pow(Math.cos(Math.PI*.5*clamp(Math.abs(Math.abs(x-594)-49)/35)),2),smile=weights.smile,o=weights.open;
+  // Paired lip contours: the opening flattens before the commissure rather
+  // than pulling the contact point into a sharp triangular slit.
+  const aperture=Math.pow(w,1.65),upper=-2.8*o*aperture,lower=(16-1.5*smile)*o*aperture;
   yy+=profile(y,[[605,0],[s-.45*w,upper],[s+.45*w,lower],[730,0]]);
-  yy-=smile*3.2*corner*(1-smooth(20,55,Math.abs(y-s)));
-  xx+=(x-594)*smile*.018*(1-smooth(12,60,Math.abs(y-s)));
+  yy-=smile*2.4*corner*(1-smooth(14,55,Math.abs(y-s)));
+  xx+=(x-594)*smile*.006*(1-smooth(12,60,Math.abs(y-s)));
  }
  // Small coupled expression, no global Gaussian warp or artificial face-depth sphere.
  if(y>390&&y<445&&x>420&&x<770)yy-=.8*(p.smile||0)*Math.sin(Math.PI*clamp((y-390)/55));
@@ -61,7 +63,7 @@ export function expressionShape(x,y,p){
   dy-=4.5*(p.cheek||0)*cheekX*cheekY;
  }
  const s=seam(x),lipY=1-smooth(10,50,Math.abs(y-s));
- const corner=profile(Math.abs(x-594),[[0,0],[43,0],[68,1],[95,0]]);
+ const corner=Math.pow(Math.cos(Math.PI*.5*clamp(Math.abs(Math.abs(x-594)-49)/35)),2);
  if(x>505&&x<683){
   // A separately authored downturned contact curve, preserving the surrounding lip volume.
   const worried=profile(x,[[505,seam(505)],[522,654],[550,650],[594,646],[638,647],[666,650],[683,seam(683)]]);

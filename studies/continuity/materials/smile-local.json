@@ -1,0 +1,14 @@
+{
+  "target": "assets/approved-front.png (unchanged)",
+  "sha256": "3FFCC0A6A7DC647191302E64944C0A9ABCB281976290BA5EE74E0D4544F03B2B",
+  "asset": "smile-local.png",
+  "method": "built-in image_gen followed by local Canvas registration and clipping",
+  "crop": [
+    490,
+    600,
+    208,
+    120
+  ],
+  "reference": "User supplied Identity photograph, expression reference only; not republished",
+  "prompt": "Use case: identity-preserve edit. Image 1 is the exact edit target, the approved frontal bust-up Hibiki in a white/blue suit. Image 2 is reference ONLY for the warmth and natural anatomy of her smile, not pose, clothes or background. Create ONE edited version of image1 with a genuinely warm natural tooth-visible smile: softly raised cheeks, gently smiling lower eyelids but alert open eyes, softly rounded lip corners, realistic pink lip volume, and natural ivory upper incisors with subtle individual contours and receding lateral teeth. No uniform white dental bar, black separators, angular triangular mouth corners or exaggerated grin. Keep the SAME head perfectly frontal, exact same framing, proportions, placement, blue bob hair, eye identity/color, nose, mole, age, skin tone, lighting, neck, suit, body and transparent background as image1. No hand, no head tilt from image2. Changes confined to expression of mouth, nearby cheeks and slight lower eyelid response. Intended as a high resolution registered smile material for the same 2D avatar. Preserve image1 composition and dimensions as closely as possible. No text, no watermark."
+}

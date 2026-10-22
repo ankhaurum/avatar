@@ -8,8 +8,8 @@
     },
     {
       "name": "upper-dental.png",
-      "bytes": 15406,
-      "sha256": "c98003a82baa97423bfe70a92da1bd4d2088403e481b1cd0bfe55b07c2df251f"
+      "bytes": 20388,
+      "sha256": "65b5c0031979fb86495cc7991bbb8c1171ac9bc004460601e17c9b61dee99b19"
     },
     {
       "name": "tongue.png",
@@ -19,8 +19,8 @@
   ],
   "psd": {
     "name": "oral-tissues.psd",
-    "bytes": 106492,
-    "sha256": "17a8dc2f81edc90e942bad22848ca19d9be3305b6e00103b12820139a3988e74"
+    "bytes": 127239,
+    "sha256": "de85f69d1efff46de71c5eb1f7e42d49a1ec9163b3869400c558fad5c8690532"
   },
   "scope": "Small interior structures only. Approved facial bitmap unchanged. Stylized tissue studies, not a newly approved portrait."
 }
