@@ -5,6 +5,7 @@ import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './mater
 import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=presence-20261022';
 import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=presence-20261022';
 import {AudioDriver} from '../../engine.js?v=cage-4a';
+import {mouthBackground,drawUpperTeeth} from './mouth.js?v=mouth-20261022';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
@@ -19,7 +20,8 @@ function makeMesh(texture,rest,uvs,indices,crop){
  const mesh=new MeshSimple({texture:Texture.from(texture),vertices:new Float32Array(rest),uvs:new Float32Array(uvs),indices:new Uint32Array(indices)});mesh.autoUpdate=true;world.addChild(mesh);return mesh;
 }
 const rect=(x,y,w,h)=>[x,y,x+w,y,x+w,y+h,x,y+h],quadIndices=[0,1,2,0,2,3];
-const cavityRest=rect(510,620,180,100),cavity=makeMesh(materials.cavity,cavityRest,cavityRest.map((v,i)=>v/(i%2?HEIGHT:WIDTH)),quadIndices,[510,620,180,100]);
+const cavityRest=rect(510,620,180,100),cavity=makeMesh(mouthBackground(),cavityRest,cavityRest.map((v,i)=>v/(i%2?HEIGHT:WIDTH)),quadIndices,[510,620,180,100]);
+const upperTeeth=new Graphics();world.addChild(upperTeeth);
 const main=makeMesh(materials.base,surface.rest,surface.uvs,surface.indices);
 const irises=eyes.map((e,i)=>{const rest=rect(e.cx-24,e.cy-24,48,48),mesh=makeMesh(materials.irises[i],rest,rest.map((v,j)=>v/(j%2?HEIGHT:WIDTH)),quadIndices,i?[657,445,47,47]:[474,451,47,47]),mask=new Graphics();world.addChild(mask);mesh.mask=mask;return {mesh,mask,rest};});
 const closedCorrectives=eyes.map((e,i)=>{const ids=[];for(let j=0;j<surface.indices.length;j+=3){const tri=surface.indices.slice(j,j+3);if([...tri].some(k=>surface.rest[k*2]>e.x0-45&&surface.rest[k*2]<e.x1+45&&surface.rest[k*2+1]>410&&surface.rest[k*2+1]<545))ids.push(...tri);}return makeMesh(materials.closedEyes[i],surface.rest,surface.uvs,ids,[e.x0-20,428,e.x1-e.x0+40,93]);});
@@ -60,6 +62,7 @@ function draw(p){
  const pos=deformSurface(surface,p);main.vertices.set(pos);main.geometry.getBuffer('aPosition').update();
  cheekMesh.alpha=p.blush||0;cheekMesh.visible=cheekMesh.alpha>.001;if(cheekMesh.visible){cheekMesh.vertices.set(pos);cheekMesh.geometry.getBuffer('aPosition').update();}
  for(let j=0;j<8;j+=2)cavity.vertices.set(skin(cavityRest[j],cavityRest[j+1],p),j);cavity.geometry.getBuffer('aPosition').update();
+ drawUpperTeeth(upperTeeth,p);
  for(const [i,r]of irises.entries()){
   r.mesh.visible=p['eye'+i]>.1;
   for(let j=0;j<8;j+=2)r.mesh.vertices.set(skin(r.rest[j]+p.gazeX*5,r.rest[j+1]+p.gazeY*2.8,p),j);
