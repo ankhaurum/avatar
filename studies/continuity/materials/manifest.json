@@ -76,13 +76,14 @@
     },
     {
       "name": "rig.json",
-      "sha256": "7733b2fedf213d164554c827aa7e8cdfb957b9009d12a28bef7f5089861dbc76",
-      "bytes": 1033846
+      "sha256": "96c7f3e5665c29000e104caa5a83f09e9b2497096f5834b3c0ca15315775f312",
+      "bytes": 1475103
     },
     {
       "name": "surface.png",
       "sha256": "7de82b6fa5b4fe84c327917e889ef663195e708f4091f1d1be380e63f23cef6d",
       "bytes": 2304491
     }
-  ]
+  ],
+  "shapeAuthoring": "Source-aligned local brow, cheek, lip-corner and lip-rounding keyforms; same shared surface and approved bitmap materials"
 }
