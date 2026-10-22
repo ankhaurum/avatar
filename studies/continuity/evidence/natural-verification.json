@@ -1,0 +1,390 @@
+{
+  "responseAtOneSecond": {
+    "yaw": 0.9997995795905169,
+    "body": 0.9522674671156839,
+    "gazeX": 0.9999999990562164
+  },
+  "frameRateIndependentForConstantTarget": true,
+  "unscaledBones": true,
+  "faceChangedChannels": 0,
+  "poses": [
+    {
+      "t": 0.5,
+      "joints": {
+        "shoulder": [
+          146.11721768850265,
+          992.3675277399287
+        ],
+        "elbow": [
+          25.580162914427163,
+          1436.294118998429
+        ],
+        "wrist": [
+          130.7313886569272,
+          1725.9412659287066
+        ],
+        "upperAngle": 1.8328130670191265,
+        "forearmAngle": 1.2194433851505908,
+        "parentAngle": 0.003115692411278038
+      }
+    },
+    {
+      "t": 1.05,
+      "joints": {
+        "shoulder": [
+          144.34305994128007,
+          993.8128722423756
+        ],
+        "elbow": [
+          -51.67217705345723,
+          1409.959513302828
+        ],
+        "wrist": [
+          244.6374168883486,
+          1325.3848448846657
+        ],
+        "upperAngle": 2.013773205162266,
+        "forearmAngle": -0.27525651483864755,
+        "parentAngle": -0.0027772392244295426
+      }
+    },
+    {
+      "t": 1.7,
+      "joints": {
+        "shoulder": [
+          141.3846340613696,
+          993.7901826292673
+        ],
+        "elbow": [
+          104.14284509849779,
+          1452.2801488824502
+        ],
+        "wrist": [
+          209.52081470050797,
+          1162.7154177383454
+        ],
+        "upperAngle": 1.6584454431675502,
+        "forearmAngle": -1.2151761383421786,
+        "parentAngle": -0.006599999999999999
+      }
+    },
+    {
+      "t": 2.7,
+      "joints": {
+        "shoulder": [
+          141.3846340613696,
+          993.7901826292673
+        ],
+        "elbow": [
+          119.52042977013488,
+          1453.2702763990749
+        ],
+        "wrist": [
+          212.14069363487468,
+          1159.3761854043323
+        ],
+        "upperAngle": 1.6249451207449748,
+        "forearmAngle": -1.2589004686812086,
+        "parentAngle": -0.006599999999999999
+      }
+    },
+    {
+      "t": 4.9,
+      "joints": {
+        "shoulder": [
+          141.43222202061534,
+          993.791602100484
+        ],
+        "elbow": [
+          70.63581628969638,
+          1448.310984454618
+        ],
+        "wrist": [
+          204.62092146851467,
+          1170.8218106293657
+        ],
+        "upperAngle": 1.7318569803978785,
+        "forearmAngle": -1.1144229264410528,
+        "parentAngle": -0.006541267052051834
+      }
+    },
+    {
+      "t": 5.7,
+      "joints": {
+        "shoulder": [
+          146.04282482756852,
+          993.9353303435677
+        ],
+        "elbow": [
+          -41.096336130485184,
+          1414.1482935371318
+        ],
+        "wrist": [
+          188.7089087806611,
+          1619.4329724864583
+        ],
+        "upperAngle": 1.9906122828672914,
+        "forearmAngle": 0.729941271599168,
+        "parentAngle": -0.0008410216501467112
+      }
+    }
+  ],
+  "liveDemoAfter16Seconds": {
+    "state": "idle",
+    "phase": "normal",
+    "emotion": "neutral",
+    "emotionOverride": "neutral",
+    "intensity": 1,
+    "inputs": {},
+    "speaking": false,
+    "ready": true,
+    "pose": {
+      "yaw": 1.2520285984201845e-13,
+      "pitch": 1.5120285134068253e-12,
+      "roll": 0.034999888363374906,
+      "smile": 1.3570530545743938e-13,
+      "mouth": 1.9663786009266093e-32,
+      "eye0": 1,
+      "eye1": 1,
+      "eyeSmile": 0,
+      "gazeX": -1.2413993450298563e-29,
+      "gazeY": 1.6551991267064634e-29,
+      "breath": -0.9931875436331876,
+      "breathGain": 0.9999999999999152,
+      "body": 0.0000013760244264639919,
+      "hair": 5.751453770263003e-7,
+      "browRaise": 1.2154965246107065e-64,
+      "browInner": 7.594596405842888e-27,
+      "browLower": 3.2293090812912524e-104,
+      "cheek": 1.187421422752594e-13,
+      "frown": 7.172674383295587e-27,
+      "round": 2.3297724559586032e-15,
+      "blush": 2.8837377409705847e-13,
+      "shoulder": -1.6280935051620802e-20,
+      "shoulderL": 6.262793710575802e-96,
+      "shoulderR": 0,
+      "armLift": 9.180695876581863e-122,
+      "armUpper": 1.0068471137419815e-121,
+      "scapulaL": 7.297048195634281e-51,
+      "scapulaR": 7.297048195634281e-51,
+      "postureX": 0.8974161145596106,
+      "postureY": 5.0393065457738955e-15,
+      "postureRoll": -2.4951212477379003e-67,
+      "hairY": 1.3720833326708498e-12,
+      "hairLeft": 5.956473449033821e-8,
+      "hairRight": 7.82541487607964e-8
+    },
+    "wardrobe": "suit",
+    "supportedWardrobes": [
+      "suit"
+    ],
+    "audioMode": "none",
+    "audioPlaying": false,
+    "peakEnvelope": 0,
+    "frames": 433,
+    "staticMode": false,
+    "gesture": {
+      "side": "character-right/screen-left",
+      "active": false,
+      "lift": 0,
+      "wrist": 0,
+      "phase": "rest",
+      "opacity": 1,
+      "entry": "articulated shoulder upper-arm forearm hand; hierarchical joint tracks",
+      "chain": [
+        "chest",
+        "right-shoulder",
+        "right-upper-arm",
+        "right-elbow",
+        "right-forearm",
+        "right-wrist",
+        "right-hand"
+      ],
+      "joints": {
+        "shoulder": [
+          154.94513506050686,
+          1007.2234129428577
+        ],
+        "elbow": [
+          59.317600996384996,
+          1457.1738265761994
+        ],
+        "wrist": [
+          140.1435750295925,
+          1754.5278444094602
+        ],
+        "upperAngle": 1.7815685870665474,
+        "forearmAngle": 1.3067504958073162,
+        "parentAngle": -0.0013590723665672707
+      },
+      "drawRegions": [
+        "shared-body-upper-arm",
+        "forearm",
+        "hand"
+      ],
+      "vertices": 364,
+      "triangles": 648,
+      "textureBytes": 409600
+    }
+  },
+  "stats": {
+    "rigVersion": "human-20261022",
+    "hierarchy": {
+      "root": {
+        "parent": null,
+        "pivot": [
+          583,
+          1250
+        ]
+      },
+      "thorax": {
+        "parent": "root"
+      },
+      "shoulderRight": {
+        "parent": "thorax",
+        "pivot": [
+          150,
+          1000
+        ]
+      },
+      "shoulderLeft": {
+        "parent": "thorax",
+        "pivot": [
+          1016,
+          1000
+        ]
+      },
+      "neck": {
+        "parent": "thorax",
+        "pivot": [
+          583,
+          930
+        ]
+      },
+      "head": {
+        "parent": "neck",
+        "pivot": [
+          583,
+          790
+        ]
+      },
+      "eyes": {
+        "parent": "head"
+      },
+      "mouth": {
+        "parent": "head"
+      },
+      "hair": {
+        "parent": "head",
+        "secondary": true
+      },
+      "upperArmRight": {
+        "parent": "shoulderRight"
+      },
+      "forearmRight": {
+        "parent": "upperArmRight"
+      },
+      "handRight": {
+        "parent": "forearmRight"
+      }
+    },
+    "renderer": "webgl",
+    "materialSource": "saved PNG layers",
+    "materialTextureBytes": 7138892,
+    "vertices": 8010,
+    "triangles": 15626,
+    "drawCount": 438,
+    "pose": {
+      "yaw": 1.0123590562551526e-14,
+      "pitch": 1.547042234645418e-13,
+      "roll": 0.03499998054400061,
+      "smile": 1.2864681174548947e-14,
+      "mouth": 6.886402784082727e-35,
+      "eye0": 1,
+      "eye1": 1,
+      "eyeSmile": 0,
+      "gazeX": -4.6991064945920905e-32,
+      "gazeY": 6.265475326122754e-32,
+      "breath": -0.9388439168881509,
+      "breathGain": 0.999999999999992,
+      "body": 4.780873994507052e-7,
+      "hair": 8.653903343420852e-7,
+      "browRaise": 1.1522744232570318e-65,
+      "browInner": 7.199575660008809e-28,
+      "browLower": 3.0613417511459637e-105,
+      "cheek": 1.1256596027730327e-14,
+      "frown": 6.799599234452317e-28,
+      "round": 2.2085930799922355e-16,
+      "blush": 2.7337447495916498e-14,
+      "shoulder": -2.5674582157071198e-21,
+      "shoulderL": 9.591072573893724e-97,
+      "shoulderR": 0,
+      "armLift": 8.703176711817145e-123,
+      "armUpper": 9.544775766978199e-123,
+      "scapulaL": 1.1257218564398909e-51,
+      "scapulaR": 1.1257218564398909e-51,
+      "postureX": 0.899201888038885,
+      "postureY": 1.2726992859617931e-15,
+      "postureRoll": -6.886096929413586e-68,
+      "hairY": 1.43466147039671e-12,
+      "hairLeft": 6.418748938610568e-7,
+      "hairRight": 7.15358695196983e-7
+    },
+    "performance": {
+      "state": "idle",
+      "phase": "normal",
+      "emotion": "neutral",
+      "emotionOverride": null,
+      "intensity": 1,
+      "inputs": {},
+      "speaking": false
+    },
+    "gesture": {
+      "side": "character-right/screen-left",
+      "active": false,
+      "lift": 0,
+      "wrist": 0,
+      "phase": "rest",
+      "opacity": 1,
+      "entry": "articulated shoulder upper-arm forearm hand; hierarchical joint tracks",
+      "chain": [
+        "chest",
+        "right-shoulder",
+        "right-upper-arm",
+        "right-elbow",
+        "right-forearm",
+        "right-wrist",
+        "right-hand"
+      ],
+      "joints": {
+        "shoulder": [
+          154.94513506050686,
+          1007.2234129428577
+        ],
+        "elbow": [
+          59.317600996384996,
+          1457.1738265761994
+        ],
+        "wrist": [
+          140.1435750295925,
+          1754.5278444094602
+        ],
+        "upperAngle": 1.7815685870665474,
+        "forearmAngle": 1.3067504958073162,
+        "parentAngle": -0.0013590723665672707
+      },
+      "drawRegions": [
+        "shared-body-upper-arm",
+        "forearm",
+        "hand"
+      ],
+      "vertices": 364,
+      "triangles": 648,
+      "textureBytes": 409600
+    },
+    "static": false
+  },
+  "videoSaved": true,
+  "errors": [],
+  "scope": "Desktop Chrome software WebGL, 390px touch emulation. Live canvas capture is not phone performance. Anatomy and naturalness remain subject to human visual evaluation."
+}

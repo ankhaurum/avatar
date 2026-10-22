@@ -1,6 +1,7 @@
-import {upperArmSkin} from './arm-rig.js?v=presence-20261022';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=presence-20261022';
+import {upperArmSkin} from './arm-rig.js?v=human-20261022';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=human-20261022';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
+import {expressionWeights} from './shape-constraints.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 export const smooth=(a,b,v)=>{let t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -34,8 +35,8 @@ export function localShape(x,y,p){
  }
  const tx=clamp((x-522)/144),w=Math.sin(Math.PI*tx),s=seam(x);
  if(x>=505&&x<=683&&y>605&&y<730){
-  const corner=Math.max(0,1-Math.abs(Math.abs(x-594)-66)/24),smile=(p.smile||0),o=(p.mouth||0);
-  const upper=-2.2*o*w,lower=11*o*w;
+  const weights=expressionWeights(p),corner=Math.max(0,1-Math.abs(Math.abs(x-594)-66)/24),smile=weights.smile,o=weights.open;
+  const upper=-2.8*o*w,lower=(16-1.5*smile)*o*w;
   yy+=profile(y,[[605,0],[s-.45*w,upper],[s+.45*w,lower],[730,0]]);
   yy-=smile*3.2*corner*(1-smooth(20,55,Math.abs(y-s)));
   xx+=(x-594)*smile*.018*(1-smooth(12,60,Math.abs(y-s)));
@@ -48,6 +49,7 @@ export function localShape(x,y,p){
 // Authored local keyforms, anchored at each feature boundary. No whole-face warp.
 export const expressionKeys=['browRaise','browInner','browLower','cheek','frown','round'];
 export function expressionShape(x,y,p){
+ const weights=expressionWeights(p);p={...p,frown:weights.frown,round:weights.round};
  let dx=0,dy=0;
  for(const [i,e]of eyes.entries()){
   const tx=clamp((x-(e.x0-12))/(e.x1-e.x0+24)),side=Math.sin(Math.PI*tx);
@@ -99,7 +101,8 @@ export function createSkin(p){
  const thorax=root.vector(...thoraxOffset(x,y,p));px+=thorax[0];py+=thorax[1];
  const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
  const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
- const hairA=root.angle+headA+neckA,hx=(p.hair||0)*hairSide*tip*4.5,hy=(p.hairY||0)*hairSide*tip*3;
+ const sideHair=x<583?(p.hairLeft??p.hair??0):(p.hairRight??p.hair??0);
+ const hairA=root.angle+headA+neckA,hx=sideHair*hairSide*tip*4.5,hy=(p.hairY||0)*hairSide*tip*3;
  px+=Math.cos(hairA)*hx-Math.sin(hairA)*hy;py+=Math.sin(hairA)*hx+Math.cos(hairA)*hy;
  if(armTransform){const weight=(1-smooth(160,285,x))*smooth(990,1110,y)*smooth(0,.05,p.armLift);if(weight>0){const q=armParent.point(...armTransform(x,y));px+=(q[0]-px)*weight;py+=(q[1]-py)*weight;}}
  return [px,py];
@@ -113,9 +116,9 @@ export function bakeKeys(surface){
 }
 export function readRig(data){return {...data,rest:new Float32Array(data.rest),indices:new Uint32Array(data.indices),uvs:new Float32Array(data.uvs)};}
 export function deformSurface(surface,p){
- const out=new Float32Array(surface.rest.length),keys=surface.keys,m=clamp(p.mouth||0),s=clamp(p.smile||0),bl=1-clamp(p.eye0??1),br=1-clamp(p.eye1??1),project=createSkin(p);
+ const out=new Float32Array(surface.rest.length),keys=surface.keys,weights=expressionWeights(p),m=weights.open,s=weights.smile,bl=1-clamp(p.eye0??1),br=1-clamp(p.eye1??1),project=createSkin(p);
  for(let i=0;i<out.length;i+=2){
-  const q=[0,1].map(c=>{const k=i+c;if(!keys)return localShape(surface.rest[i],surface.rest[i+1],p)[c];let v=lerp(lerp(keys.neutral[k],keys.mouthOpen[k],m),lerp(keys.smile[k],keys.smileOpen[k],m),s)+bl*(keys.blinkLeft[k]-keys.neutral[k])+br*(keys.blinkRight[k]-keys.neutral[k]);for(const name of expressionKeys)if(keys[name]&&p[name])v+=clamp(p[name])*(keys[name][k]-keys.neutral[k]);return v;});
+  const q=[0,1].map(c=>{const k=i+c;if(!keys)return localShape(surface.rest[i],surface.rest[i+1],p)[c];let v=lerp(lerp(keys.neutral[k],keys.mouthOpen[k],m),lerp(keys.smile[k],keys.smileOpen[k],m),s)+bl*(keys.blinkLeft[k]-keys.neutral[k])+br*(keys.blinkRight[k]-keys.neutral[k]);for(const name of expressionKeys)if(keys[name]&&p[name])v+=(name==='round'?weights.round:name==='frown'?weights.frown:clamp(p[name]))*(keys[name][k]-keys.neutral[k]);return v;});
   q[1]+=smileEyeDelta(surface.rest[i],surface.rest[i+1],p);out.set(project(...q),i);
  }return out;
 }
