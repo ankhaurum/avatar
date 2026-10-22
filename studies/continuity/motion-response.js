@@ -9,7 +9,7 @@ export class MotionResponse{
   for(const key of Object.keys(current)){
    const goal=Number.isFinite(target[key])?target[key]:0;
    // Eyelids and phonation retain the authored closures rather than spring overshoot.
-   if(!Object.hasOwn(rates,key)){const speed=key.startsWith('eye')?100:key==='mouth'?24:10;current[key]+=(goal-current[key])*(-Math.expm1(-speed*h));continue;}
+   if(!Object.hasOwn(rates,key)){const speed=(key==='eye0'||key==='eye1')?100:key==='mouth'?24:key==='eyeSmile'?8:10;current[key]+=(goal-current[key])*(-Math.expm1(-speed*h));continue;}
    const w=rates[key],offset=current[key]-goal,v=this.velocity[key]||0,j=v+w*offset,e=Math.exp(-w*h);
    current[key]=goal+(offset+j*h)*e;this.velocity[key]=(v-w*j*h)*e;
   }

@@ -1,4 +1,4 @@
-import {speechShape} from './presence.js?v=human-20261022';
+import {speechShape} from './presence.js?v=affect-20261022';
 // V2 input translation is separate from V3 expression, speech and secondary motion.
 export const STATES = ['idle','attention','thinking','speaking','happy','notify','concern','error','sleep','wake'];
 export const EMOTIONS = {
@@ -22,12 +22,13 @@ export class PerformanceController {
   constructor(now=()=>performance.now()) {
     this.now=now; this.state='idle'; this.phase='normal'; this.started=now();
     this.deadline=0; this.calmAt=0; this.next='idle'; this.emotion=null; this.intensity=1;
-    this.inputs={}; this.strength=1; this.speech=null; this.volume=0; this.volumeAt=-Infinity;
+    this.inputs={}; this.strength=1; this.speech=null; this.volume=0; this.volumeAt=-Infinity;this.emotionStarted=now();
   }
   setState(state,options={},at=this.now()) {
     if(!STATES.includes(state)||!options||typeof options!=='object')return false;
     if(options.next!==undefined&&!STATES.includes(options.next))return false;
     if(options.duration!==undefined&&(!finite(options.duration)||options.duration<0))return false;
+    if(!this.emotion&&stateEmotion[state]!==stateEmotion[this.state])this.emotionStarted=at;
     this.state=state; this.phase=typeof options.phase==='string'?options.phase:'normal'; this.started=at;
     const duration=options.duration??durations[state]??0;
     this.deadline=duration>0?this.started+duration:0;this.next=options.next||'idle';
@@ -39,10 +40,10 @@ export class PerformanceController {
     return true;
   }
   setEmotion(name,intensity=1) {
-    if(name===null||name==='auto'){this.emotion=null;return true;}
+    if(name===null||name==='auto'){if(this.emotion!==null)this.emotionStarted=this.now();this.emotion=null;return true;}
     name=aliases[name]||name;
     if(!Object.hasOwn(EMOTIONS,name)||!finite(intensity))return false;
-    this.emotion=name;this.intensity=clamp(intensity);return true;
+    if(this.emotion!==name)this.emotionStarted=this.now();this.emotion=name;this.intensity=clamp(intensity);return true;
   }
   setPose(input={}) {
     if(!input||typeof input!=='object')return {applied:[],unsupported:[]};
