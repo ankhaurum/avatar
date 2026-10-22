@@ -1,5 +1,5 @@
 {
-  "baseMain": "1636cb8ac4f5e55119d77e9089fc4edad80125e7",
+  "baseMain": "8f0b43d8a4823cf4c5dd515c19f07f2123614217",
   "onDemand": true,
   "faceROI": [
     330,
@@ -34,15 +34,15 @@
         995.6056984975078
       ],
       "elbow": [
-        78.6570240670492,
-        1451.2174366298168
+        -167.363837411014,
+        1335.9975573263755
       ],
       "wrist": [
-        9.930617808427144,
-        1150.8361271533868
+        140.2841723161758,
+        1353.4604354081503
       ],
-      "upperAngle": 1.7152713805964617,
-      "forearmAngle": 4.493700058791476,
+      "upperAngle": 2.3147854174429,
+      "forearmAngle": 0.06293849043451068,
       "parentAngle": -0.006236809733838623
     },
     "drawRegions": [
@@ -67,7 +67,7 @@
       "lift": 1,
       "upperLift": 1,
       "support": 1,
-      "wrist": -0.01346398932681183,
+      "wrist": -0.022605040114656506,
       "prepare": 0,
       "phase": "wave",
       "opacity": 1,
@@ -83,20 +83,20 @@
       ],
       "joints": {
         "shoulder": [
-          138.33903154433207,
-          994.0933722232544
+          135.78442626321635,
+          988.8990503297198
         ],
         "elbow": [
-          117.55181551788708,
-          1453.6234492039346
+          118.84623559401558,
+          1448.587094221285
         ],
         "wrist": [
-          209.46699394351822,
-          1159.5080807258757
+          207.20073208705256,
+          1153.3825330277598
         ],
-        "upperAngle": 1.6250000000265998,
-        "forearmAngle": 5.024285307179583,
-        "parentAngle": -0.008998678743350882
+        "upperAngle": 1.6165239881776656,
+        "forearmAngle": -1.2710853870933103,
+        "parentAngle": -0.008897181657939396
       },
       "drawRegions": [
         "shared-body-upper-arm",
@@ -113,7 +113,7 @@
       "triangles": 784,
       "textureBytes": 671744
     },
-    "shoulderL": 0.21999964492532978,
+    "shoulderL": 0.21975338545573406,
     "state": "speaking",
     "emotion": "gentle"
   },
@@ -123,7 +123,7 @@
   "resetCancelsPending": true,
   "video": {
     "saved": false,
-    "note": "Not recorded in this run; existing video is historical. Current phase images and live preview show the elbow arc."
+    "note": "Separate arm-reach-comparison.webm contains the complete deterministic comparison; physical device performance is unverified."
   },
   "errors": [],
   "scope": "Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance"

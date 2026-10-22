@@ -1,6 +1,6 @@
-import {track} from './presence.js?v=presence-shapes-20261023';
-import {ARM,armChain} from './arm-rig.js?v=presence-shapes-20261023';
-import {shoulderFrame} from './bust-rig.js?v=presence-shapes-20261023';
+import {track} from './presence.js?v=arm-reach-20261023';
+import {ARM,armChain} from './arm-rig.js?v=arm-reach-20261023';
+import {shoulderFrame} from './bust-rig.js?v=arm-reach-20261023';
 import {Sleeve} from './sleeve.js';
 // Character's RIGHT hand = screen left. Forearm/elbow stay separate from the face rig.
 const clamp=v=>Math.max(0,Math.min(1,v));

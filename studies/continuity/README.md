@@ -284,3 +284,8 @@ node studies/continuity/verify.mjs
 [前後比較画像](evidence/presence-comparison.png)／[前後比較動画](evidence/presence-comparison.webm)／[追加検証](evidence/presence-shapes.json)。動画は同じ入力を実WebGL描画した10fps比較素材で、端末の実時間性能の証明ではありません。
 
 残課題：大きく向きを変える手の厚み、袖の完全な三次元的回り込み、別視点用の腕素材は未制作。毛束を分離して背景の隠れ面が露出するほどの揺れは対象外です。スーツ・襟・ネクタイ・瞳の素材自体は今回変更せず、複合動作時の接続・見え方を確認する範囲です。スマホ実機・Safari・人間による自然さの受入は未確認。バストアップ品質の改善であり、人体の全可動域やLive2D同等品質を完成と判断しません。
+
+### 2026-10-23: circular greeting correction
+The preceding release kept the elbow almost stationary while rotating the forearm about 210 degrees. Sleeve contour keys did not correct that trajectory. The new reach authors a cubic wrist path from below the crop to beside the chest, then solves shoulder and elbow together at unchanged segment lengths. There is no post-solve upper-arm clamp, opacity appearance, or length scaling. Existing sleeve keys, wrist articulation, chest support and facial controls remain.
+
+`verify-arm-reach.mjs` compares the published PR19 baseline with the new reach using identical WebGL inputs; `evidence/arm-reach-comparison.webm` shows the complete raise/hold/return. PC Chrome 390px touch emulation was checked; physical phones remain unverified. This is a projected 2D reach, not a full anatomical arm reconstruction. Palm orientation assets and sleeve depth remain limitations. No new Live2D analysis or third-party geometry was used in this correction.
