@@ -24,22 +24,21 @@ export class RightGreeting {
  preview(seconds){this.started=null;this.pose=greetingPose(seconds);return this.pose;}
  stop(){this.started=null;this.pose=greetingPose(-1);this.mesh.visible=false;}
  draw(p){
-  const g=this.pose;this.mesh.visible=g.active&&g.lift>.001;if(!this.mesh.visible)return;
-  // Shoulder inherits the actual chest surface. Upper arm stays beside the torso;
-  // the elbow is below the bust crop. Flexion is projected in the sagittal plane,
-  // so raising the forearm does not sweep a flat palm sideways across the chest.
+  const g=this.pose;this.mesh.alpha=ease((g.lift-.05)/.7);this.mesh.visible=g.active&&this.mesh.alpha>.001;if(!this.mesh.visible)return;
+  // Maintain palm proportions. A small elbow-pivot arc plus visibility easing
+  // replaces sagittal flattening of the photographic hand during entry/exit.
   const shoulder=this.skin(115,1000,p),rootX=shoulder[0]+20,rootY=shoulder[1]+640;
-  const flexion=(94*(1-g.lift)+20*g.lift)*Math.PI/180;
-  const projection=Math.cos(flexion)/Math.cos(20*Math.PI/180),scale=.9;
+  const angle=(1-g.lift)*.24,c=Math.cos(angle),s=Math.sin(angle),scale=.9;
   const wc=Math.cos(g.wrist),ws=Math.sin(g.wrist),v=this.mesh.vertices;
   for(let i=0;i<this.rest.length;i+=2){
    let x=this.rest[i],y=this.rest[i+1];
    // Wrist bends smoothly through the cuff support; no independent skin cut seam.
    const w=1-ease((y-1120)/130),dx=x-285,dy=y-1160;
    x+=w*(wc*dx-ws*dy-dx);y+=w*(ws*dx+wc*dy-dy);
-   v[i]=rootX+(x-135)*scale;v[i+1]=rootY+(y-1640)*scale*projection;
+   const lx=(x-135)*scale,ly=(y-1640)*scale;
+   v[i]=rootX+c*lx-s*ly;v[i+1]=rootY+s*lx+c*ly;
   }
   this.mesh.geometry.getBuffer('aPosition').update();
  }
- stats(){return {side:'character-right/screen-left',...this.pose,chain:['chest','right-shoulder','right-elbow','right-wrist'],vertices:this.rest.length/2,triangles:this.indices.length/3,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4};}
+ stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'small elbow arc with fade; uniform palm scale',chain:['chest','right-shoulder','right-elbow','right-wrist'],vertices:this.rest.length/2,triangles:this.indices.length/3,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4};}
 }

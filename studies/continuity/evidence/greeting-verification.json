@@ -1,5 +1,5 @@
 {
-  "baseMain": "c338ab6fd78d7dd703ffcea4b9e9abcb18867da4",
+  "baseMain": "ca5d3c860bc80ff37052489091f930002c6279c2",
   "onDemand": true,
   "faceROI": [
     330,
@@ -14,6 +14,8 @@
     "lift": 0.7355570193275793,
     "wrist": 0,
     "phase": "lower",
+    "opacity": 0.9999148592731198,
+    "entry": "small elbow arc with fade; uniform palm scale",
     "chain": [
       "chest",
       "right-shoulder",
@@ -29,8 +31,10 @@
       "side": "character-right/screen-left",
       "active": true,
       "lift": 1,
-      "wrist": 0.01724380632444643,
+      "wrist": 0.019611704614420154,
       "phase": "wave",
+      "opacity": 1,
+      "entry": "small elbow arc with fade; uniform palm scale",
       "chain": [
         "chest",
         "right-shoulder",
@@ -41,7 +45,7 @@
       "triangles": 576,
       "textureBytes": 409600
     },
-    "shoulderL": 0.05995515069563318,
+    "shoulderL": 0.05991306664168986,
     "state": "speaking",
     "emotion": "gentle"
   },
@@ -50,9 +54,11 @@
   "missingGesturePreservesAvatar": true,
   "resetCancelsPending": true,
   "video": {
-    "bytes": 133717,
+    "saved": false,
+    "bytes": 110,
     "draws": 47,
-    "ended": true
+    "ended": true,
+    "note": "Recording unavailable; existing video belongs to prior version. Use current phase images and live preview."
   },
   "errors": [],
   "scope": "Desktop Chrome software WebGL with 390px viewport and touch; video is software rendering, not phone performance or naturalness acceptance"
