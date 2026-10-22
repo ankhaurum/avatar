@@ -1,20 +1,21 @@
-import {presencePose,blinkInterval} from './presence.js?v=smile-20261022';
-import {affectPose,blinkContext} from './affect.js?v=smile-20261022';
-import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=smile-20261022';
+import {presencePose,blinkInterval} from './presence.js?v=mouth-20261023';
+import {affectPose,blinkContext} from './affect.js?v=mouth-20261023';
+import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=mouth-20261023';
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=smile-20261022';
-import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=smile-20261022';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=mouth-20261023';
+import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=mouth-20261023';
 import {AudioDriver} from '../../engine.js?v=cage-4a';
-import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=smile-20261022';
-import {MotionResponse} from './motion-response.js?v=smile-20261022';
+import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=mouth-20261023';
+import {MotionResponse} from './motion-response.js?v=mouth-20261023';
+import {makeSmileMaterial} from './smile-material.js?v=mouth-20261023';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
 app.canvas.style.width='100%';app.canvas.style.height='100%';
 stage.prepend(app.canvas);app.canvas.setAttribute('aria-label','響V3 連続メッシュの比較試作');
 const world=new Container();app.stage.addChild(world);
-const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=smile-20261022').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
+const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=mouth-20261023').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
 if(author)await import('./vendor/bundle.js');
 if(author)bakeKeys(surface);
 function makeMesh(texture,rest,uvs,indices,crop){
@@ -26,6 +27,7 @@ const oral=author?authorOralMaterials():await readOralMaterials();
 const cavityRest=rect(510,620,180,100),cavity=makeMesh(oral.cavity,cavityRest,[0,0,1,0,1,1,0,1],quadIndices);
 const oralParts=['tongue','teeth'].map(kind=>{const geometry=oralStrip(kind);return {kind,geometry,mesh:makeMesh(oral[kind],geometry.rest,geometry.uvs,geometry.indices)};});
 const main=makeMesh(materials.base,surface.rest,surface.uvs,surface.indices);
+const smileMaterial=await makeSmileMaterial({MeshSimple,Texture,Graphics,world});
 const irises=eyes.map((e,i)=>{const rest=rect(e.cx-24,e.cy-24,48,48),mesh=makeMesh(materials.irises[i],rest,rest.map((v,j)=>v/(j%2?HEIGHT:WIDTH)),quadIndices,i?[657,445,47,47]:[474,451,47,47]),mask=new Graphics();world.addChild(mask);mesh.mask=mask;return {mesh,mask,rest};});
 const closedCorrectives=eyes.map((e,i)=>{const ids=[];for(let j=0;j<surface.indices.length;j+=3){const tri=surface.indices.slice(j,j+3);if([...tri].some(k=>surface.rest[k*2]>e.x0-45&&surface.rest[k*2]<e.x1+45&&surface.rest[k*2+1]>410&&surface.rest[k*2+1]<545))ids.push(...tri);}return makeMesh(materials.closedEyes[i],surface.rest,surface.uvs,ids,[e.x0-20,428,e.x1-e.x0+40,93]);});
 const cheekCanvas=document.createElement('canvas');cheekCanvas.width=WIDTH;cheekCanvas.height=HEIGHT;
@@ -37,7 +39,7 @@ const wire=new Graphics();world.addChild(wire);
 let greeting=null,greetingLoad=null,greetingError=null,greetingLoading=false,greetingRequest=0,gestureClock=0;
 async function loadGreeting(){
  if(greeting)return greeting;
- if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=smile-20261022');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
+ if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=mouth-20261023');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
  return greetingLoad;
 }
 async function startGreeting(){
@@ -64,6 +66,7 @@ function applyZoom(){const mode=$('#zoom').value,box=({full:[0,0,WIDTH,HEIGHT],n
 function draw(p){
  rendered={...p};
  const pos=deformSurface(surface,p);main.vertices.set(pos);main.geometry.getBuffer('aPosition').update();
+ smileMaterial.draw(p);
  cheekMesh.alpha=p.blush||0;cheekMesh.visible=cheekMesh.alpha>.001;if(cheekMesh.visible){cheekMesh.vertices.set(pos);cheekMesh.geometry.getBuffer('aPosition').update();}
  for(let j=0;j<8;j+=2)cavity.vertices.set(skin(cavityRest[j],cavityRest[j+1],p),j);cavity.geometry.getBuffer('aPosition').update();
  for(const part of oralParts){part.mesh.vertices.set(oralVertices(part.kind,part.geometry,p));part.mesh.geometry.getBuffer('aPosition').update();}
@@ -136,5 +139,5 @@ window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
- stats(){return {rigVersion:'smile-20261022',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
+ stats(){return {rigVersion:'mouth-20261023',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+smileMaterial.textureBytes+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
 };draw(resting);requestAnimationFrame(frame);
