@@ -1,18 +1,19 @@
-import {presencePose,blinkInterval} from './presence.js?v=presence-20261022';
-import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=presence-20261022';
+import {presencePose,blinkInterval} from './presence.js?v=human-20261022';
+import {BUST_HIERARCHY,composeBustIntent,BustDynamics} from './bust-rig.js?v=human-20261022';
 import {Application,Container,MeshSimple,Texture,Graphics} from './vendor/pixi.min.mjs';
 import {authorMaterials,readMaterials,exportPSD,eyes,WIDTH,HEIGHT} from './materials.js';
-import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=presence-20261022';
-import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=presence-20261022';
+import {buildSurface,bakeKeys,readRig,deformSurface,skin,aperture,boneRig,clamp,smooth} from './rig.js?v=human-20261022';
+import {PerformanceController,STATES,emotionDemo} from './emotion.js?v=human-20261022';
 import {AudioDriver} from '../../engine.js?v=cage-4a';
-import {mouthBackground,drawUpperTeeth} from './mouth.js?v=mouth-20261022';
+import {authorOralMaterials,readOralMaterials,oralStrip,oralVertices} from './mouth.js?v=human-20261022';
+import {MotionResponse} from './motion-response.js?v=human-20261022';
 const $=s=>document.querySelector(s),stage=$('#stage');
 const app=new Application();
 await app.init({width:WIDTH,height:HEIGHT,resolution:Math.min(devicePixelRatio||1,1.5),autoDensity:true,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true,autoStart:false});
 app.canvas.style.width='100%';app.canvas.style.height='100%';
 stage.prepend(app.canvas);app.canvas.setAttribute('aria-label','響V3 連続メッシュの比較試作');
 const world=new Container();app.stage.addChild(world);
-const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
+const author=new URLSearchParams(location.search).has('author'),materials=await (author?authorMaterials():readMaterials()),surface=author?buildSurface():readRig(await fetch('materials/rig.json?v=human-20261022').then(r=>{if(!r.ok)throw Error('形状素材の読込に失敗しました');return r.json();}));
 if(author)await import('./vendor/bundle.js');
 if(author)bakeKeys(surface);
 function makeMesh(texture,rest,uvs,indices,crop){
@@ -20,8 +21,9 @@ function makeMesh(texture,rest,uvs,indices,crop){
  const mesh=new MeshSimple({texture:Texture.from(texture),vertices:new Float32Array(rest),uvs:new Float32Array(uvs),indices:new Uint32Array(indices)});mesh.autoUpdate=true;world.addChild(mesh);return mesh;
 }
 const rect=(x,y,w,h)=>[x,y,x+w,y,x+w,y+h,x,y+h],quadIndices=[0,1,2,0,2,3];
-const cavityRest=rect(510,620,180,100),cavity=makeMesh(mouthBackground(),cavityRest,cavityRest.map((v,i)=>v/(i%2?HEIGHT:WIDTH)),quadIndices,[510,620,180,100]);
-const upperTeeth=new Graphics();world.addChild(upperTeeth);
+const oral=author?authorOralMaterials():await readOralMaterials();
+const cavityRest=rect(510,620,180,100),cavity=makeMesh(oral.cavity,cavityRest,[0,0,1,0,1,1,0,1],quadIndices);
+const oralParts=['tongue','teeth'].map(kind=>{const geometry=oralStrip(kind);return {kind,geometry,mesh:makeMesh(oral[kind],geometry.rest,geometry.uvs,geometry.indices)};});
 const main=makeMesh(materials.base,surface.rest,surface.uvs,surface.indices);
 const irises=eyes.map((e,i)=>{const rest=rect(e.cx-24,e.cy-24,48,48),mesh=makeMesh(materials.irises[i],rest,rest.map((v,j)=>v/(j%2?HEIGHT:WIDTH)),quadIndices,i?[657,445,47,47]:[474,451,47,47]),mask=new Graphics();world.addChild(mask);mesh.mask=mask;return {mesh,mask,rest};});
 const closedCorrectives=eyes.map((e,i)=>{const ids=[];for(let j=0;j<surface.indices.length;j+=3){const tri=surface.indices.slice(j,j+3);if([...tri].some(k=>surface.rest[k*2]>e.x0-45&&surface.rest[k*2]<e.x1+45&&surface.rest[k*2+1]>410&&surface.rest[k*2+1]<545))ids.push(...tri);}return makeMesh(materials.closedEyes[i],surface.rest,surface.uvs,ids,[e.x0-20,428,e.x1-e.x0+40,93]);});
@@ -34,7 +36,7 @@ const wire=new Graphics();world.addChild(wire);
 let greeting=null,greetingLoad=null,greetingError=null,greetingLoading=false,greetingRequest=0,gestureClock=0;
 async function loadGreeting(){
  if(greeting)return greeting;
- if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=presence-20261022');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
+ if(!greetingLoad)greetingLoad=(async()=>{const {RightGreeting}=await import('./greeting.js?v=human-20261022');const image=new Image();image.src='materials/right-greeting.png';await image.decode();return greeting=new RightGreeting({MeshSimple,Texture,world,image});})().catch(error=>{greetingLoad=null;throw error;});
  return greetingLoad;
 }
 async function startGreeting(){
@@ -52,7 +54,7 @@ function greetingStatus(){
  $('#greetingStatus').textContent=g?.active?({raise:'右手をそっと差し出しています',wave:'右手で小さく挨拶',lower:'右手を元へ戻しています'})[g.phase]:'右手（画面左側）だけの挨拶 · 約6秒';
 }
 const initial={yaw:0,pitch:0,roll:0,smile:0,mouth:0,eye0:1,eye1:1,eyeSmile:0,gazeX:0,gazeY:0,breath:0,breathGain:1,body:0,hair:0,browRaise:0,browInner:0,browLower:0,cheek:0,frown:0,round:0,blush:0,shoulder:0,shoulderL:0,shoulderR:0,armLift:0,armUpper:0,scapulaL:0,scapulaR:0,postureX:0,postureY:0,postureRoll:0,hairY:0};
-const controller=new PerformanceController(),audio=new AudioDriver(),bustDynamics=new BustDynamics();let demoBeat=-1,audioMessage=null;
+const controller=new PerformanceController(),audio=new AudioDriver(),bustDynamics=new BustDynamics(),motion=new MotionResponse();let demoBeat=-1,audioMessage=null;
 let current={...initial},target={...initial},time=0,last=performance.now(),demo=false,fixed=false,blinkAt=-99,nextBlink=3.4,blinkCount=0,contactUntil=-1,pointer=null,rendered={...initial},drawCount=0,staticRendered=false;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');$('#static').checked=reduced.matches;
 function blink(t){if(t<0||t>.3)return 0;if(t<.09)return Math.sin(t/.09*Math.PI/2);if(t<.12)return 1;return .5+.5*Math.cos((t-.12)/.18*Math.PI);}
@@ -62,7 +64,7 @@ function draw(p){
  const pos=deformSurface(surface,p);main.vertices.set(pos);main.geometry.getBuffer('aPosition').update();
  cheekMesh.alpha=p.blush||0;cheekMesh.visible=cheekMesh.alpha>.001;if(cheekMesh.visible){cheekMesh.vertices.set(pos);cheekMesh.geometry.getBuffer('aPosition').update();}
  for(let j=0;j<8;j+=2)cavity.vertices.set(skin(cavityRest[j],cavityRest[j+1],p),j);cavity.geometry.getBuffer('aPosition').update();
- drawUpperTeeth(upperTeeth,p);
+ for(const part of oralParts){part.mesh.vertices.set(oralVertices(part.kind,part.geometry,p));part.mesh.geometry.getBuffer('aPosition').update();}
  for(const [i,r]of irises.entries()){
   r.mesh.visible=p['eye'+i]>.1;
   for(let j=0;j<8;j+=2)r.mesh.vertices.set(skin(r.rest[j]+p.gazeX*5,r.rest[j+1]+p.gazeY*2.8,p),j);
@@ -88,7 +90,7 @@ function frame(now){
  else if(controller.inputs.body===undefined)p.body=(p.yaw||0)*.45;
  if($('#idle').checked||demo)p=presencePose(p,time,{state:controller.state,inputs:controller.inputs,demo});
  p=composeBustIntent(p,greeting?.pose);
- for(const name of Object.keys(initial)){const speed=name==='body'?2.2:name.startsWith('gaze')?14:(name==='eye0'||name==='eye1')?100:6;current[name]+=(p[name]-current[name])*(1-Math.exp(-speed*dt));}
+ motion.step(current,p,dt);
 
  if(contactUntil>=0&&time>contactUntil){for(const k of ['yaw','pitch','gazeX','gazeY'])delete controller.inputs[k];contactUntil=-1;}
  $('#state').value=controller.state;$('#phase').textContent=controller.state+' / '+controller.phase;
@@ -100,12 +102,12 @@ for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).oninput=e=>{fixed=fals
 $('#demo').onclick=()=>{fixed=false;if(demo){stopDemo();stopGreeting();controller.reset();}else{controller.reset();audio.stop();demo=true;demoBeat=-1;time=0;$('#demo').setAttribute('aria-pressed','true');$('#demo').textContent='オートデモを停止';}};
 $('#blink').onclick=()=>{fixed=false;blinkAt=time;};
 $('#greet').onclick=()=>startGreeting();
-$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();stopGreeting();bustDynamics.reset();greetingError=null;target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
+$('#reset').onclick=()=>{fixed=false;stopDemo();controller.reset();audio.stop();stopGreeting();bustDynamics.reset();motion.reset();greetingError=null;target={...initial};for(const id of ['yaw','pitch','smile','mouth'])$('#'+id).value=0;$('#emotion').value='auto';};
 $('#dark').onchange=e=>stage.classList.toggle('dark',e.target.checked);
-function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked){audio.stop();stopGreeting();bustDynamics.reset();}for(const id of ['demo','blink','tone','chooseAudio','greet'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
+function policy(){fixed=false;staticRendered=false;last=performance.now();if($('#static').checked){audio.stop();stopGreeting();bustDynamics.reset();motion.reset();}for(const id of ['demo','blink','tone','chooseAudio','greet'])$('#'+id).disabled=$('#static').checked;$('#status').textContent=$('#static').checked?'静止表示中':'連続メッシュ · 感情と発話を独立制御';}
 $('#static').onchange=policy;reduced.addEventListener('change',e=>{$('#static').checked=e.matches;policy();});
 for(const id of ['zoom','wire'])$('#'+id).onchange=()=>draw($('#static').checked?initial:current);
-document.addEventListener('visibilitychange',()=>{last=performance.now();bustDynamics.reset();});
+document.addEventListener('visibilitychange',()=>{last=performance.now();bustDynamics.reset();motion.reset();});
 stage.addEventListener('pointerdown',e=>{if($('#static').checked)return;pointer=e.pointerId;stage.setPointerCapture(e.pointerId);contact(e);});
 stage.addEventListener('pointermove',e=>{if(pointer===e.pointerId)contact(e);});for(const n of ['pointerup','pointercancel','lostpointercapture'])stage.addEventListener(n,()=>pointer=null);
 function contact(e){fixed=false;stopDemo();const r=stage.getBoundingClientRect(),yaw=clamp((e.clientX-r.left)/r.width*2-1,-1,1),pitch=clamp((e.clientY-r.top)/r.height*2-1,-1,1)*.5;controller.setPose({yaw,pitch,gazeX:yaw,gazeY:pitch});contactUntil=time+3.5;}
@@ -130,5 +132,5 @@ window.study={ready:true,materials,exportRig:()=>bakeKeys(surface),exportPSD:()=
  pose(p={}){fixed=true;current={...initial,...p};draw(current);return {...current};},
  animate(){fixed=false;last=performance.now();},
  demo(t){return this.pose({...sample(t),eye0:1-blink((t%4)-3),eye1:1-blink((t%4)-3)});},
- stats(){return {rigVersion:'presence-20261022',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
+ stats(){return {rigVersion:'human-20261022',hierarchy:BUST_HIERARCHY,renderer:app.renderer.name,materialSource:author?'local authoring canvases':'saved PNG layers',materialTextureBytes:[main,cavity,...oralParts.map(r=>r.mesh),cheekMesh,...irises.map(r=>r.mesh),...closedCorrectives].reduce((n,m)=>n+m.texture.width*m.texture.height*4,0)+(greeting?.stats().textureBytes||0),vertices:surface.rest.length/2,triangles:surface.indices.length/3,drawCount,pose:{...rendered},performance:controller.snapshot(),gesture:greeting?.stats()||{active:false,loaded:false,error:greetingError},static:$('#static').checked};}
 };draw(initial);requestAnimationFrame(frame);

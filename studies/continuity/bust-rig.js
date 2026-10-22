@@ -31,7 +31,24 @@ export function thoraxOffset(x,y,p){
  const breath=p.breath||0,torso=smooth(810,1010,y)*(1-smooth(1170,1390,y));
  const shoulder=Math.exp(-(((y-1015)/145)**2))*(1-Math.exp(-(((x-583)/175)**2)));
  const cue=(p.shoulder||0)+(x<583?(p.shoulderL||0):(p.shoulderR||0)),q=scapulaOffset(x,y,p);
- return [(x-583)*.017*breath*torso+q[0],-breath*(3.2*torso+5.8*shoulder)-cue*9*shoulder*smooth(900,990,y)+q[1]];
+ const turn=thoraxTurn(x,y,p.body||0);
+ return [(x-583)*.017*breath*torso+q[0]+turn[0],-breath*(3.2*torso+5.8*shoulder)-cue*9*shoulder*smooth(900,990,y)+q[1]+turn[1]];
+}
+// Independently authored collar/sternum/shoulder landmarks. Waist and neck boundary pinned.
+const TURN_X=[0,150,350,583,810,1016,1122],TURN_Y=[810,900,980,1100,1260,1402];
+const TURN_ROWS=[
+ [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
+ [[0,0],[0,0],[1,0],[3,0],[1,0],[0,0],[0,0]],
+ [[0,0],[9,2],[14,1],[16,0],[3,-1],[-9,-2],[0,0]],
+ [[0,0],[6,1],[12,1],[13,0],[2,-1],[-7,-1],[0,0]],
+ [[0,0],[1,0],[3,0],[5,0],[1,0],[-2,0],[0,0]],
+ [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+];
+export function thoraxTurn(x,y,value){
+ const weight=Math.min(1,Math.abs(value));if(!weight||x<0||x>1122||y<810||y>1402)return [0,0];
+ const mirror=value<0,sx=mirror?1122-x:x,ix=Math.min(TURN_X.length-2,Math.max(0,TURN_X.findIndex(a=>a>=sx)-1)),iy=Math.min(TURN_Y.length-2,Math.max(0,TURN_Y.findIndex(a=>a>=y)-1));
+ const u=clamp((sx-TURN_X[ix])/(TURN_X[ix+1]-TURN_X[ix])),v=clamp((y-TURN_Y[iy])/(TURN_Y[iy+1]-TURN_Y[iy]));
+ return [0,1].map(k=>((1-u)*(1-v)*TURN_ROWS[iy][ix][k]+u*(1-v)*TURN_ROWS[iy][ix+1][k]+(1-u)*v*TURN_ROWS[iy+1][ix][k]+u*v*TURN_ROWS[iy+1][ix+1][k])*weight*(mirror&&k===0?-1:1));
 }
 export function shoulderFrame(p,side='right'){
  const anchor=BUST_HIERARCHY[side==='right'?'shoulderRight':'shoulderLeft'].pivot,frame=chestFrame(p),q=frame.point(...anchor),offset=frame.vector(...thoraxOffset(...anchor,p));
@@ -52,14 +69,17 @@ export function composeBustIntent(p,g={active:false,lift:0,prepare:0}){
 // Bounded fixed-step secondary motion, driven by head AND chest changes.
 export class BustDynamics{
  constructor(){this.reset();}
- reset(){this.x=0;this.y=0;this.vx=0;this.vy=0;this.last=null;}
+ reset(){this.x=0;this.y=0;this.vx=0;this.vy=0;this.side={left:0,right:0,vl:0,vr:0};this.last=null;}
  apply(p,dt){
   const hx=(p.yaw||0)*.6+(p.roll||0)*.25+(p.body||0)*.35+(p.postureRoll||0)*12;
   const hy=(p.pitch||0)*.45+(p.postureY||0)*.03;
-  if(!this.last||dt>.2){this.last=[hx,hy];this.x=this.y=this.vx=this.vy=0;}
+  if(!this.last||dt>.2){this.last=[hx,hy];this.x=this.y=this.vx=this.vy=0;this.side={left:0,right:0,vl:0,vr:0};}
   const safe=Math.max(.001,dt),tx=clamp(-(hx-this.last[0])/safe*.65,-1,1),ty=clamp(-(hy-this.last[1])/safe*.35,-1,1);this.last=[hx,hy];
   const steps=Math.max(1,Math.ceil(Math.min(.1,safe)*120)),h=Math.min(.1,safe)/steps;
-  for(let i=0;i<steps;i++){this.vx+=((tx-this.x)*85-this.vx*17)*h;this.x+=this.vx*h;this.vy+=((ty-this.y)*70-this.vy*16)*h;this.y+=this.vy*h;}
-  return {...p,hair:clamp((p.hair||0)+this.x,-1,1),hairY:clamp((p.hairY||0)+this.y,-1,1)};
+  for(let i=0;i<steps;i++){this.vx+=((tx-this.x)*85-this.vx*17)*h;this.x+=this.vx*h;this.vy+=((ty-this.y)*70-this.vy*16)*h;this.y+=this.vy*h;
+   this.side.vl+=((this.x-this.side.left)*62-this.side.vl*12)*h;this.side.left+=this.side.vl*h;
+   this.side.vr+=((this.x-this.side.right)*88-this.side.vr*15)*h;this.side.right+=this.side.vr*h;
+  }
+  return {...p,hair:clamp((p.hair||0)+this.x,-1,1),hairLeft:clamp((p.hair||0)+this.side.left,-1,1),hairRight:clamp((p.hair||0)+this.side.right,-1,1),hairY:clamp((p.hairY||0)+this.y,-1,1)};
  }
 }

@@ -1,0 +1,26 @@
+{
+  "producer": "Canvas2D; original dental arch and oral tissue artwork, no external source",
+  "files": [
+    {
+      "name": "oral-cavity.png",
+      "bytes": 7610,
+      "sha256": "f4629be41d12397ce9df4d7341f9213216194cc946412c1432d68ba6be7270e4"
+    },
+    {
+      "name": "upper-dental.png",
+      "bytes": 5708,
+      "sha256": "0cc7c10bfe7ee93f9acdd3e6822b9455cbc4696a46656fdd0e9c0297d888d268"
+    },
+    {
+      "name": "tongue.png",
+      "bytes": 8112,
+      "sha256": "761d74964eedecaf7660ddfe4fd230206ec35033e7f768298aa30d5974f1cc35"
+    }
+  ],
+  "psd": {
+    "name": "oral-tissues.psd",
+    "bytes": 78611,
+    "sha256": "8821c4c595fe3759d8f442a3b30aa0c33414f0563de2028583a3fda501faa5c4"
+  },
+  "scope": "Small interior structures only. Approved facial bitmap unchanged. Stylized tissue studies, not a newly approved portrait."
+}

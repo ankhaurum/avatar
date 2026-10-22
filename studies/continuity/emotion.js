@@ -1,4 +1,4 @@
-import {speechShape} from './presence.js?v=presence-20261022';
+import {speechShape} from './presence.js?v=human-20261022';
 // V2 input translation is separate from V3 expression, speech and secondary motion.
 export const STATES = ['idle','attention','thinking','speaking','happy','notify','concern','error','sleep','wake'];
 export const EMOTIONS = {

@@ -1,27 +1,37 @@
-import {WIDTH,HEIGHT,seam} from './materials.js';
-import {localShape,createSkin,clamp} from './rig.js?v=presence-20261022';
-
-// Independently authored tissue shading; no second mouth photograph behind the lips.
-export function mouthBackground(){
- const canvas=document.createElement('canvas');canvas.width=WIDTH;canvas.height=HEIGHT;
- const c=canvas.getContext('2d'),shade=c.createLinearGradient(0,636,0,679);
- shade.addColorStop(0,'#66353d');shade.addColorStop(.45,'#85454e');shade.addColorStop(1,'#b5767b');
- c.fillStyle=shade;c.beginPath();c.ellipse(594,654,80,31,0,0,Math.PI*2);c.fill();
- const tissue=c.createRadialGradient(594,670,2,594,670,35);
- tissue.addColorStop(0,'rgba(202,126,135,.75)');tissue.addColorStop(1,'rgba(179,100,112,0)');
- c.fillStyle=tissue;c.fillRect(544,644,100,41);return canvas;
+import {seam} from './materials.js';
+import {localShape,createSkin} from './rig.js?v=human-20261022';
+// Original Canvas-authored oral tissues. No second face or mouth photograph.
+export function authorOralMaterials(){
+ const canvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
+ const cavity=canvas(180,100),c=cavity.getContext('2d'),shade=c.createLinearGradient(0,14,0,78);
+ shade.addColorStop(0,'#46242d');shade.addColorStop(.5,'#81434b');shade.addColorStop(1,'#b97d81');c.fillStyle=shade;c.fillRect(0,0,180,100);
+ const bounce=c.createRadialGradient(90,63,1,90,63,43);bounce.addColorStop(0,'rgba(213,142,144,.6)');bounce.addColorStop(1,'rgba(163,94,103,0)');c.fillStyle=bounce;c.fillRect(0,0,180,100);
+ const teeth=canvas(288,32),t=teeth.getContext('2d');t.beginPath();t.moveTo(0,0);t.lineTo(288,0);
+ for(let i=32;i>=0;i--){const x=i/32*288;t.lineTo(x,32*Math.sin(Math.PI*i/32));}t.closePath();t.clip();
+ const ivory=t.createLinearGradient(0,0,0,32);ivory.addColorStop(0,'#a98d81');ivory.addColorStop(.28,'#d9c7b3');ivory.addColorStop(.74,'#dfcebb');ivory.addColorStop(1,'#b9a092');t.fillStyle=ivory;t.fillRect(0,0,288,32);
+ const side=t.createLinearGradient(0,0,288,0);side.addColorStop(0,'rgba(96,51,55,.65)');side.addColorStop(.2,'rgba(96,51,55,0)');side.addColorStop(.8,'rgba(96,51,55,0)');side.addColorStop(1,'rgba(96,51,55,.65)');t.fillStyle=side;t.fillRect(0,0,288,32);
+ for(const x of [48,80,111,144,177,208,240]){const g=t.createLinearGradient(x-2,0,x+2,0);g.addColorStop(0,'rgba(133,97,87,0)');g.addColorStop(.5,'rgba(133,97,87,.20)');g.addColorStop(1,'rgba(133,97,87,0)');t.fillStyle=g;t.fillRect(x-2,12,4,20);}
+ const tongue=canvas(176,32),q=tongue.getContext('2d'),pink=q.createRadialGradient(88,21,4,88,21,85);
+ pink.addColorStop(0,'rgba(200,125,133,.95)');pink.addColorStop(.65,'rgba(168,86,101,.72)');pink.addColorStop(1,'rgba(130,61,78,0)');q.fillStyle=pink;q.beginPath();q.ellipse(88,24,88,24,0,0,Math.PI*2);q.fill();
+ return {cavity,teeth,tongue};
 }
-
-// The upper dental arch stays attached to the upper lip, independently of the lower jaw.
-// The continuous face surface occludes it at closed lips and around the mouth corners.
-export function drawUpperTeeth(graphics,p){
- graphics.clear();const project=createSkin(p),depth=3.3+clamp(p.smile||0);
- for(const [top,bottom,color] of [[0,.2,0xb6a59d],[.2,.82,0xdfd4c6],[.82,1,0xc3b1a5]]){
-  const points=[];
-  for(const [start,end,step,offset]of [[0,32,1,top],[32,0,-1,bottom]])for(let j=start;step>0?j<=end:j>=end;j+=step){
-   const x=538+112*j/32,w=Math.sin(Math.PI*(x-522)/144),arch=Math.sin(Math.PI*j/32),q=localShape(x,seam(x)-.45*w,p);
-   points.push(...project(q[0],q[1]+.85*w+offset*depth*arch));
-  }
-  graphics.poly(points).fill(color);
+export async function readOralMaterials(){
+ const load=async name=>{const i=new Image();i.src='materials/'+name+'.png';await i.decode();return i;};
+ const [cavity,teeth,tongue]=await Promise.all(['oral-cavity','upper-dental','tongue'].map(load));return {cavity,teeth,tongue};
+}
+export function oralStrip(kind){
+ const rest=[],uvs=[],indices=[];
+ for(let row=0;row<2;row++)for(let j=0;j<=32;j++){rest.push(kind==='teeth'?542+j*104/32:550+j*88/32,row);uvs.push(j/32,row);}
+ for(let j=0;j<32;j++)indices.push(j,j+33,j+1,j+1,j+33,j+34);
+ return {rest,uvs,indices};
+}
+export function oralVertices(kind,geometry,p){
+ const out=new Float32Array(geometry.rest.length),project=createSkin(p);
+ for(let i=0;i<out.length;i+=2){
+  const x=geometry.rest[i],row=geometry.rest[i+1],w=Math.sin(Math.PI*Math.max(0,Math.min(1,(x-522)/144)));
+  const edge=kind==='teeth'?seam(x)-.45*w:seam(x)+.45*w;
+  const q=localShape(x,edge,p),offset=kind==='teeth'?.65*w+row*7.6:-6+row*5;
+  out.set(project(q[0],q[1]+offset),i);
  }
+ return out;
 }
