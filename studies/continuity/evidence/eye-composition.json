@@ -1,0 +1,30 @@
+{
+  "reports": [
+    {
+      "emotion": "smile",
+      "minEye": 0.006494689711613006,
+      "endEye": 0.98,
+      "mouth": 0.72
+    },
+    {
+      "emotion": "concern",
+      "minEye": 0.006281229461512014,
+      "endEye": 0.9199999972824434,
+      "mouth": 0
+    },
+    {
+      "emotion": "shy",
+      "minEye": 0,
+      "endEye": 0.8600000001427873,
+      "mouth": 0
+    },
+    {
+      "emotion": "surprise",
+      "minEye": 0.0066270097099121305,
+      "endEye": 0.9999999996448133,
+      "mouth": 0.32000000183928157
+    }
+  ],
+  "errors": [],
+  "scope": "PC Chrome 390px touch emulation; images freeze sampled live blink poses, not physical phone"
+}
