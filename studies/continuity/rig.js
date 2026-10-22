@@ -1,3 +1,4 @@
+import {upperArmSkin} from './arm-rig.js?v=joint-arm-20261022';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 export const smooth=(a,b,v)=>{let t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
@@ -74,7 +75,7 @@ export function expressionShape(x,y,p){
  return [dx,dy];
 }
 export function createSkin(p){
- const breath=p.breath||0;
+ const breath=p.breath||0,armTransform=p.armLift?upperArmSkin(p.armLift):null;
  const chestA=(p.body||0)*.012,headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
  const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
  const bodyTransform=transform(583,1250,chestA,0,-breath*1.7),neckTransform=transform(583,930,neckA),headTransform=transform(583,790,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
@@ -91,10 +92,11 @@ export function createSkin(p){
  px+=(x-583)*.017*breath*torso;
  py-=breath*(3.2*torso+5.8*shoulder);
  const shoulderCue=(p.shoulder||0)+(x<583?(p.shoulderL||0):(p.shoulderR||0));
- py-=shoulderCue*9*shoulder;
+ py-=shoulderCue*9*shoulder*smooth(900,990,y);
  const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
  const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
  px+=(p.hair||0)*hairSide*tip*.8;
+ if(p.armLift){const weight=(1-smooth(160,285,x))*smooth(990,1110,y);if(weight>0){const q=armTransform(x,y);px+=(q[0]-x)*weight;py+=(q[1]-y)*weight;}}
  return [px,py];
  };
 }
