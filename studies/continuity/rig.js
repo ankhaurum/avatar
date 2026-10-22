@@ -1,11 +1,12 @@
-import {upperArmSkin} from './arm-rig.js?v=joint-arm-20261022';
+import {upperArmSkin} from './arm-rig.js?v=bust-20261022';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset,shoulderFrame} from './bust-rig.js?v=bust-20261022';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 export const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 export const smooth=(a,b,v)=>{let t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
 const lerp=(a,b,t)=>a+(b-a)*t;
 // Piecewise shape profiles are explicit authoring landmarks, separate from bone skinning.
 function profile(y,points){if(y<=points[0][0])return points[0][1];for(let i=1;i<points.length;i++)if(y<=points[i][0])return lerp(points[i-1][1],points[i][1],(y-points[i-1][0])/(points[i][0]-points[i-1][0]));return points.at(-1)[1];}
-export const boneRig={version:'continuity-study-1',bones:[{id:'chest',parent:null,pivot:[583,1150]},{id:'neck',parent:'chest',pivot:[583,930]},{id:'head',parent:'neck',pivot:[583,790]}],motionScope:'small frontal poses',materialSlots:['approved-suit-surface','eye-left','eye-right','mouth-interior'],join:'shared vertices across head neck collar; no feathered alpha seams'};
+export const boneRig={version:'bust-coordinated-1',hierarchy:BUST_HIERARCHY,bones:[{id:'chest',parent:null,pivot:[583,1150]},{id:'neck',parent:'chest',pivot:[583,930]},{id:'head',parent:'neck',pivot:[583,790]}],motionScope:'small frontal poses',materialSlots:['approved-suit-surface','eye-left','eye-right','mouth-interior'],join:'shared vertices across head neck collar; no feathered alpha seams'};
 export function buildSurface(){
  const xs=[...new Set([0,WIDTH,...Array.from({length:58},(_,i)=>i*20),...Array.from({length:31},(_,i)=>420+i*12),522,666,...eyes.flatMap(e=>[e.x0,e.x1,e.cx])].filter(x=>x<=WIDTH))].sort((a,b)=>a-b);
  const ys=[...new Set([0,HEIGHT,...Array.from({length:48},(_,i)=>i*30),...Array.from({length:21},(_,i)=>420+i*5),...Array.from({length:15},(_,i)=>600+i*8),...Array.from({length:18},(_,i)=>740+i*12)].filter(y=>y<640||y>660))].sort((a,b)=>a-b);
@@ -75,10 +76,10 @@ export function expressionShape(x,y,p){
  return [dx,dy];
 }
 export function createSkin(p){
- const breath=p.breath||0,armTransform=p.armLift?upperArmSkin(p.armLift):null;
- const chestA=(p.body||0)*.012,headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
+ const armTransform=p.armLift?upperArmSkin(p.armLift):null,root=chestFrame(p),armParent=p.armLift?shoulderFrame(p):null;
+ const headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
  const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
- const bodyTransform=transform(583,1250,chestA,0,-breath*1.7),neckTransform=transform(583,930,neckA),headTransform=transform(583,790,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
+ const bodyTransform=root.point,neckTransform=transform(...BUST_HIERARCHY.neck.pivot,neckA),headTransform=transform(...BUST_HIERARCHY.head.pivot,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
  return (x,y)=>{
  const headWeight=1-smooth(770,965,y),neckWeight=(1-smooth(875,1000,y))*(1-headWeight);
  const body=bodyTransform(x,y),neck=bodyTransform(...neckTransform(x,y));
@@ -87,16 +88,12 @@ export function createSkin(p){
  let py=body[1]+neckWeight*(neck[1]-body[1])+headWeight*(head[1]-body[1]);
  // Continuous thoracic breathing: shoulders rise, ribcage widens, waist stays put.
  // These fields act on the shared surface, including collar and suit, not separate cutouts.
- const torso=smooth(810,1010,y)*(1-smooth(1170,1390,y));
- const shoulder=Math.exp(-(((y-1015)/145)**2))*(1-Math.exp(-(((x-583)/175)**2)));
- px+=(x-583)*.017*breath*torso;
- py-=breath*(3.2*torso+5.8*shoulder);
- const shoulderCue=(p.shoulder||0)+(x<583?(p.shoulderL||0):(p.shoulderR||0));
- py-=shoulderCue*9*shoulder*smooth(900,990,y);
+ const thorax=root.vector(...thoraxOffset(x,y,p));px+=thorax[0];py+=thorax[1];
  const hairSide=(1-smooth(385,455,x))+smooth(745,810,x),tip=smooth(440,820,y)*(1-smooth(845,890,y));
  const pinned=1-smooth(1190,1402,y);px=x+(px-x)*pinned;py=y+(py-y)*pinned;
- px+=(p.hair||0)*hairSide*tip*.8;
- if(p.armLift){const weight=(1-smooth(160,285,x))*smooth(990,1110,y);if(weight>0){const q=armTransform(x,y);px+=(q[0]-x)*weight;py+=(q[1]-y)*weight;}}
+ const hairA=root.angle+headA+neckA,hx=(p.hair||0)*hairSide*tip*4.5,hy=(p.hairY||0)*hairSide*tip*3;
+ px+=Math.cos(hairA)*hx-Math.sin(hairA)*hy;py+=Math.sin(hairA)*hx+Math.cos(hairA)*hy;
+ if(armTransform){const weight=(1-smooth(160,285,x))*smooth(990,1110,y)*smooth(0,.05,p.armLift);if(weight>0){const q=armParent.point(...armTransform(x,y));px+=(q[0]-px)*weight;py+=(q[1]-py)*weight;}}
  return [px,py];
  };
 }

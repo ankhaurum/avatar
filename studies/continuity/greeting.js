@@ -1,4 +1,5 @@
-import {ARM,armChain} from './arm-rig.js?v=joint-arm-20261022';
+import {ARM,armChain} from './arm-rig.js?v=bust-20261022';
+import {shoulderFrame} from './bust-rig.js?v=bust-20261022';
 // Character's RIGHT hand = screen left. Forearm/elbow stay separate from the face rig.
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=v=>{const t=clamp(v);return t*t*t*(t*(t*6-15)+10);};
@@ -8,11 +9,12 @@ export function greetingPose(seconds){
  const lift=seconds<1.7?ease(seconds/1.7):seconds<4.5?1:1-ease((seconds-4.5)/1.9);
  const t=clamp((seconds-1.7)/2.8);
  const wrist=seconds>=1.7&&seconds<=4.5?Math.sin(t*Math.PI*4)*Math.sin(t*Math.PI)*.045:Math.sin(lift*Math.PI)*.025;
- return {active:true,lift,wrist,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
+ const prepare=seconds<1.2?ease(seconds/.38)*(1-ease((seconds-.35)/.85)):0;
+ return {active:true,lift,wrist,prepare,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
 }
 export class RightGreeting {
- constructor({MeshSimple,Texture,world,image,skin}){
-  this.skin=skin;this.started=null;this.pose=greetingPose(-1);
+ constructor({MeshSimple,Texture,world,image}){
+  this.started=null;this.pose=greetingPose(-1);
   const cols=12,rows=24,rest=[],uvs=[],indices=[],ys=[...new Set([...Array.from({length:25},(_,j)=>740+j/24*662),1120,1160,1200])].sort((a,b)=>a-b);
   for(const y of ys)for(let i=0;i<=cols;i++){rest.push(i/cols*430,y);uvs.push(i/cols,(y-740)/662);}
   for(let j=0;j<ys.length-1;j++)for(let i=0;i<cols;i++){const a=j*(cols+1)+i,b=a+1,c=a+cols+1;indices.push(a,c,b,b,c,c+1);}
@@ -28,18 +30,17 @@ export class RightGreeting {
  stop(){this.started=null;this.pose=greetingPose(-1);this.meshes.forEach(m=>m.visible=false);}
  draw(p){
   const g=this.pose;for(const m of this.meshes){m.alpha=1;m.visible=g.active;}if(!g.active)return;
-  const chain=armChain(p.armLift??g.lift),shoulder=this.skin(...ARM.shoulder,p);
-  const ox=shoulder[0]-ARM.shoulder[0],oy=shoulder[1]-ARM.shoulder[1];
-  const angle=chain.forearmAngle-Math.atan2(ARM.sourceWrist[1]-ARM.sourceElbow[1],ARM.sourceWrist[0]-ARM.sourceElbow[0]);
+  const chain=armChain(p.armLift??g.lift),parent=shoulderFrame(p),wrist=parent.point(...chain.wrist);
+  const angle=parent.angle+chain.forearmAngle-Math.atan2(ARM.sourceWrist[1]-ARM.sourceElbow[1],ARM.sourceWrist[0]-ARM.sourceElbow[0]);
   const c=Math.cos(angle),s=Math.sin(angle),wc=Math.cos(g.wrist),ws=Math.sin(g.wrist),v=this.mesh.vertices;
   for(let i=0;i<this.rest.length;i+=2){
    const x=this.rest[i],y=this.rest[i+1],dx=x-ARM.sourceWrist[0],dy=y-ARM.sourceWrist[1];
    // Shared wrist support between two draw regions; the contact ring cannot separate.
    const w=1-ease((y-1120)/80),lx=(dx+w*(wc*dx-ws*dy-dx))*ARM.scale,ly=(dy+w*(ws*dx+wc*dy-dy))*ARM.scale;
-   v[i]=chain.wrist[0]+ox+c*lx-s*ly;v[i+1]=chain.wrist[1]+oy+s*lx+c*ly;
+   v[i]=wrist[0]+c*lx-s*ly;v[i+1]=wrist[1]+s*lx+c*ly;
   }
   for(const m of this.meshes){if(m!==this.mesh)m.vertices.set(v);m.geometry.getBuffer('aPosition').update();}
-  this.chain=chain;
+  this.chain={...chain,shoulder:parent.point(...chain.shoulder),elbow:parent.point(...chain.elbow),wrist,parentAngle:parent.angle};
  }
  stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['shared-body-upper-arm','forearm','hand'],vertices:this.rest.length/2,triangles:this.indices.length/3,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4};}
 }

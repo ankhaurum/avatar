@@ -1,0 +1,447 @@
+{
+  "baseMain": "4f9d58eb54d541422eb3a94cb7db149863516d19",
+  "poses": [
+    {
+      "label": "基準姿勢",
+      "pose": {
+        "yaw": 0,
+        "pitch": 0,
+        "roll": 0,
+        "smile": 0,
+        "mouth": 0,
+        "eye0": 1,
+        "eye1": 1,
+        "gazeX": 0,
+        "gazeY": 0,
+        "breath": 0,
+        "breathGain": 1,
+        "body": 0,
+        "hair": 0,
+        "browRaise": 0,
+        "browInner": 0,
+        "browLower": 0,
+        "cheek": 0,
+        "frown": 0,
+        "round": 0,
+        "blush": 0,
+        "shoulder": 0,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "armLift": 0,
+        "scapulaL": 0,
+        "scapulaR": 0,
+        "postureX": 0,
+        "postureY": 0,
+        "postureRoll": 0,
+        "hairY": 0
+      },
+      "geometry": {
+        "inverted": 0
+      }
+    },
+    {
+      "label": "肩・体幹の予備動作",
+      "pose": {
+        "yaw": 0,
+        "pitch": 0,
+        "roll": 0.00437761602048657,
+        "smile": 0,
+        "mouth": 0,
+        "eye0": 1,
+        "eye1": 1,
+        "gazeX": 0,
+        "gazeY": 0,
+        "breath": 0.6,
+        "breathGain": 1,
+        "body": 0,
+        "hair": 0,
+        "browRaise": 0,
+        "browInner": 0,
+        "browLower": 0,
+        "cheek": 0,
+        "frown": 0,
+        "round": 0,
+        "blush": 0,
+        "shoulder": 0,
+        "shoulderL": 0.13323547208247666,
+        "shoulderR": 0,
+        "armLift": 0.0625373717212367,
+        "scapulaL": 0.22924577283269626,
+        "scapulaR": 0,
+        "postureX": -1.7748838015431225,
+        "postureY": 1.1947725030380458,
+        "postureRoll": 0.0024240949121039847,
+        "hairY": 0
+      },
+      "joints": {
+        "shoulder": [
+          144.3314644493033,
+          991.9592809922885
+        ],
+        "elbow": [
+          53.62219669165552,
+          1442.9269391928199
+        ],
+        "wrist": [
+          162.0902494291229,
+          1731.348386965592
+        ],
+        "upperAngle": 1.7668671851511335,
+        "forearmAngle": 1.2086595604346073,
+        "parentAngle": 0.0024240949121039847
+      },
+      "geometry": {
+        "inverted": 0
+      }
+    },
+    {
+      "label": "持ち上げ＋発話",
+      "pose": {
+        "yaw": 0.4,
+        "pitch": 0,
+        "roll": 0.04988072566462681,
+        "smile": 0.3,
+        "mouth": 0.4,
+        "eye0": 1,
+        "eye1": 1,
+        "gazeX": 0,
+        "gazeY": 0,
+        "breath": 0.7,
+        "breathGain": 1,
+        "body": 0.2,
+        "hair": 0,
+        "browRaise": 0,
+        "browInner": 0,
+        "browLower": 0,
+        "cheek": 0,
+        "frown": 0,
+        "round": 0,
+        "blush": 0,
+        "shoulder": 0,
+        "shoulderL": 0.1617402984948485,
+        "shoulderR": 0,
+        "armLift": 0.7125817952089544,
+        "scapulaL": 0.5775238914904813,
+        "scapulaR": 0,
+        "postureX": -3.2687718728012767,
+        "postureY": 0.04972303548878525,
+        "postureRoll": -0.006288928568158625,
+        "hairY": 0
+      },
+      "joints": {
+        "shoulder": [
+          140.27408264484535,
+          991.309858455067
+        ],
+        "elbow": [
+          25.408262150581095,
+          1436.7375667110528
+        ],
+        "wrist": [
+          312.88354530020274,
+          1325.7861738489312
+        ],
+        "upperAngle": 1.8270642613520722,
+        "forearmAngle": -0.3644479444056694,
+        "parentAngle": -0.003888928568158625
+      },
+      "geometry": {
+        "inverted": 0
+      }
+    },
+    {
+      "label": "挨拶＋表情＋呼吸",
+      "pose": {
+        "yaw": 0.65,
+        "pitch": 0.2,
+        "roll": 0.07,
+        "smile": 0.6,
+        "mouth": 0.5,
+        "eye0": 1,
+        "eye1": 0.45,
+        "gazeX": -0.4,
+        "gazeY": 0,
+        "breath": 1,
+        "breathGain": 1,
+        "body": 0.35,
+        "hair": 0,
+        "browRaise": 0,
+        "browInner": 0,
+        "browLower": 0,
+        "cheek": 0,
+        "frown": 0,
+        "round": 0,
+        "blush": 0,
+        "shoulder": 0,
+        "shoulderL": 0.22,
+        "shoulderR": 0,
+        "armLift": 1,
+        "scapulaL": 0.8,
+        "scapulaR": 0,
+        "postureX": -4.5,
+        "postureY": 0,
+        "postureRoll": -0.009,
+        "hairY": 0
+      },
+      "joints": {
+        "shoulder": [
+          136.46810906560367,
+          987.3616396388732
+        ],
+        "elbow": [
+          47.60463032068323,
+          1438.696639550636
+        ],
+        "wrist": [
+          196.95523199083237,
+          1169.1662186687543
+        ],
+        "upperAngle": 1.77,
+        "forearmAngle": -1.0599999999999998,
+        "parentAngle": -0.0048
+      },
+      "geometry": {
+        "inverted": 0
+      }
+    },
+    {
+      "label": "逆向きの頭・胸郭",
+      "pose": {
+        "yaw": -0.65,
+        "pitch": -0.3,
+        "roll": 0.07,
+        "smile": 0.35,
+        "mouth": 0.45,
+        "eye0": 1,
+        "eye1": 1,
+        "gazeX": 0,
+        "gazeY": 0,
+        "breath": -0.8,
+        "breathGain": 1,
+        "body": 0.4,
+        "hair": 0.6,
+        "browRaise": 0,
+        "browInner": 0,
+        "browLower": 0,
+        "cheek": 0,
+        "frown": 0,
+        "round": 0,
+        "blush": 0,
+        "shoulder": 0,
+        "shoulderL": 0.22,
+        "shoulderR": 0,
+        "armLift": 1,
+        "scapulaL": 0.8,
+        "scapulaR": 0,
+        "postureX": -4.5,
+        "postureY": 0,
+        "postureRoll": -0.009,
+        "hairY": 0
+      },
+      "joints": {
+        "shoulder": [
+          149.84567707028864,
+          1006.1255319936539
+        ],
+        "elbow": [
+          60.711413337094896,
+          1457.4071325810714
+        ],
+        "wrist": [
+          210.22370636696257,
+          1187.9663705702894
+        ],
+        "upperAngle": 1.77,
+        "forearmAngle": -1.0599999999999998,
+        "parentAngle": -0.004199999999999999
+      },
+      "geometry": {
+        "inverted": 0
+      }
+    },
+    {
+      "label": "自然な復帰",
+      "pose": {
+        "yaw": 0,
+        "pitch": 0,
+        "roll": 0.018511008647069425,
+        "smile": 0,
+        "mouth": 0,
+        "eye0": 1,
+        "eye1": 1,
+        "gazeX": 0,
+        "gazeY": 0,
+        "breath": -0.3,
+        "breathGain": 1,
+        "body": 0.1,
+        "hair": 0,
+        "browRaise": 0,
+        "browInner": 0,
+        "browLower": 0,
+        "cheek": 0,
+        "frown": 0,
+        "round": 0,
+        "blush": 0,
+        "shoulder": 0,
+        "shoulderL": 0.058177455747932476,
+        "shoulderR": 0,
+        "armLift": 0.26444298067242034,
+        "scapulaL": 0.2115543845379363,
+        "scapulaR": 0,
+        "postureX": -1.1899934130258916,
+        "postureY": 0,
+        "postureRoll": -0.0023799868260517827,
+        "hairY": 0
+      },
+      "joints": {
+        "shoulder": [
+          150.58604809053347,
+          1002.5907460099623
+        ],
+        "elbow": [
+          40.175833547280746,
+          1449.1437490504895
+        ],
+        "wrist": [
+          272.069535883676,
+          1652.0662978633782
+        ],
+        "upperAngle": 1.8143650387964627,
+        "forearmAngle": 0.720047986772743,
+        "parentAngle": -0.0011799868260517826
+      },
+      "geometry": {
+        "inverted": 0
+      }
+    }
+  ],
+  "live": {
+    "pose": {
+      "yaw": 0,
+      "pitch": 0,
+      "roll": 0.13741925939128208,
+      "smile": 0.3199953069801111,
+      "mouth": 0.09156880452717442,
+      "eye0": 0.96,
+      "eye1": 0.96,
+      "gazeX": 0,
+      "gazeY": 0,
+      "breath": 0.920890936063579,
+      "breathGain": 1,
+      "body": 4.4061809816235275e-12,
+      "hair": 0.033876683697143146,
+      "browRaise": 0,
+      "browInner": 0,
+      "browLower": 0,
+      "cheek": 0.17999736017631246,
+      "frown": 0,
+      "round": 0,
+      "blush": 0,
+      "shoulder": 0,
+      "shoulderL": 0.2112353437241167,
+      "shoulderR": 0,
+      "armLift": 0.9562188242244674,
+      "scapulaL": 0.7662758629716747,
+      "scapulaR": 0,
+      "postureX": -4.313824738944277,
+      "postureY": 0.008672023947338814,
+      "postureRoll": -0.008584289358151859,
+      "hairY": 0.0030087970355490144
+    },
+    "joints": {
+      "shoulder": [
+        136.27524604957662,
+        990.0491531800351
+      ],
+      "elbow": [
+        44.56615620835966,
+        1440.8145498560618
+      ],
+      "wrist": [
+        220.6269879346023,
+        1187.9216208685878
+      ],
+      "upperAngle": 1.7800931252011516,
+      "forearmAngle": -0.9540495546232106,
+      "parentAngle": -0.008584289358098985
+    },
+    "state": "speaking",
+    "emotion": "gentle"
+  },
+  "desktop": {
+    "yaw": 0.2869262823589177,
+    "pitch": 0.06692115065974591,
+    "roll": 0.11314260816016614,
+    "smile": 0.319970744245927,
+    "mouth": 0,
+    "eye0": 0.96,
+    "eye1": 0.96,
+    "gazeX": 0.16121113487863079,
+    "gazeY": 0,
+    "breath": 0.9728843173200661,
+    "breathGain": 1,
+    "body": 0.049503451104796155,
+    "hair": -0.02299427233396045,
+    "browRaise": 0,
+    "browInner": 0,
+    "browLower": 0,
+    "cheek": 0.1799835436383339,
+    "frown": 0,
+    "round": 0,
+    "blush": 0,
+    "shoulder": 0,
+    "shoulderL": 0.1740004763832399,
+    "shoulderR": 0,
+    "armLift": 0.7478259771374205,
+    "scapulaL": 0.6124789238294475,
+    "scapulaR": 0,
+    "postureX": -3.4837014147809846,
+    "postureY": 0.0947876141300737,
+    "postureRoll": -0.0064934647589116,
+    "hairY": 0.0057044327773064524
+  },
+  "touch": {
+    "yaw": 0.5975483610679214,
+    "pitch": -0.04979567570870393,
+    "roll": 0.03083494289999387,
+    "smile": 0,
+    "mouth": 0,
+    "eye0": 1,
+    "eye1": 1,
+    "gazeX": 0.5999983318843799,
+    "gazeY": -0.049999839857115494,
+    "breath": -0.7595228686091532,
+    "breathGain": 1,
+    "body": 0.23406604453444121,
+    "hair": -0.07680534775603545,
+    "browRaise": 0,
+    "browInner": 0,
+    "browLower": 0,
+    "cheek": 0,
+    "frown": 0,
+    "round": 0,
+    "blush": 0,
+    "shoulder": 0,
+    "shoulderL": 0,
+    "shoulderR": 0,
+    "armLift": 0,
+    "scapulaL": 0,
+    "scapulaR": 0,
+    "postureX": 0,
+    "postureY": 0,
+    "postureRoll": 0,
+    "hairY": 0.0022965286328462974
+  },
+  "secondary": {
+    "peak": 0.060315596818426034,
+    "settles": true,
+    "longGapReset": true
+  },
+  "parentInheritance": true,
+  "staticStopsDrawing": true,
+  "demoStopStopsArm": true,
+  "reducedMotion": true,
+  "missingArmPreservesAvatar": true,
+  "errors": [],
+  "scope": "PC Chrome software WebGL, 1280px and 390px with touch emulation. Geometry checks do not prove naturalness; physical phone/Safari/performance unverified."
+}
