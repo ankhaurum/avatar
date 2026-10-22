@@ -1,0 +1,21 @@
+{
+  "fast": {
+    "yaw": 0.29999999999999993,
+    "hair": -0.33571437065097043,
+    "hairLeft": -0.10890740038022052,
+    "hairRight": -0.13166074164828395,
+    "hairY": 0
+  },
+  "slow": {
+    "yaw": 0.3,
+    "hair": -0.3357143706509705,
+    "hairLeft": -0.10890740038022055,
+    "hairRight": -0.13166074164828395,
+    "hairY": 0
+  },
+  "constantVelocityResponseMatches": true,
+  "longPauseRebased": true,
+  "zeroDtStable": true,
+  "headAfterQuarterSecond": 0.7602705204748466,
+  "scope": "Synthetic elapsed-time regression; not actual device FPS or naturalness acceptance"
+}

@@ -66,16 +66,20 @@ export function composeBustIntent(p,g={active:false,lift:0,prepare:0}){
  out.roll=(out.roll||0)+.07*lift;
  return out;
 }
-// Bounded fixed-step secondary motion, driven by head AND chest changes.
+// Bounded substeps (at most 1/120 s), driven by head AND chest changes.
 export class BustDynamics{
  constructor(){this.reset();}
  reset(){this.x=0;this.y=0;this.vx=0;this.vy=0;this.side={left:0,right:0,vl:0,vr:0};this.last=null;}
  apply(p,dt){
   const hx=(p.yaw||0)*.6+(p.roll||0)*.25+(p.body||0)*.35+(p.postureRoll||0)*12;
   const hy=(p.pitch||0)*.45+(p.postureY||0)*.03;
-  if(!this.last||dt>.2){this.last=[hx,hy];this.x=this.y=this.vx=this.vy=0;this.side={left:0,right:0,vl:0,vr:0};}
-  const safe=Math.max(.001,dt),tx=clamp(-(hx-this.last[0])/safe*.65,-1,1),ty=clamp(-(hy-this.last[1])/safe*.35,-1,1);this.last=[hx,hy];
-  const steps=Math.max(1,Math.ceil(Math.min(.1,safe)*120)),h=Math.min(.1,safe)/steps;
+  // A short slow frame is elapsed simulation time, not a reason to erase inertia.
+  // Discontinuities (resume/debug pause) rebase instead of producing a velocity kick.
+  if(!this.last||!Number.isFinite(dt)||dt>.5){this.last=[hx,hy];this.x=this.y=this.vx=this.vy=0;this.side={left:0,right:0,vl:0,vr:0};}
+  const safe=Number.isFinite(dt)?Math.max(0,Math.min(.5,dt)):0;
+  const tx=safe?clamp(-(hx-this.last[0])/safe*.65,-1,1):0,ty=safe?clamp(-(hy-this.last[1])/safe*.35,-1,1):0;
+  if(safe)this.last=[hx,hy];
+  const steps=Math.max(1,Math.ceil(safe*120)),h=safe/steps;
   for(let i=0;i<steps;i++){this.vx+=((tx-this.x)*85-this.vx*17)*h;this.x+=this.vx*h;this.vy+=((ty-this.y)*70-this.vy*16)*h;this.y+=this.vy*h;
    this.side.vl+=((this.x-this.side.left)*62-this.side.vl*12)*h;this.side.left+=this.side.vl*h;
    this.side.vr+=((this.x-this.side.right)*88-this.side.vr*15)*h;this.side.right+=this.side.vr*h;
