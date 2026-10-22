@@ -38,14 +38,14 @@ export function shoulderFrame(p,side='right'){
  return {angle:frame.angle,point:(x,y)=>{const d=frame.vector(x-anchor[0],y-anchor[1]);return [q[0]+offset[0]+d[0],q[1]+offset[1]+d[1]];}};
 }
 export function composeBustIntent(p,g={active:false,lift:0,prepare:0}){
- const out={...p},lift=g.active?g.lift:0,prepare=g.active?g.prepare||0:0;
+ const out={...p},lift=g.active?g.lift:0,prepare=g.active?g.prepare||0:0,supportPose=g.active?g.support??lift:0;
  // A small support/anticipation pose is shared by spine, collar, neck and arm.
  const support=clamp((p.shoulder||0)*.4);
- out.armLift=lift;out.scapulaL=support+.8*lift+.18*prepare;out.scapulaR=support;
- out.postureX=(out.postureX||0)-4.5*lift-1.5*prepare;
+ out.armLift=lift;out.armUpper=g.active?g.upperLift??lift:0;out.scapulaL=support+.8*supportPose+.18*prepare;out.scapulaR=support;
+ out.postureX=(out.postureX||0)-4.5*supportPose-1.5*prepare;
  out.postureY=(out.postureY||0)+1.2*prepare-(p.shoulder||0)*2.5;
- out.postureRoll=(out.postureRoll||0)-.009*lift+.003*prepare;
- out.shoulderL=(out.shoulderL||0)+.22*lift+.12*prepare;
+ out.postureRoll=(out.postureRoll||0)-.009*supportPose+.003*prepare;
+ out.shoulderL=(out.shoulderL||0)+.22*supportPose+.12*prepare;
  out.roll=(out.roll||0)+.07*lift;
  return out;
 }

@@ -1,16 +1,17 @@
-import {ARM,armChain} from './arm-rig.js?v=bust-20261022';
-import {shoulderFrame} from './bust-rig.js?v=bust-20261022';
+import {track} from './presence.js?v=presence-20261022';
+import {ARM,armChain} from './arm-rig.js?v=presence-20261022';
+import {shoulderFrame} from './bust-rig.js?v=presence-20261022';
 // Character's RIGHT hand = screen left. Forearm/elbow stay separate from the face rig.
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=v=>{const t=clamp(v);return t*t*t*(t*(t*6-15)+10);};
 export const GREETING_DURATION=6.4;
 export function greetingPose(seconds){
  if(seconds<0||seconds>=GREETING_DURATION)return {active:false,lift:0,wrist:0,phase:'rest'};
- const lift=seconds<1.7?ease(seconds/1.7):seconds<4.5?1:1-ease((seconds-4.5)/1.9);
- const t=clamp((seconds-1.7)/2.8);
- const wrist=seconds>=1.7&&seconds<=4.5?Math.sin(t*Math.PI*4)*Math.sin(t*Math.PI)*.045:Math.sin(lift*Math.PI)*.025;
- const prepare=seconds<1.2?ease(seconds/.38)*(1-ease((seconds-.35)/.85)):0;
- return {active:true,lift,wrist,prepare,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
+ const lift=track([[0,0],[.22,0],[1.65,.985],[2.05,1],[4.4,1],[4.65,.98],[6.4,0]],seconds);
+ const upperLift=track([[0,0],[.12,0],[1.25,1],[4.7,1],[6.4,0]],seconds);
+ const support=track([[0,0],[.5,.24],[1.65,1],[4.75,1],[6.4,0]],seconds);
+ const wrist=track([[0,0],[1.3,.018],[1.75,0],[2.15,-.026],[2.72,.035],[3.28,-.018],[3.95,.012],[4.5,0],[5.25,-.012],[6.4,0]],seconds); const prepare=seconds<1.2?ease(seconds/.38)*(1-ease((seconds-.35)/.85)):0;
+ return {active:true,lift,upperLift,support,wrist,prepare,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
 }
 export class RightGreeting {
  constructor({MeshSimple,Texture,world,image}){
@@ -30,7 +31,7 @@ export class RightGreeting {
  stop(){this.started=null;this.pose=greetingPose(-1);this.meshes.forEach(m=>m.visible=false);}
  draw(p){
   const g=this.pose;for(const m of this.meshes){m.alpha=1;m.visible=g.active;}if(!g.active)return;
-  const chain=armChain(p.armLift??g.lift),parent=shoulderFrame(p),wrist=parent.point(...chain.wrist);
+  const chain=armChain(p.armLift??g.lift,p.armUpper??g.upperLift),parent=shoulderFrame(p),wrist=parent.point(...chain.wrist);
   const angle=parent.angle+chain.forearmAngle-Math.atan2(ARM.sourceWrist[1]-ARM.sourceElbow[1],ARM.sourceWrist[0]-ARM.sourceElbow[0]);
   const c=Math.cos(angle),s=Math.sin(angle),wc=Math.cos(g.wrist),ws=Math.sin(g.wrist),v=this.mesh.vertices;
   for(let i=0;i<this.rest.length;i+=2){
