@@ -1,7 +1,8 @@
-import {track} from './presence.js?v=axilla-binding-20261023';
-import {ARM,armChain} from './arm-rig.js?v=axilla-binding-20261023';
-import {shoulderFrame} from './bust-rig.js?v=axilla-binding-20261023';
+import {track} from './presence.js?v=upper-sleeve-20261023';
+import {ARM,armChain} from './arm-rig.js?v=upper-sleeve-20261023';
+import {shoulderFrame} from './bust-rig.js?v=upper-sleeve-20261023';
 import {Sleeve} from './sleeve.js';
+import {UpperArm} from './upper-arm.js';
 // Character's RIGHT hand = screen left. Forearm/elbow stay separate from the face rig.
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=v=>{const t=clamp(v);return t*t*t*(t*(t*6-15)+10);};
@@ -15,8 +16,9 @@ export function greetingPose(seconds){
  return {active:true,lift,upperLift,support,wrist,prepare,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
 }
 export class RightGreeting {
- constructor({MeshSimple,Texture,world,image,sleeveImage}){
+ constructor({MeshSimple,Texture,Graphics,world,image,sleeveImage,main}){
   this.started=null;this.pose=greetingPose(-1);
+  this.upperArm=new UpperArm({MeshSimple,Graphics,world,main});
   this.sleeve=new Sleeve({MeshSimple,Texture,world,image:sleeveImage});
   const cols=12,rows=24,rest=[],uvs=[],indices=[],ys=[...new Set([...Array.from({length:25},(_,j)=>740+j/24*662).filter(y=>y<1240),1120,1160,1200,1240])].sort((a,b)=>a-b);
   for(const y of ys)for(let i=0;i<=cols;i++){rest.push(i/cols*430,y);uvs.push(i/cols,(y-740)/662);}
@@ -30,10 +32,11 @@ export class RightGreeting {
  play(clock){if(this.started!==null)return false;this.started=clock;return true;}
  update(clock){this.pose=this.started===null?greetingPose(-1):greetingPose(clock-this.started);if(!this.pose.active)this.started=null;return this.pose;}
  preview(seconds){this.started=null;this.pose=greetingPose(seconds);return this.pose;}
- stop(){this.started=null;this.pose=greetingPose(-1);this.meshes.forEach(m=>m.visible=false);this.sleeve.draw(false);}
+ stop(){this.started=null;this.pose=greetingPose(-1);this.meshes.forEach(m=>m.visible=false);this.sleeve.draw(false);this.upperArm.draw(false);}
  draw(p){
-  const g=this.pose;for(const m of this.meshes){m.alpha=1;m.visible=g.active;}if(!g.active){this.sleeve.draw(false);return;}
+  const g=this.pose;for(const m of this.meshes){m.alpha=1;m.visible=g.active;}if(!g.active){this.sleeve.draw(false);this.upperArm.draw(false);return;}
   const chain=armChain(p.armLift??g.lift,p.armUpper??g.upperLift),parent=shoulderFrame(p),wrist=parent.point(...chain.wrist);
+  this.upperArm.draw(true,p,chain);
   const angle=parent.angle+chain.forearmAngle-Math.atan2(ARM.sourceWrist[1]-ARM.sourceElbow[1],ARM.sourceWrist[0]-ARM.sourceElbow[0]);
   const c=Math.cos(angle),s=Math.sin(angle),wc=Math.cos(g.wrist),ws=Math.sin(g.wrist),v=this.mesh.vertices;
   this.sleeve.draw(true,ease(g.lift), (x,y)=>{const dx=(x-ARM.sourceWrist[0])*ARM.scale,dy=(y-ARM.sourceWrist[1])*ARM.scale;return [wrist[0]+c*dx-s*dy,wrist[1]+s*dx+c*dy];});
@@ -46,5 +49,5 @@ export class RightGreeting {
   for(const m of this.meshes){if(m!==this.mesh)m.vertices.set(v);m.geometry.getBuffer('aPosition').update();}
   this.chain={...chain,shoulder:parent.point(...chain.shoulder),elbow:parent.point(...chain.elbow),wrist,parentAngle:parent.angle};
  }
- stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162,triangles:this.indices.length/3+256,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4};}
+ stats(){return {side:'character-right/screen-left',...this.pose,opacity:this.mesh.alpha,upperSleeveVisible:this.upperArm.mesh.visible,torsoMaskActive:this.upperArm.main.mask===this.upperArm.mask,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','independent-upper-sleeve','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162+72,triangles:this.indices.length/3+256+112,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4};}
 }
