@@ -27,8 +27,8 @@ export function compile(model){
    check(shape.axes?.length>0&&shape.axes.length<=3,'Shape axes '+m.id);
    const keys=new Set();let count=1;
    for(const a of shape.axes){check(params.has(a.parameter)&&a.keys?.length>=1&&a.keys.every(finite)&&a.keys.every((v,i)=>!i||v>a.keys[i-1]),'Shape axis '+m.id);count*=a.keys.length;}
-   for(const key of shape.keys){array(key.at,shape.axes.length,'Key coordinate');array(key.delta,m.rest.length,'Key topology '+m.id);check(key.at.every((v,i)=>shape.axes[i].keys.includes(v)),'Unknown key coordinate');const name=key.at.join('|');check(!keys.has(name),'Duplicate shape key');keys.add(name);}
-   check(keys.size===count,'Missing authored key: '+m.id);shapeIndexes.set(shape,new Map(shape.keys.map(k=>[k.at.join('|'),k.delta])));
+   for(const key of shape.keys){array(key.at,shape.axes.length,'Key coordinate');array(key.delta,m.rest.length,'Key topology '+m.id);if(key.depthDelta!==undefined){check(!!m.surface,'Depth key requires surface '+m.id);array(key.depthDelta,m.rest.length/2,'Depth key topology '+m.id);}check(key.at.every((v,i)=>shape.axes[i].keys.includes(v)),'Unknown key coordinate');const name=key.at.join('|');check(!keys.has(name),'Duplicate shape key');keys.add(name);}
+   check(keys.size===count,'Missing authored key: '+m.id);shapeIndexes.set(shape,new Map(shape.keys.map(k=>[k.at.join('|'),k])));
   }
   meshes.set(m.id,m);
  }
@@ -49,14 +49,14 @@ export function evaluate(compiled,input={}){
  }
  const surfaceTransforms=surfaceMatrices(compiled.surfaceOrder,state);
  for(const mesh of model.meshes){
-  const local=Float64Array.from(mesh.rest);
+  const local=Float64Array.from(mesh.rest);let localDepth=null;
   for(const shape of mesh.shapes||[]){
    let corners=[{at:[],weight:1}];
    for(const a of shape.axes)corners=corners.flatMap(c=>bracket(a.keys,state[a.parameter]).map(([v,w])=>({at:[...c.at,v],weight:c.weight*w})));
-   for(const c of corners){if(c.weight===0)continue;const delta=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=delta[i]*c.weight;}
+   for(const c of corners){if(c.weight===0)continue;const key=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=key.delta[i]*c.weight;if(key.depthDelta){localDepth??=new Float64Array(local.length/2);for(let i=0;i<localDepth.length;i++)localDepth[i]+=key.depthDelta[i]*c.weight;}}
   }
   const out=new Float32Array(local.length),matrix=matrices.get(mesh.node),depth=new Float32Array(local.length/2);
-  if(mesh.surface)for(let i=0;i<local.length;i+=2){const p=surfacePoint(mesh.surface,surfaceTransforms,i/2,local[i],local[i+1],mesh.surface.depthField?sampleField(compiled.projectionFields.get(mesh.surface.depthField),local[i],local[i+1]):undefined);local[i]=p[0];local[i+1]=p[1];depth[i/2]=p[2];}
+  if(mesh.surface)for(let i=0;i<local.length;i+=2){const p=surfacePoint(mesh.surface,surfaceTransforms,i/2,local[i],local[i+1],(mesh.surface.depthField?sampleField(compiled.projectionFields.get(mesh.surface.depthField),local[i],local[i+1]):mesh.surface.depth[i/2])+(localDepth?.[i/2]??0));local[i]=p[0];local[i+1]=p[1];depth[i/2]=p[2];}
   for(let i=0;i<local.length;i+=2){
    if(mesh.weights){for(const w of mesh.weights[i/2]){const a=matrices.get(w.node),x=local[i],y=local[i+1];out[i]+=(a[0]*x+a[2]*y+a[4])*w.weight;out[i+1]+=(a[1]*x+a[3]*y+a[5])*w.weight;}}
    else {const x=local[i],y=local[i+1];out[i]=matrix[0]*x+matrix[2]*y+matrix[4];out[i+1]=matrix[1]*x+matrix[3]*y+matrix[5];}

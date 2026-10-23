@@ -1,4 +1,4 @@
-const MODEL_PATH='model-head-r33.json';
+const MODEL_PATH='model-fold-r34.json';
 import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=4';
 import {Renderer,loadImages} from './runtime/renderer.mjs?surface=5';
 import {MotionController} from './runtime/motion-controller.mjs';

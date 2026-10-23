@@ -4,7 +4,7 @@ import {solveArmAndShoulder} from './runtime/shoulder-solver.mjs';
 import {inverseSkin} from './tools/landmark-warp.mjs';
 import {Renderer,loadImages} from './runtime/renderer.mjs?surface=5';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
-let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-head-r33.json',location.href),generation=0,assetImages=new Map();
+let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-fold-r34.json',location.href),generation=0,assetImages=new Map();
 const view=[-400,-100,2600,2500];
 document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-400,-100,2600,2500],r:[330,1570,340,500],l:[1200,1570,340,500],face:[590,240,650,650]};view.splice(0,4,...boxes[button.dataset.view]);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
 const error=e=>{$('error').textContent=e.message;console.error(e);};
@@ -81,3 +81,7 @@ try{const response=await fetch(baseURL);if(!response.ok)throw Error('制作デ�
 
 
 $('exactValue').addEventListener('input',()=>setParameter(Number($('exactValue').value)));
+
+function selectedDepthKey(){const mesh=selected(),id=$('parameter').value,candidates=(mesh.shapes||[]).filter(s=>s.axes.some(a=>a.parameter===id));if(candidates.length!==1)throw Error('厚みキーを持つパーツと関節パラメータを選んでください。');const shape=candidates[0],key=shape.keys.find(k=>k.at.every((v,i)=>Math.abs(v-frame.state[shape.axes[i].parameter])<1e-8));if(!key?.depthDelta)throw Error('厚みキーのある正確なキー姿勢を選んでください。');const vertex=Number($('depthVertex').value);if(document.getElementById('depthVertex').value.trim()===''||!Number.isInteger(vertex)||vertex<0||vertex>=key.depthDelta.length)throw Error('頂点番号が範囲外です。');return {key,vertex};}
+$('readDepth').onclick=()=>{try{const {key,vertex}=selectedDepthKey();$('depthValue').value=key.depthDelta[vertex];$('error').textContent='';}catch(e){error(e);}};
+$('applyDepth').onclick=()=>{try{const {key,vertex}=selectedDepthKey(),value=Number($('depthValue').value);if($('depthValue').value.trim()===''||!Number.isFinite(value))throw Error('有限の補正値を入力してください。');history.push({array:key.depthDelta,before:[...key.depthDelta]});key.depthDelta[vertex]=value;$('error').textContent='';redraw();}catch(e){error(e);}};
