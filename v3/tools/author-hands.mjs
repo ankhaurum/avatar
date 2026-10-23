@@ -12,8 +12,8 @@ for(const side of ['r','l']){
   let parent=flex;
   for(let j=0;j<3;j++){const name='finger.'+side+'.'+digit+'.'+(digit==='thumb'?['cmc','mcp','ip']:['mcp','pip','dip'])[j],p=points[j],pivot=[side==='r'?p[0]:1877.5-p[0],p[1],0];param(name,-.15,1.4);const bindings={x:b(name,-1)};if(!j)bindings.z=b('finger.'+side+'.'+digit+'.spread');node(name,parent,pivot,bindings);parent=name;}
  }
- const weights=(digit,y)=>{
-  if(digit==='palm'){const t=clamp((y-wrist[1]+18)/36);return [{node:root,weight:1-t},{node:flex,weight:t}];}
+ const weights=(digit,y,x)=>{
+  if(digit==='palm'){const t=clamp((y-wrist[1]+18)/36),pads=[];for(const [name,points]of Object.entries(fingers)){const q=points[0],px=side==='r'?q[0]:1877.5-q[0],rx=name==='thumb'?28:20,ry=name==='thumb'?28:24,falloff=clamp(1-((x-px)/rx)**2)*clamp(1-((y-q[1])/ry)**2);if(falloff)pads.push({node:'finger.'+side+'.'+name+'.'+(name==='thumb'?'cmc':'mcp'),weight:.5*falloff*falloff});}const total=pads.reduce((a,w)=>a+w.weight,0),scale=total>.65?.65/total:1,amount=total*scale;return [{node:root,weight:(1-t)*(1-amount)},{node:flex,weight:t*(1-amount)},...pads.map(w=>({...w,weight:w.weight*scale}))];}
   const js=fingers[digit],names=[flex,...(digit==='thumb'?['cmc','mcp','ip']:['mcp','pip','dip']).map(j=>'finger.'+side+'.'+digit+'.'+j)];
   for(let j=0;j<3;j++)if(y<js[j][1]+6){const t=clamp((y-js[j][1]+6)/12);return [{node:names[j],weight:1-t},{node:names[j+1],weight:t}];}
   return [{node:names[3],weight:1}];
@@ -36,11 +36,11 @@ for(const side of ['r','l']){
      // Palm depth is fitted to the registered side original. Finger cross-
      // sections remain editable round-volume drafts until their folds are sculpted.
      const halfThickness=digit==='palm'?edgeSpan/2:(right-left)*.43;
-     depth.push((isBack?-1:1)*halfThickness*Math.sqrt(Math.max(0,1-(2*t-1)**2)));skin.push(weights(digit,worldY));
+     depth.push((isBack?-1:1)*halfThickness*Math.sqrt(Math.max(0,1-(2*t-1)**2)));skin.push(weights(digit,worldY,x0+x+centreShift));
     }
    }
    for(let r=0;r<rows.length-1;r++)for(let c=0;c<columns;c++){const a=r*(columns+1)+c,d=a+columns+2,tri=[a,a+1,a+columns+1,a+1,d,a+columns+1];for(let i=0;i<6;i+=3)triangles.push(...(isBack?[tri[i],tri[i+2],tri[i+1]]:tri.slice(i,i+3)));}
-   Object.assign(mesh,{rest,uv,triangles,node:'wrist.'+side,shapes:[],visible:true,surface:{group:'hand.'+side,depth,weights:skin},authoring:{...mesh.authoring,kind:'traced-hand-surface',digit,face:isBack?'volar':'dorsal'}});delete mesh.weights;
+   Object.assign(mesh,{rest,uv,triangles,node:'wrist.'+side,shapes:[],visible:true,surface:{group:'hand.'+side,depth,weights:skin,blend:'dual-quaternion'},authoring:{...mesh.authoring,kind:'traced-hand-surface',digit,face:isBack?'volar':'dorsal'}});delete mesh.weights;
    if(digit==='palm')mesh.weights=Array.from({length:rest.length/2},(_,i)=>{const t=clamp((rest[i*2+1]-wrist[1]+18)/36);return [{node:'fore.'+side,weight:1-t},{node:'wrist.'+side,weight:t}];});
   }
  }

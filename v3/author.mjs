@@ -1,10 +1,10 @@
-import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=3';
+import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=4';
 import {solveArm} from './runtime/arm-solver.mjs?limits=2';
 import {solveArmAndShoulder} from './runtime/shoulder-solver.mjs';
 import {inverseSkin} from './tools/landmark-warp.mjs';
 import {Renderer,loadImages} from './runtime/renderer.mjs?surface=5';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
-let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-head-r28.json',location.href),generation=0,assetImages=new Map();
+let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-head-r32.json',location.href),generation=0,assetImages=new Map();
 const view=[-400,-100,2600,2500];
 document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-400,-100,2600,2500],r:[330,1570,340,500],l:[1200,1570,340,500],face:[590,240,650,650]};view.splice(0,4,...boxes[button.dataset.view]);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
 const error=e=>{$('error').textContent=e.message;console.error(e);};

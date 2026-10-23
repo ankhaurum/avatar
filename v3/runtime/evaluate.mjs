@@ -1,6 +1,6 @@
 import {compileFields,sampleField} from './projection-field.mjs';
 // Original author-data evaluator. No Cubism runtime or legacy V3 imports.
-import {compileSurfaces,surfaceMatrices,surfacePoint} from './surface.mjs?axis=3';
+import {compileSurfaces,surfaceMatrices,surfacePoint} from './surface.mjs?axis=4';
 const identity=()=>[1,0,0,1,0,0];
 export function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];}
 export const point=(m,x,y)=>[m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]];
