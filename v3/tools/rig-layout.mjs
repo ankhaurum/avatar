@@ -2,8 +2,8 @@
 // R/L refer to the character, not the viewer. Limits here are editable author
 // settings for inspection, not additional acceptance requirements.
 export const arms={
- r:{shoulder:[535,975],elbow:[515,1305],wrist:[495,1640],bend:1},
- l:{shoulder:[1345,975],elbow:[1370,1305],wrist:[1380,1640],bend:-1}
+ r:{shoulder:[535,975],elbow:[515,1305],cuff:[495,1640],wrist:[490,1735],bend:1},
+ l:{shoulder:[1345,975],elbow:[1370,1305],cuff:[1380,1640],wrist:[1387.5,1735],bend:-1}
 };
 export const fingers={thumb:[[555,1798],[570,1840],[584,1864]],index:[[525,1855],[525,1908],[525,1950]],middle:[[490,1858],[490,1910],[490,1960]],ring:[[460,1851],[460,1900],[460,1950]],little:[[432,1823],[432,1872],[432,1914]]};
 export function addRig(model){

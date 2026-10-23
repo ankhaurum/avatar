@@ -1,10 +1,11 @@
-import {compile,evaluate,point} from './runtime/evaluate.mjs';
-import {solveArm} from './runtime/arm-solver.mjs';
+import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=2';
+import {solveArm} from './runtime/arm-solver.mjs?limits=2';
 import {inverseSkin} from './tools/landmark-warp.mjs';
-import {Renderer,loadImages} from './runtime/renderer.mjs?assets=3';
+import {Renderer,loadImages} from './runtime/renderer.mjs?surface=4';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
-let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-rigged-r2.json',location.href),generation=0,assetImages=new Map();
+let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-face-r3.json',location.href),generation=0,assetImages=new Map();
 const view=[-400,-100,2600,2500];
+document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-400,-100,2600,2500],r:[330,1570,340,500],l:[1200,1570,340,500],face:[590,240,650,650]};view.splice(0,4,...boxes[button.dataset.view]);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
 const error=e=>{$('error').textContent=e.message;console.error(e);};
 function selected(){return model.meshes.find(m=>m.id===$('part').value);}
 function modelPoint(e){const r=overlay.getBoundingClientRect();return [view[0]+(e.clientX-r.left)/r.width*view[2],view[1]+(e.clientY-r.top)/r.height*view[3]];}
@@ -23,10 +24,12 @@ function redraw(){
  }catch(e){error(e);}
 }
 async function install(next){
+ $('status').textContent='制作素材を読み込み・検証しています…';
  const token=++generation,candidate=compile(next),images=await loadImages(next,baseURL,assetImages);
  if(token!==generation)return;
  renderer?.destroy();model=next;compiled=candidate;renderer=new Renderer(canvas,model,images);assetImages=images;renderer.view=view;state={};history=[];
  $('part').replaceChildren(...model.meshes.map(m=>new Option(m.id,m.id)));
+ $('part').value=model.meshes.find(m=>m.visible!==false)?.id||model.meshes[0].id;
  $('parameter').replaceChildren(new Option('基準形',''),...model.parameters.map(p=>new Option(p.id,p.id)));
  $('hands').disabled=!model.rig;$('hands').checked=!!model.rig;
  $('error').textContent='';parameterChanged();redraw();
@@ -38,6 +41,7 @@ overlay.addEventListener('pointerdown',e=>{
  if(!model)return;
  if($('hands').checked&&model.rig){const [x,y]=modelPoint(e),radius=22*view[2]/overlay.getBoundingClientRect().width;for(const [side,arm]of Object.entries(model.rig.arms)){const p=point(frame.matrices.get('wrist.'+side),...arm.wrist);if(Math.hypot(p[0]-x,p[1]-y)<radius){drag={side,kind:'hand'};overlay.setPointerCapture(e.pointerId);return;}}}
  if(!$('wire').checked)return;
+ if(selected().surface&&compiled.surfaceOrder.some(n=>Object.values(n.bindings||{}).some(terms=>terms.some(t=>Math.abs(frame.state[t.parameter]*t.factor)>1e-8)))){$('editMode').textContent='ひねり・指節の立体姿勢は現在表示専用です。局所立体の入力を基準値へ戻してから編集してください。';return;}
  let key=null;
  if($('keyEdit').checked){const candidates=(selected().shapes||[]).filter(s=>s.axes.some(a=>a.parameter===$('parameter').value));if(candidates.length!==1){$('editMode').textContent='編集する形状キー群が一意に決まりません。パーツとパラメータを選んでください。';return;}key=candidates[0].keys.find(k=>k.at.every((v,i)=>Math.abs(v-frame.state[candidates[0].axes[i].parameter])<1e-8));if(!key){$('editMode').textContent='途中姿勢は表示専用です。キーのボタンから編集する姿勢を選んでください。';return;}}
  else if(Object.keys(state).some(id=>state[id]!==compiled.params.get(id).default)){$('editMode').textContent='現在は姿勢確認中です。基準形へ戻すか、形状キー編集を選んでください。';return;}

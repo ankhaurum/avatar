@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-23",
+  "kind": "partial authoring checkpoint, not Human Acceptance",
+  "art": "source/hibiki-v3-art-r9.psd",
+  "currentModel": "model-face-r3.json",
+  "checks": [
+    {
+      "image": "left-twist.jpg",
+      "model": "model-forearm-r5.json",
+      "state": {
+        "forearm.l.twist": -2.3
+      },
+      "finding": "left cuff penetration resolved at this pose"
+    },
+    {
+      "image": "left-index-flex.jpg",
+      "model": "model-forearm-r5.json",
+      "state": {
+        "forearm.l.twist": -2.3,
+        "finger.l.index.pip": 1.2
+      },
+      "finding": "independent flexion rendered; joint fold quality remains unfinished"
+    },
+    {
+      "image": "right-wrist-combined.jpg",
+      "model": "model-face-r2.json",
+      "state": {
+        "forearm.r.twist": 2.3,
+        "wrist.r.flex": 0.35
+      },
+      "finding": "measured wrist pivot and registered hidden section remove observed cuff gap/penetration"
+    },
+    {
+      "image": "bilateral-combined.jpg",
+      "model": "model-face-r2.json",
+      "state": {
+        "forearm.r.twist": 2.3,
+        "wrist.r.flex": 0.35,
+        "arm.r.elbow": 1.2,
+        "arm.l.elbow": -1.6,
+        "body.lean": 0.12
+      },
+      "finding": "independent bilateral pose and body lean rendered; shoulder correction remains unfinished"
+    },
+    {
+      "image": "blink-candidate.jpg",
+      "model": "model-face-r2.json",
+      "state": {
+        "eye.r.blink": 1,
+        "eye.l.blink": 0.5
+      },
+      "finding": "closed/intermediate eye shapes rendered; bright eyelid seam is unresolved"
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-isolation=none v3/runtime/evaluate.test.mjs v3/runtime/arm-solver.test.mjs v3/runtime/surface.test.mjs",
+    "passed": 11
+  },
+  "unresolved": [
+    "eyelid seam",
+    "neck hair residue and hidden gaps",
+    "finger folds/webs",
+    "sleeve backside shading",
+    "shoulder/bust corrective forms",
+    "face directions",
+    "mouth/speech/emotions",
+    "physics and conversation integration",
+    "performance and final audit"
+  ]
+}

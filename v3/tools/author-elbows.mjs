@@ -14,7 +14,7 @@ const guides=[
 ];
 const records=[];
 for(const [side,arm]of Object.entries(arms)){
- const reflect=side==='r'?-1:1,restUpper=Math.atan2(arm.elbow[1]-arm.shoulder[1],arm.elbow[0]-arm.shoulder[0]),restFore=Math.atan2(arm.wrist[1]-arm.elbow[1],arm.wrist[0]-arm.elbow[0]);
+ const reflect=side==='r'?-1:1,restUpper=Math.atan2(arm.elbow[1]-arm.shoulder[1],arm.elbow[0]-arm.shoulder[0]),restFore=Math.atan2(arm.cuff[1]-arm.elbow[1],arm.cuff[0]-arm.elbow[0]);
  const sumX=y=>y<=1305?1880+5*clamp((y-975)/330):1885-10*clamp((y-1305)/335);
  const rest=restRight.map(([x,y])=>side==='r'?[x,y]:[sumX(y)-x,y]);
  const poses=guides.map(guide=>{
@@ -22,7 +22,7 @@ for(const [side,arm]of Object.entries(arms)){
   const angle=wrap(Math.atan2(f[1],f[0])-Math.atan2(u[1],u[0])-(restFore-restUpper));
   const scale=Math.hypot(arm.elbow[0]-arm.shoulder[0],arm.elbow[1]-arm.shoulder[1])/Math.hypot(...u),rotation=restUpper-Math.atan2(u[1],u[0]),c=Math.cos(rotation),s=Math.sin(rotation);
   const map=p=>{const x=reflect*(p[0]-guide.elbow[0])*scale,y=(p[1]-guide.elbow[1])*scale;return [arm.elbow[0]+x*c-y*s,arm.elbow[1]+x*s+y*c];};
-  const frame=evaluate(compiled,{['arm.'+side+'.elbow']:angle}),fore=frame.matrices.get('fore.'+side),upper=frame.matrices.get('upper.'+side),wrist=point(fore,...arm.wrist),refWrist=map(guide.wrist),correction=[wrist[0]-refWrist[0],wrist[1]-refWrist[1]];
+  const frame=evaluate(compiled,{['arm.'+side+'.elbow']:angle}),fore=frame.matrices.get('fore.'+side),upper=frame.matrices.get('upper.'+side),wrist=point(fore,...arm.cuff),refWrist=map(guide.wrist),correction=[wrist[0]-refWrist[0],wrist[1]-refWrist[1]];
   const source=rest.map(([x,y])=>{const t=clamp((y-(arm.elbow[1]-65))/130),a=point(upper,x,y),b=point(fore,x,y);return [a[0]*(1-t)+b[0]*t,a[1]*(1-t)+b[1]*t];});
   const target=guide.contour.map((p,i)=>{if(i<2)return rest[i];const q=map(p),dx=reflect*(p[0]-guide.elbow[0]),dy=p[1]-guide.elbow[1],t=clamp((dx*f[0]+dy*f[1])/(f[0]*f[0]+f[1]*f[1]));return [q[0]+correction[0]*t,q[1]+correction[1]*t];});
   for(const [x,y]of [[440,880],[630,880]]){const p=side==='r'?[x,y]:[sumX(y)-x,y];source.push(p);target.push(p);}
