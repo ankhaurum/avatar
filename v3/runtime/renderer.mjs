@@ -57,6 +57,23 @@ export class Renderer{
  }
  destroy(){if(this.destroyed)return;this.destroyed=true;const gl=this.gl;for(const r of this.resources.values()){gl.deleteVertexArray(r.vao);for(const b of [r.positions,r.uvs,r.indices])gl.deleteBuffer(b);}for(const t of this.textures.values())gl.deleteTexture(t);gl.deleteProgram(this.program);}
 }
-export async function loadImages(model,baseURL){
- const images=new Map();await Promise.all(model.textures.map(async t=>{const image=new Image();image.src=new URL(t.file,baseURL);await image.decode();if(t.width&&image.naturalWidth!==t.width||t.height&&image.naturalHeight!==t.height)throw Error('Texture size mismatch '+t.id);images.set(t.id,image);}));return images;
+export async function loadImages(model,baseURL,previous=new Map()){
+ const images=new Map();
+ for(const t of model.textures){
+  const url=new URL(t.file,baseURL),key=url.href+'|'+t.sha256;
+  if(url.origin!==new URL(baseURL).origin)throw Error('Texture must belong to the authoring origin: '+t.id);
+  if(previous.get(t.id)?.sourceKey===key){images.set(t.id,previous.get(t.id));continue;}
+  let objectURL;
+  try{
+   const response=await fetch(url);if(!response.ok)throw Error('HTTP '+response.status);
+   const bytes=await response.arrayBuffer();
+   if(t.sha256){const digest=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');if(digest!==t.sha256)throw Error('SHA256 mismatch');}
+   objectURL=URL.createObjectURL(new Blob([bytes],{type:'image/png'}));
+   const image=new Image();image.src=objectURL;await image.decode();
+   if(t.width&&image.naturalWidth!==t.width||t.height&&image.naturalHeight!==t.height)throw Error('Dimensions mismatch');
+   image.sourceKey=key;images.set(t.id,image);
+  }catch(e){throw Error('Texture '+t.id+': '+e.message);}
+  finally{if(objectURL)URL.revokeObjectURL(objectURL);}
+ }
+ return images;
 }

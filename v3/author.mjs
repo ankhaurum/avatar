@@ -1,9 +1,9 @@
 import {compile,evaluate,point} from './runtime/evaluate.mjs';
 import {solveArm} from './runtime/arm-solver.mjs';
 import {inverseSkin} from './tools/landmark-warp.mjs';
-import {Renderer,loadImages} from './runtime/renderer.mjs?view=2';
+import {Renderer,loadImages} from './runtime/renderer.mjs?assets=3';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
-let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-rigged-r2.json',location.href),generation=0;
+let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-rigged-r2.json',location.href),generation=0,assetImages=new Map();
 const view=[-400,-100,2600,2500];
 const error=e=>{$('error').textContent=e.message;console.error(e);};
 function selected(){return model.meshes.find(m=>m.id===$('part').value);}
@@ -23,9 +23,9 @@ function redraw(){
  }catch(e){error(e);}
 }
 async function install(next){
- const token=++generation,candidate=compile(next),images=await loadImages(next,baseURL);
+ const token=++generation,candidate=compile(next),images=await loadImages(next,baseURL,assetImages);
  if(token!==generation)return;
- renderer?.destroy();model=next;compiled=candidate;renderer=new Renderer(canvas,model,images);renderer.view=view;state={};history=[];
+ renderer?.destroy();model=next;compiled=candidate;renderer=new Renderer(canvas,model,images);assetImages=images;renderer.view=view;state={};history=[];
  $('part').replaceChildren(...model.meshes.map(m=>new Option(m.id,m.id)));
  $('parameter').replaceChildren(new Option('基準形',''),...model.parameters.map(p=>new Option(p.id,p.id)));
  $('hands').disabled=!model.rig;$('hands').checked=!!model.rig;
