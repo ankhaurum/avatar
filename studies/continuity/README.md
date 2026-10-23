@@ -337,3 +337,12 @@ This is a bounded approximation, not a reconstructed anatomical hand or complete
 Reference: [official rotation deformer](https://docs.live2d.com/cubism-editor-manual/making-and-rotation-of-rotationdeformer/). Rotation/shape deformation/pose opacity are separate mechanisms.
 
 Validation after application: greeting region 8,863 vertices / 17,534 triangles, about 2.05 MB reported GPU textures. Downloaded hand atlas is unchanged. Sorting is reused for unchanged axial angle, and this mesh is only drawn during the gesture. These counts are resource facts, not quality criteria; physical-phone speed remains unverified. SDK aggregate observations are retained in `evidence/wrist-sdk-observations.json` without vertex/UV data.
+
+
+## 両腕の独立制御（2026-10-23・部分実装）
+
+左右の腕、胴体マスク、脇の接続面を共有管理し、片腕の停止で反対側の袖が戻る競合を解消。左袖は左側のジャケットを参照します。右手／左手／両手の再生と途中姿勢スライダーを追加しました。オートデモで右→左→両手を既存の感情・発話と併用します。
+
+重要な未達：画面内での甲→掌の連続回旋と、独立した各指の屈伸は完成していません。推定厚みの方式を廃止し、今回の安定した再生範囲は掌を見せた控えめな仕草です。向きの素材切替は画角外の区間へ限定しています。これを高可動ハンドリグの完成とは扱いません。今回新しい画像生成・PSD制作や他社モデルの内部解析は行っていません。既存の響素材からCanvasで袖口の布を肌と分離し、新しい手首が袖口の後ろへ入る描画順にしています。髪は既存の部位別追従を維持し、左右の肩入力を反映する修正です。大きな姿勢での隠れ面、各指の造形、衣装の独立した二次変形は引き続き不足しています。
+
+`node studies/continuity/verify-bilateral.mjs` はマスク所有、停止復帰、有限な頂点、閉口入力契約の確認であり、自然さを合格判定するテストではありません。

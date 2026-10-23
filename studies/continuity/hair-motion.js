@@ -5,7 +5,7 @@ export class HairMotion {
  constructor(){this.reset();}
  reset(){this.time=0;this.last=null;this.nodes=Object.fromEntries(['front','left','right','tipLeft','tipRight'].map(k=>[k,{x:0,v:0}]));}
  apply(p,dt){
-  const drive=(p.yaw||0)*.6+(p.roll||0)*.25+(p.body||0)*.35+(p.postureRoll||0)*12+(p.shoulderL||0)*.12;
+  const drive=(p.yaw||0)*.6+(p.roll||0)*.25+(p.body||0)*.35+(p.postureRoll||0)*12+((p.shoulderL||0)-(p.shoulderR||0))*.12;
   if(!Number.isFinite(dt)||dt<0||dt>.5){this.reset();this.last=drive;return {...p,hairFront:0,hairTipLeft:0,hairTipRight:0};}
   this.time+=dt;const impulse=this.last===null||!dt?0:clamp(-(drive-this.last)/dt*.5);this.last=drive;
   const breeze=(p.wind??1)*(.20*Math.sin(this.time*.73)+.09*Math.sin(this.time*1.31+.8))*smooth(0,2,this.time);
