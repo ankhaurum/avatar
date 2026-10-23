@@ -1,0 +1,24 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const [sourceArg,dirArg]=process.argv.slice(2);
+if(!sourceArg||!dirArg)throw Error('Usage: node finalize-export.mjs source.psd export-directory');
+const source=path.resolve(sourceArg),dir=path.resolve(dirArg);
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const meta=JSON.parse(fs.readFileSync(path.join(dir,'layers.json'),'utf8').replace(/^\uFEFF/,''));
+if(meta.format!=='hibiki-art-export'||meta.version!==1||!meta.layers?.length)throw Error('Unsupported/empty export');
+const ids=new Set();
+const layers=meta.layers.map(l=>{
+ if(!/^[a-z][a-z0-9_.-]*$/.test(l.id)||ids.has(l.id)||l.file!==l.id+'.png')throw Error('Duplicate/invalid layer ID');
+ ids.add(l.id);
+ const b=l.bounds;if(!Array.isArray(b)||b.length!==4||b.some(x=>!Number.isFinite(x))||b[2]<=b[0]||b[3]<=b[1])throw Error('Invalid bounds '+l.id);
+ const buffer=fs.readFileSync(path.join(dir,l.file));
+ if(buffer.subarray(0,8).toString('hex')!=='89504e470d0a1a0a')throw Error('Not PNG: '+l.id);
+ const width=buffer.readUInt32BE(16),height=buffer.readUInt32BE(20);
+ if(width!==b[2]-b[0]||height!==b[3]-b[1])throw Error('Export dimensions disagree with PSD bounds: '+l.id);
+ return {...l,width,height,sha256:sha(buffer)};
+});
+const manifest={...meta,source:{path:path.relative(dir,source).replaceAll('\\','/'),sha256:sha(fs.readFileSync(source))},layers};
+const output=path.join(dir,'manifest.json');if(fs.existsSync(output))throw Error('Manifest exists; exports are revisioned');
+fs.writeFileSync(output,JSON.stringify(manifest,null,2)+'\n');
+console.log(JSON.stringify({layers:layers.length,source:manifest.source.sha256,output}));
