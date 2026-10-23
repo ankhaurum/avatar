@@ -1,5 +1,5 @@
 import {headTurn} from './head-turn.js';
-import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=hand-turn-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=hand-cage-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 import {hairOffset} from './hair-motion.js';

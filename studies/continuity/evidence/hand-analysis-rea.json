@@ -1,0 +1,35 @@
+{
+  "evidence_id": "ev_a42856deb70c6e8315e4de6854697890ed1ae3ab30a268df7263927121003c1a",
+  "parent_evidence_id": "ev_01a9ca8a615a9f02f6d16dd89e571195145b7d212ad70eaefff2f2d116a85349",
+  "source_selection": {
+    "requested_paths": [
+      "hand-turn.js",
+      "greeting.js",
+      "arm-rig.js"
+    ],
+    "unselected_files": 65
+  },
+  "statistics": {
+    "relevant_files": 68,
+    "nested_asar_containers": 0,
+    "text_bytes_read": 9755,
+    "invalid_utf8_files": 0,
+    "parsed_javascript_files": 3,
+    "skipped_javascript_files": 0,
+    "visited_ast_nodes": 2818,
+    "findings": 21,
+    "modules": 0,
+    "parse_failures": 0
+  },
+  "coverage": {
+    "status": "partial",
+    "truncated": false,
+    "omitted_count": null,
+    "limits": []
+  },
+  "limitations": [
+    "Static source analysis only, not rendering or anatomical validation.",
+    "No private Core or protected model extraction.",
+    "Official SDK observations are separate evidence."
+  ]
+}
