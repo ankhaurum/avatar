@@ -1,4 +1,4 @@
-import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=upper-sleeve-20261023';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=arm-socket-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 import {hairOffset} from './hair-motion.js';
