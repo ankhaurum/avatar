@@ -1,4 +1,5 @@
-import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=arm-socket-20261023';
+import {headTurn} from './head-turn.js';
+import {BUST_HIERARCHY,chestFrame,thoraxOffset} from './bust-rig.js?v=hand-turn-20261023';
 import {eyes,eyeBounds,seam,WIDTH,HEIGHT} from './materials.js';
 import {expressionWeights} from './shape-constraints.js';
 import {hairOffset} from './hair-motion.js';
@@ -89,13 +90,13 @@ export function smileEyeDelta(x,y,p){
 }
 export function createSkin(p){
  const root=chestFrame(p);
- const headA=(p.roll||0)*.027+(p.yaw||0)*.013,neckA=(p.yaw||0)*.008;
+ const headA=(p.roll||0)*.027,neckA=0;
  const transform=(cx,cy,a,tx=0,ty=0)=>{const c=Math.cos(a),s=Math.sin(a);return (x,y)=>[cx+(x-cx)*c-(y-cy)*s+tx,cy+(x-cx)*s+(y-cy)*c+ty];};
- const bodyTransform=root.point,neckTransform=transform(...BUST_HIERARCHY.neck.pivot,neckA),headTransform=transform(...BUST_HIERARCHY.head.pivot,headA,(p.yaw||0)*3.5,(p.pitch||0)*3);
+ const bodyTransform=root.point,neckTransform=transform(...BUST_HIERARCHY.neck.pivot,neckA),headTransform=transform(...BUST_HIERARCHY.head.pivot,headA);
  return (x,y)=>{
  const headWeight=1-smooth(770,965,y),neckWeight=(1-smooth(875,1000,y))*(1-headWeight);
  const body=bodyTransform(x,y),neck=bodyTransform(...neckTransform(x,y));
- const head=bodyTransform(...neckTransform(...headTransform(x,y)));
+ const head=bodyTransform(...neckTransform(...headTransform(...headTurn(x,y,p))));
  let px=body[0]+neckWeight*(neck[0]-body[0])+headWeight*(head[0]-body[0]);
  let py=body[1]+neckWeight*(neck[1]-body[1])+headWeight*(head[1]-body[1]);
  // Continuous thoracic breathing: shoulders rise, ribcage widens, waist stays put.
