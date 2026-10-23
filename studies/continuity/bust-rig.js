@@ -6,6 +6,7 @@ export const BUST_HIERARCHY={
  shoulderRight:{parent:'thorax',pivot:[150,1000]},shoulderLeft:{parent:'thorax',pivot:[1016,1000]},
  neck:{parent:'thorax',pivot:[583,930]},head:{parent:'neck',pivot:[583,790]},
  eyes:{parent:'head'},mouth:{parent:'head'},hair:{parent:'head',secondary:true},
+ upperArmLeft:{parent:'shoulderLeft'},forearmLeft:{parent:'upperArmLeft'},handLeft:{parent:'forearmLeft'},
  upperArmRight:{parent:'shoulderRight'},forearmRight:{parent:'upperArmRight'},handRight:{parent:'forearmRight'}
 };
 // Authored scapular corrective cage: neutral -> supported shoulder. Boundaries stay pinned.
@@ -59,7 +60,7 @@ export function composeBustIntent(p,g={active:false,lift:0,prepare:0}){
  // A small support/anticipation pose is shared by spine, collar, neck and arm.
  const support=clamp((p.shoulder||0)*.4);
  const mirrored=g.side==='left',direction=mirrored?-1:1,scapula=.8*supportPose+.18*prepare;
- out.armLift=lift;out.armUpper=g.active?g.upperLift??lift:0;out.scapulaL=support+(mirrored?0:scapula);out.scapulaR=support+(mirrored?scapula:0);
+ out.armLift=lift;out.armUpper=g.active?g.upperLift??lift:0;out.scapulaL=(out.scapulaL||0)+support+(mirrored?0:scapula);out.scapulaR=(out.scapulaR||0)+support+(mirrored?scapula:0);
  out.postureX=(out.postureX||0)+direction*(-4.5*supportPose-1.5*prepare);
  out.postureY=(out.postureY||0)+1.2*prepare-(p.shoulder||0)*2.5;
  out.postureRoll=(out.postureRoll||0)+direction*(-.009*supportPose+.003*prepare);

@@ -1,4 +1,4 @@
-import {BUST_HIERARCHY,shoulderFrame} from './bust-rig.js?v=hand-cage-20261023';
+import {BUST_HIERARCHY,shoulderFrame} from './bust-rig.js?v=bilateral-20261023';
 // Character right = screen left. Reflect about the rig's thorax axis,
 // not the canvas edge (the approved portrait is slightly asymmetric).
 export const ARM_MIRROR_X=BUST_HIERARCHY.shoulderRight.pivot[0]+BUST_HIERARCHY.shoulderLeft.pivot[0];
