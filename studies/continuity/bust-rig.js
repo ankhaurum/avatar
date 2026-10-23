@@ -24,7 +24,7 @@ export function scapulaOffset(x,y,p){
  return [0,1].map(k=>((1-u)*(1-v)*deltas[iy][ix][k]+u*(1-v)*deltas[iy][ix+1][k]+(1-u)*v*deltas[iy+1][ix][k]+u*v*deltas[iy+1][ix+1][k])*amount*(mirror&&k===0?-1:1));
 }
 export function chestFrame(p){
- const [cx,cy]=BUST_HIERARCHY.root.pivot,angle=(p.body||0)*.012+(p.postureRoll||0),c=Math.cos(angle),s=Math.sin(angle);
+ const [cx,cy]=BUST_HIERARCHY.root.pivot,angle=p.postureRoll||0,c=Math.cos(angle),s=Math.sin(angle);
  return {angle,vector:(x,y)=>[c*x-s*y,s*x+c*y],point:(x,y)=>[cx+c*(x-cx)-s*(y-cy)+(p.postureX||0),cy+s*(x-cx)+c*(y-cy)-(p.breath||0)*1.7+(p.postureY||0)]};
 }
 export function thoraxOffset(x,y,p){
@@ -39,8 +39,8 @@ const TURN_X=[0,150,350,583,810,1016,1122],TURN_Y=[810,900,980,1100,1260,1402];
 const TURN_ROWS=[
  [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
  [[0,0],[0,0],[1,0],[3,0],[1,0],[0,0],[0,0]],
- [[0,0],[9,2],[14,1],[16,0],[3,-1],[-9,-2],[0,0]],
- [[0,0],[6,1],[12,1],[13,0],[2,-1],[-7,-1],[0,0]],
+ [[0,0],[20,2],[25,1],[30,0],[9,-1],[-19,-2],[0,0]],
+ [[0,0],[16,1],[26,1],[35,0],[12,-1],[-15,-1],[0,0]],
  [[0,0],[1,0],[3,0],[5,0],[1,0],[-2,0],[0,0]],
  [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
 ];

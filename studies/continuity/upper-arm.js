@@ -1,5 +1,5 @@
-import {skin} from './rig.js?v=arm-socket-20261023';
-import {ARM,armChain} from './arm-rig.js?v=arm-socket-20261023';
+import {skin} from './rig.js?v=hand-turn-20261023';
+import {ARM,armChain} from './arm-rig.js?v=hand-turn-20261023';
 import {armFrame,armPoint} from './arm-space.js';
 // Source-space jacket sleeve/chest seam, authored from Hibiki's own image.
 export const SEAM=[[930,90],[980,101],[1040,119],[1100,139],[1160,160],[1220,176],[1300,180],[1402,190]];

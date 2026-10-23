@@ -1,5 +1,6 @@
-import {track} from './presence.js?v=arm-socket-20261023';
-import {ARM,armChain} from './arm-rig.js?v=arm-socket-20261023';
+import {HandTurn} from './hand-turn.js';
+import {track} from './presence.js?v=hand-turn-20261023';
+import {ARM,armChain} from './arm-rig.js?v=hand-turn-20261023';
 import {armFrame} from './arm-space.js';
 import {Sleeve} from './sleeve.js';
 import {UpperArm} from './upper-arm.js';
@@ -13,10 +14,11 @@ export function greetingPose(seconds,side='right'){
  const upperLift=track([[0,0],[.12,0],[1.25,1],[4.7,1],[6.4,0]],seconds);
  const support=track([[0,0],[.5,.24],[1.65,1],[4.75,1],[6.4,0]],seconds);
  const wrist=track([[0,0],[1.3,.018],[1.75,0],[2.15,-.026],[2.72,.035],[3.28,-.018],[3.95,.012],[4.5,0],[5.25,-.012],[6.4,0]],seconds); const prepare=seconds<1.2?ease(seconds/.38)*(1-ease((seconds-.35)/.85)):0;
- return {active:true,lift,upperLift,support,wrist,prepare,side,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
+ const turn=track([[0,0],[.95,0],[1.35,.5],[1.85,1],[4.5,1],[5.1,.5],[5.55,0],[6.4,0]],seconds);
+ return {active:true,lift,upperLift,support,wrist,turn,prepare,side,phase:seconds<1.7?'raise':seconds<4.5?'wave':'lower'};
 }
 export class RightGreeting {
- constructor({MeshSimple,Texture,Graphics,world,image,sleeveImage,main,side='right'}){
+ constructor({MeshSimple,Texture,Graphics,world,image,sleeveImage,handTurnImage,main,side='right'}){
   this.started=null;this.pose=greetingPose(-1,side);this.side=side;
   this.upperArm=new UpperArm({MeshSimple,Graphics,world,main,side});
   this.sleeve=new Sleeve({MeshSimple,Texture,world,image:sleeveImage});
@@ -27,14 +29,14 @@ export class RightGreeting {
   const texture=Texture.from(image),hand=[],forearm=[];
   for(let i=0;i<indices.length;i+=3){const tri=indices.slice(i,i+3),maxY=Math.max(...tri.map(k=>rest[k*2+1]));(maxY<=1160?hand:forearm).push(...tri);}
   this.meshes=[forearm,hand].map(ids=>{const mesh=new MeshSimple({texture,vertices:new Float32Array(rest),uvs:new Float32Array(uvs),indices:new Uint16Array(ids)});mesh.visible=false;mesh.autoUpdate=true;world.addChild(mesh);return mesh;});
-  this.mesh=this.meshes[0];
+  this.mesh=this.meshes[0];this.handTurn=handTurnImage?new HandTurn({MeshSimple,Texture,world,image:handTurnImage}):null;
  }
  play(clock){if(this.started!==null)return false;this.started=clock;return true;}
  update(clock){this.pose=this.started===null?greetingPose(-1,this.side):greetingPose(clock-this.started,this.side);if(!this.pose.active)this.started=null;return this.pose;}
  preview(seconds){this.started=null;this.pose=greetingPose(seconds,this.side);return this.pose;}
- stop(){this.started=null;this.pose=greetingPose(-1,this.side);this.meshes.forEach(m=>m.visible=false);this.sleeve.draw(false);this.upperArm.draw(false);}
+ stop(){this.started=null;this.pose=greetingPose(-1,this.side);this.meshes.forEach(m=>m.visible=false);this.sleeve.draw(false);this.upperArm.draw(false);this.handTurn?.draw(false);}
  draw(p){
-  const g=this.pose;for(const m of this.meshes){m.alpha=1;m.visible=g.active;}if(!g.active){this.sleeve.draw(false);this.upperArm.draw(false);return;}
+  const g=this.pose;for(const m of this.meshes){m.alpha=1;m.visible=g.active;}if(!g.active){this.sleeve.draw(false);this.upperArm.draw(false);this.handTurn?.draw(false);return;}
   const chain=armChain(p.armLift??g.lift,p.armUpper??g.upperLift),parent=armFrame(p,this.side),wrist=parent.point(...chain.wrist);
   this.upperArm.draw(true,p,chain);
   const angle=chain.forearmAngle-Math.atan2(ARM.sourceWrist[1]-ARM.sourceElbow[1],ARM.sourceWrist[0]-ARM.sourceElbow[0]);
@@ -47,7 +49,8 @@ export class RightGreeting {
    v.set(parent.point(chain.wrist[0]+c*lx-s*ly,chain.wrist[1]+s*lx+c*ly),i);
   }
   for(const m of this.meshes){if(m!==this.mesh)m.vertices.set(v);m.geometry.getBuffer('aPosition').update();}
+  if(this.handTurn){this.meshes[1].visible=false;this.handTurn.draw(true,g.turn,(x,y)=>{const dx=x-ARM.sourceWrist[0],dy=y-ARM.sourceWrist[1],w=1-ease((y-1120)/80),lx=(dx+w*(wc*dx-ws*dy-dx))*ARM.scale,ly=(dy+w*(ws*dx+wc*dy-dy))*ARM.scale;return parent.point(chain.wrist[0]+c*lx-s*ly,chain.wrist[1]+s*lx+c*ly);});}
   this.chain={...chain,shoulder:parent.point(...chain.shoulder),elbow:parent.point(...chain.elbow),wrist,parentAngle:parent.angle};
  }
- stats(){return {side:this.side==='right'?'character-right/screen-left':'character-left/screen-right',...this.pose,opacity:this.mesh.alpha,upperSleeveVisible:this.upperArm.mesh.visible,socketJoints:this.upperArm.joins||[],torsoMaskActive:this.upperArm.main.mask===this.upperArm.mask,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','independent-upper-sleeve','inner-sleeve-attachment','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162+72+16,triangles:this.indices.length/3+256+112+14,textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4};}
+ stats(){return {side:this.side==='right'?'character-right/screen-left':'character-left/screen-right',...this.pose,opacity:this.mesh.alpha,handTurnViews:this.handTurn?3:1,upperSleeveVisible:this.upperArm.mesh.visible,socketJoints:this.upperArm.joins||[],torsoMaskActive:this.upperArm.main.mask===this.upperArm.mask,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','independent-upper-sleeve','inner-sleeve-attachment','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162+72+16+(this.handTurn?261:0),triangles:this.indices.length/3+256+112+14+(this.handTurn?448:0),textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4+(this.handTurn?256*448*4:0)};}
 }
