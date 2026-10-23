@@ -6,7 +6,7 @@ output=Path(sys.argv[2])
 if output.exists(): raise ValueError('Contour output already exists; use a new revision')
 model=json.loads(model_path.read_text(encoding='utf-8'));result={}
 for mesh in model['meshes']:
-    if not (mesh['id'].startswith('hand.') or mesh['id'].startswith('arm.') and mesh['id'].split('.')[-1] in ['fore','cuff']): continue
+    if not (mesh['id'].startswith('hand.') or mesh['id'].startswith('arm.') and mesh['id'].split('.')[-1] in ['upper','fore','cuff']): continue
     texture=next(t for t in model['textures'] if t['id']==mesh['texture'])
     im=Image.open(root/texture['file']).convert('RGBA');alpha=im.getchannel('A');rows=[]
     for y in range(im.height):

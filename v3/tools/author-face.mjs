@@ -12,14 +12,15 @@ l:{upper:[[994,484],[1002,468],[1019,456],[1040,449],[1063,450],[1084,457],[1096
 };
 for(const side of ['r','l']){
  const e=eye[side],id='eye.'+side+'.blink';m.parameters.push({id,min:0,max:1,default:0});
+ const upperLid=m.meshes.find(v=>v.id==='eye.'+side+'.upper'),lowerLid=m.meshes.find(v=>v.id==='eye.'+side+'.lower');upperLid.order=Math.max(upperLid.order,lowerLid.order)+.01;
  for(const part of ['upper','lower','white']){
   const mesh=m.meshes.find(v=>v.id==='eye.'+side+'.'+part);grid(mesh,24,12);
   key(mesh,id,[0,.5,1],(x,y,t)=>{
    const a=curve(e.upper,x),b=curve(e.lower,x),closed=curve(e.closed,x);
    // Explicit intermediate upper/lower trajectories; endpoints remain pinned.
-   const upper=a+(closed-a)*(t===.5?.62:t),lower=b+(closed-b)*(t===.5?.3:t);
+   const upper=a+(closed-a)*(t===.5?.62:t)+1.5*t,lower=b+(closed-b)*(t===.5?.3:t)-1.5*t;
    let yy;
-   if(part==='white')yy=upper+(y-a)/Math.max(.01,b-a)*(lower-upper);
+   if(part==='white')yy=upper+(y-a)/Math.max(.01,b-a)*Math.max(0,lower-upper);
    else if(y<=a)yy=y+(upper-a)*clamp((y-420)/(a-420));
    else if(y>=b)yy=y+(lower-b)*clamp((530-y)/(530-b));
    else yy=upper+(y-a)/Math.max(.01,b-a)*(lower-upper);

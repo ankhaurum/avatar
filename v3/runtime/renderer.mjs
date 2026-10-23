@@ -49,7 +49,7 @@ export class Renderer{
   const renderedGroups=new Set();
   for(const {mesh}of meshes){
    if(mesh.visible===false||mesh.maskOnly)continue;
-   if(mesh.surface){const group=mesh.surface.group;if(renderedGroups.has(group))continue;renderedGroups.add(group);gl.disable(gl.STENCIL_TEST);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.depthMask(true);gl.clearDepth(1);gl.clear(gl.DEPTH_BUFFER_BIT);gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);gl.frontFace(gl.CW);for(const {mesh:part}of meshes)if(part.visible!==false&&part.surface?.group===group)draw(part);gl.disable(gl.CULL_FACE);gl.disable(gl.DEPTH_TEST);continue;}
+   if(mesh.surface&&!mesh.surface.projectOnly){const group=mesh.surface.group;if(renderedGroups.has(group))continue;renderedGroups.add(group);gl.disable(gl.STENCIL_TEST);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.depthMask(true);gl.clearDepth(1);gl.clear(gl.DEPTH_BUFFER_BIT);gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);gl.frontFace(gl.CW);for(const {mesh:part}of meshes)if(part.visible!==false&&part.surface?.group===group&&!part.surface.projectOnly)draw(part);gl.disable(gl.CULL_FACE);gl.disable(gl.DEPTH_TEST);continue;}
    if(mesh.masks?.length){
     gl.enable(gl.STENCIL_TEST);gl.stencilMask(255);gl.clear(gl.STENCIL_BUFFER_BIT);gl.stencilFunc(gl.ALWAYS,1,255);gl.stencilOp(gl.KEEP,gl.KEEP,gl.REPLACE);gl.colorMask(false,false,false,false);
     for(const id of mesh.masks)draw(this.resources.get(id).mesh,true);

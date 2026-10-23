@@ -14,7 +14,7 @@ export function addRig(model){
  parameter('body.x',-140,140);parameter('body.y',-80,80);parameter('body.lean',-.2,.2);parameter('chest.turn',-.12,.12);parameter('neck.tilt',-.12,.12);parameter('head.tilt',-.25,.25);
  node('root',null,[920,1900],{x:b('body.x'),y:b('body.y'),rotation:b('body.lean')});node('torso','root',[920,1600]);node('chest','torso',[920,1120],{rotation:b('chest.turn')});node('neck','chest',[940,850],{rotation:b('neck.tilt')});node('head','neck',[940,740],{rotation:b('head.tilt')});
  for(const [side,arm]of Object.entries(arms)){
-  parameter('shoulder.'+side+'.lift',-35,35);parameter('arm.'+side+'.upper',-1.35,1.35);parameter('arm.'+side+'.elbow',side==='r'?0:-2.2,side==='r'?2.2:0);parameter('wrist.'+side+'.rotation',-.75,.75);
+  parameter('shoulder.'+side+'.lift',-35,35);parameter('arm.'+side+'.upper',-1.35,1.35);parameter('arm.'+side+'.elbow',-2.2,2.2);parameter('wrist.'+side+'.rotation',-.75,.75);
   node('clavicle.'+side,'chest',arm.shoulder,{y:b('shoulder.'+side+'.lift')});node('upper.'+side,'clavicle.'+side,arm.shoulder,{rotation:b('arm.'+side+'.upper')});node('fore.'+side,'upper.'+side,arm.elbow,{rotation:b('arm.'+side+'.elbow')});node('wrist.'+side,'fore.'+side,arm.wrist,{rotation:b('wrist.'+side+'.rotation')});
   for(const [finger,points]of Object.entries(fingers)){
    const pivot=side==='r'?points[0]:[1877.5-points[0][0],points[0][1]],id='finger.'+side+'.'+finger;

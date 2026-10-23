@@ -1,0 +1,123 @@
+{
+  "states": {
+    "idle": {
+      "label": "待機",
+      "expression": "neutral",
+      "pose": {
+        "arm.r.elbow": 0.12,
+        "arm.l.elbow": -0.12
+      }
+    },
+    "speaking": {
+      "label": "発話",
+      "expression": "smile",
+      "pose": {
+        "arm.r.upper": 0.12,
+        "arm.r.elbow": 1.1,
+        "arm.l.upper": -0.1,
+        "arm.l.elbow": -1.35,
+        "forearm.r.twist": 2.3,
+        "forearm.l.twist": -2.3,
+        "body.lean": 0.025
+      }
+    },
+    "listening": {
+      "label": "傾聴",
+      "expression": "neutral",
+      "pose": {
+        "head.tilt": 0.05,
+        "head.pitch": 0.12,
+        "gaze.y": 0.1,
+        "arm.r.elbow": 0.25,
+        "arm.l.elbow": -0.25
+      }
+    },
+    "thinking": {
+      "label": "思考",
+      "expression": "puzzled",
+      "pose": {
+        "arm.r.upper": -0.4,
+        "arm.r.elbow": -2.05,
+        "wrist.r.rotation": -0.25,
+        "finger.r.index.mcp": 0.3,
+        "finger.r.middle.mcp": 0.65,
+        "finger.r.ring.mcp": 0.75,
+        "finger.r.little.mcp": 0.8,
+        "head.tilt": -0.07,
+        "head.yaw": -0.25,
+        "gaze.x": -0.35,
+        "gaze.y": -0.4
+      }
+    },
+    "happy": {
+      "label": "喜び",
+      "expression": "smile",
+      "pose": {
+        "arm.r.upper": 0.3,
+        "arm.l.upper": -0.3,
+        "arm.r.elbow": 1.3,
+        "arm.l.elbow": -1.3,
+        "head.tilt": 0.05,
+        "forearm.r.twist": 2.1,
+        "forearm.l.twist": -2.1
+      }
+    },
+    "surprised": {
+      "label": "驚き",
+      "expression": "surprised",
+      "pose": {
+        "body.y": -12,
+        "head.pitch": -0.3,
+        "arm.r.elbow": -0.9,
+        "arm.l.elbow": 0.9,
+        "shoulder.r.lift": -14,
+        "shoulder.l.lift": -14
+      }
+    },
+    "explain": {
+      "label": "説明",
+      "expression": "smile",
+      "pose": {
+        "body.lean": -0.035,
+        "head.yaw": 0.18,
+        "arm.r.upper": 0.1,
+        "arm.l.upper": -0.16,
+        "arm.r.elbow": 1.35,
+        "arm.l.elbow": -1.65,
+        "forearm.r.twist": 2.3,
+        "forearm.l.twist": -2.3,
+        "wrist.r.flex": 0.16,
+        "wrist.l.flex": 0.12
+      }
+    },
+    "nod": {
+      "label": "うなずき",
+      "expression": "neutral",
+      "pose": {
+        "arm.r.elbow": 0.2,
+        "arm.l.elbow": -0.2
+      }
+    }
+  },
+  "expressions": {
+    "neutral": {
+      "mouth.form": 0
+    },
+    "smile": {
+      "mouth.form": 0.8,
+      "brow.raise": 0.1,
+      "eye.r.blink": 0.08,
+      "eye.l.blink": 0.08
+    },
+    "puzzled": {
+      "mouth.form": -0.25,
+      "brow.inner": 0.7,
+      "brow.raise": -0.2
+    },
+    "surprised": {
+      "mouth.form": -0.7,
+      "mouth.open": 0.7,
+      "brow.raise": 0.9
+    }
+  }
+}

@@ -1,9 +1,10 @@
-import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=2';
+import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=3';
 import {solveArm} from './runtime/arm-solver.mjs?limits=2';
+import {solveArmAndShoulder} from './runtime/shoulder-solver.mjs';
 import {inverseSkin} from './tools/landmark-warp.mjs';
-import {Renderer,loadImages} from './runtime/renderer.mjs?surface=4';
+import {Renderer,loadImages} from './runtime/renderer.mjs?surface=5';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
-let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-face-r3.json',location.href),generation=0,assetImages=new Map();
+let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-head-r28.json',location.href),generation=0,assetImages=new Map();
 const view=[-400,-100,2600,2500];
 document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-400,-100,2600,2500],r:[330,1570,340,500],l:[1200,1570,340,500],face:[590,240,650,650]};view.splice(0,4,...boxes[button.dataset.view]);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
 const error=e=>{$('error').textContent=e.message;console.error(e);};
@@ -39,7 +40,7 @@ function setParameter(value){const p=compiled.params.get($('parameter').value);i
 function keyButtons(){const id=$('parameter').value,keys=new Set();for(const s of selected().shapes||[])for(const a of s.axes)if(a.parameter===id)for(const v of a.keys)keys.add(v);$('keys').replaceChildren(...[...keys].sort((a,b)=>a-b).map(v=>{const b=document.createElement('button');b.textContent='キー '+v.toFixed(3);b.addEventListener('click',()=>setParameter(v));return b;}));}
 overlay.addEventListener('pointerdown',e=>{
  if(!model)return;
- if($('hands').checked&&model.rig){const [x,y]=modelPoint(e),radius=22*view[2]/overlay.getBoundingClientRect().width;for(const [side,arm]of Object.entries(model.rig.arms)){const p=point(frame.matrices.get('wrist.'+side),...arm.wrist);if(Math.hypot(p[0]-x,p[1]-y)<radius){drag={side,kind:'hand'};overlay.setPointerCapture(e.pointerId);return;}}}
+ if($('hands').checked&&model.rig){const [x,y]=modelPoint(e),radius=22*view[2]/overlay.getBoundingClientRect().width;for(const [side,arm]of Object.entries(model.rig.arms)){const p=point(frame.matrices.get('wrist.'+side),...arm.wrist);if(Math.hypot(p[0]-x,p[1]-y)<radius){const elbow=frame.state['arm.'+side+'.elbow'];drag={side,kind:'hand',bend:Math.abs(elbow)>.05?Math.sign(elbow):arm.bend};overlay.setPointerCapture(e.pointerId);return;}}}
  if(!$('wire').checked)return;
  if(selected().surface&&compiled.surfaceOrder.some(n=>Object.values(n.bindings||{}).some(terms=>terms.some(t=>Math.abs(frame.state[t.parameter]*t.factor)>1e-8)))){$('editMode').textContent='ひねり・指節の立体姿勢は現在表示専用です。局所立体の入力を基準値へ戻してから編集してください。';return;}
  let key=null;
@@ -53,7 +54,18 @@ overlay.addEventListener('pointerdown',e=>{
  const local=inverseSkin(mesh,frame.matrices,vertex/2,p[vertex],p[vertex+1]);
  const array=key?key.delta:mesh.rest;history.push({array,before:[...array]});drag={mesh,vertex,key,local,start:[array[vertex],array[vertex+1]]};overlay.setPointerCapture(e.pointerId);
 });
-overlay.addEventListener('pointermove',e=>{if(!drag)return;const [x,y]=modelPoint(e);if(drag.kind==='hand'){const side=drag.side,u='arm.'+side+'.upper',f='arm.'+side+'.elbow',pu=compiled.params.get(u),pf=compiled.params.get(f),solution=solveArm(model.rig.arms[side],[x,y],frame.matrices.get('clavicle.'+side),{upper:[pu.min,pu.max],elbow:[pf.min,pf.max],previousUpper:state[u]??pu.default});state[u]=solution.upper;state[f]=solution.elbow;const id=$('parameter').value;if(id){$('value').value=state[id]??compiled.params.get(id).default;$('valueText').textContent=Number($('value').value).toFixed(3);}}else{const local=inverseSkin(drag.mesh,frame.matrices,drag.vertex/2,x,y),array=drag.key?drag.key.delta:drag.mesh.rest;array[drag.vertex]=drag.start[0]+local[0]-drag.local[0];array[drag.vertex+1]=drag.start[1]+local[1]-drag.local[1];}redraw();});
+overlay.addEventListener('pointermove',e=>{
+ if(!drag)return;const [x,y]=modelPoint(e);
+ if(drag.kind==='hand'){
+  const side=drag.side,u='arm.'+side+'.upper',f='arm.'+side+'.elbow',s='shoulder.'+side+'.lift',pu=compiled.params.get(u),pf=compiled.params.get(f),ps=compiled.params.get(s);
+  const limits={upper:[pu.min,pu.max],elbow:[pf.min,pf.max],lift:[ps.min,ps.max],previousUpper:state[u]??pu.default};
+  const arm={...model.rig.arms[side],bend:drag.bend};
+  const solution=model.rig.shoulderResponse?solveArmAndShoulder(arm,[x,y],frame.matrices.get('chest'),limits,model.rig.shoulderResponse):solveArm(arm,[x,y],frame.matrices.get('clavicle.'+side),limits);
+  state[u]=solution.upper;state[f]=solution.elbow;if(solution.lift!==undefined)state[s]=solution.lift;
+  const id=$('parameter').value;if(id){const value=state[id]??compiled.params.get(id).default;$('value').value=value;$('exactValue').value=value;$('valueText').textContent=value.toFixed(3);}
+ }else{const local=inverseSkin(drag.mesh,frame.matrices,drag.vertex/2,x,y),array=drag.key?drag.key.delta:drag.mesh.rest;array[drag.vertex]=drag.start[0]+local[0]-drag.local[0];array[drag.vertex+1]=drag.start[1]+local[1]-drag.local[1];}
+ redraw();
+});
 overlay.addEventListener('pointerup',()=>{drag=null;});overlay.addEventListener('pointercancel',()=>{drag=null;});
 $('part').addEventListener('change',()=>{keyButtons();redraw();});$('wire').addEventListener('change',redraw);$('solo').addEventListener('change',redraw);$('parameter').addEventListener('change',parameterChanged);
 $('hands').addEventListener('change',redraw);

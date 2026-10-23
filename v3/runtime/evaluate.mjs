@@ -1,5 +1,6 @@
+import {compileFields,sampleField} from './projection-field.mjs';
 // Original author-data evaluator. No Cubism runtime or legacy V3 imports.
-import {compileSurfaces,surfaceMatrices,surfacePoint} from './surface.mjs?axis=2';
+import {compileSurfaces,surfaceMatrices,surfacePoint} from './surface.mjs?axis=3';
 const identity=()=>[1,0,0,1,0,0];
 export function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];}
 export const point=(m,x,y)=>[m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]];
@@ -34,7 +35,7 @@ export function compile(model){
  for(const m of meshes.values())for(const id of m.masks||[])check(meshes.has(id)&&id!==m.id&&!meshes.get(id).masks?.length,'Missing, self or nested mask '+m.id);
  const bound=new Set();
  for(const seam of model.seams||[]){check(seam.vertices?.length>=2,'Seam needs counterparts');for(const v of seam.vertices){const m=meshes.get(v.mesh);check(m&&Number.isInteger(v.vertex)&&v.vertex>=0&&v.vertex<m.rest.length/2,'Seam vertex');const id=v.mesh+':'+v.vertex;check(!bound.has(id),'Vertex belongs to multiple seam groups');bound.add(id);}if(seam.parameter)check(params.has(seam.parameter),'Seam parameter');}
- return {model,params,nodes,meshes,order,shapeIndexes,surfaceOrder:compileSurfaces(model,params)};
+ return {model,params,nodes,meshes,order,shapeIndexes,surfaceOrder:compileSurfaces(model,params),projectionFields:compileFields(model)};
 }
 function bracket(keys,x){if(x<=keys[0])return [[keys[0],1]];if(x>=keys.at(-1))return [[keys.at(-1),1]];for(let i=1;i<keys.length;i++)if(x<=keys[i]){const t=(x-keys[i-1])/(keys[i]-keys[i-1]);return [[keys[i-1],1-t],[keys[i],t]];}}
 export function evaluate(compiled,input={}){
@@ -55,7 +56,7 @@ export function evaluate(compiled,input={}){
    for(const c of corners){const delta=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=delta[i]*c.weight;}
   }
   const out=new Float32Array(local.length),matrix=matrices.get(mesh.node),depth=new Float32Array(local.length/2);
-  if(mesh.surface)for(let i=0;i<local.length;i+=2){const p=surfacePoint(mesh.surface,surfaceTransforms,i/2,local[i],local[i+1]);local[i]=p[0];local[i+1]=p[1];depth[i/2]=p[2];}
+  if(mesh.surface)for(let i=0;i<local.length;i+=2){const p=surfacePoint(mesh.surface,surfaceTransforms,i/2,local[i],local[i+1],mesh.surface.depthField?sampleField(compiled.projectionFields.get(mesh.surface.depthField),local[i],local[i+1]):undefined);local[i]=p[0];local[i+1]=p[1];depth[i/2]=p[2];}
   for(let i=0;i<local.length;i+=2){
    if(mesh.weights){for(const w of mesh.weights[i/2]){const p=point(matrices.get(w.node),local[i],local[i+1]);out[i]+=p[0]*w.weight;out[i+1]+=p[1]*w.weight;}}
    else {const p=point(matrix,local[i],local[i+1]);out[i]=p[0];out[i+1]=p[1];}

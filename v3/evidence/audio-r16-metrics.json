@@ -1,0 +1,22 @@
+{
+  "model": "model-head-r16.json",
+  "frames": 960,
+  "samples": 240,
+  "meanWorkMs": 5.715416666741173,
+  "p95WorkMs": 15.800000011920929,
+  "canvas": [
+    580,
+    555
+  ],
+  "textures": 62,
+  "estimatedDecodedTextureBytes": 17525860,
+  "audioMode": "none",
+  "peakMeasuredRms": 0.3473712981343566,
+  "speechIntent": "local-audio",
+  "speechEvidence": {
+    "frames": 35,
+    "minMouth": 0.0005753284590395346,
+    "maxMouth": 0.9523867402531114
+  },
+  "note": "CPU evaluation plus WebGL submission; not GPU completion or production performance. Decoded texture size is an estimate, not measured heap."
+}
