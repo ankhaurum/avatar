@@ -1,0 +1,20 @@
+{
+  "status": "candidate_pending_human_review",
+  "method": "built-in image_gen; comparison via Photoshop MCP",
+  "identity": {
+    "path": "../../assets/approved-front.png",
+    "sha256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96"
+  },
+  "prompt": "Use case: identity-preserve. Create a cohesive static original avatar illustration by extending the supplied approved Hibiki portrait, not by assembling rig parts. The supplied image is the sole identity authority. Preserve this exact young adult woman's facial identity: facial proportions and eye shape, warm brown irises, small beauty mark on viewer-left cheek, gentle closed-mouth smile, age, delicate but adult build. Preserve vivid blue chin-to-shoulder length bob, center crown and wispy bangs, same white blazer with cobalt-blue piping, pale blue collared shirt and blue tie. Keep the original soft photoreal rendered style and skin texture, not anime, not doll or chibi. Compose ONE front-facing coherent figure from crown to upper thighs, BOTH complete arms and BOTH hands fully visible with margins. Natural adult proportions: head, neck, shoulders, ribcage, arms, wrists, hands all belong to the same person, shoulders gently relaxed, realistic arm length, modest natural torso with no exaggerated hourglass or bust. Arms hang comfortably at her sides slightly away from the jacket; elbows very gently flexed, hands relaxed with five anatomically coherent fingers each, natural wrist transitions; no presentation gesture, no T-pose. Long jacket sleeves end naturally at wrists, no long exposed forearms, no disconnected parts, no cut-and-paste seams. Continue the existing outfit consistently; plain matching white lower garment visible only enough to finish upper-thigh framing. Exact same face and hair, no redesign or beautification. Uniform soft frontal light across face, body and hands. Transparent background, no shadow backdrop, no text, no diagram, no labels, no extra views. Prioritize a beautiful believable complete still image over any future animation requirements.",
+  "scope": "Whole static artwork, no part extraction or runtime integration",
+  "outputs": [
+    {
+      "path": "hibiki-static-a.png",
+      "sha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf"
+    },
+    {
+      "path": "identity-comparison-a.png",
+      "sha256": "e099bafe5487a3b4b8c475ba69c4cff85f302dd64114af02e8c7d5b5120a6033"
+    }
+  ]
+}
