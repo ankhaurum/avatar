@@ -1,4 +1,4 @@
-const MODEL_PATH='model-head-r32.json';
+const MODEL_PATH='model-head-r33.json';
 import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=4';
 import {Renderer,loadImages} from './runtime/renderer.mjs?surface=5';
 import {MotionController} from './runtime/motion-controller.mjs';
@@ -13,7 +13,7 @@ let model,compiled,images,renderer,motion,controller,frame,last=0,raf=0,drag=nul
 const fail=e=>{$('error').textContent=e.message||String(e);console.error(e);};
 audio.onError=message=>fail(new Error(message));
 async function json(file){const r=await fetch(file);if(!r.ok)throw Error('読込み失敗: '+file+' / '+r.status);return r.json();}
-function overlayDraw(){overlay.width=canvas.width;overlay.height=canvas.height;ctx.clearRect(0,0,overlay.width,overlay.height);if(!$('hands').checked)return;ctx.setTransform(overlay.width/view[2],0,0,overlay.height/view[3],-view[0]*overlay.width/view[2],-view[1]*overlay.height/view[3]);ctx.lineWidth=7;ctx.strokeStyle='#a46213';ctx.fillStyle='#fff2cd';
+function overlayDraw(){if(overlay.width!==canvas.width)overlay.width=canvas.width;if(overlay.height!==canvas.height)overlay.height=canvas.height;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,overlay.width,overlay.height);if(!$('hands').checked)return;ctx.setTransform(overlay.width/view[2],0,0,overlay.height/view[3],-view[0]*overlay.width/view[2],-view[1]*overlay.height/view[3]);ctx.lineWidth=7;ctx.strokeStyle='#a46213';ctx.fillStyle='#fff2cd';
  for(const [side,arm]of Object.entries(model.rig.arms)){const p=point(frame.matrices.get('wrist.'+side),...arm.wrist);ctx.beginPath();ctx.arc(p[0],p[1],23,0,Math.PI*2);ctx.fill();ctx.stroke();}}
 function metrics(){const sorted=[...work].sort((a,b)=>a-b);return {model:MODEL_PATH,sourceManifest:model?.source.manifest,sourceManifestSha256:model?.source.sha256,frames:count,samples:work.length,meanWorkMs:work.reduce((a,b)=>a+b,0)/Math.max(1,work.length),p95WorkMs:sorted[Math.floor((sorted.length-1)*.95)]??0,canvas:[canvas.width,canvas.height],textures:images?.size??0,estimatedDecodedTextureBytes:model?.textures.reduce((n,t)=>n+t.width*t.height*4,0)??0,audioMode:audio.mode,peakMeasuredRms:audio.peak,speechIntent,speechEvidence,note:'CPU evaluation plus WebGL submission; not GPU completion or production performance. Decoded texture size is an estimate, not measured heap.'};}
 function tick(now){raf=0;if(disposed||!ready||document.hidden)return;const start=performance.now(),dt=last?Math.min(.1,(now-last)/1000):1/60;last=now;

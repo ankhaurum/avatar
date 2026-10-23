@@ -1,0 +1,24 @@
+{
+  "model": "model-head-r33.json",
+  "sourceManifest": "export-r33/manifest.json",
+  "sourceManifestSha256": "79e15c13e1ecc843cc0cf04b011b6e7fbdf719823cbd6436770a711559b98d80",
+  "frames": 2400,
+  "samples": 240,
+  "meanWorkMs": 10.062916666641831,
+  "p95WorkMs": 28.599999994039536,
+  "canvas": [
+    550,
+    526
+  ],
+  "textures": 62,
+  "estimatedDecodedTextureBytes": 17307808,
+  "audioMode": "none",
+  "peakMeasuredRms": 0,
+  "speechIntent": "none",
+  "speechEvidence": {
+    "frames": 0,
+    "minMouth": 1,
+    "maxMouth": 0
+  },
+  "note": "CPU evaluation plus WebGL submission; not GPU completion or production performance. Decoded texture size is an estimate, not measured heap."
+}

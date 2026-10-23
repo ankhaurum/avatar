@@ -53,13 +53,13 @@ export function evaluate(compiled,input={}){
   for(const shape of mesh.shapes||[]){
    let corners=[{at:[],weight:1}];
    for(const a of shape.axes)corners=corners.flatMap(c=>bracket(a.keys,state[a.parameter]).map(([v,w])=>({at:[...c.at,v],weight:c.weight*w})));
-   for(const c of corners){const delta=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=delta[i]*c.weight;}
+   for(const c of corners){if(c.weight===0)continue;const delta=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=delta[i]*c.weight;}
   }
   const out=new Float32Array(local.length),matrix=matrices.get(mesh.node),depth=new Float32Array(local.length/2);
   if(mesh.surface)for(let i=0;i<local.length;i+=2){const p=surfacePoint(mesh.surface,surfaceTransforms,i/2,local[i],local[i+1],mesh.surface.depthField?sampleField(compiled.projectionFields.get(mesh.surface.depthField),local[i],local[i+1]):undefined);local[i]=p[0];local[i+1]=p[1];depth[i/2]=p[2];}
   for(let i=0;i<local.length;i+=2){
-   if(mesh.weights){for(const w of mesh.weights[i/2]){const p=point(matrices.get(w.node),local[i],local[i+1]);out[i]+=p[0]*w.weight;out[i+1]+=p[1]*w.weight;}}
-   else {const p=point(matrix,local[i],local[i+1]);out[i]=p[0];out[i+1]=p[1];}
+   if(mesh.weights){for(const w of mesh.weights[i/2]){const a=matrices.get(w.node),x=local[i],y=local[i+1];out[i]+=(a[0]*x+a[2]*y+a[4])*w.weight;out[i+1]+=(a[1]*x+a[3]*y+a[5])*w.weight;}}
+   else {const x=local[i],y=local[i+1];out[i]=matrix[0]*x+matrix[2]*y+matrix[4];out[i+1]=matrix[1]*x+matrix[3]*y+matrix[5];}
   }
   positions.set(mesh.id,out);depths.set(mesh.id,depth);
  }

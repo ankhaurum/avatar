@@ -19,3 +19,7 @@ test('seams use common evaluated endpoints and reject overlapping conflicting gr
 test('invalid skin weights, hierarchy cycles and non-finite inputs are not silently repaired',()=>{
  const m=fixture();m.meshes[0].weights=Array.from({length:3},()=>[{node:'root',weight:.4}]);assert.throws(()=>compile(m),/sum to one/);delete m.meshes[0].weights;m.nodes[0].parent='child';assert.throws(()=>compile(m),/cycle/);delete m.nodes[0].parent;assert.throws(()=>evaluate(compile(m),{b:NaN}),/Non-finite/);
 });
+
+test('editing an initially zero shape key is reflected without reloading author data',()=>{
+ const m=fixture();m.nodes[0].bindings={};m.nodes[1].bindings={};const delta=[0,0,0,0,0,0];m.meshes[0].shapes=[{axes:[{parameter:'b',keys:[0,1]}],keys:[{at:[0],delta:[0,0,0,0,0,0]},{at:[1],delta}]}];const c=compile(m);close(evaluate(c,{b:1}).positions.get('m')[0],10);delta[0]=3;close(evaluate(c,{b:1}).positions.get('m')[0],13);delta[0]=0;close(evaluate(c,{b:1}).positions.get('m')[0],10);
+});
