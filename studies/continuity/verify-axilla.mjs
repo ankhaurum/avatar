@@ -8,8 +8,8 @@ for(const [x,y] of [[85,1000],[130,1110],[165,1200],[180,1320],[210,1390],[260,1
  for(const armLift of [.1,.3,.5,.7,1])assert.deepEqual(skin(x,y,{...base,armLift}),skin(x,y,base),'arm rotation leaked into torso seam');
 }
 assert.notDeepEqual(skin(150,1060,base),skin(150,1060,{}),'shoulder and breathing must remain active');
-const baseline='63c4c2f1c9fdfe049931e1b293ff6de8e60a57f0',old=new Map();
-for(const name of ['rig.js','arm-rig.js'])old.set(name,execFileSync('git',['show',baseline+':studies/continuity/'+name]).toString());
+const baseline='faddf6cf3656607df88152d50d0b9e5131f90e74',old=new Map();
+for(const name of ['rig.js','arm-rig.js','upper-arm.js'])old.set(name,execFileSync('git',['show',baseline+':studies/continuity/'+name]).toString());
 const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright');
 const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-webgl']});
 try{
@@ -20,7 +20,7 @@ try{
   await page.goto('http://127.0.0.1:8794/studies/continuity/');await page.waitForFunction(()=>window.study?.ready);
   const shots=[];for(const t of [.9,1.1,1.3,2.4,5.4])shots.push(await page.evaluate(async t=>{
    await study.previewGreeting(t,{breath:.4});const c=document.createElement('canvas');c.width=420;c.height=480;
-   c.getContext('2d').drawImage(study.app.canvas,0,920,420,480,0,0,420,480);return c.toDataURL();
+   const g=c.getContext('2d');g.fillStyle='#d622ae';g.fillRect(0,0,420,480);g.drawImage(study.app.canvas,0,920,420,480,0,0,420,480);return c.toDataURL();
   },t));pictures.push(shots);await page.close();
  }
  const page=await browser.newPage({viewport:{width:840,height:2540}});

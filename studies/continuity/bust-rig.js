@@ -58,12 +58,13 @@ export function composeBustIntent(p,g={active:false,lift:0,prepare:0}){
  const out={...p},lift=g.active?g.lift:0,prepare=g.active?g.prepare||0:0,supportPose=g.active?g.support??lift:0;
  // A small support/anticipation pose is shared by spine, collar, neck and arm.
  const support=clamp((p.shoulder||0)*.4);
- out.armLift=lift;out.armUpper=g.active?g.upperLift??lift:0;out.scapulaL=support+.8*supportPose+.18*prepare;out.scapulaR=support;
- out.postureX=(out.postureX||0)-4.5*supportPose-1.5*prepare;
+ const mirrored=g.side==='left',direction=mirrored?-1:1,scapula=.8*supportPose+.18*prepare;
+ out.armLift=lift;out.armUpper=g.active?g.upperLift??lift:0;out.scapulaL=support+(mirrored?0:scapula);out.scapulaR=support+(mirrored?scapula:0);
+ out.postureX=(out.postureX||0)+direction*(-4.5*supportPose-1.5*prepare);
  out.postureY=(out.postureY||0)+1.2*prepare-(p.shoulder||0)*2.5;
- out.postureRoll=(out.postureRoll||0)-.009*supportPose+.003*prepare;
- out.shoulderL=(out.shoulderL||0)+.22*supportPose+.12*prepare;
- out.roll=(out.roll||0)+.07*lift;
+ out.postureRoll=(out.postureRoll||0)+direction*(-.009*supportPose+.003*prepare);
+ const shoulder=mirrored?'shoulderR':'shoulderL';out[shoulder]=(out[shoulder]||0)+.22*supportPose+.12*prepare;
+ out.roll=(out.roll||0)+direction*.07*lift;
  return out;
 }
 // Bounded substeps (at most 1/120 s), driven by head AND chest changes.

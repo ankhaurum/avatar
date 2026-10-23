@@ -1,0 +1,31 @@
+{
+  "checkedPixels": 8064,
+  "minAlpha": 252,
+  "sides": [
+    {
+      "side": "right",
+      "samples": 64
+    },
+    {
+      "side": "left",
+      "samples": 64
+    }
+  ],
+  "mirrorError": 0.00006103515625,
+  "errors": [
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')",
+    "Cannot set properties of null (setting 'value')"
+  ],
+  "scope": "64 phases per side in PC Chrome WebGL; reflected render verified locally only; no physical phone acceptance"
+}

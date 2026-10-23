@@ -9,7 +9,7 @@
   ],
   "faceChangedChannels": 0,
   "gesture": {
-    "side": "character-right/screen-left",
+    "side": "right",
     "active": true,
     "lift": 0.6194752186588921,
     "upperLift": 0.662038501060318,
@@ -19,6 +19,88 @@
     "phase": "lower",
     "opacity": 1,
     "upperSleeveVisible": true,
+    "socketJoints": [
+      {
+        "body": [
+          84.49349277687159,
+          929.0044872689111
+        ],
+        "sleeve": [
+          84.49349212646484,
+          929.0045166015625
+        ]
+      },
+      {
+        "body": [
+          94.62774838455711,
+          976.0388324554849
+        ],
+        "sleeve": [
+          94.68495178222656,
+          975.9194946289062
+        ]
+      },
+      {
+        "body": [
+          112.6220250740535,
+          1036.1220905979915
+        ],
+        "sleeve": [
+          111.3450698852539,
+          1035.1064453125
+        ]
+      },
+      {
+        "body": [
+          133.3274380701041,
+          1097.5025845123164
+        ],
+        "sleeve": [
+          125.83356475830078,
+          1096.4893798828125
+        ]
+      },
+      {
+        "body": [
+          155.28740077536358,
+          1159.231464046948
+        ],
+        "sleeve": [
+          139.0883026123047,
+          1159.721435546875
+        ]
+      },
+      {
+        "body": [
+          172.6037734923441,
+          1220.2381561234577
+        ],
+        "sleeve": [
+          150.1301727294922,
+          1222.08447265625
+        ]
+      },
+      {
+        "body": [
+          180.2085315260488,
+          1300.6045874610618
+        ],
+        "sleeve": [
+          149.5907440185547,
+          1302.4942626953125
+        ]
+      },
+      {
+        "body": [
+          192,
+          1402
+        ],
+        "sleeve": [
+          150.97616577148438,
+          1404.44287109375
+        ]
+      }
+    ],
     "torsoMaskActive": true,
     "entry": "articulated shoulder upper-arm forearm hand; hierarchical joint tracks",
     "chain": [
@@ -50,6 +132,7 @@
     "drawRegions": [
       "chest-supported-body",
       "independent-upper-sleeve",
+      "inner-sleeve-attachment",
       "elbow-sleeve",
       "cuff",
       "hand"
@@ -59,22 +142,104 @@
       "mid-bend",
       "bent"
     ],
-    "vertices": 533,
-    "triangles": 896,
+    "vertices": 549,
+    "triangles": 910,
     "textureBytes": 671744
   },
   "live": {
     "gesture": {
-      "side": "character-right/screen-left",
+      "side": "right",
       "active": true,
-      "lift": 1,
+      "lift": 0.9983508291951001,
       "upperLift": 1,
       "support": 1,
-      "wrist": -0.02599998636607084,
+      "wrist": -0.012707528078786869,
       "prepare": 0,
       "phase": "wave",
       "opacity": 1,
       "upperSleeveVisible": true,
+      "socketJoints": [
+        {
+          "body": [
+            79.80262825643213,
+            925.397260268802
+          ],
+          "sleeve": [
+            79.80262756347656,
+            925.3972778320312
+          ]
+        },
+        {
+          "body": [
+            88.77886844262807,
+            970.4199087114353
+          ],
+          "sleeve": [
+            88.75403594970703,
+            970.4844970703125
+          ]
+        },
+        {
+          "body": [
+            106.68890438257392,
+            1030.4268177107365
+          ],
+          "sleeve": [
+            107.39674377441406,
+            1030.9029541015625
+          ]
+        },
+        {
+          "body": [
+            127.8046496859512,
+            1092.9174078489768
+          ],
+          "sleeve": [
+            131.7523193359375,
+            1093.1329345703125
+          ]
+        },
+        {
+          "body": [
+            150.29264354793645,
+            1156.0613116450627
+          ],
+          "sleeve": [
+            158.71437072753906,
+            1155.1304931640625
+          ]
+        },
+        {
+          "body": [
+            168.65789336770553,
+            1218.2183951284967
+          ],
+          "sleeve": [
+            180.29302978515625,
+            1216.3192138671875
+          ]
+        },
+        {
+          "body": [
+            179.1775748229326,
+            1300.1611735839597
+          ],
+          "sleeve": [
+            195.05523681640625,
+            1297.899658203125
+          ]
+        },
+        {
+          "body": [
+            192,
+            1402
+          ],
+          "sleeve": [
+            213.27772521972656,
+            1399.016357421875
+          ]
+        }
+      ],
       "torsoMaskActive": true,
       "entry": "articulated shoulder upper-arm forearm hand; hierarchical joint tracks",
       "chain": [
@@ -88,24 +253,25 @@
       ],
       "joints": {
         "shoulder": [
-          135.78596727584065,
-          988.9006980564652
+          136.48705375643442,
+          989.666977380237
         ],
         "elbow": [
-          118.9208422873302,
-          1448.5914283949414
+          116.41225206052695,
+          1449.2287276781376
         ],
         "wrist": [
-          207.49479625715404,
-          1153.452639554587
+          210.07993989991292,
+          1155.666784887824
         ],
-        "upperAngle": 1.6163556770227303,
-        "forearmAngle": -1.2703512615430108,
-        "parentAngle": -0.008887816266348932
+        "upperAngle": 1.623082649184486,
+        "forearmAngle": -1.253302922236177,
+        "parentAngle": -0.00863158472371027
       },
       "drawRegions": [
         "chest-supported-body",
         "independent-upper-sleeve",
+        "inner-sleeve-attachment",
         "elbow-sleeve",
         "cuff",
         "hand"
@@ -115,11 +281,11 @@
         "mid-bend",
         "bent"
       ],
-      "vertices": 533,
-      "triangles": 896,
+      "vertices": 549,
+      "triangles": 910,
       "textureBytes": 671744
     },
-    "shoulderL": 0.21973659686287872,
+    "shoulderL": 0.21799932064379968,
     "state": "speaking",
     "emotion": "gentle"
   },

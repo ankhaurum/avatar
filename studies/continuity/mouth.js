@@ -1,5 +1,5 @@
 import {seam} from './materials.js';
-import {localShape,createSkin} from './rig.js?v=upper-sleeve-20261023';
+import {localShape,createSkin} from './rig.js?v=arm-socket-20261023';
 // Original Canvas-authored oral tissues. No second face or mouth photograph.
 export function authorOralMaterials(){
  const canvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
@@ -25,7 +25,7 @@ export function authorOralMaterials(){
  return {cavity,teeth,tongue};
 }
 export async function readOralMaterials(){
- const load=async name=>{const i=new Image();i.src='materials/'+name+'.png?v=upper-sleeve-20261023';await i.decode();return i;};
+ const load=async name=>{const i=new Image();i.src='materials/'+name+'.png?v=arm-socket-20261023';await i.decode();return i;};
  const [cavity,teeth,tongue]=await Promise.all(['oral-cavity','upper-dental','tongue'].map(load));return {cavity,teeth,tongue};
 }
 export function oralStrip(kind){

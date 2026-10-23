@@ -8,7 +8,7 @@ for(let i=0;i<=100;i++){
  elbows.push(q.elbow[0]);previous=q;
 }
 assert(Math.min(...elbows)>0,'elbow must remain beside the torso, not escape offscreen');
-const root=path.resolve(import.meta.dirname,'../..'),out=path.join(import.meta.dirname,'evidence'),baseline='fa840c056b4096f6d5f9ecc72970b3c4fb940a12';
+const root=path.resolve(import.meta.dirname,'../..'),out=path.join(import.meta.dirname,'evidence'),baseline='faddf6cf3656607df88152d50d0b9e5131f90e74';
 const old=new Map();for(const name of fs.readdirSync(import.meta.dirname).filter(x=>x.endsWith('.js'))){try{old.set(name,execFileSync('git',['show',baseline+':studies/continuity/'+name],{cwd:root,stdio:['ignore','pipe','ignore']}).toString());}catch{}}
 const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright'),browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-webgl']});
 const frames=[],reports=[];
