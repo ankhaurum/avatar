@@ -1,5 +1,5 @@
 {
-  "status": "candidate_pending_human_review",
+  "status": "static_artwork_approved",
   "method": "built-in image_gen; comparison via Photoshop MCP",
   "identity": {
     "path": "../../assets/approved-front.png",
@@ -16,5 +16,10 @@
       "path": "identity-comparison-a.png",
       "sha256": "e099bafe5487a3b4b8c475ba69c4cff85f302dd64114af02e8c7d5b5120a6033"
     }
-  ]
+  ],
+  "approval": {
+    "date": "2026-10-24 JST",
+    "url": "https://github.com/ankhaurum/Ankhaurum-Development/issues/94#issuecomment-6370059173",
+    "scope": "Static artwork A only; PSD, wardrobe and motion Human Acceptance remain pending"
+  }
 }

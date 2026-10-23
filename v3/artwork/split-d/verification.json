@@ -1,0 +1,110 @@
+{
+  "sourceSHA256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "psdSHA256": "2bd04e1715a9dfdd3eedf86f7934e859abbe3ea8d27f3e1158c729445e3fd35c",
+  "canvas": [
+    1024,
+    1536
+  ],
+  "comparisons": {
+    "recomposed": {
+      "alphaDifferentPixels": 0,
+      "visibleRGBDifferentPixels": 0
+    },
+    "reopened": {
+      "alphaDifferentPixels": 0,
+      "visibleRGBDifferentPixels": 0
+    }
+  },
+  "coverage": "Every nontransparent source pixel belongs to exactly one part",
+  "parts": [
+    {
+      "file": "parts/BODY_face.png",
+      "sha256": "d8a1de650eb6c611b65b370e85ca2b6623234c3d1aea25f231d06adacc8a42bf",
+      "nonzeroAlphaPixels": 30438,
+      "opaqueLikePixels": 30438
+    },
+    {
+      "file": "parts/BODY_hair.png",
+      "sha256": "4f8f850bc35d5d7b6e833cc6d4ed7f5e594f744f6f2c9e6c56a7d3bcb7158743",
+      "nonzeroAlphaPixels": 103935,
+      "opaqueLikePixels": 95846
+    },
+    {
+      "file": "parts/BODY_hand_viewer_left.png",
+      "sha256": "2ad7c268f6f45dac4991201b8d81749c0b2b6ee7479f95805af8548422c49635",
+      "nonzeroAlphaPixels": 12134,
+      "opaqueLikePixels": 10952
+    },
+    {
+      "file": "parts/BODY_hand_viewer_right.png",
+      "sha256": "e5b2d3dcb4685125172811d59479ce6a983804d4234be57d1aafd66884bfbcb1",
+      "nonzeroAlphaPixels": 13230,
+      "opaqueLikePixels": 10962
+    },
+    {
+      "file": "parts/BODY_legs_visible.png",
+      "sha256": "8add79cca9ae6710b5ce2748a836c418c2ae3c7006816b8c5d927474418d7b06",
+      "nonzeroAlphaPixels": 52978,
+      "opaqueLikePixels": 49993
+    },
+    {
+      "file": "parts/BODY_neck.png",
+      "sha256": "915e9d499687094f40c4ff602a1994f6193fb1bb36927cdb6b52fafae92d8317",
+      "nonzeroAlphaPixels": 14004,
+      "opaqueLikePixels": 14004
+    },
+    {
+      "file": "parts/WARDROBE_jacket_front.png",
+      "sha256": "618f9df1ea1a9b4346dc36e35afdec6d22c45a35e4685213fb3539ca2b25f6e9",
+      "nonzeroAlphaPixels": 277913,
+      "opaqueLikePixels": 269291
+    },
+    {
+      "file": "parts/WARDROBE_jacket_sleeve_viewer_left.png",
+      "sha256": "72f33bc71fa9b66a483a1f2e37ea5f2cb7a2381388ef4c83e54d8ba0a3d9da36",
+      "nonzeroAlphaPixels": 87424,
+      "opaqueLikePixels": 82275
+    },
+    {
+      "file": "parts/WARDROBE_jacket_sleeve_viewer_right.png",
+      "sha256": "a83bccaf572d1f79dbc72ef03d7422e4ca1b62ac438052bd1a251be43b544fea",
+      "nonzeroAlphaPixels": 86300,
+      "opaqueLikePixels": 81720
+    },
+    {
+      "file": "parts/WARDROBE_lower_skirt.png",
+      "sha256": "d561f6e235a90a6ee92a9f67b3491c3c031aa849f5b873373b5d4477fbc36f4a",
+      "nonzeroAlphaPixels": 124855,
+      "opaqueLikePixels": 123462
+    },
+    {
+      "file": "parts/WARDROBE_shirt.png",
+      "sha256": "a366de99b2162c19e633a652fe20f0e238c360b12bf1ab10e1e4edd45c73f250",
+      "nonzeroAlphaPixels": 25168,
+      "opaqueLikePixels": 25168
+    },
+    {
+      "file": "parts/WARDROBE_shirt_cuff_viewer_left.png",
+      "sha256": "57994f2ebed9a5f35f0f2e6fe55826e808886e154f3cdea86d1050db87773a0d",
+      "nonzeroAlphaPixels": 1546,
+      "opaqueLikePixels": 1493
+    },
+    {
+      "file": "parts/WARDROBE_shirt_cuff_viewer_right.png",
+      "sha256": "67db0f7eed2dc327732d3e89475da4a2d766f4502863f5f7424addbc019718fb",
+      "nonzeroAlphaPixels": 1288,
+      "opaqueLikePixels": 1259
+    },
+    {
+      "file": "parts/WARDROBE_tie.png",
+      "sha256": "f442fed8789b4d4f8899e50af667a41c96d27900c353c7b2173ed70b52c8ed1b",
+      "nonzeroAlphaPixels": 22143,
+      "opaqueLikePixels": 22143
+    }
+  ],
+  "limitations": [
+    "Visible source separation; hidden body/garment surfaces are not complete",
+    "No garment-swap or animation acceptance",
+    "Transparent RGB values are ignored only where both alpha values are zero"
+  ]
+}
