@@ -7,8 +7,8 @@ for(let i=0;i<=100;i++){
  assert(Math.abs(Math.hypot(q.elbow[0]-q.shoulder[0],q.elbow[1]-q.shoulder[1])-ARM.upper)<1e-7);
  elbows.push(q.elbow[0]);previous=q;
 }
-assert(Math.max(...elbows)-Math.min(...elbows)>100,'elbow must participate in the reach');
-const root=path.resolve(import.meta.dirname,'../..'),out=path.join(import.meta.dirname,'evidence'),baseline='8f0b43d8a4823cf4c5dd515c19f07f2123614217';
+assert(Math.min(...elbows)>0,'elbow must remain beside the torso, not escape offscreen');
+const root=path.resolve(import.meta.dirname,'../..'),out=path.join(import.meta.dirname,'evidence'),baseline='fa840c056b4096f6d5f9ecc72970b3c4fb940a12';
 const old=new Map();for(const name of fs.readdirSync(import.meta.dirname).filter(x=>x.endsWith('.js'))){try{old.set(name,execFileSync('git',['show',baseline+':studies/continuity/'+name],{cwd:root,stdio:['ignore','pipe','ignore']}).toString());}catch{}}
 const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright'),browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-webgl']});
 const frames=[],reports=[];
@@ -28,8 +28,8 @@ try{for(const before of [true,false]){
  const page=await browser.newPage({viewport:{width:780,height:520}});await page.setContent('<canvas id="comparison" width="780" height="520"></canvas>');
  const outputs=await page.evaluate(async sequences=>{
   const c=document.querySelector('canvas'),g=c.getContext('2d'),images=await Promise.all(sequences.map(async seq=>Promise.all(seq.map(async src=>{const i=new Image();i.src=src;await i.decode();return i;}))));
-  const draw=i=>{g.fillStyle='#edf2f7';g.fillRect(0,0,780,520);g.fillStyle='#243045';g.font='18px sans-serif';g.fillText('Before / circular reach',14,24);g.fillText('After / coordinated reach',404,24);g.drawImage(images[0][i],0,32);g.drawImage(images[1][i],390,32);};
-  const shots=[];for(const i of [11,13,24,35,51,54]){draw(i);shots.push(c.toDataURL());}
+  const draw=i=>{g.fillStyle='#edf2f7';g.fillRect(0,0,780,520);g.fillStyle='#243045';g.font='18px sans-serif';g.fillText('Before / detached upper sleeve',14,24);g.fillText('After / connected upper sleeve',404,24);g.drawImage(images[0][i],0,32);g.drawImage(images[1][i],390,32);};
+  const shots=[];for(const i of [24,49,52,54,56,59]){draw(i);shots.push(c.toDataURL());}
   const stream=c.captureStream(10),chunks=[],recorder=new MediaRecorder(stream,{mimeType:'video/webm',videoBitsPerSecond:1100000});recorder.ondataavailable=e=>chunks.push(e.data);const done=new Promise(r=>recorder.onstop=r);recorder.start();
   for(let i=0;i<images[0].length;i++){draw(i);await new Promise(r=>setTimeout(r,100));}recorder.stop();await done;stream.getTracks().forEach(t=>t.stop());
   const data=await new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.readAsDataURL(new Blob(chunks,{type:'video/webm'}));});return {shots,video:data};
