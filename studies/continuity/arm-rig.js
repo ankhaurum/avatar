@@ -1,5 +1,5 @@
 // Shoulder -> upper arm -> elbow -> forearm -> wrist. Character right, screen left.
-import {BUST_HIERARCHY} from './bust-rig.js?v=hand-turn-20261023';
+import {BUST_HIERARCHY} from './bust-rig.js?v=hand-cage-20261023';
 const clamp=v=>Math.max(0,Math.min(1,v));
 export const ARM={shoulder:BUST_HIERARCHY.shoulderRight.pivot,upper:460,forearm:Math.hypot(165,300)*.9,sourceWrist:[285,1160],sourceElbow:[120,1460],scale:.9};
 export function armChain(lift=0,upperLift=lift){

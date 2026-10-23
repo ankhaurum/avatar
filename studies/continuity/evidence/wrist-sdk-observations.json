@@ -1,0 +1,665 @@
+{
+  "scope": "Official SDK aggregate observations; no vertex or UV export",
+  "models": [
+    {
+      "input": "ParamArmBR03",
+      "samples": [
+        {
+          "value": -30,
+          "changed": [
+            {
+              "id": "ArtMesh195",
+              "part": "PartHand11",
+              "vertices": 37,
+              "angle": 29.99999873043588,
+              "scale": 1.000000221553929,
+              "residual": 5.730302341903609E-07,
+              "opacity": 1,
+              "order": 152
+            },
+            {
+              "id": "ArtMesh196",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": 30.000001292780755,
+              "scale": 0.9999999185530636,
+              "residual": 9.266306172924297E-07,
+              "opacity": 1,
+              "order": 151
+            },
+            {
+              "id": "ArtMesh198",
+              "part": "PartHand11",
+              "vertices": 23,
+              "angle": 29.99999800627102,
+              "scale": 1.0000001106665457,
+              "residual": 1.0727466764302104E-06,
+              "opacity": 1,
+              "order": 149
+            },
+            {
+              "id": "ArtMesh201",
+              "part": "PartHand11",
+              "vertices": 33,
+              "angle": 8.474328229890602,
+              "scale": 0.9465139743249025,
+              "residual": 0.19379086671290519,
+              "opacity": 1,
+              "order": 146
+            },
+            {
+              "id": "ArtMesh200",
+              "part": "PartHand11",
+              "vertices": 58,
+              "angle": 27.02948742100985,
+              "scale": 0.9665317467919857,
+              "residual": 0.10415496349690682,
+              "opacity": 1,
+              "order": 147
+            },
+            {
+              "id": "ArtMesh197",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": 29.999995839050694,
+              "scale": 1.0000001697157765,
+              "residual": 7.935909262480018E-07,
+              "opacity": 1,
+              "order": 150
+            },
+            {
+              "id": "ArtMesh199",
+              "part": "PartHand11",
+              "vertices": 38,
+              "angle": 30.00000135798211,
+              "scale": 1.0000000489957672,
+              "residual": 5.892933149808959E-07,
+              "opacity": 1,
+              "order": 148
+            }
+          ]
+        },
+        {
+          "value": -15,
+          "changed": [
+            {
+              "id": "ArtMesh195",
+              "part": "PartHand11",
+              "vertices": 37,
+              "angle": 15.000003853483427,
+              "scale": 1.0000000197173573,
+              "residual": 4.907930951915413E-07,
+              "opacity": 1,
+              "order": 152
+            },
+            {
+              "id": "ArtMesh196",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": 15.00000394838253,
+              "scale": 0.9999997864052853,
+              "residual": 1.1203349982413025E-06,
+              "opacity": 1,
+              "order": 151
+            },
+            {
+              "id": "ArtMesh198",
+              "part": "PartHand11",
+              "vertices": 23,
+              "angle": 15.000000749653251,
+              "scale": 0.9999998304186323,
+              "residual": 9.45824967011106E-07,
+              "opacity": 1,
+              "order": 149
+            },
+            {
+              "id": "ArtMesh201",
+              "part": "PartHand11",
+              "vertices": 33,
+              "angle": 4.29924070137916,
+              "scale": 0.9775353395735464,
+              "residual": 0.09615335659585317,
+              "opacity": 1,
+              "order": 146
+            },
+            {
+              "id": "ArtMesh200",
+              "part": "PartHand11",
+              "vertices": 58,
+              "angle": 13.409384787364345,
+              "scale": 0.9860058671610856,
+              "residual": 0.052279154491412023,
+              "opacity": 1,
+              "order": 147
+            },
+            {
+              "id": "ArtMesh197",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": 15.000000247968375,
+              "scale": 0.9999999681678347,
+              "residual": 7.446537599290631E-07,
+              "opacity": 1,
+              "order": 150
+            },
+            {
+              "id": "ArtMesh199",
+              "part": "PartHand11",
+              "vertices": 38,
+              "angle": 15.00000018821565,
+              "scale": 1.0000000394632234,
+              "residual": 7.526958693115391E-07,
+              "opacity": 1,
+              "order": 148
+            }
+          ]
+        },
+        {
+          "value": 0,
+          "changed": []
+        },
+        {
+          "value": 15,
+          "changed": [
+            {
+              "id": "ArtMesh195",
+              "part": "PartHand11",
+              "vertices": 37,
+              "angle": -15.000000361568759,
+              "scale": 1.0000002136818924,
+              "residual": 6.020879363072134E-07,
+              "opacity": 1,
+              "order": 152
+            },
+            {
+              "id": "ArtMesh196",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": -14.999997383951621,
+              "scale": 1.0000000049881645,
+              "residual": 8.85904460858264E-07,
+              "opacity": 1,
+              "order": 151
+            },
+            {
+              "id": "ArtMesh198",
+              "part": "PartHand11",
+              "vertices": 23,
+              "angle": -15.000009268524582,
+              "scale": 1.0000000966361815,
+              "residual": 8.915842316771073E-07,
+              "opacity": 1,
+              "order": 149
+            },
+            {
+              "id": "ArtMesh201",
+              "part": "PartHand11",
+              "vertices": 33,
+              "angle": -3.4430773598959847,
+              "scale": 1.0165758426017661,
+              "residual": 0.09438867487096685,
+              "opacity": 1,
+              "order": 146
+            },
+            {
+              "id": "ArtMesh200",
+              "part": "PartHand11",
+              "vertices": 58,
+              "angle": -13.635052313295356,
+              "scale": 1.0076627789494508,
+              "residual": 0.055203975628290186,
+              "opacity": 1,
+              "order": 147
+            },
+            {
+              "id": "ArtMesh197",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": -14.999999639088466,
+              "scale": 1.0000000590120797,
+              "residual": 9.021010115789607E-07,
+              "opacity": 1,
+              "order": 150
+            },
+            {
+              "id": "ArtMesh199",
+              "part": "PartHand11",
+              "vertices": 38,
+              "angle": -14.999998246367763,
+              "scale": 1.0000000037300765,
+              "residual": 6.349344345255241E-07,
+              "opacity": 1,
+              "order": 148
+            }
+          ]
+        },
+        {
+          "value": 30,
+          "changed": [
+            {
+              "id": "ArtMesh195",
+              "part": "PartHand11",
+              "vertices": 37,
+              "angle": -30.00000583196111,
+              "scale": 1.0000000153605118,
+              "residual": 4.981865083618277E-07,
+              "opacity": 1,
+              "order": 152
+            },
+            {
+              "id": "ArtMesh196",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": -29.999993069310094,
+              "scale": 0.9999998682929954,
+              "residual": 8.98036697107397E-07,
+              "opacity": 1,
+              "order": 151
+            },
+            {
+              "id": "ArtMesh198",
+              "part": "PartHand11",
+              "vertices": 23,
+              "angle": -30.000006404613128,
+              "scale": 0.999999989314299,
+              "residual": 7.890626850716825E-07,
+              "opacity": 1,
+              "order": 149
+            },
+            {
+              "id": "ArtMesh201",
+              "part": "PartHand11",
+              "vertices": 33,
+              "angle": -6.957566208051089,
+              "scale": 1.0217107118537618,
+              "residual": 0.18751847298753213,
+              "opacity": 1,
+              "order": 146
+            },
+            {
+              "id": "ArtMesh200",
+              "part": "PartHand11",
+              "vertices": 58,
+              "angle": -27.2126154481686,
+              "scale": 1.009221805341732,
+              "residual": 0.10941278731050685,
+              "opacity": 1,
+              "order": 147
+            },
+            {
+              "id": "ArtMesh197",
+              "part": "PartHand11",
+              "vertices": 24,
+              "angle": -30.000004830479078,
+              "scale": 0.9999999363229682,
+              "residual": 7.7356234911143E-07,
+              "opacity": 1,
+              "order": 150
+            },
+            {
+              "id": "ArtMesh199",
+              "part": "PartHand11",
+              "vertices": 38,
+              "angle": -30.000001581990738,
+              "scale": 0.9999999961750141,
+              "residual": 6.344347373682554E-07,
+              "opacity": 1,
+              "order": 148
+            }
+          ]
+        }
+      ],
+      "model": "natori"
+    },
+    {
+      "input": "ParamArmRA03",
+      "samples": [
+        {
+          "value": -30,
+          "changed": [
+            {
+              "id": "ArtMesh172",
+              "part": "PartArmRA",
+              "vertices": 25,
+              "angle": 20.000613983637432,
+              "scale": 1.0000000724049436,
+              "residual": 4.803680012363377E-07,
+              "opacity": 1,
+              "order": 24
+            },
+            {
+              "id": "ArtMesh173",
+              "part": "PartArmRA",
+              "vertices": 27,
+              "angle": 20.000616258900088,
+              "scale": 1.0000000599916585,
+              "residual": 3.764250500160634E-07,
+              "opacity": 1,
+              "order": 23
+            },
+            {
+              "id": "ArtMesh181",
+              "part": "PartArmRA",
+              "vertices": 35,
+              "angle": 20.00061365862091,
+              "scale": 1.0000000158284617,
+              "residual": 3.787419426039409E-07,
+              "opacity": 1,
+              "order": 10
+            },
+            {
+              "id": "ArtMesh182",
+              "part": "PartArmRA",
+              "vertices": 30,
+              "angle": 18.72079203353839,
+              "scale": 0.9883738238153205,
+              "residual": 0.07197759155903974,
+              "opacity": 1,
+              "order": 9
+            },
+            {
+              "id": "ArtMesh175",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": 20.000644768750888,
+              "scale": 0.99999980873587,
+              "residual": 1.424889207358085E-06,
+              "opacity": 1,
+              "order": 16
+            },
+            {
+              "id": "ArtMesh176",
+              "part": "PartWandA",
+              "vertices": 24,
+              "angle": 20.00063501915217,
+              "scale": 0.9999999993054042,
+              "residual": 1.0274162371689584E-07,
+              "opacity": 1,
+              "order": 15
+            },
+            {
+              "id": "ArtMesh177",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": 20.000631246435077,
+              "scale": 0.9999999643970446,
+              "residual": 2.7992683606685134E-07,
+              "opacity": 1,
+              "order": 14
+            },
+            {
+              "id": "ArtMesh178",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": 20.000640467414208,
+              "scale": 1.0000000076852589,
+              "residual": 1.9330772833878384E-07,
+              "opacity": 1,
+              "order": 13
+            }
+          ]
+        },
+        {
+          "value": -15,
+          "changed": [
+            {
+              "id": "ArtMesh172",
+              "part": "PartArmRA",
+              "vertices": 25,
+              "angle": 10.000313371701626,
+              "scale": 1.0000000190054283,
+              "residual": 3.9890031731588076E-07,
+              "opacity": 1,
+              "order": 24
+            },
+            {
+              "id": "ArtMesh173",
+              "part": "PartArmRA",
+              "vertices": 27,
+              "angle": 10.000308892290688,
+              "scale": 1.0000000056263163,
+              "residual": 3.5409820551779005E-07,
+              "opacity": 1,
+              "order": 23
+            },
+            {
+              "id": "ArtMesh181",
+              "part": "PartArmRA",
+              "vertices": 35,
+              "angle": 10.000315085213737,
+              "scale": 1.0000000121315422,
+              "residual": 4.1850539591402317E-07,
+              "opacity": 1,
+              "order": 10
+            },
+            {
+              "id": "ArtMesh182",
+              "part": "PartArmRA",
+              "vertices": 30,
+              "angle": 9.364144149371784,
+              "scale": 0.9941249501234359,
+              "residual": 0.03598878248863011,
+              "opacity": 1,
+              "order": 9
+            },
+            {
+              "id": "ArtMesh175",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": 10.000705958192132,
+              "scale": 0.9999995663169184,
+              "residual": 1.9593206972791702E-06,
+              "opacity": 1,
+              "order": 16
+            },
+            {
+              "id": "ArtMesh176",
+              "part": "PartWandA",
+              "vertices": 24,
+              "angle": 10.000722158960988,
+              "scale": 0.9999999964338132,
+              "residual": 8.859128645439037E-08,
+              "opacity": 1,
+              "order": 15
+            },
+            {
+              "id": "ArtMesh177",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": 10.000718088742746,
+              "scale": 0.9999999193585934,
+              "residual": 2.386467816883469E-07,
+              "opacity": 1,
+              "order": 14
+            },
+            {
+              "id": "ArtMesh178",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": 10.00072116815511,
+              "scale": 0.9999999604488405,
+              "residual": 2.2194834006076314E-07,
+              "opacity": 1,
+              "order": 13
+            }
+          ]
+        },
+        {
+          "value": 0,
+          "changed": []
+        },
+        {
+          "value": 15,
+          "changed": [
+            {
+              "id": "ArtMesh172",
+              "part": "PartArmRA",
+              "vertices": 25,
+              "angle": -9.999688762450406,
+              "scale": 0.9999999468420928,
+              "residual": 4.819169741197862E-07,
+              "opacity": 1,
+              "order": 24
+            },
+            {
+              "id": "ArtMesh173",
+              "part": "PartArmRA",
+              "vertices": 27,
+              "angle": -9.999696245791148,
+              "scale": 1.0000001293384424,
+              "residual": 5.191407058248521E-07,
+              "opacity": 1,
+              "order": 23
+            },
+            {
+              "id": "ArtMesh181",
+              "part": "PartArmRA",
+              "vertices": 35,
+              "angle": -9.999691833428406,
+              "scale": 0.9999999619902612,
+              "residual": 4.113710121236599E-07,
+              "opacity": 1,
+              "order": 10
+            },
+            {
+              "id": "ArtMesh182",
+              "part": "PartArmRA",
+              "vertices": 30,
+              "angle": -9.408613323512025,
+              "scale": 0.9993781835536116,
+              "residual": 0.03461077396490024,
+              "opacity": 1,
+              "order": 9
+            },
+            {
+              "id": "ArtMesh175",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": -9.999870213993136,
+              "scale": 0.9999989915018256,
+              "residual": 2.1773508461850194E-06,
+              "opacity": 1,
+              "order": 16
+            },
+            {
+              "id": "ArtMesh176",
+              "part": "PartWandA",
+              "vertices": 24,
+              "angle": -9.999886909867557,
+              "scale": 0.9999999038643808,
+              "residual": 1.0843832645058874E-07,
+              "opacity": 1,
+              "order": 15
+            },
+            {
+              "id": "ArtMesh177",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": -9.999885283240907,
+              "scale": 0.9999998119075927,
+              "residual": 3.0564087707092607E-07,
+              "opacity": 1,
+              "order": 14
+            },
+            {
+              "id": "ArtMesh178",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": -9.999890774180466,
+              "scale": 0.9999997861071427,
+              "residual": 1.9913798590148758E-07,
+              "opacity": 1,
+              "order": 13
+            }
+          ]
+        },
+        {
+          "value": 30,
+          "changed": [
+            {
+              "id": "ArtMesh172",
+              "part": "PartArmRA",
+              "vertices": 25,
+              "angle": -19.999393138070754,
+              "scale": 1.0000000615888416,
+              "residual": 4.80752493085089E-07,
+              "opacity": 1,
+              "order": 24
+            },
+            {
+              "id": "ArtMesh173",
+              "part": "PartArmRA",
+              "vertices": 27,
+              "angle": -19.999394672050926,
+              "scale": 1.000000125454843,
+              "residual": 4.3982342859967214E-07,
+              "opacity": 1,
+              "order": 23
+            },
+            {
+              "id": "ArtMesh181",
+              "part": "PartArmRA",
+              "vertices": 35,
+              "angle": -19.999395342746237,
+              "scale": 1.0000000163339322,
+              "residual": 4.3864236351075617E-07,
+              "opacity": 1,
+              "order": 10
+            },
+            {
+              "id": "ArtMesh182",
+              "part": "PartArmRA",
+              "vertices": 30,
+              "angle": -18.816555705695073,
+              "scale": 0.9988628590860531,
+              "residual": 0.06922147213890695,
+              "opacity": 1,
+              "order": 9
+            },
+            {
+              "id": "ArtMesh175",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": -19.99918558447773,
+              "scale": 1.000000412192382,
+              "residual": 2.6687024589005555E-06,
+              "opacity": 1,
+              "order": 16
+            },
+            {
+              "id": "ArtMesh176",
+              "part": "PartWandA",
+              "vertices": 24,
+              "angle": -19.999225311018815,
+              "scale": 1.0000000369380384,
+              "residual": 8.28970685647278E-08,
+              "opacity": 1,
+              "order": 15
+            },
+            {
+              "id": "ArtMesh177",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": -19.999228425282663,
+              "scale": 0.9999999120283932,
+              "residual": 2.9654394374540825E-07,
+              "opacity": 1,
+              "order": 14
+            },
+            {
+              "id": "ArtMesh178",
+              "part": "PartWandA",
+              "vertices": 9,
+              "angle": -19.999229604475918,
+              "scale": 0.9999999318284967,
+              "residual": 1.7475239294446293E-07,
+              "opacity": 1,
+              "order": 13
+            }
+          ]
+        }
+      ],
+      "model": "mao"
+    }
+  ]
+}

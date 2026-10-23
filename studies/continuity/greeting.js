@@ -1,6 +1,6 @@
 import {HandTurn} from './hand-turn.js';
-import {track} from './presence.js?v=hand-turn-20261023';
-import {ARM,armChain} from './arm-rig.js?v=hand-turn-20261023';
+import {track} from './presence.js?v=hand-cage-20261023';
+import {ARM,armChain} from './arm-rig.js?v=hand-cage-20261023';
 import {armFrame} from './arm-space.js';
 import {Sleeve} from './sleeve.js';
 import {UpperArm} from './upper-arm.js';
@@ -52,5 +52,5 @@ export class RightGreeting {
   if(this.handTurn){this.meshes[1].visible=false;this.handTurn.draw(true,g.turn,(x,y)=>{const dx=x-ARM.sourceWrist[0],dy=y-ARM.sourceWrist[1],w=1-ease((y-1120)/80),lx=(dx+w*(wc*dx-ws*dy-dx))*ARM.scale,ly=(dy+w*(ws*dx+wc*dy-dy))*ARM.scale;return parent.point(chain.wrist[0]+c*lx-s*ly,chain.wrist[1]+s*lx+c*ly);});}
   this.chain={...chain,shoulder:parent.point(...chain.shoulder),elbow:parent.point(...chain.elbow),wrist,parentAngle:parent.angle};
  }
- stats(){return {side:this.side==='right'?'character-right/screen-left':'character-left/screen-right',...this.pose,opacity:this.mesh.alpha,handTurnViews:this.handTurn?3:1,upperSleeveVisible:this.upperArm.mesh.visible,socketJoints:this.upperArm.joins||[],torsoMaskActive:this.upperArm.main.mask===this.upperArm.mask,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','independent-upper-sleeve','inner-sleeve-attachment','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162+72+16+(this.handTurn?261:0),triangles:this.indices.length/3+256+112+14+(this.handTurn?448:0),textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4+(this.handTurn?256*448*4:0)};}
+ stats(){return {side:this.side==='right'?'character-right/screen-left':'character-left/screen-right',...this.pose,opacity:this.mesh.alpha,handTurnViews:this.handTurn?2:1,handTurnMethod:this.handTurn?'connected-depth-cage':'palm-only',upperSleeveVisible:this.upperArm.mesh.visible,socketJoints:this.upperArm.joins||[],torsoMaskActive:this.upperArm.main.mask===this.upperArm.mask,entry:'articulated shoulder upper-arm forearm hand; hierarchical joint tracks',chain:['chest','right-shoulder','right-upper-arm','right-elbow','right-forearm','right-wrist','right-hand'],joints:this.chain,drawRegions:['chest-supported-body','independent-upper-sleeve','inner-sleeve-attachment','elbow-sleeve','cuff','hand'],sleeveKeys:['extended','mid-bend','bent'],vertices:this.rest.length/2+162+72+16+(this.handTurn?this.handTurn.points.length:0),triangles:this.indices.length/3+256+112+14+(this.handTurn?this.handTurn.triangles.length:0),textureBytes:this.mesh.texture.width*this.mesh.texture.height*4+256*256*4+(this.handTurn?768*448*4:0)};}
 }

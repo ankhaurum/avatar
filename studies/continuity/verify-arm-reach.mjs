@@ -8,7 +8,7 @@ for(let i=0;i<=100;i++){
  elbows.push(q.elbow[0]);previous=q;
 }
 assert(Math.min(...elbows)>0,'elbow must remain beside the torso, not escape offscreen');
-const root=path.resolve(import.meta.dirname,'../..'),out=path.join(import.meta.dirname,'evidence'),baseline='86a3805b3c176b5d8926cfae4c9ad4a53f430f29';
+const root=path.resolve(import.meta.dirname,'../..'),out=path.join(import.meta.dirname,'evidence'),baseline='8c80c76125d900ca8fa94c5c9245cb2c1862ec90';
 const old=new Map();for(const name of fs.readdirSync(import.meta.dirname).filter(x=>x.endsWith('.js'))){try{old.set(name,execFileSync('git',['show',baseline+':studies/continuity/'+name],{cwd:root,stdio:['ignore','pipe','ignore']}).toString());}catch{}}
 const require=createRequire(process.env.PLAYWRIGHT_MODULE||import.meta.url),{chromium}=require('playwright'),browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-webgl']});
 const frames=[],reports=[];
@@ -28,7 +28,7 @@ try{for(const before of [true,false]){
  const page=await browser.newPage({viewport:{width:780,height:520}});await page.setContent('<canvas id="comparison" width="780" height="520"></canvas>');
  const outputs=await page.evaluate(async sequences=>{
   const c=document.querySelector('canvas'),g=c.getContext('2d'),images=await Promise.all(sequences.map(async seq=>Promise.all(seq.map(async src=>{const i=new Image();i.src=src;await i.decode();return i;}))));
-  const draw=i=>{g.fillStyle='#edf2f7';g.fillRect(0,0,780,520);g.fillStyle='#243045';g.font='18px sans-serif';g.fillText('Before / palm only',14,24);g.fillText('After / back - edge - palm',404,24);g.drawImage(images[0][i],0,32);g.drawImage(images[1][i],390,32);};
+  const draw=i=>{g.fillStyle='#edf2f7';g.fillRect(0,0,780,520);g.fillStyle='#243045';g.font='18px sans-serif';g.fillText('Before / row warp',14,24);g.fillText('After / connected hand',404,24);g.drawImage(images[0][i],0,32);g.drawImage(images[1][i],390,32);};
   const shots=[];for(const i of [24,49,52,54,56,59]){draw(i);shots.push(c.toDataURL());}
   const stream=c.captureStream(10),chunks=[],recorder=new MediaRecorder(stream,{mimeType:'video/webm',videoBitsPerSecond:1100000});recorder.ondataavailable=e=>chunks.push(e.data);const done=new Promise(r=>recorder.onstop=r);recorder.start();
   for(let i=0;i<images[0].length;i++){draw(i);await new Promise(r=>setTimeout(r,100));}recorder.stop();await done;stream.getTracks().forEach(t=>t.stop());
