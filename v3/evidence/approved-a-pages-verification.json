@@ -53,5 +53,20 @@
     "metrics": "pages-approved-a-live-metrics.json",
     "limits": "Chrome viewport emulation, not physical phone or Human Acceptance; large finger opening and high-angle sculpt unfinished"
   },
-  "acceptance": "not performed; material sculpt and rendering smoothness unfinished"
+  "acceptance": "not performed; material sculpt and rendering smoothness unfinished",
+  "latestPublishedContinuation": {
+    "buildCommit": "1f3bc83bcdb9428012ce0788b481824534997356",
+    "sourceCommit": "3570ba6",
+    "modelSHA256": "4e74bff9ea950ddfc9b5fc3a77b9ac8dbf02d92d2b85a74f875b78991e97c123",
+    "textures": 59,
+    "testTonePeakRms": 0.10757901021129022,
+    "observedAudioFrames": 28,
+    "mouthRange": [
+      0,
+      0.5618281581981965
+    ],
+    "error": "",
+    "evidence": "approved-a-public-oral-metrics.json",
+    "screen": "approved-a-public-oral-screen.png"
+  }
 }

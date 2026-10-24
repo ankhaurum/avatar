@@ -1,0 +1,23 @@
+{
+  "vertices": 32959,
+  "modes": {
+    "fresh": [
+      12.07169375,
+      12.429705000000002,
+      9.97645875
+    ],
+    "reuse": [
+      7.190289999999999,
+      14.104610000000003,
+      8.439059999999994
+    ]
+  },
+  "note": "Node fixed pose, 20 warmup and 3x80 evaluations; default vs output reuse within updated evaluator. Not browser/GPU measurement.",
+  "avoidedRepeatedLocalAndOutputTypedArrayBytes": 922852,
+  "avoidedLocalWorkspaceAllocationBytes": 527344,
+  "avoidedOutputAllocationBytes": 395508,
+  "comparison": "fresh and reuse modes both already use local workspaces; total 28 bytes/vertex compares against pre-workspace implementation",
+  "correctness": "12 actual A poses: fresh vs reused Float32 positions/depths identical; neutral restoration and retained default snapshots checked; cross-compiled reuse rejected",
+  "browserSnapshot": "approved-a-reuse-metrics.json",
+  "browserLimitation": "26.93ms mean / p95 103ms in this session; variation remains, no completed smoothness claim"
+}
