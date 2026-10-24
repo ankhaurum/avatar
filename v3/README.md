@@ -1,3 +1,9 @@
+# 原画Aの最新制作素材
+
+2026-10-24: 承認原画Aから制作した衣装素材・PSDは [artwork/split-e/README.md](artwork/split-e/README.md)、静止交換の確認は [artwork/split-e/index.html](artwork/split-e/index.html)。原画と分割Dを保全し、衣装の隠面・所有・接合を更新した。HV3-04向けの1024×1536初期入力を登録したが、関節・姿勢キー・可動受入は未完了。
+
+以下のr33/r34の会話・制作画面は過去の試作として保全している。原画Aの制作結果や承認済み完成モデルとして扱わない。
+
 # 独立V3の制作データ
 
 管理: Ankhaurum-Development #94 / #98 / #99 / #100 / #101 / #102。制作中の保存地点であり、原画完成・可動完成・Human Acceptanceを意味しない。

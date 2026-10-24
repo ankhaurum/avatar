@@ -21,5 +21,11 @@
     "date": "2026-10-24 JST",
     "url": "https://github.com/ankhaurum/Ankhaurum-Development/issues/94#issuecomment-6370059173",
     "scope": "Static artwork A only; PSD, wardrobe and motion Human Acceptance remain pending"
+  },
+  "wardrobeMaterials": {
+    "path": "split-e/material-manifest.json",
+    "method": "Photoshop 2018 painting, photographic fabric repair and exact material ownership reassignment",
+    "generationUsed": false,
+    "acceptance": "Static clothing assembly verified; motion and Human Acceptance remain pending"
   }
 }

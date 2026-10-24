@@ -1,0 +1,29 @@
+{
+  "browser": "Chrome",
+  "route": "http://127.0.0.1:8796/v3/artwork/split-e/index.html",
+  "method": "Actual independent-material selection and canvas comparison to PSD readback; original PNG composition is separately verified byte-for-byte",
+  "states": {
+    "approved-neutral": {
+      "differentPixelsOverOneLevel": 0,
+      "maximumPremultipliedChannelDifference": 0.0
+    },
+    "shirt-with-tie": {
+      "differentPixelsOverOneLevel": 2,
+      "maximumPremultipliedChannelDifference": 1.99
+    },
+    "shirt-without-tie": {
+      "differentPixelsOverOneLevel": 2,
+      "maximumPremultipliedChannelDifference": 1.99
+    },
+    "jacket-without-tie": {
+      "differentPixelsOverOneLevel": 141,
+      "maximumPremultipliedChannelDifference": 2.65
+    },
+    "lower-material-exchange": {
+      "differentPixelsOverOneLevel": 16,
+      "maximumPremultipliedChannelDifference": 2.09
+    }
+  },
+  "evidence": "browser-screen.jpg",
+  "limits": "Desktop browser rendering, not a physical mobile-device or moving-pose acceptance; browser decode/composite rounding or color conversion is a likely source of small differences, not established as a server-side issue"
+}

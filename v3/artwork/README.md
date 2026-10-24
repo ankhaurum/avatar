@@ -1,6 +1,6 @@
 # 響V3 承認原画A
 
-2026-10-24 JST、原画Aはユーザー承認済み。再生成・再承認は不要。PSD制作と再合成の最新成果・未達は [split-d/README.md](split-d/README.md)、画像確認は [split-d/index.html](split-d/index.html)。原画SHAは不変。
+2026-10-24 JST、原画Aはユーザー承認済み。再生成・再承認は不要。PSD制作と再合成の最新成果・未達は [split-e/README.md](split-e/README.md)、画像確認は [split-e/index.html](split-e/index.html)。原画SHAは不変。
 
 以下はd8e3a9c時点の制作来歴で、記載された「承認前」は当時の状態です。
 

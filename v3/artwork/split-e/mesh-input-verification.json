@@ -1,0 +1,11 @@
+{
+  "canvas": [
+    1024,
+    1536
+  ],
+  "meshes": 12,
+  "defaultVisible": 5,
+  "poseKeys": 0,
+  "sourceManifest": "export-manifest.json",
+  "scope": "Existing import contract and initial coordinates only; joint, seam and pose authoring remain unfinished"
+}

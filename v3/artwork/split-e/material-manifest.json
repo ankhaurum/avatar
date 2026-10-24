@@ -1,0 +1,404 @@
+{
+  "source": {
+    "file": "../hibiki-static-a.png",
+    "commit": "d8e3a9c",
+    "sha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf"
+  },
+  "baselinePreserved": {
+    "commit": "17c3f54",
+    "psd": "2bd04e1715a9dfdd3eedf86f7934e859abbe3ea8d27f3e1158c729445e3fd35c",
+    "partCount": 14
+  },
+  "canvas": [
+    1024,
+    1536
+  ],
+  "psd": {
+    "file": "hibiki-v3-wardrobe-e.psd",
+    "sha256": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99"
+  },
+  "method": "Photoshop 2018 painting, content-aware fabric repair and garment-only color curves; no image generation, runtime warp or silhouette mask hiding missing cloth",
+  "neutralComparison": {
+    "visibleRGBDifferentPixels": 0,
+    "alphaDifferentPixels": 0,
+    "maximumVisibleRGBDifference": 0
+  },
+  "materials": [
+    {
+      "id": "body-visible",
+      "file": "parts/body-visible.png",
+      "sha256": "679e74807ed79725f7e0493a4514550b7682fec669a8eb17b2e7a05ec4b86463",
+      "nonzeroAlphaPixels": 227679,
+      "bounds": [
+        122,
+        30,
+        950,
+        1536
+      ]
+    },
+    {
+      "id": "BODY_arm_viewer_left_hidden",
+      "file": "parts/BODY_arm_viewer_left_hidden.png",
+      "sha256": "e6bbf166524d6c27f4cdcf52a737043c85e5960d584e44d3e0a206c307ef1e49",
+      "nonzeroAlphaPixels": 64043,
+      "bounds": [
+        139,
+        524,
+        341,
+        1312
+      ]
+    },
+    {
+      "id": "BODY_arm_viewer_right_hidden",
+      "file": "parts/BODY_arm_viewer_right_hidden.png",
+      "sha256": "0669dded7df94cc31c7ba4f017ddd23716393ccd95179ca20f17fb55ad5ca1eb",
+      "nonzeroAlphaPixels": 63698,
+      "bounds": [
+        683,
+        524,
+        885,
+        1312
+      ]
+    },
+    {
+      "id": "BODY_hand_viewer_left",
+      "file": "parts/BODY_hand_viewer_left.png",
+      "sha256": "309d77c8be2dcb19b73325e8520fa3292d0eaf318cbd64e6b57b1928c591e734",
+      "nonzeroAlphaPixels": 12134,
+      "bounds": [
+        122,
+        1289,
+        216,
+        1466
+      ]
+    },
+    {
+      "id": "BODY_hand_viewer_right",
+      "file": "parts/BODY_hand_viewer_right.png",
+      "sha256": "089b77f09bea2c41c5b13dacc73202ccdfb8c5fd3a61336caae6df74e8e61c58",
+      "nonzeroAlphaPixels": 12796,
+      "bounds": [
+        800,
+        1281,
+        912,
+        1456
+      ]
+    },
+    {
+      "id": "BODY_legs_visible",
+      "file": "parts/BODY_legs_visible.png",
+      "sha256": "3ecc2cb8c2b3907b4902881c990771148e205d468e1244ecd510ce353209ba81",
+      "nonzeroAlphaPixels": 52660,
+      "bounds": [
+        252,
+        1385,
+        776,
+        1536
+      ]
+    },
+    {
+      "id": "BODY_neck_collar_underlap",
+      "file": "parts/BODY_neck_collar_underlap.png",
+      "sha256": "f6e419e724a59211c1907baca16d9a25b9c8d8f79d3148ae950379d7c9b4d0ac",
+      "nonzeroAlphaPixels": 21342,
+      "bounds": [
+        437,
+        407,
+        612,
+        565
+      ]
+    },
+    {
+      "id": "BODY_torso_hidden_surface",
+      "file": "parts/BODY_torso_hidden_surface.png",
+      "sha256": "c033555f323b436913352a9386b409621e6a19d6d795e76ac86d1a2187c75f5a",
+      "nonzeroAlphaPixels": 278422,
+      "bounds": [
+        293,
+        449,
+        734,
+        1244
+      ]
+    },
+    {
+      "id": "jacket-approved",
+      "file": "parts/jacket-approved.png",
+      "sha256": "204bbb62ea437ad890237148eed4b7a4e0fbeffbf2fc1a0c0c01cb7e21b1f554",
+      "nonzeroAlphaPixels": 462435,
+      "bounds": [
+        80,
+        449,
+        1009,
+        1520
+      ]
+    },
+    {
+      "id": "lower-approved-visible",
+      "file": "parts/lower-approved-visible.png",
+      "sha256": "d3911981bfe0c442a4023c2d80e66473b15615ead2b3ca26162c39a4b9234557",
+      "nonzeroAlphaPixels": 117121,
+      "bounds": [
+        207,
+        1060,
+        824,
+        1536
+      ]
+    },
+    {
+      "id": "lower-complete",
+      "file": "parts/lower-complete.png",
+      "sha256": "369a367eda0ec3d7d5a5f66b905d4c8dac410a392128efc15e4b875294ac91fb",
+      "nonzeroAlphaPixels": 168354,
+      "bounds": [
+        210,
+        1082,
+        819,
+        1420
+      ]
+    },
+    {
+      "id": "shirt-approved-visible",
+      "file": "parts/shirt-approved-visible.png",
+      "sha256": "492feca890d9acb17b43991186fefc52f2bd324f1393aa0eaf19bf0ef25eaa46",
+      "nonzeroAlphaPixels": 23978,
+      "bounds": [
+        130,
+        446,
+        902,
+        1297
+      ]
+    },
+    {
+      "id": "shirt-complete",
+      "file": "parts/shirt-complete.png",
+      "sha256": "d06519b466db0fc507d408575c99adc80ad1f6d6fab49c86f07dca3901869b07",
+      "nonzeroAlphaPixels": 390358,
+      "bounds": [
+        141,
+        449,
+        893,
+        1292
+      ]
+    },
+    {
+      "id": "shirt-cuffs",
+      "file": "parts/shirt-cuffs.png",
+      "sha256": "2353a10d8257a94fcfe712abc0c5880cdb35b8c5d4d03c21209b020572d738ef",
+      "nonzeroAlphaPixels": 2834,
+      "bounds": [
+        130,
+        1264,
+        902,
+        1297
+      ]
+    },
+    {
+      "id": "tie-approved",
+      "file": "parts/tie-approved.png",
+      "sha256": "efd6ddc032b91e5ffd6122b25287e48f44ce96782b0e1501764a7c0f55a2d991",
+      "nonzeroAlphaPixels": 22143,
+      "bounds": [
+        465,
+        512,
+        590,
+        849
+      ]
+    }
+  ],
+  "states": {
+    "approved-neutral": {
+      "file": "approved-neutral.png",
+      "sha256": "3e1bd0e7a5c59de8c45d6319d5084c4a18bd7ecb17ba9a23cb209d5658f57e15",
+      "assembly": [
+        "jacket-approved",
+        "shirt-approved-visible",
+        "tie-approved",
+        "lower-approved-visible",
+        "body-visible"
+      ],
+      "roundTrip": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "componentAssembly": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "protectedIdentity": {
+        "head_hair": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_left": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_right": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        }
+      }
+    },
+    "shirt-with-tie": {
+      "file": "shirt-with-tie.png",
+      "sha256": "4f1821d43ef3f020f1aecf8ded735f4cf00e6d66257f0c7c2eeadf1dd1315fa5",
+      "assembly": [
+        "shirt-complete",
+        "lower-complete",
+        "shirt-cuffs",
+        "tie-approved",
+        "body-visible"
+      ],
+      "roundTrip": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "componentAssembly": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "protectedIdentity": {
+        "head_hair": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_left": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_right": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        }
+      }
+    },
+    "shirt-without-tie": {
+      "file": "shirt-without-tie.png",
+      "sha256": "944e250663048e580e30b7dc33dc0672934a1492466fc8ed80b113e6d34e4f19",
+      "assembly": [
+        "shirt-complete",
+        "lower-complete",
+        "shirt-cuffs",
+        "body-visible"
+      ],
+      "roundTrip": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "componentAssembly": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "protectedIdentity": {
+        "head_hair": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_left": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_right": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        }
+      }
+    },
+    "jacket-without-tie": {
+      "file": "jacket-without-tie.png",
+      "sha256": "9989efcecf2dcf08571ab8fe2cc0db8de82c9435b90f3ef489a2d22bf36f7f5a",
+      "assembly": [
+        "shirt-complete",
+        "jacket-approved",
+        "shirt-cuffs",
+        "lower-approved-visible",
+        "body-visible"
+      ],
+      "roundTrip": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "componentAssembly": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "protectedIdentity": {
+        "head_hair": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_left": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_right": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        }
+      }
+    },
+    "lower-material-exchange": {
+      "file": "lower-material-exchange.png",
+      "sha256": "1923e7234927721b6c8d817da74bf6ff77c9bf720f8f3de65e735c1c24d85d40",
+      "assembly": [
+        "lower-complete",
+        "jacket-approved",
+        "shirt-approved-visible",
+        "tie-approved",
+        "body-visible"
+      ],
+      "roundTrip": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "componentAssembly": {
+        "visibleRGBDifferentPixels": 0,
+        "alphaDifferentPixels": 0,
+        "maximumVisibleRGBDifference": 0
+      },
+      "protectedIdentity": {
+        "head_hair": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_left": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        },
+        "hand_right": {
+          "visibleRGBDifferentPixels": 0,
+          "alphaDifferentPixels": 0,
+          "maximumVisibleRGBDifference": 0
+        }
+      }
+    }
+  },
+  "limits": [
+    "Protected identity comparisons cover the head/hair above y430 and visible hands below y1320; clothing-adjacent alpha edges are reviewed visually",
+    "Static approved garments with jacket/tie on/off; arbitrary new outfits and moving-pose acceptance are not proven",
+    "Human Acceptance remains with the user"
+  ]
+}
