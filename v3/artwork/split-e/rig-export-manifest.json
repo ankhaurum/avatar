@@ -1,0 +1,876 @@
+{
+  "format": "hibiki-psd-export",
+  "version": 1,
+  "width": 1024,
+  "height": 1536,
+  "source": {
+    "path": "hibiki-v3-motion-f.psd",
+    "sha256": "8e5e9ef84e16f42c1153c8b3e9738e8dddb001c286e77131cac8d185ff8fd60b"
+  },
+  "layers": [
+    {
+      "id": "FACE_eyelid_closed_l",
+      "path": "28_FACE_eyelids_painted/FACE_eyelid_closed_l",
+      "group": "28_FACE_eyelids_painted",
+      "file": "parts/rig-FACE_eyelid_closed_l.png",
+      "bounds": [
+        543,
+        231,
+        615,
+        278
+      ],
+      "width": 72,
+      "height": 47,
+      "sha256": "4905674ab599b740a31caf5e3d5b9a0e1593a72f838e484a61ece42098026bc7",
+      "visible": false
+    },
+    {
+      "id": "FACE_eyelid_closed_r",
+      "path": "28_FACE_eyelids_painted/FACE_eyelid_closed_r",
+      "group": "28_FACE_eyelids_painted",
+      "file": "parts/rig-FACE_eyelid_closed_r.png",
+      "bounds": [
+        435,
+        236,
+        509,
+        282
+      ],
+      "width": 74,
+      "height": 46,
+      "sha256": "7600022272f178af241fafa2a08bc38ef61f4332eb9d0c8c34fe3d7694570cdd",
+      "visible": false
+    },
+    {
+      "id": "FACE_lip_lower",
+      "path": "10_BODY_identity/FACE_lip_lower",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-FACE_lip_lower.png",
+      "bounds": [
+        481,
+        348,
+        570,
+        373
+      ],
+      "width": 89,
+      "height": 25,
+      "sha256": "6e91bc0dbea20579591ede03b8a2bc74e946daea6845b3ead8702be97bba5566",
+      "visible": true
+    },
+    {
+      "id": "FACE_lip_upper",
+      "path": "10_BODY_identity/FACE_lip_upper",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-FACE_lip_upper.png",
+      "bounds": [
+        481,
+        331,
+        570,
+        348
+      ],
+      "width": 89,
+      "height": 17,
+      "sha256": "4f4e0a9f0ac020801b6fa7da22312100a84cc05948d2a3658232f1ba1bea1e27",
+      "visible": true
+    },
+    {
+      "id": "BODY_hand_viewer_left_edge_recovered_motion",
+      "path": "10_BODY_identity/BODY_hand_viewer_left_edge_recovered_motion",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_hand_viewer_left_edge_recovered_motion.png",
+      "bounds": [
+        80,
+        1298,
+        131,
+        1497
+      ],
+      "width": 51,
+      "height": 199,
+      "sha256": "5acdcf9b2c835000102581f090b98620f666a997e04e54c444600260ee499af9",
+      "visible": false
+    },
+    {
+      "id": "BODY_leg_edge_recovered",
+      "path": "10_BODY_identity/BODY_leg_edge_recovered",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_leg_edge_recovered.png",
+      "bounds": [
+        240,
+        1378,
+        790,
+        1423
+      ],
+      "width": 550,
+      "height": 45,
+      "sha256": "4c71a87f507a61dfa48c30b06ddd8ba58ea1c6615c04c3c2f2bcc1a1fb35d5cf",
+      "visible": true
+    },
+    {
+      "id": "BODY_hair_tip_right_recovered",
+      "path": "10_BODY_identity/BODY_hair_tip_right_recovered",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_hair_tip_right_recovered.png",
+      "bounds": [
+        621,
+        457,
+        651,
+        463
+      ],
+      "width": 30,
+      "height": 6,
+      "sha256": "5b3c740711c705a76f20a7a78b3d1cdb324f44b0204c5686c8bcc56d85d7d667",
+      "visible": true
+    },
+    {
+      "id": "BODY_hair",
+      "path": "10_BODY_identity/BODY_hair",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_hair.png",
+      "bounds": [
+        303,
+        30,
+        950,
+        463
+      ],
+      "width": 647,
+      "height": 433,
+      "sha256": "b133b1096b88e5216974f3778a95a6c0a11be9abddb61f954690242bf1905a68",
+      "visible": true
+    },
+    {
+      "id": "BODY_legs_visible",
+      "path": "10_BODY_identity/BODY_legs_visible",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_legs_visible.png",
+      "bounds": [
+        252,
+        1385,
+        776,
+        1536
+      ],
+      "width": 524,
+      "height": 151,
+      "sha256": "719da62ca6f39c014966edad09608fa9c4ea36001e6a0420d596fd51c23e8bfc",
+      "visible": true
+    },
+    {
+      "id": "BODY_hand_viewer_right",
+      "path": "10_BODY_identity/BODY_hand_viewer_right",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_hand_viewer_right.png",
+      "bounds": [
+        800,
+        1281,
+        912,
+        1456
+      ],
+      "width": 112,
+      "height": 175,
+      "sha256": "2929335ac685f5d171aa82e8cd5a0fcfd2a7ba177cd6a6410131820c44b09080",
+      "visible": true
+    },
+    {
+      "id": "BODY_hand_viewer_left",
+      "path": "10_BODY_identity/BODY_hand_viewer_left",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_hand_viewer_left.png",
+      "bounds": [
+        122,
+        1289,
+        216,
+        1466
+      ],
+      "width": 94,
+      "height": 177,
+      "sha256": "c819f2d7755e7984cc401e40a6d0984c7638b0bd26499bb629dbf351d7bf961c",
+      "visible": false
+    },
+    {
+      "id": "BODY_neck",
+      "path": "10_BODY_identity/BODY_neck",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_neck.png",
+      "bounds": [
+        450,
+        383,
+        594,
+        549
+      ],
+      "width": 144,
+      "height": 166,
+      "sha256": "4347c30594ec146cf73eeb3605948c6dcdb10d0e98042fc1960beb77834e561d",
+      "visible": true
+    },
+    {
+      "id": "BODY_face",
+      "path": "10_BODY_identity/BODY_face",
+      "group": "10_BODY_identity",
+      "file": "parts/rig-BODY_face.png",
+      "bounds": [
+        414,
+        218,
+        629,
+        413
+      ],
+      "width": 215,
+      "height": 195,
+      "sha256": "a8c825a4aaf312732b79192263605ff7067ca6976771c609b1d4bb1181ab7981",
+      "visible": true
+    },
+    {
+      "id": "HAND_volar_viewer_right",
+      "path": "30_HAND_volar_materials/HAND_volar_viewer_right",
+      "group": "30_HAND_volar_materials",
+      "file": "parts/rig-HAND_volar_viewer_right.png",
+      "bounds": [
+        800,
+        1281,
+        912,
+        1456
+      ],
+      "width": 112,
+      "height": 175,
+      "sha256": "472f1c8ea2513a673532beb896a108da3da1c2b2068be1df52fb91142fbc9c37",
+      "visible": true
+    },
+    {
+      "id": "HAND_volar_viewer_left",
+      "path": "30_HAND_volar_materials/HAND_volar_viewer_left",
+      "group": "30_HAND_volar_materials",
+      "file": "parts/rig-HAND_volar_viewer_left.png",
+      "bounds": [
+        80,
+        1289,
+        216,
+        1497
+      ],
+      "width": 136,
+      "height": 208,
+      "sha256": "16ade4d0be3c8130e6df3c624bd72034e1c9eaa0371e1ca9ebf5e2b05543bc78",
+      "visible": true
+    },
+    {
+      "id": "BODY_wrist_underlap_viewer_right",
+      "path": "32_BODY_wrist_underlaps/BODY_wrist_underlap_viewer_right",
+      "group": "32_BODY_wrist_underlaps",
+      "file": "parts/rig-BODY_wrist_underlap_viewer_right.png",
+      "bounds": [
+        811,
+        1254,
+        902,
+        1317
+      ],
+      "width": 91,
+      "height": 63,
+      "sha256": "65ebf5aa074bd5ee4255233ed122c829f350c9b05743e6970ad898f4dac46d8e",
+      "visible": true
+    },
+    {
+      "id": "BODY_wrist_underlap_viewer_left",
+      "path": "32_BODY_wrist_underlaps/BODY_wrist_underlap_viewer_left",
+      "group": "32_BODY_wrist_underlaps",
+      "file": "parts/rig-BODY_wrist_underlap_viewer_left.png",
+      "bounds": [
+        134,
+        1257,
+        219,
+        1315
+      ],
+      "width": 85,
+      "height": 58,
+      "sha256": "01642dabb0b5db0a15a26dc629ace8bf77e196e60f243296422c0d3fd1d89ca5",
+      "visible": true
+    },
+    {
+      "id": "SHIRT_cuff_inner_viewer_right",
+      "path": "33_SHIRT_cuff_facings/SHIRT_cuff_inner_viewer_right",
+      "group": "33_SHIRT_cuff_facings",
+      "file": "parts/rig-SHIRT_cuff_inner_viewer_right.png",
+      "bounds": [
+        812,
+        1261,
+        904,
+        1293
+      ],
+      "width": 92,
+      "height": 32,
+      "sha256": "f7bd399ea0d3b8ecf30e85eaab8411a384589474ebb9f9048dd5b0113c6fe178",
+      "visible": true
+    },
+    {
+      "id": "SHIRT_cuff_inner_viewer_left",
+      "path": "33_SHIRT_cuff_facings/SHIRT_cuff_inner_viewer_left",
+      "group": "33_SHIRT_cuff_facings",
+      "file": "parts/rig-SHIRT_cuff_inner_viewer_left.png",
+      "bounds": [
+        131,
+        1264,
+        218,
+        1298
+      ],
+      "width": 87,
+      "height": 34,
+      "sha256": "871454bcd098f01c5514aa7deb6bc667a2a8d71cbcf368860d36a569ec0a1341",
+      "visible": true
+    },
+    {
+      "id": "HAND_front_viewer_left_registered",
+      "path": "31_HAND_front_registered/HAND_front_viewer_left_registered",
+      "group": "31_HAND_front_registered",
+      "file": "parts/rig-HAND_front_viewer_left_registered.png",
+      "bounds": [
+        80,
+        1289,
+        216,
+        1497
+      ],
+      "width": 136,
+      "height": 208,
+      "sha256": "15f6b642d52e63d2aad7652f32b4ba29f4509e4556ca115ac8d97387522495e6",
+      "visible": true
+    },
+    {
+      "id": "FACE_mouth_cavity",
+      "path": "27_FACE_mouth_hidden/FACE_mouth_cavity",
+      "group": "27_FACE_mouth_hidden",
+      "file": "parts/rig-FACE_mouth_cavity.png",
+      "bounds": [
+        478,
+        330,
+        574,
+        379
+      ],
+      "width": 96,
+      "height": 49,
+      "sha256": "a276bacbba5299b90ce07c60e1626afecd4c2f221f81a0e6652497619b93ab2d",
+      "visible": false
+    },
+    {
+      "id": "FACE_skin_lip_underlap",
+      "path": "29_FACE_skin_underlap/FACE_skin_lip_underlap",
+      "group": "29_FACE_skin_underlap",
+      "file": "parts/rig-FACE_skin_lip_underlap.png",
+      "bounds": [
+        478,
+        328,
+        574,
+        379
+      ],
+      "width": 96,
+      "height": 51,
+      "sha256": "7d833c7c4710596655031c3eaad6d5136efb4c4b66477f4d0337664eb89a1934",
+      "visible": true
+    },
+    {
+      "id": "LOWER_hem_recovered_from_leg",
+      "path": "23_WARDROBE_lower/LOWER_hem_recovered_from_leg",
+      "group": "23_WARDROBE_lower",
+      "file": "parts/rig-LOWER_hem_recovered_from_leg.png",
+      "bounds": [
+        265,
+        1380,
+        776,
+        1414
+      ],
+      "width": 511,
+      "height": 34,
+      "sha256": "eb9682c4dfc3636f306742a23bc1011b3730cdf01951d78e423531507b1ad643",
+      "visible": true
+    },
+    {
+      "id": "LOWER_edge_recovered_from_hand",
+      "path": "23_WARDROBE_lower/LOWER_edge_recovered_from_hand",
+      "group": "23_WARDROBE_lower",
+      "file": "parts/rig-LOWER_edge_recovered_from_hand.png",
+      "bounds": [
+        800,
+        1331,
+        821,
+        1378
+      ],
+      "width": 21,
+      "height": 47,
+      "sha256": "e14ce60551320aaeb8252aecb06401cd5463bcc2ea852d2b3d3da9c89780805e",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_lower_skirt",
+      "path": "23_WARDROBE_lower/WARDROBE_lower_skirt",
+      "group": "23_WARDROBE_lower",
+      "file": "parts/rig-WARDROBE_lower_skirt.png",
+      "bounds": [
+        207,
+        1060,
+        824,
+        1536
+      ],
+      "width": 617,
+      "height": 476,
+      "sha256": "91de92f0e22ba8bc14df4469cc1410bac3b74401a7e8da9845be31f2b038e363",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_tie",
+      "path": "22_WARDROBE_tie/WARDROBE_tie",
+      "group": "22_WARDROBE_tie",
+      "file": "parts/rig-WARDROBE_tie.png",
+      "bounds": [
+        465,
+        512,
+        590,
+        849
+      ],
+      "width": 125,
+      "height": 337,
+      "sha256": "3f1740a8fedcb45cd1fd39f34cf6474a114952dd7711a92f9e0f83fa14c15600",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_shirt",
+      "path": "21_WARDROBE_shirt/WARDROBE_shirt",
+      "group": "21_WARDROBE_shirt",
+      "file": "parts/rig-WARDROBE_shirt.png",
+      "bounds": [
+        438,
+        446,
+        618,
+        749
+      ],
+      "width": 180,
+      "height": 303,
+      "sha256": "ebe790a1b29435c3f9608e8440b72bdcded7c6e5c7746d946999e2b9120d10b3",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_shirt_cuff_viewer_right",
+      "path": "21_WARDROBE_shirt/WARDROBE_shirt_cuff_viewer_right",
+      "group": "21_WARDROBE_shirt",
+      "file": "parts/rig-WARDROBE_shirt_cuff_viewer_right.png",
+      "bounds": [
+        817,
+        1264,
+        902,
+        1290
+      ],
+      "width": 85,
+      "height": 26,
+      "sha256": "a692285f2c48ecad6a009602c614e8fca167b2f51f87a6586f1a3df11c022f32",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_shirt_cuff_viewer_left",
+      "path": "21_WARDROBE_shirt/WARDROBE_shirt_cuff_viewer_left",
+      "group": "21_WARDROBE_shirt",
+      "file": "parts/rig-WARDROBE_shirt_cuff_viewer_left.png",
+      "bounds": [
+        130,
+        1270,
+        217,
+        1297
+      ],
+      "width": 87,
+      "height": 27,
+      "sha256": "1771b1963ccbbc1e358e353a64638c161cf44e4ac5872007ad27c553c04b3df9",
+      "visible": true
+    },
+    {
+      "id": "JACKET_pocket_edge_recovered_motion",
+      "path": "20_WARDROBE_jacket/JACKET_pocket_edge_recovered_motion",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-JACKET_pocket_edge_recovered_motion.png",
+      "bounds": [
+        734,
+        650,
+        762,
+        691
+      ],
+      "width": 28,
+      "height": 41,
+      "sha256": "88ca9796f9f554eebc7aee743b226158098488e5fa5f6f2c88a5541bf4eff4e6",
+      "visible": true
+    },
+    {
+      "id": "JACKET_right_hem_underlap_recovered",
+      "path": "20_WARDROBE_jacket/JACKET_right_hem_underlap_recovered",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-JACKET_right_hem_underlap_recovered.png",
+      "bounds": [
+        576,
+        1166,
+        778,
+        1221
+      ],
+      "width": 202,
+      "height": 55,
+      "sha256": "c0d31cfd6b944ae9dd33a2915e6f104243924f506a3f128d88b6490c1f45ab2c",
+      "visible": true
+    },
+    {
+      "id": "JACKET_left_hem_underlap_recovered",
+      "path": "20_WARDROBE_jacket/JACKET_left_hem_underlap_recovered",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-JACKET_left_hem_underlap_recovered.png",
+      "bounds": [
+        253,
+        1184,
+        408,
+        1221
+      ],
+      "width": 155,
+      "height": 37,
+      "sha256": "6268c89e433a78470ae74d2e664e0aabb0eedd253eec65985d57ee8fa85d1f62",
+      "visible": true
+    },
+    {
+      "id": "JACKET_blue_hem_recovered",
+      "path": "20_WARDROBE_jacket/JACKET_blue_hem_recovered",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-JACKET_blue_hem_recovered.png",
+      "bounds": [
+        231,
+        1061,
+        798,
+        1271
+      ],
+      "width": 567,
+      "height": 210,
+      "sha256": "20a495bb7a38d1c380065552c33a0d2c2808d32f145a783b8835c6254968e589",
+      "visible": true
+    },
+    {
+      "id": "JACKET_lapel_tip_recovered",
+      "path": "20_WARDROBE_jacket/JACKET_lapel_tip_recovered",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-JACKET_lapel_tip_recovered.png",
+      "bounds": [
+        527,
+        833,
+        537,
+        852
+      ],
+      "width": 10,
+      "height": 19,
+      "sha256": "318997418e7b1764e427534f9e0cc8f15a0e4b19c05e658973ba1ecb004db1df",
+      "visible": true
+    },
+    {
+      "id": "JACKET_inner_lapel_recovered",
+      "path": "20_WARDROBE_jacket/JACKET_inner_lapel_recovered",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-JACKET_inner_lapel_recovered.png",
+      "bounds": [
+        439,
+        570,
+        572,
+        851
+      ],
+      "width": 133,
+      "height": 281,
+      "sha256": "6626de9f803f95e0e32d7c8c8c088ed1774af953be9d6ee826790b4776e31ce6",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_jacket_front",
+      "path": "20_WARDROBE_jacket/WARDROBE_jacket_front",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-WARDROBE_jacket_front.png",
+      "bounds": [
+        128,
+        449,
+        910,
+        1520
+      ],
+      "width": 782,
+      "height": 1071,
+      "sha256": "a514eb7bd06332b1d3aefce6c8640a4b68842a986a99993d98b1480113acb7b0",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_jacket_sleeve_viewer_right",
+      "path": "20_WARDROBE_jacket/WARDROBE_jacket_sleeve_viewer_right",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-WARDROBE_jacket_sleeve_viewer_right.png",
+      "bounds": [
+        715,
+        493,
+        1009,
+        1287
+      ],
+      "width": 294,
+      "height": 794,
+      "sha256": "d9601032c33a22eb5b7cdb6fe161132569df90ff1ae3563f8d83c616ccc32ced",
+      "visible": true
+    },
+    {
+      "id": "WARDROBE_jacket_sleeve_viewer_left",
+      "path": "20_WARDROBE_jacket/WARDROBE_jacket_sleeve_viewer_left",
+      "group": "20_WARDROBE_jacket",
+      "file": "parts/rig-WARDROBE_jacket_sleeve_viewer_left.png",
+      "bounds": [
+        105,
+        498,
+        322,
+        1288
+      ],
+      "width": 217,
+      "height": 790,
+      "sha256": "3efc2e5d675d59ff12386632001c1f46553c1f1bc8b2456837af7ea725f3c446",
+      "visible": true
+    },
+    {
+      "id": "JACKET_armhole_viewer_right",
+      "path": "26_JOINT_fabric_underlaps/JACKET_armhole_viewer_right",
+      "group": "26_JOINT_fabric_underlaps",
+      "file": "parts/rig-JACKET_armhole_viewer_right.png",
+      "bounds": [
+        689,
+        504,
+        777,
+        976
+      ],
+      "width": 88,
+      "height": 472,
+      "sha256": "48cb09a83487905a5a4ab9eae30c07d4469ccb9f51337b8b49575da515153e83",
+      "visible": false
+    },
+    {
+      "id": "JACKET_armhole_viewer_left",
+      "path": "26_JOINT_fabric_underlaps/JACKET_armhole_viewer_left",
+      "group": "26_JOINT_fabric_underlaps",
+      "file": "parts/rig-JACKET_armhole_viewer_left.png",
+      "bounds": [
+        246,
+        504,
+        334,
+        976
+      ],
+      "width": 88,
+      "height": 472,
+      "sha256": "18dda7ccd214357fef739f344abfeea307733544ad0116a6947c4802b98c44b8",
+      "visible": false
+    },
+    {
+      "id": "LOWER_waistband",
+      "path": "25_LOWER_waist_underlap/LOWER_waistband",
+      "group": "25_LOWER_waist_underlap",
+      "file": "parts/rig-LOWER_waistband.png",
+      "bounds": [
+        319,
+        1082,
+        705,
+        1110
+      ],
+      "width": 386,
+      "height": 28,
+      "sha256": "099d7712eef8dec759414ec4aed799565369ed1b429e54f36cf7c444ec690c78",
+      "visible": false
+    },
+    {
+      "id": "LOWER_complete_pleated_fabric",
+      "path": "25_LOWER_waist_underlap/LOWER_complete_pleated_fabric",
+      "group": "25_LOWER_waist_underlap",
+      "file": "parts/rig-LOWER_complete_pleated_fabric.png",
+      "bounds": [
+        210,
+        1082,
+        819,
+        1420
+      ],
+      "width": 609,
+      "height": 338,
+      "sha256": "abd335fc482acef93e33fcf1d34caabd6d2301231597adc1b44a4a9aa0b845a5",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_original_collar_clean",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_original_collar_clean",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_original_collar_clean.png",
+      "bounds": [
+        436,
+        450,
+        616,
+        579
+      ],
+      "width": 180,
+      "height": 129,
+      "sha256": "ef68f212e3292a3f2454c00bf1823b2380f9942188308b17fe5bf28510594992",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_button_5",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_5",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_button_5.png",
+      "bounds": [
+        525,
+        1016,
+        535,
+        1026
+      ],
+      "width": 10,
+      "height": 10,
+      "sha256": "b022397d6755008942b7bef1fb2f0c2c7e35d332b453423bbfc7eccb9943801e",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_button_4",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_4",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_button_4.png",
+      "bounds": [
+        525,
+        917,
+        535,
+        927
+      ],
+      "width": 10,
+      "height": 10,
+      "sha256": "97a1e9d4d3a08ef3d46cc9b11e62b432c2ea97d2912aae0165e6fbcb403e01cf",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_button_3",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_3",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_button_3.png",
+      "bounds": [
+        525,
+        818,
+        535,
+        828
+      ],
+      "width": 10,
+      "height": 10,
+      "sha256": "b89655d5f3deeb203e44fd1c777908f1efcabc561c4c3f8bc5557d189558e69a",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_button_2",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_2",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_button_2.png",
+      "bounds": [
+        525,
+        719,
+        535,
+        729
+      ],
+      "width": 10,
+      "height": 10,
+      "sha256": "de4f1b526cc6326ab34411158e2d4e60232ef110474303f88835efe856401647",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_button_1",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_1",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_button_1.png",
+      "bounds": [
+        525,
+        620,
+        535,
+        630
+      ],
+      "width": 10,
+      "height": 10,
+      "sha256": "784a94cdef39811a2f89a7555430df8dfd549c240fd6e35f330cbc63882f9265",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_center_placket",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_center_placket",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_center_placket.png",
+      "bounds": [
+        520,
+        548,
+        541,
+        1110
+      ],
+      "width": 21,
+      "height": 562,
+      "sha256": "2ae3424f2f922d7c53ed2dc7791177c7e7134a2ea106900a129d561ad5918837",
+      "visible": false
+    },
+    {
+      "id": "SHIRT_completed_fabric",
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_completed_fabric",
+      "group": "24_SHIRT_photographic_fabric_completion",
+      "file": "parts/rig-SHIRT_completed_fabric.png",
+      "bounds": [
+        141,
+        449,
+        893,
+        1292
+      ],
+      "width": 752,
+      "height": 843,
+      "sha256": "bb483d342df2848a17f7a665fb7a318393355c2f772f02f73e8cbfd12bde3214",
+      "visible": false
+    },
+    {
+      "id": "BODY_neck_collar_underlap",
+      "path": "11_BODY_underclothing_paint/BODY_neck_collar_underlap",
+      "group": "11_BODY_underclothing_paint",
+      "file": "parts/rig-BODY_neck_collar_underlap.png",
+      "bounds": [
+        437,
+        407,
+        612,
+        565
+      ],
+      "width": 175,
+      "height": 158,
+      "sha256": "aae4480357d9946ec923a3869f30570b36dc18a96b41b01575cb6cd62c43d47e",
+      "visible": false
+    },
+    {
+      "id": "BODY_arm_viewer_right_hidden",
+      "path": "11_BODY_underclothing_paint/BODY_arm_viewer_right_hidden",
+      "group": "11_BODY_underclothing_paint",
+      "file": "parts/rig-BODY_arm_viewer_right_hidden.png",
+      "bounds": [
+        683,
+        524,
+        885,
+        1312
+      ],
+      "width": 202,
+      "height": 788,
+      "sha256": "3cc14569db5be87af74c0c27ecbe929002a9c393f188cebaca61d304200aaa04",
+      "visible": false
+    },
+    {
+      "id": "BODY_arm_viewer_left_hidden",
+      "path": "11_BODY_underclothing_paint/BODY_arm_viewer_left_hidden",
+      "group": "11_BODY_underclothing_paint",
+      "file": "parts/rig-BODY_arm_viewer_left_hidden.png",
+      "bounds": [
+        139,
+        524,
+        341,
+        1312
+      ],
+      "width": 202,
+      "height": 788,
+      "sha256": "b61fe4e06a17e2d867e1ed0c8eb231100e91fd02eb81005d4baca5ab12ca140b",
+      "visible": false
+    },
+    {
+      "id": "BODY_torso_hidden_surface",
+      "path": "11_BODY_underclothing_paint/BODY_torso_hidden_surface",
+      "group": "11_BODY_underclothing_paint",
+      "file": "parts/rig-BODY_torso_hidden_surface.png",
+      "bounds": [
+        293,
+        449,
+        734,
+        1244
+      ],
+      "width": 441,
+      "height": 795,
+      "sha256": "bfc22d6964e85368ca7175209313a3b79471d4a207a16c8d05aa85ebf54ebba3",
+      "visible": false
+    }
+  ]
+}

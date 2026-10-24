@@ -64,12 +64,12 @@ export class Renderer{
 export async function loadImages(model,baseURL,previous=new Map()){
  const images=new Map();
  for(const t of model.textures){
-  const url=new URL(t.file,baseURL),key=url.href+'|'+t.sha256;
+  const url=new URL(t.file,baseURL);if(t.sha256)url.searchParams.set('sha256',t.sha256);const key=url.href+'|'+t.sha256;
   if(url.origin!==new URL(baseURL).origin)throw Error('Texture must belong to the authoring origin: '+t.id);
   if(previous.get(t.id)?.sourceKey===key){images.set(t.id,previous.get(t.id));continue;}
   let objectURL;
   try{
-   const response=await fetch(url);if(!response.ok)throw Error('HTTP '+response.status);
+   const response=await fetch(url,{cache:'no-cache'});if(!response.ok)throw Error('HTTP '+response.status);
    const bytes=await response.arrayBuffer();
    if(t.sha256){const digest=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');if(digest!==t.sha256)throw Error('SHA256 mismatch');}
    objectURL=URL.createObjectURL(new Blob([bytes],{type:'image/png'}));

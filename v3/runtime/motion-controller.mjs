@@ -4,6 +4,7 @@ export class Spring {
 }
 export class MotionController{
  constructor(model,motion,random=Math.random){this.model=model;this.motion=motion;this.random=random;this.springs=new Map(model.parameters.map(p=>[p.id,new Spring(p.default)]));this.state='idle';this.expression='auto';this.time=0;this.stateAt=0;this.nextBlink=2;this.blinkAt=-10;this.manual={};this.secondary={hair:new Spring(),cloth:new Spring()};}
+ resetToRest(){this.state='idle';this.expression='auto';this.manual={};for(const p of this.model.parameters){const spring=this.springs.get(p.id);spring.value=p.default;spring.velocity=0;}this.secondary={hair:new Spring(),cloth:new Spring()};}
  setState(id){if(!this.motion.states[id])throw Error('Unknown conversation state');this.state=id;this.stateAt=this.time;}
  setExpression(id){if(id!=='auto'&&!this.motion.expressions[id])throw Error('Unknown expression');this.expression=id;}
  hold(values){for(const [id,value]of Object.entries(values)){if(!this.springs.has(id)||!Number.isFinite(value))throw Error('Invalid manual pose');this.manual[id]=value;}}
@@ -27,7 +28,7 @@ export class MotionController{
   const actual=speech.mode!=='none',synthetic=this.state==='speaking'&&!actual;
   pose['mouth.open']=Math.max(pose['mouth.open']||0,actual?speech.value:synthetic&&animate?Math.max(0,Math.sin(t*9.4))*.55:0);
   Object.assign(pose,this.manual);
-  const result={};for(const p of this.model.parameters){const target=Math.max(p.min,Math.min(p.max,pose[p.id]??p.default));result[p.id]=this.springs.get(p.id).step(target,dt,p.id.includes('blink')?48:p.id==='mouth.open'?26:7);}
+  const result={};for(const p of this.model.parameters){let target=Math.max(p.min,Math.min(p.max,pose[p.id]??p.default));const spring=this.springs.get(p.id),periodic=/^forearm\.[rl]\.twist$/.test(p.id)&&p.max-p.min>=Math.PI*2-1e-6;if(periodic)target+=Math.round((spring.value-target)/(Math.PI*2))*Math.PI*2;const value=spring.step(target,dt,p.id.includes('blink')?48:p.id==='mouth.open'?26:7);result[p.id]=periodic?Math.atan2(Math.sin(value),Math.cos(value)):value;}
   const headV=this.springs.get('head.tilt')?.velocity||0,bodyV=this.springs.get('body.lean')?.velocity||0,yawV=this.springs.get('head.yaw')?.velocity||0;
   const limit=x=>Math.max(-1,Math.min(1,x));
   if(animate){result['hair.sway']=this.secondary.hair.step(limit(-headV*1.8-yawV*.4-bodyV),dt,7);result['cloth.sway']=this.secondary.cloth.step(limit(-bodyV*3),dt,5);}

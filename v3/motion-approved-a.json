@@ -1,0 +1,96 @@
+{
+  "states": {
+    "idle": {
+      "label": "待機",
+      "expression": "neutral",
+      "pose": {}
+    },
+    "listening": {
+      "label": "傾聴",
+      "expression": "neutral",
+      "pose": {
+        "head.tilt": 0.035,
+        "head.pitch": 0.1,
+        "body.lean": 0.008
+      }
+    },
+    "speaking": {
+      "label": "発話",
+      "expression": "smile",
+      "pose": {
+        "arm.r.upper": 0.12,
+        "arm.l.upper": -0.1,
+        "arm.r.elbow": 0.4,
+        "arm.l.elbow": -0.32,
+        "body.lean": -0.012
+      }
+    },
+    "explain": {
+      "label": "説明",
+      "expression": "smile",
+      "pose": {
+        "arm.r.upper": 0.18,
+        "arm.l.upper": -0.22,
+        "arm.r.elbow": 0.85,
+        "arm.l.elbow": -0.95,
+        "wrist.r.rotation": -0.15,
+        "wrist.l.rotation": 0.12,
+        "forearm.r.twist": 0.18,
+        "forearm.l.twist": -0.2,
+        "body.lean": -0.022,
+        "head.tilt": 0.022
+      }
+    },
+    "nod": {
+      "label": "うなずき",
+      "expression": "neutral",
+      "pose": {}
+    },
+    "happy": {
+      "label": "喜び",
+      "expression": "smile",
+      "pose": {
+        "arm.r.elbow": 0.65,
+        "arm.l.elbow": -0.65,
+        "head.tilt": 0.04,
+        "body.y": -3
+      }
+    },
+    "surprised": {
+      "label": "驚き",
+      "expression": "surprised",
+      "pose": {
+        "body.y": -6,
+        "head.pitch": -0.13,
+        "shoulder.r.lift": -5,
+        "shoulder.l.lift": -5
+      }
+    },
+    "thinking": {
+      "label": "思考",
+      "expression": "puzzled",
+      "pose": {
+        "arm.r.upper": 0.25,
+        "arm.r.elbow": -1.65,
+        "wrist.r.rotation": -0.18,
+        "head.tilt": -0.04
+      }
+    }
+  },
+  "expressions": {
+    "neutral": {},
+    "smile": {
+      "mouth.smile": 0.6,
+      "eye.r.blink": 0.06,
+      "eye.l.blink": 0.06
+    },
+    "puzzled": {
+      "brow.r.raise": 0.4,
+      "brow.l.raise": -0.15
+    },
+    "surprised": {
+      "brow.r.raise": 0.7,
+      "brow.l.raise": 0.7
+    }
+  }
+}

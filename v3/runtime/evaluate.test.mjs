@@ -23,3 +23,7 @@ test('invalid skin weights, hierarchy cycles and non-finite inputs are not silen
 test('editing an initially zero shape key is reflected without reloading author data',()=>{
  const m=fixture();m.nodes[0].bindings={};m.nodes[1].bindings={};const delta=[0,0,0,0,0,0];m.meshes[0].shapes=[{axes:[{parameter:'b',keys:[0,1]}],keys:[{at:[0],delta:[0,0,0,0,0,0]},{at:[1],delta}]}];const c=compile(m);close(evaluate(c,{b:1}).positions.get('m')[0],10);delta[0]=3;close(evaluate(c,{b:1}).positions.get('m')[0],13);delta[0]=0;close(evaluate(c,{b:1}).positions.get('m')[0],10);
 });
+
+test('planar rigid skinning retains a joint section and neutral coordinates',()=>{
+ const m=fixture();m.nodes=[{id:'root',pivot:[0,0],bindings:{rotation:[{parameter:'a',factor:1}]}},{id:'other',pivot:[0,0],bindings:{rotation:[{parameter:'a',factor:-1}]}}];m.meshes[0].node='root';m.meshes[0].weights=m.meshes[0].rest.filter((_,i)=>i%2===0).map(()=>[{node:'root',weight:.5},{node:'other',weight:.5}]);m.meshes[0].blend='dual-quaternion';const c=compile(m),zero=evaluate(c),turned=evaluate(c,{a:Math.PI/3});for(let i=0;i<m.meshes[0].rest.length;i++){close(zero.positions.get('m')[i],m.meshes[0].rest[i]);close(turned.positions.get('m')[i],m.meshes[0].rest[i]);}
+});

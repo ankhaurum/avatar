@@ -1,0 +1,96 @@
+{
+  "modelSHA256": "2727196c497fe6ea7164235002a264b3c237b790142b1c4b3fbed37c9056838f",
+  "motionSHA256": "7bd7d02e3bdb73c55d4e3b090bcabe5919bc7619292967641b12935eaf002931",
+  "sourcePSD_SHA256": "8e5e9ef84e16f42c1153c8b3e9738e8dddb001c286e77131cac8d185ff8fd60b",
+  "browser": "Chrome, local loopback :8796",
+  "images": [
+    {
+      "file": "approved-a-neutral-screen.png",
+      "sha256": "3c51bcc54dbe6c7c823c2453e2613c24e519f4d53676ff3db68881ab15f5b5be",
+      "capturedModelSHA256": "2727196c497fe6ea7164235002a264b3c237b790142b1c4b3fbed37c9056838f",
+      "region": "neutral",
+      "note": "Current model"
+    },
+    {
+      "file": "approved-a-explain-bust-screen.png",
+      "sha256": "68bd8b8649896d459574400d647464b4e752d196caa6a81459e4147fbf83e84c",
+      "capturedModelSHA256": "2727196c497fe6ea7164235002a264b3c237b790142b1c4b3fbed37c9056838f",
+      "region": "explain-bust",
+      "note": "Current model"
+    },
+    {
+      "file": "approved-a-thinking-shirt-screen.png",
+      "sha256": "f337da264caca46b8a77b3f58a9d2ba495eafb75a2c6b388e4d93b9124a6ceb6",
+      "capturedModelSHA256": "2727196c497fe6ea7164235002a264b3c237b790142b1c4b3fbed37c9056838f",
+      "region": "thinking-shirt",
+      "note": "Current model"
+    },
+    {
+      "file": "approved-a-closed-eyes-screen.png",
+      "sha256": "7fcc448e21a921a45f489d85873f45f61e27b2936b0c620e973211a9322bbc0f",
+      "capturedModelSHA256": "6e98677dbcf1f260f38979da1f8cbdfdcc510ffd1892a516812267182db080f5",
+      "region": "closed-eyes",
+      "note": "Face/hand detail captures precede final armhole-only material extension; depicted face/hand region unchanged thereafter"
+    },
+    {
+      "file": "approved-a-open-mouth-screen.png",
+      "sha256": "49361dadf2b1e85957b9f220c11d188ef48fc36d4e97750037b87af5e2411e0c",
+      "capturedModelSHA256": "6e98677dbcf1f260f38979da1f8cbdfdcc510ffd1892a516812267182db080f5",
+      "region": "open-mouth",
+      "note": "Face/hand detail captures precede final armhole-only material extension; depicted face/hand region unchanged thereafter"
+    },
+    {
+      "file": "approved-a-right-palm-screen.png",
+      "sha256": "84aeac0c4c2447abefc4ad163290493875e5f0d7563e15ad9e35acfd93a0f79a",
+      "capturedModelSHA256": "c1e2873baebca488da48d755fcd7628bee7b4170ee62dffeaa6ff59adfa18bbf",
+      "region": "right-palm",
+      "note": "Face/hand detail captures precede final armhole-only material extension; depicted face/hand region unchanged thereafter"
+    },
+    {
+      "file": "approved-a-left-palm-screen.png",
+      "sha256": "c497b06fbe64b19043d4c75ec7c275c3f6719341b926c2cfe38f6dfaf8d7e6ae",
+      "capturedModelSHA256": "c1e2873baebca488da48d755fcd7628bee7b4170ee62dffeaa6ff59adfa18bbf",
+      "region": "left-palm",
+      "note": "Face/hand detail captures precede final armhole-only material extension; depicted face/hand region unchanged thereafter"
+    }
+  ],
+  "verified": [
+    "A-space neutral and original proportions displayed",
+    "normal outfit/explain and shirt/thinking displayed; reset returned to rest",
+    "both palm half-turns and cuff underlaps inspected independently in author",
+    "closed eyes and full mouth inspected enlarged; blink hair-partition seam repaired",
+    "saved current model loaded via local file chooser in author; then final armhole revision reloaded normally",
+    "test tone produced measured audio RMS and mouth response on earlier same mouth geometry"
+  ],
+  "audioProbe": {
+    "capturedModelSHA256": "33c0ddf35a03bc4dc0ed4d831900f6c337c98c06e6744e9fd83cd96d40a828ab",
+    "peakMeasuredRms": 0.03300294569461509,
+    "mouthRange": [
+      5.5393519987353275e-06,
+      0.11696593470425566
+    ],
+    "note": "Not a real speech recording or final performance benchmark"
+  },
+  "regressionTests": {
+    "command": "node --test v3/runtime/*.test.mjs v3/tools/landmark-warp.test.mjs",
+    "passed": 33,
+    "failed": 0
+  },
+  "performance": {
+    "nodeEvaluationBeforeMs": 25.070574166666667,
+    "nodeEvaluationAfterMs": 7.295196666666666,
+    "samePose": {
+      "arm.r.elbow": -0.8,
+      "forearm.r.twist": 1.2
+    },
+    "note": "Local Node evaluation 120 samples after 40 warmups; excludes GPU and browser; browser actual metrics retained separately"
+  },
+  "remaining": [
+    "Full independent articulated finger opening and missing interdigit surfaces",
+    "Palm sculpting and foreshortening quality beyond provisional relaxed pose",
+    "High-angle face/neck/shoulder and combined cloth seam/occlusion sculpting",
+    "Runtime pacing and independent visual audit",
+    "Human Acceptance"
+  ],
+  "acceptance": "NOT PERFORMED; implementation evidence only"
+}

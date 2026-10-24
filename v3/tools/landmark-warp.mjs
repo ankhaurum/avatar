@@ -1,3 +1,4 @@
+import {rigidBlendPoint} from '../runtime/rigid-blend.mjs';
 // Independent thin-plate interpolation of artist-authored landmark pairs.
 // It interpolates a specified target silhouette; it does not infer anatomy.
 const kernel=(x,y)=>{const r=x*x+y*y;return r===0?0:r*Math.log(r);};
@@ -23,7 +24,8 @@ export function landmarkWarp(source,target){
  return (x,y)=>{const u=(x-cx)/scale,v=(y-cy)/scale;let tx=wx[n]+wx[n+1]*u+wx[n+2]*v,ty=wy[n]+wy[n+1]*u+wy[n+2]*v;for(let i=0;i<n;i++){const k=kernel(u-points[i][0],v-points[i][1]);tx+=wx[i]*k;ty+=wy[i]*k;}return [tx*scale+cx,ty*scale+cy];};
 }
 export function inverseSkin(mesh,matrices,vertex,x,y){
- const matrix=mesh.weights?mesh.weights[vertex].reduce((a,w)=>a.map((v,i)=>v+matrices.get(w.node)[i]*w.weight),[0,0,0,0,0,0]):matrices.get(mesh.node);
+ let matrix=mesh.weights?mesh.weights[vertex].reduce((a,w)=>a.map((v,i)=>v+matrices.get(w.node)[i]*w.weight),[0,0,0,0,0,0]):matrices.get(mesh.node);
+ if(mesh.weights&&mesh.blend==='dual-quaternion'){const transforms=new Map();for(const w of mesh.weights[vertex]){const a=matrices.get(w.node);transforms.set(w.node,[a[0],a[2],0,a[4],a[1],a[3],0,a[5],0,0,1,0]);}const p=rigidBlendPoint(mesh.weights[vertex],transforms,0,0,0),u=rigidBlendPoint(mesh.weights[vertex],transforms,1,0,0),v=rigidBlendPoint(mesh.weights[vertex],transforms,0,1,0);matrix=[u[0]-p[0],u[1]-p[1],v[0]-p[0],v[1]-p[1],p[0],p[1]];}
  const [a,b,c,d,tx,ty]=matrix,det=a*d-b*c;
  if(Math.abs(det)<1e-8)throw Error('Pose cannot be inverted at vertex '+vertex);
  return [(d*(x-tx)-c*(y-ty))/det,(-b*(x-tx)+a*(y-ty))/det];

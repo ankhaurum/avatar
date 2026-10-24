@@ -1,19 +1,23 @@
-import {compile,evaluate,point} from './runtime/evaluate.mjs?surface=4';
+async function readModelBytes(bytes){loadedModelSHA=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');return JSON.parse(new TextDecoder().decode(bytes));}
+import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=10';
+import {MODEL_PATH} from './model-source.mjs?approvedA=1';
+import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=2';
 import {solveArm} from './runtime/arm-solver.mjs?limits=2';
 import {solveArmAndShoulder} from './runtime/shoulder-solver.mjs';
-import {inverseSkin} from './tools/landmark-warp.mjs';
-import {Renderer,loadImages} from './runtime/renderer.mjs?surface=5';
+import {inverseSkin} from './tools/landmark-warp.mjs?approvedA=1';
+import {Renderer,loadImages} from './runtime/renderer.mjs?approvedA=1';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
-let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL('model-fold-r34.json',location.href),generation=0,assetImages=new Map();
-const view=[-400,-100,2600,2500];
-document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-400,-100,2600,2500],r:[330,1570,340,500],l:[1200,1570,340,500],face:[590,240,650,650]};view.splice(0,4,...boxes[button.dataset.view]);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
-const error=e=>{$('error').textContent=e.message;console.error(e);};
+let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL(MODEL_PATH,location.href),generation=0,loadedModelSHA='',assetImages=new Map();
+for(const element of document.querySelectorAll('aside input,aside select,aside button'))element.disabled=true;
+const view=[-470,-40,1964,1610];
+document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-470,-40,1964,1610],r:[95,1250,170,270],l:[775,1240,170,270],face:[290,0,470,540]};let box=boxes[button.dataset.view];if(frame&&['r','l'].includes(button.dataset.view)){const side=button.dataset.view==='r'?'left':'right',mesh=model.meshes.find(m=>m.id===(side==='left'?'HAND_front_viewer_left_registered':'BODY_hand_viewer_right'))||model.meshes.find(m=>m.id==='BODY_hand_viewer_'+side);if(mesh){const p=frame.positions.get(mesh.id),xs=p.filter((_,i)=>i%2===0),ys=p.filter((_,i)=>i%2===1),x0=Math.min(...xs)-25,y0=Math.min(...ys)-25;box=[x0,y0,Math.max(...xs)-x0+25,Math.max(...ys)-y0+25];}}view.splice(0,4,...box);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
+const error=e=>{$('error').textContent=e.message;if(!renderer){$('status').textContent='制作素材の読込みを完了できませんでした。';$('load').disabled=false;}console.error(e);};
 function selected(){return model.meshes.find(m=>m.id===$('part').value);}
 function modelPoint(e){const r=overlay.getBoundingClientRect();return [view[0]+(e.clientX-r.left)/r.width*view[2],view[1]+(e.clientY-r.top)/r.height*view[3]];}
 function redraw(){
  if(!renderer)return;
  try{
-  frame=evaluate(compiled,state);const visible=model.meshes.map(m=>m.visible);
+  frame=evaluate(compiled,state);if(model.source?.manifest==='rig-export-manifest.json')applyApprovedAppearance(model,frame.state);const visible=model.meshes.map(m=>m.visible);
   if($('solo').checked)for(const m of model.meshes)m.visible=m.id===$('part').value;
   try{renderer.render(frame);}finally{model.meshes.forEach((m,i)=>m.visible=visible[i]);}
   overlay.width=canvas.width;overlay.height=canvas.height;g.clearRect(0,0,overlay.width,overlay.height);
@@ -21,7 +25,7 @@ function redraw(){
   const mesh=selected(),p=frame.positions.get(mesh.id),scale=view[2]/overlay.width;
   if($('wire').checked){g.lineWidth=scale;g.strokeStyle='#127fbd99';g.beginPath();for(let i=0;i<mesh.triangles.length;i+=3){const [a,b,c]=mesh.triangles.slice(i,i+3).map(v=>v*2);g.moveTo(p[a],p[a+1]);g.lineTo(p[b],p[b+1]);g.lineTo(p[c],p[c+1]);g.closePath();}g.stroke();g.fillStyle='#004cff';for(let i=0;i<p.length;i+=2){g.beginPath();g.arc(p[i],p[i+1],2.8*scale,0,Math.PI*2);g.fill();}}
   if($('hands').checked&&model.rig){g.strokeStyle='#be640d';g.fillStyle='#fff4d6';g.lineWidth=2*scale;for(const [side,arm]of Object.entries(model.rig.arms)){const p=point(frame.matrices.get('wrist.'+side),...arm.wrist);g.beginPath();g.arc(p[0],p[1],8*scale,0,Math.PI*2);g.fill();g.stroke();}}
-  $('status').textContent=`${mesh.id}\n${p.length/2} 頂点 / ${mesh.triangles.length/3} 三角形\n${mesh.shapes?.length||0} 形状キー群\n${model.authoringStatus||''}`;
+  $('status').textContent=`${mesh.id}\n${p.length/2} 頂点 / ${mesh.triangles.length/3} 三角形\n${mesh.shapes?.length||0} 形状キー群\n${model.authoringStatus||''}\n読込モデルSHA256: ${loadedModelSHA}\n${history.length?'頂点の編集履歴あり':'読込みデータ'}`;
  }catch(e){error(e);}
 }
 async function install(next){
@@ -32,6 +36,7 @@ async function install(next){
  $('part').replaceChildren(...model.meshes.map(m=>new Option(m.id,m.id)));
  $('part').value=model.meshes.find(m=>m.visible!==false)?.id||model.meshes[0].id;
  $('parameter').replaceChildren(new Option('基準形',''),...model.parameters.map(p=>new Option(p.id,p.id)));
+ for(const element of document.querySelectorAll('aside input,aside select,aside button'))element.disabled=false;
  $('hands').disabled=!model.rig;$('hands').checked=!!model.rig;
  $('error').textContent='';parameterChanged();redraw();
 }
@@ -72,11 +77,11 @@ $('hands').addEventListener('change',redraw);
 $('value').addEventListener('input',()=>setParameter(Number($('value').value)));
 $('undo').addEventListener('click',()=>{const previous=history.pop();if(previous){previous.array.splice(0,previous.array.length,...previous.before);redraw();}});
 $('save').addEventListener('click',()=>{try{compile(model);const blob=new Blob([JSON.stringify(model,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='hibiki-v3-model.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){error(e);}});
-$('load').addEventListener('change',async e=>{try{const file=e.target.files[0];if(file)await install(JSON.parse(await file.text()));}catch(err){error(err);}});
+$('load').addEventListener('change',async e=>{try{const file=e.target.files[0];if(file)await install(await readModelBytes(await file.arrayBuffer()));}catch(err){error(err);}});
 new ResizeObserver(redraw).observe(canvas);
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();$('error').textContent='描画コンテキストが失われました。制作JSONを保存してから再読み込みしてください。';});
 window.addEventListener('pagehide',()=>renderer?.destroy());
-try{const response=await fetch(baseURL);if(!response.ok)throw Error('制作データの読込みに失敗: '+response.status);await install(await response.json());}catch(e){error(e);}
+try{const response=await fetch(baseURL,{cache:'no-store'});if(!response.ok)throw Error('制作データの読込みに失敗: '+response.status);await install(await readModelBytes(await response.arrayBuffer()));}catch(e){error(e);}
 
 
 
