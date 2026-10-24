@@ -82,3 +82,8 @@ Pages反映後も継続し、顎下の素材接合を追加制作。元のBODY_n
 保存FのSHAは11abb7d069e2ffd111c8bcb577a43b7642843a47376d44f859b2931c0b589e60、モデルSHAはac1239a93275ec9c19aa89b687f62c3c9cf407866096924634753393526c982e。PSDの5衣装の可視RGB/alphaは前回と差分0。書出し対象の部分一致がBODY_neckまで再書出ししてSHAを変える不具合を発見し完全一致へ修正。元画像は全RGBA画素一致を確認して保存済みバイトへ戻した。41回帰、59素材SHA、8会話姿勢の可視平面反転0、390pxブラウザで5衣装・表情・説明・音量同期を確認。最新の実測は approved-a-jaw-margin-browser.json。追加した下地の分を含めGPU転送省略量は53,424〜87,516 bytes/frame。
 
 PR30は1808314でマージされ、公開実URLのモデル54abe846…・59素材・390px横はみ出しなし・左右指入力・会話・表情・シャツ交換を確認した。approved-a-public-resumed.jsonはこの公開地点の証拠で、後続の顎下素材更新とは区別する。
+
+
+公開確認でスマートフォンのバストアップが全体と同じ縮尺になる欠陥を発見。全身・両腕用の横幅が原因で、バストアップのカメラ範囲を上半身へ修正した。原画・モデル・全体/顔表示を変えず、390×844と1280×900で3種類のカメラ切替と横はみ出しなしを確認。approved-a-mobile-bust.png、approved-a-desktop-bust.png、approved-a-camera-browser.json。
+
+顎下素材もPR31/ee15b65としてPagesビルド完了。公開URLでモデルac1239a…・59素材・左右指・会話/表情/衣装を確認した証拠は approved-a-public-jaw-margin.json。この時点のCPU＋GPU送信計測は平均14.63ms/p95 23.6ms、GPU完了や実端末の受入証拠とは区別する。

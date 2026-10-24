@@ -10,8 +10,8 @@ for(const element of document.querySelectorAll('aside input,aside select,aside b
 let loadedModelSHA='',loadedMotionSHA='';
 let camera='full',speechIntent='none',speechEvidence={frames:0,minMouth:1,maxMouth:0};
 const resetSpeech=mode=>{speechIntent=mode;speechEvidence={frames:0,minMouth:1,maxMouth:0};};
-function fitView(){const b=canvas.getBoundingClientRect(),ratio=b.width/b.height,box=camera==='face'?[290,0,470,540]:camera==='bust'?[-470,-20,1964,1280]:[-470,-40,1964,1610],w=Math.max(box[2],box[3]*ratio),h=w/ratio;view.splice(0,4,box[0]+(box[2]-w)/2,box[1]+(box[3]-h)/2,w,h);}
-function cameraView(mode){camera=mode;document.querySelector('.stage').style.aspectRatio=mode==='bust'?'1964/1280':'2300/2200';}
+function fitView(){const b=canvas.getBoundingClientRect(),ratio=b.width/b.height,box=camera==='face'?[290,0,470,540]:camera==='bust'?[145,0,760,850]:[-470,-40,1964,1610],w=Math.max(box[2],box[3]*ratio),h=w/ratio;view.splice(0,4,box[0]+(box[2]-w)/2,box[1]+(box[3]-h)/2,w,h);}
+function cameraView(mode){camera=mode;document.querySelector('.stage').style.aspectRatio=mode==='bust'?'760/850':'2300/2200';}
 $('fullView').onclick=()=>cameraView('full');$('bustView').onclick=()=>cameraView('bust');$('faceView').onclick=()=>cameraView('face');
 let model,compiled,images,renderer,motion,controller,frame,last=0,raf=0,drag=null,disposed=false,ready=false,work=[],count=0;
 const fail=e=>{$('error').textContent=e.message||String(e);if(!ready)$('status').textContent='制作素材の読込みを完了できませんでした。';console.error(e);};
