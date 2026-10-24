@@ -5,7 +5,7 @@
   "height": 1536,
   "source": {
     "path": "hibiki-v3-motion-f.psd",
-    "sha256": "16f2b5d415875605786d524307b1cb4e1b546b4c5e18b34227b2cb38118ef2d8"
+    "sha256": "a9799977d50bdaf6501f92a5d09db1bb54ff6d9878096b096e403821b318ce46"
   },
   "layers": [
     {
@@ -229,7 +229,7 @@
       ],
       "width": 125,
       "height": 190,
-      "sha256": "4d478a8c96deee8f41b4a8f06a0efb179e121ec4992d4f40254549ae4421698b",
+      "sha256": "ddff200df5b9ae4412d0828a69ea6f1e9f501308eaeb9cdcf0baef8ef76728fc",
       "visible": true
     },
     {
@@ -245,7 +245,7 @@
       ],
       "width": 110,
       "height": 195,
-      "sha256": "4bff26f06cab8cb063264ec03ec62cc78e5349618cd77bd947245e0955d29651",
+      "sha256": "5af632a396d2eaef7b34f3ed56e6bbc43aec8f44ed64636c92076c0712582efa",
       "visible": true
     },
     {

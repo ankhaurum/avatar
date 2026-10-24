@@ -57,7 +57,7 @@
         "progress": 0.25,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9933163193233597,
+        "minActiveAreaRatio": 0.9917542800928155,
         "locations": {},
         "reversed": []
       },
@@ -65,7 +65,7 @@
         "progress": 0.5,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9866389781326199,
+        "minActiveAreaRatio": 0.9835079002838868,
         "locations": {},
         "reversed": []
       },
@@ -73,7 +73,7 @@
         "progress": 0.75,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9799534681772527,
+        "minActiveAreaRatio": 0.9752604254784111,
         "locations": {},
         "reversed": []
       },
@@ -81,7 +81,7 @@
         "progress": 1,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9732748116545665,
+        "minActiveAreaRatio": 0.9670022880324186,
         "locations": {},
         "reversed": []
       }
@@ -413,49 +413,49 @@
       "maximumVertexChange": 176.49148559570312
     },
     "finger.r.thumb.mcp": {
-      "maximumVertexChange": 9.863525390625
+      "maximumVertexChange": 11.001220703125
     },
     "finger.r.thumb.pip": {
-      "maximumVertexChange": 6.024169921875
+      "maximumVertexChange": 7.0357666015625
     },
     "finger.r.thumb.dip": {
-      "maximumVertexChange": 3.3492431640625
+      "maximumVertexChange": 3.8668212890625
     },
     "finger.r.index.mcp": {
-      "maximumVertexChange": 10.78173828125
+      "maximumVertexChange": 8.8411865234375
     },
     "finger.r.index.pip": {
-      "maximumVertexChange": 5.138671875
+      "maximumVertexChange": 5.395751953125
     },
     "finger.r.index.dip": {
-      "maximumVertexChange": 3.1961517333984375
+      "maximumVertexChange": 3.9046630859375
     },
     "finger.r.middle.mcp": {
-      "maximumVertexChange": 11.6673583984375
+      "maximumVertexChange": 10.2423095703125
     },
     "finger.r.middle.pip": {
-      "maximumVertexChange": 6.80419921875
+      "maximumVertexChange": 6.7539825439453125
     },
     "finger.r.middle.dip": {
-      "maximumVertexChange": 4.4597320556640625
+      "maximumVertexChange": 4.6692352294921875
     },
     "finger.r.ring.mcp": {
-      "maximumVertexChange": 9.0074462890625
+      "maximumVertexChange": 9.3714599609375
     },
     "finger.r.ring.pip": {
-      "maximumVertexChange": 5.8531341552734375
+      "maximumVertexChange": 6.2108306884765625
     },
     "finger.r.ring.dip": {
-      "maximumVertexChange": 3.456634521484375
+      "maximumVertexChange": 4.26922607421875
     },
     "finger.r.little.mcp": {
-      "maximumVertexChange": 2.451904296875
+      "maximumVertexChange": 2.671875
     },
     "finger.r.little.pip": {
-      "maximumVertexChange": 0.75701904296875
+      "maximumVertexChange": 0.8317718505859375
     },
     "finger.r.little.dip": {
-      "maximumVertexChange": 0.4464263916015625
+      "maximumVertexChange": 0.60205078125
     },
     "shoulder.l.lift": {
       "maximumVertexChange": 12
@@ -470,55 +470,55 @@
       "maximumVertexChange": 81.3585205078125
     },
     "wrist.l.bend": {
-      "maximumVertexChange": 15.7646484375
+      "maximumVertexChange": 15.1588134765625
     },
     "forearm.l.twist": {
       "maximumVertexChange": 162.26519775390625
     },
     "finger.l.thumb.mcp": {
-      "maximumVertexChange": 9.0203857421875
+      "maximumVertexChange": 10.5653076171875
     },
     "finger.l.thumb.pip": {
-      "maximumVertexChange": 5.064208984375
+      "maximumVertexChange": 6.552734375
     },
     "finger.l.thumb.dip": {
-      "maximumVertexChange": 2.6124267578125
+      "maximumVertexChange": 3.500732421875
     },
     "finger.l.index.mcp": {
-      "maximumVertexChange": 10.6876220703125
+      "maximumVertexChange": 8.8546142578125
     },
     "finger.l.index.pip": {
-      "maximumVertexChange": 5.495849609375
+      "maximumVertexChange": 4.2603759765625
     },
     "finger.l.index.dip": {
-      "maximumVertexChange": 3.80255126953125
+      "maximumVertexChange": 2.9124755859375
     },
     "finger.l.middle.mcp": {
-      "maximumVertexChange": 11.057861328125
+      "maximumVertexChange": 9.6107177734375
     },
     "finger.l.middle.pip": {
-      "maximumVertexChange": 6.888427734375
+      "maximumVertexChange": 7.45916748046875
     },
     "finger.l.middle.dip": {
-      "maximumVertexChange": 4.36865234375
+      "maximumVertexChange": 5.20025634765625
     },
     "finger.l.ring.mcp": {
-      "maximumVertexChange": 7.484375
+      "maximumVertexChange": 8.02197265625
     },
     "finger.l.ring.pip": {
-      "maximumVertexChange": 5.16552734375
+      "maximumVertexChange": 5.621337890625
     },
     "finger.l.ring.dip": {
-      "maximumVertexChange": 3.14886474609375
+      "maximumVertexChange": 3.70452880859375
     },
     "finger.l.little.mcp": {
-      "maximumVertexChange": 2.0712890625
+      "maximumVertexChange": 2.2021484375
     },
     "finger.l.little.pip": {
-      "maximumVertexChange": 1.36431884765625
+      "maximumVertexChange": 1.26019287109375
     },
     "finger.l.little.dip": {
-      "maximumVertexChange": 1.01123046875
+      "maximumVertexChange": 0.96661376953125
     }
   },
   "limits": {
@@ -596,7 +596,7 @@
   "sourceChecks": {
     "approvedArtwork": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
     "wardrobeE": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99",
-    "motionF": "16f2b5d415875605786d524307b1cb4e1b546b4c5e18b34227b2cb38118ef2d8",
+    "motionF": "a9799977d50bdaf6501f92a5d09db1bb54ff6d9878096b096e403821b318ce46",
     "splitDAll14PartsAndPsdUnchanged": true
   },
   "wardrobeOwnershipRepair": {

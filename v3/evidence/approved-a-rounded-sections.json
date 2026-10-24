@@ -1,0 +1,35 @@
+{
+  "baseline": "c3abb6a",
+  "neutralXYExcludingRefinedNeckGrid": 0,
+  "nonHandDepth": 0,
+  "maximumHandDepthChange": 4.956937313079834,
+  "modelSHA256": "54abe846558b76ffd92a0163722171d1c07806e4042e3503171e6aec4816c175",
+  "transfers": {
+    "approved-neutral": {
+      "allBytesPerFrame": 407688,
+      "requiredBytesPerFrame": 328320,
+      "omittedBytesPerFrame": 79368
+    },
+    "shirt-with-tie": {
+      "allBytesPerFrame": 407688,
+      "requiredBytesPerFrame": 314772,
+      "omittedBytesPerFrame": 92916
+    },
+    "shirt-without-tie": {
+      "allBytesPerFrame": 407688,
+      "requiredBytesPerFrame": 313620,
+      "omittedBytesPerFrame": 94068
+    },
+    "jacket-without-tie": {
+      "allBytesPerFrame": 407688,
+      "requiredBytesPerFrame": 347712,
+      "omittedBytesPerFrame": 59976
+    },
+    "lower-material-exchange": {
+      "allBytesPerFrame": 407688,
+      "requiredBytesPerFrame": 327348,
+      "omittedBytesPerFrame": 80340
+    }
+  },
+  "limits": "Rounded existing relaxed hand sections only. Finger hidden surfaces, large opening and high-angle joins remain unfinished. Transfer byte reduction is not measured frame-time improvement."
+}

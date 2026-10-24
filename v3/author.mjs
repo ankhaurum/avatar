@@ -5,7 +5,7 @@ import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=7';
 import {solveArm} from './runtime/arm-solver.mjs?limits=2';
 import {solveArmAndShoulder} from './runtime/shoulder-solver.mjs';
 import {inverseSkin} from './tools/landmark-warp.mjs?approvedA=1';
-import {Renderer,loadImages} from './runtime/renderer.mjs?approvedA=2';
+import {Renderer,loadImages} from './runtime/renderer.mjs?approvedA=3';
 const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),g=overlay.getContext('2d');
 let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL(MODEL_PATH,location.href),generation=0,loadedModelSHA='',assetImages=new Map();
 for(const element of document.querySelectorAll('aside input,aside select,aside button'))element.disabled=true;

@@ -1,3 +1,5 @@
+import {refineNeckJoin} from './refine-neck-join.mjs';
+import {handSectionDepth} from './hand-section-depth.mjs';
 import {registerFingerRig,fingerSurfaceWeights} from './approved-finger-rig.mjs';
 // Authored A-space registration. Technical evaluator reused; no r33/r34 data.
 import {applyApprovedAppearance} from '../runtime/approved-appearance.mjs';
@@ -75,7 +77,7 @@ const handContours=JSON.parse(read('rig-hand-contours.json')),handTopology=JSON.
 m.rig.fingers=fingerLandmarks.sides;
 for(const side of ['r','l'])registerFingerRig(m,side,m.rig.fingers[side]);
 for(const s of ['r','l']){
- const suffix=s==='r'?'left':'right',frontId='HAND_front_viewer_'+suffix+'_registered',backId='HAND_volar_viewer_'+suffix,front=m.meshes.find(x=>x.id===frontId),back=m.meshes.find(x=>x.id===backId),topology=handTopology[s],profile=handVolume.sides[s],authoredHandDepth=topology.depth.map((d,i)=>{const x=topology.rest[i*2],y=topology.rest[i*2+1],bulge=Math.exp(-(((x-profile.center[0])/profile.radius[0])**2+((y-profile.center[1])/profile.radius[1])**2));return 1.5+(d-1.5)*(1+profile.palmGain*bulge*smooth(...profile.wristBlend,y));});
+ const suffix=s==='r'?'left':'right',frontId='HAND_front_viewer_'+suffix+'_registered',backId='HAND_volar_viewer_'+suffix,front=m.meshes.find(x=>x.id===frontId),back=m.meshes.find(x=>x.id===backId),topology=handTopology[s],profile=handVolume.sides[s],authoredHandDepth=handSectionDepth(topology,profile,fingerLandmarks.sides[s]);
  for(const [mesh,isBack]of [[front,false],[back,true]]){
   const rest=[...topology.rest],uv=[],t=m.textures.find(t=>t.id===mesh.texture),box=mesh.authoring.bounds;
   for(let i=0;i<rest.length;i+=2)uv.push(Math.max(0,Math.min(1,(rest[i]-box[0])/t.width)),Math.max(0,Math.min(1,(rest[i+1]-box[1])/t.height)));
@@ -114,6 +116,7 @@ for(const s of ['r','l']){
  const back=structuredClone(mesh);back.id+='.back';back.order-=.001;back.authoring.baseOrder=back.order;back.surface.depth=back.surface.depth.map(v=>-v);for(let i=0;i<back.triangles.length;i+=3)[back.triangles[i+1],back.triangles[i+2]]=[back.triangles[i+2],back.triangles[i+1]];m.meshes.push(back);
  const facing=m.meshes.find(x=>x.id==='SHIRT_cuff_inner_viewer_'+suffix);facing.node='forearm.'+s;delete facing.weights;facing.shapes=[];facing.order=cuff.authoring.baseOrder-.1;facing.authoring.baseOrder=facing.order;
 }
+refineNeckJoin(m);
 applyApprovedAppearance(m,Object.fromEntries(m.parameters.map(p=>[p.id,p.default])));
 const manifest={format:'hibiki-psd-export',version:1,width:1024,height:1536,source:{path:source.source,sha256:hash(read(source.source))},layers:source.layers.map((o,i)=>({...o,...m.textures[i],visible:m.meshes[i].visible}))};
 fs.writeFileSync(path.join(base,'rig-export-manifest.json'),JSON.stringify(manifest,null,2)+'\n');m.source.sha256=hash(read('rig-export-manifest.json'));
