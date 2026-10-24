@@ -1,7 +1,7 @@
 {
   "source": "d8e3a9c / relaxed source-A hand silhouette",
   "purpose": "Authored palm/knuckle thickness supplement; front reference XY and boundary topology remain fixed",
-  "status": "Partial sculpt; not open fingers, not full palm anatomy or acceptance",
+  "status": "Rounded palm/digit cross-sections in relaxed source-A silhouette. Hidden finger separation and full opening remain unfinished.",
   "sides": {
     "r": {
       "center": [
@@ -16,7 +16,19 @@
       "wristBlend": [
         1295,
         1320
-      ]
+      ],
+      "section": {
+        "palmRadius": 10,
+        "palmBulge": 3,
+        "edgeRadius": 0.8,
+        "digitRadii": {
+          "thumb": 8,
+          "index": 6.5,
+          "middle": 6.5,
+          "ring": 6,
+          "little": 5
+        }
+      }
     },
     "l": {
       "center": [
@@ -31,7 +43,19 @@
       "wristBlend": [
         1288,
         1313
-      ]
+      ],
+      "section": {
+        "palmRadius": 10,
+        "palmBulge": 3,
+        "edgeRadius": 0.8,
+        "digitRadii": {
+          "thumb": 8,
+          "index": 6.5,
+          "middle": 6.5,
+          "ring": 6,
+          "little": 5
+        }
+      }
     }
   }
 }

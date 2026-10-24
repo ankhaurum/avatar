@@ -1,0 +1,50 @@
+{
+  "baseline": "c3abb6a",
+  "sideMaterials": {
+    "left": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 807,
+      "maximumRGBDifference": 7
+    },
+    "right": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 805,
+      "maximumRGBDifference": 7
+    }
+  },
+  "wardrobe": {
+    "approved-neutral": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 0,
+      "maximumRGBDifference": 0
+    },
+    "shirt-with-tie": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 0,
+      "maximumRGBDifference": 0
+    },
+    "shirt-without-tie": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 0,
+      "maximumRGBDifference": 0
+    },
+    "jacket-without-tie": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 0,
+      "maximumRGBDifference": 0
+    },
+    "lower-material-exchange": {
+      "alphaChangedPixels": 0,
+      "visibleRGBChangedPixels": 0,
+      "maximumRGBDifference": 0
+    }
+  },
+  "original": {
+    "alphaChangedPixels": 0,
+    "visibleRGBChangedPixels": 0,
+    "maximumRGBDifference": 255
+  },
+  "sourcePSD": "a9799977d50bdaf6501f92a5d09db1bb54ff6d9878096b096e403821b318ce46",
+  "approvedArtwork": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "limits": "Side creases only. Does not complete large digit opening, hidden finger art or high-angle joints."
+}

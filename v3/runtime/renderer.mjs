@@ -43,7 +43,10 @@ export class Renderer{
   if(this.destroyed||this.gl.isContextLost())return false;
   const gl=this.gl;this.resize();gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.useProgram(this.program);const view=this.view||[0,0,this.model.width,this.model.height];gl.uniform2f(this.size,view[2],view[3]);gl.uniform2f(this.origin,view[0],view[1]);
   gl.colorMask(true,true,true,true);gl.stencilMask(255);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
-  for(const [id,p]of frame.positions){const r=this.resources.get(id);gl.bindBuffer(gl.ARRAY_BUFFER,r.positions);gl.bufferSubData(gl.ARRAY_BUFFER,0,p);gl.bindBuffer(gl.ARRAY_BUFFER,r.depths);gl.bufferSubData(gl.ARRAY_BUFFER,0,frame.depths?.get(id)||new Float32Array(p.length/2));}
+  // Invisible costume/body layers need no GPU upload; visible stencil consumers
+  // still require their hidden mask geometry. Visibility may change every frame.
+  const required=new Set();for(const mesh of this.model.meshes)if(mesh.visible!==false){required.add(mesh.id);for(const id of mesh.masks||[])required.add(id);}
+  for(const [id,p]of frame.positions){if(!required.has(id))continue;const r=this.resources.get(id);gl.bindBuffer(gl.ARRAY_BUFFER,r.positions);gl.bufferSubData(gl.ARRAY_BUFFER,0,p);gl.bindBuffer(gl.ARRAY_BUFFER,r.depths);gl.bufferSubData(gl.ARRAY_BUFFER,0,frame.depths?.get(id)||new Float32Array(p.length/2));}
   const draw=(mesh,mask=false)=>{const r=this.resources.get(mesh.id);gl.bindVertexArray(r.vao);gl.bindTexture(gl.TEXTURE_2D,this.textures.get(mesh.texture));gl.uniform1f(this.opacity,mask?1:(mesh.opacity??1));gl.uniform1i(this.maskPass,mask?1:0);gl.drawElements(gl.TRIANGLES,mesh.triangles.length,gl.UNSIGNED_INT,0);};
   const meshes=this.model.meshes.map((mesh,i)=>({mesh,i})).sort((a,b)=>a.mesh.order-b.mesh.order||a.i-b.i);
   const renderedGroups=new Set();
