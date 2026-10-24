@@ -45,3 +45,10 @@ PhotoshopのネイティブJSXで、袖付けの布地、手首の肌、内側�
 計算負荷の修正では、剛体ブレンドの一時配列を減らし、関節角度・軸・支点が完全に同じ時だけ変換を再利用する。数値の丸めや見える頂点の削減はしない。支点や角度を変えた場合の再計算も回帰で確認した。固定した説明姿勢のNode評価（20回ウォームアップ後80回）は修正前約27.79ms、修正後約12.43ms。GPU・実ブラウザの完了時間とは区別し、実描画の滑らかさは引き続き未達としている。
 
 最新の実描画は [会話画面](../../evidence/approved-a-final-conversation-screen.png)、実ロードSHAと描画計測は [最終実測](../../evidence/approved-a-final-conversation-metrics.json)。指の修正前後・撮影対象・未達は [手の制作記録](../../evidence/approved-a-hand-articulation.json) を参照。以前の `approved-a-browser-verification.json` と写真はff6cd6d保存地点の証拠として保持し、最終モデルと混同しない。
+
+
+2026-10-24 Pages公開後の継続制作：既存URL `https://ankhaurum.github.io/avatar/studies/continuity/` は原画Aの共有プレビューへ接続し、旧画面を `studies/continuity/legacy-preview.html` に保全した。Chromeの390×844表示で横はみ出し、両腕・指入力・表情・衣装交換と実モデルSHAを確認した。実端末の受入とは区別する。証拠は `../../evidence/approved-a-pages-verification.json`。
+
+口内の単色感を改善するため、既存27グループにPhotoshopで上歯・舌を別レイヤーとして描いた。承認済みの顔・唇画像は置換せず、開口時に唇の内側で現れる形状を制作。Fの最新は61編集レイヤー・5カンプ、59個の非空PNG、63メッシュ。閉口時は隠れ、通常PSDの原画可視RGB/alpha差分0を維持。開口・半開口と頭部複合姿勢を実画面で確認した。推定して描いた隠面であり、母音ごとの口形や顔首肩の高角度造形の完成ではない。`../../evidence/approved-a-oral-verification.json` に比較画像・SHA・未達を保存。
+
+関節計算は単一影響の場合に同じ正規化Quaternionから変換を一度求める方式へ整理した。旧実装との12姿勢・全頂点位置/厚みはFloat32差分0。固定説明姿勢のNode計測3回中央値は16.33→11.04ms（各20 warmup後80評価、旧→新の順序。実ブラウザ/GPU性能ではない）。素材取得は4件並行化し、元の順序・SHA/寸法検証・既取得素材の再利用を維持する。実描画の滑らかさは継続確認が必要。`../../evidence/approved-a-runtime-optimization.json` を参照。

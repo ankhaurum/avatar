@@ -63,10 +63,11 @@ export class Renderer{
 }
 export async function loadImages(model,baseURL,previous=new Map()){
  const images=new Map();
- for(const t of model.textures){
+ let nextTexture=0;
+ const load=async t=>{
   const url=new URL(t.file,baseURL);if(t.sha256)url.searchParams.set('sha256',t.sha256);const key=url.href+'|'+t.sha256;
   if(url.origin!==new URL(baseURL).origin)throw Error('Texture must belong to the authoring origin: '+t.id);
-  if(previous.get(t.id)?.sourceKey===key){images.set(t.id,previous.get(t.id));continue;}
+  if(previous.get(t.id)?.sourceKey===key){images.set(t.id,previous.get(t.id));return;}
   let objectURL;
   try{
    const response=await fetch(url,{cache:'no-cache'});if(!response.ok)throw Error('HTTP '+response.status);
@@ -78,6 +79,7 @@ export async function loadImages(model,baseURL,previous=new Map()){
    image.sourceKey=key;images.set(t.id,image);
   }catch(e){throw Error('Texture '+t.id+': '+e.message);}
   finally{if(objectURL)URL.revokeObjectURL(objectURL);}
- }
- return images;
+ };
+ await Promise.all(Array.from({length:Math.min(4,model.textures.length)},async()=>{while(nextTexture<model.textures.length)await load(model.textures[nextTexture++]);}));
+ return new Map(model.textures.map(t=>[t.id,images.get(t.id)]));
 }

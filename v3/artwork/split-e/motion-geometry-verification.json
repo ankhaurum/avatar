@@ -374,7 +374,7 @@
       "maximumVertexChange": 8
     },
     "mouth.smile": {
-      "maximumVertexChange": 1.78936767578125
+      "maximumVertexChange": 1.789581298828125
     },
     "gaze.x": {
       "maximumVertexChange": 1.3782958984375
@@ -596,7 +596,7 @@
   "sourceChecks": {
     "approvedArtwork": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
     "wardrobeE": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99",
-    "motionF": "aff1bd7954656cf4684cb1324bdb091a27c23bce4a4b941e091986cf04ffc677",
+    "motionF": "16f2b5d415875605786d524307b1cb4e1b546b4c5e18b34227b2cb38118ef2d8",
     "splitDAll14PartsAndPsdUnchanged": true
   },
   "wardrobeOwnershipRepair": {

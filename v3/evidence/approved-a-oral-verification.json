@@ -1,0 +1,38 @@
+{
+  "sourceArtwork": "d8e3a9c",
+  "sourceArtworkSHA256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "modelSHA256": "4e74bff9ea950ddfc9b5fc3a77b9ac8dbf02d92d2b85a74f875b78991e97c123",
+  "psdSHA256": "16f2b5d415875605786d524307b1cb4e1b546b4c5e18b34227b2cb38118ef2d8",
+  "editableLeaves": 61,
+  "exportedPNG": 59,
+  "meshes": 63,
+  "newTissues": [
+    "FACE_mouth_teeth_upper",
+    "FACE_mouth_tongue"
+  ],
+  "method": "Photoshop native editable layers in existing group 27, gradient and Bezier paint; inferred hidden tissues, no replacement of approved face/lips",
+  "neutralNativeVisibleRGBAndAlphaDifference": 0,
+  "images": {
+    "before": "approved-a-oral-before.png",
+    "after": "approved-a-oral-after.png",
+    "combined": "approved-a-oral-combined.png"
+  },
+  "browserChecks": [
+    "mouth.open 1",
+    "mouth.open .5 + head.yaw .2 + head.pitch .3 + smile",
+    "wardrobe/conversation regression"
+  ],
+  "limits": [
+    "not phoneme-specific speech shapes",
+    "high-angle face/neck sculpt incomplete",
+    "large finger opening and palm/side sculpt incomplete",
+    "actual phone performance and Human Acceptance not established"
+  ],
+  "continuationBrowser": {
+    "metrics": "approved-a-continuation-metrics.json",
+    "screen": "approved-a-continuation-screen.png",
+    "meanCPUWorkMs": 21.936363636228172,
+    "p95CPUWorkMs": 49.5,
+    "limitation": "different session and model from earlier capture; not controlled speedup or completed smoothness"
+  }
+}
