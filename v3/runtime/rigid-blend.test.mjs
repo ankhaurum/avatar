@@ -12,3 +12,11 @@ test('single-joint rigid blending agrees with hierarchical matrices across rotat
 test('adjacent rotations crossing the quaternion sign boundary blend continuously',()=>{
  const nodes=[{id:'a',pivot:[0,0,0],bindings:{y:[{parameter:'a',factor:1}]}},{id:'b',pivot:[0,0,0],bindings:{y:[{parameter:'b',factor:1}]}}],m=surfaceMatrices(nodes,{a:Math.PI-.01,b:Math.PI+.01});near(rigidBlendPoint([{node:'a',weight:.5},{node:'b',weight:.5}],m,1,0,0),[-1,0,0]);
 });
+
+// Duplicate influences exercise the general blend path as an independent oracle.
+test('single influence acceleration agrees with normalized general blending',()=>{
+ for(let i=0;i<100;i++){const angle=i*.073,c=Math.cos(angle),s=Math.sin(angle),matrices=new Map([['joint',[c,-s,0,i*.3,s,c,0,-i*.2,0,0,1,i*.1]]]);
+  const a=rigidBlendPoint([{node:'joint',weight:1}],matrices,123,-45,17),b=rigidBlendPoint([{node:'joint',weight:.5},{node:'joint',weight:.5}],matrices,123,-45,17);
+  for(let j=0;j<3;j++)assert.ok(Math.abs(a[j]-b[j])<1e-10);
+ }
+});

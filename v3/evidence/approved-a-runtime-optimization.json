@@ -1,0 +1,21 @@
+{
+  "fixedPoseMs": {
+    "before": [
+      16.69489625,
+      16.327291250000002,
+      15.68300999999999
+    ],
+    "after": [
+      7.176492499999995,
+      11.042104999999992,
+      12.424992499999997
+    ]
+  },
+  "maxPositionDelta": 0,
+  "maxDepthDelta": 0,
+  "baseline": "a75ec22",
+  "sourceModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738",
+  "conditions": "same Node process, fixed explain pose, 20 warmups and 3 x 80 evaluations per implementation; old then new; not browser/GPU/mobile performance",
+  "comparison": "12 source-A poses varying forearm twist and index flexion; all 61 meshes",
+  "change": "single rigid influence derived from the same normalized quaternion; parallel texture loading with four workers; no mesh/material deletion"
+}

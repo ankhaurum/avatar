@@ -25,6 +25,33 @@
     "old entry preserved byte-for-byte in local checkout",
     "both arms and wardrobe rendered after load"
   ],
-  "liveVerification": "pending deployment",
+  "liveVerification": {
+    "buildCommit": "8285f0012ecc5f448d971b69ad31d69993554881",
+    "buildStatus": "built",
+    "url": "https://ankhaurum.github.io/avatar/studies/continuity/",
+    "modelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738",
+    "textures": 57,
+    "mobileViewport": [
+      390,
+      844
+    ],
+    "documentWidths": [
+      375,
+      375
+    ],
+    "actions": [
+      "explain",
+      "bust",
+      "shirt-without-tie",
+      "smile",
+      "right index MCP 0.4",
+      "left index MCP 0.35",
+      "body.x 30"
+    ],
+    "error": "",
+    "image": "pages-approved-a-mobile.png",
+    "metrics": "pages-approved-a-live-metrics.json",
+    "limits": "Chrome viewport emulation, not physical phone or Human Acceptance; large finger opening and high-angle sculpt unfinished"
+  },
   "acceptance": "not performed; material sculpt and rendering smoothness unfinished"
 }

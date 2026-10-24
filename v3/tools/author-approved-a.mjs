@@ -57,6 +57,16 @@ const fingerCentres=s==='r'?[[183,1387],[200,1450],[184,1447],[162,1438],[144,14
 for(const [i,f]of ['thumb','index','middle','ring','little'].entries())for(const [j,joint]of ['mcp','pip','dip'].entries()){const [cx,cy]=fingerCentres[i];shape(mesh,`finger.${s}.${f}.${joint}`,[-.15,0,.55],(x,y,k)=>{const w=gauss(x,cx,i===0?13:8)*gauss(y,cy,18-j*3);return[(s==='r'?-1:1)*k*(3-j)*w,-k*(6-j*1.5)*w];});}
 }
 if(cavity){const cx=axis(482,570,6,[490,503,512,526,535,552]);mesh.rest=[];mesh.uv=[];mesh.triangles=[];mesh.weights=[];mesh.shapes=[];for(const y of [347.99,348.01])for(const x of cx){mesh.rest.push(x,y);mesh.uv.push((x-x0)/(x1-x0),(y-y0)/(y1-y0));mesh.weights.push([{node:'head',weight:1}]);}for(let i=0;i<cx.length-1;i++){const a=i,b=i+1,c=i+cx.length,d=c+1;mesh.triangles.push(a,b,c,b,d,c);}shape(mesh,'mouth.open',[0,.5,1],(x,y,k)=>[0,348-y+k*(y<348?-3:8)*Math.max(0,1-((x-526)/44)**2)**2]);shape(mesh,'head.yaw',[-.2,0,.2],(x,y,k)=>{const f=gauss(y,305,150);return[(x-525)*(-Math.abs(k)*.09)*f+k*9*f,k*(x-525)*.015*f];});shape(mesh,'head.pitch',[-.3,0,.3],(x,y,k)=>[0,k*8*gauss(y,320,150)]);mesh.authoring.kind='oral-aperture-between-authored-lip-boundaries';}
+if(o.id==='FACE_mouth_teeth_upper'||o.id==='FACE_mouth_tongue'){
+ const teeth=o.id.endsWith('teeth_upper'),columns=axis(x0,x1,4,[503,512,526,535,552]);mesh.rest=[];mesh.uv=[];mesh.triangles=[];mesh.weights=[];mesh.shapes=[];
+ for(const row of [0,.5,1])for(const x of columns){mesh.rest.push(x,348+(row-.5)*.02);mesh.uv.push((x-x0)/(x1-x0),row);mesh.weights.push([{node:'head',weight:1}]);}
+ for(let row=0;row<2;row++)for(let col=0;col<columns.length-1;col++){const a=row*columns.length+col,b=a+1,c=a+columns.length,d=c+1;mesh.triangles.push(a,b,c,b,d,c);}
+ shape(mesh,'mouth.open',[0,.5,1],(x,y,k)=>{const row=(y-347.99)/.02,f=Math.max(0,1-((x-526)/44)**2)**2;return[0,348-y+k*(teeth?-2.8+row*3.4:3.4+row*3.7)*f];});
+ shape(mesh,'mouth.smile',[0,1],(x,y,k)=>[(x-526)*.035*k*gauss(x,526,45)*gauss(y,349,15),-k*1.8*gauss(y,347,13)*(gauss(x,492,13)+gauss(x,561,13))]);
+ shape(mesh,'head.yaw',[-.2,0,.2],(x,y,k)=>{const f=gauss(y,305,150);return[(x-525)*(-Math.abs(k)*.09)*f+k*9*f,k*(x-525)*.015*f];});shape(mesh,'head.pitch',[-.3,0,.3],(x,y,k)=>[0,k*8*gauss(y,320,150)]);
+ mesh.authoring.kind='separate-painted-oral-tissue-within-lip-aperture';
+}
+if(cavity){for(let i=1;i<mesh.uv.length;i+=2)mesh.uv[i]=mesh.rest[i]<348?0:1;shape(mesh,'mouth.smile',[0,1],(x,y,k)=>[(x-526)*.035*k*gauss(x,526,45)*gauss(y,349,15),-k*1.8*gauss(y,347,13)*(gauss(x,492,13)+gauss(x,561,13))]);}
 m.meshes.push(mesh);
 }
 // Actual original-photo outline topology includes finger gaps, with a closed

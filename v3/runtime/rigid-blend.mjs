@@ -12,6 +12,15 @@ export function rigidPair(m){
  return [q,mul([0,m[3],m[7],m[11]],q).map(v=>v*.5)];
 }
 export function rigidBlendPoint(weights,matrices,x,y,z,out=[]){
+ // A single rigid influence needs no per-vertex blend. Derive the same rigid
+ // transform from its normalized quaternion once; preserve non-rigid input semantics.
+ if(weights.length===1&&weights[0].weight>0){
+  const cache=matrices.singleRigidTransforms??=new Map(),id=weights[0].node;let a=cache.get(id);
+  if(!a){const [q,d]=rigidPair(matrices.get(id)),[w,u,v,t]=q,[dw,dx,dy,dz]=d;
+   a=[1-2*(v*v+t*t),2*(u*v-w*t),2*(u*t+w*v),2*(-dw*u+dx*w-dy*t+dz*v),2*(u*v+w*t),1-2*(u*u+t*t),2*(v*t-w*u),2*(-dw*v+dx*t+dy*w-dz*u),2*(u*t-w*v),2*(v*t+w*u),1-2*(u*u+v*v),2*(-dw*t-dx*v+dy*u+dz*w)];cache.set(id,a);}
+  out[0]=a[0]*x+a[1]*y+a[2]*z+a[3];out[1]=a[4]*x+a[5]*y+a[6]*z+a[7];out[2]=a[8]*x+a[9]*y+a[10]*z+a[11];return out;
+ }
+
  const blends=matrices.rigidBlends??=new Map(),key=matrices.weightKeys?.get(weights)??weights.map(w=>w.node+':'+w.weight).join('|');let blend=blends.get(key);
  if(!blend){
   const cache=matrices.rigidPairs??=new Map();let aw=0,ax=0,ay=0,az=0,bw=0,bx=0,by=0,bz=0,reference;

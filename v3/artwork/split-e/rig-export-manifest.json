@@ -5,7 +5,7 @@
   "height": 1536,
   "source": {
     "path": "hibiki-v3-motion-f.psd",
-    "sha256": "aff1bd7954656cf4684cb1324bdb091a27c23bce4a4b941e091986cf04ffc677"
+    "sha256": "16f2b5d415875605786d524307b1cb4e1b546b4c5e18b34227b2cb38118ef2d8"
   },
   "layers": [
     {
@@ -375,6 +375,38 @@
       "height": 211,
       "sha256": "861767aa6f80b6943bc461880e8e9790c61c8ad1456b7726a44820c3ffb4c9c9",
       "visible": true
+    },
+    {
+      "id": "FACE_mouth_tongue",
+      "path": "27_FACE_mouth_hidden/FACE_mouth_tongue",
+      "group": "27_FACE_mouth_hidden",
+      "file": "parts/rig-FACE_mouth_tongue.png",
+      "bounds": [
+        499,
+        347,
+        554,
+        359
+      ],
+      "width": 55,
+      "height": 12,
+      "sha256": "53307c2dd9d58b91dc9df12909023b54f9743f0a1c85e84045c8f39918086ac8",
+      "visible": false
+    },
+    {
+      "id": "FACE_mouth_teeth_upper",
+      "path": "27_FACE_mouth_hidden/FACE_mouth_teeth_upper",
+      "group": "27_FACE_mouth_hidden",
+      "file": "parts/rig-FACE_mouth_teeth_upper.png",
+      "bounds": [
+        495,
+        341,
+        556,
+        353
+      ],
+      "width": 61,
+      "height": 12,
+      "sha256": "3f172d56c31a67ee4d86d6e92c4c13312efb5d3101354167576dc69b1eacdaa1",
+      "visible": false
     },
     {
       "id": "FACE_mouth_cavity",

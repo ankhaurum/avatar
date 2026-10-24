@@ -1,4 +1,4 @@
-import {rigidBlendPoint} from './rigid-blend.mjs?scalar=1';
+import {rigidBlendPoint} from './rigid-blend.mjs?scalar=2';
 // Local volume deformation for authored hand surfaces. The surrounding avatar
 // remains a 2D layered mesh; these coordinates supply foreshortening and occlusion.
 const unit=()=>[1,0,0,0,0,1,0,0,0,0,1,0];
