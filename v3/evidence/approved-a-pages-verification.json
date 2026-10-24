@@ -1,0 +1,30 @@
+{
+  "publication": "https://ankhaurum.github.io/avatar/studies/continuity/",
+  "source": "PR 27 / 7714c6c plus publication entry",
+  "pages": {
+    "source": "main",
+    "path": "/",
+    "build_type": "legacy"
+  },
+  "legacy": "studies/continuity/legacy-preview.html",
+  "localMobile": {
+    "viewport": [
+      390,
+      844
+    ],
+    "camera": "bust",
+    "state": "explain",
+    "wardrobe": "shirt-without-tie",
+    "documentClientWidth": 375,
+    "documentScrollWidth": 375,
+    "stageWidth": 355,
+    "error": ""
+  },
+  "checks": [
+    "35 runtime/landmark tests passed",
+    "old entry preserved byte-for-byte in local checkout",
+    "both arms and wardrobe rendered after load"
+  ],
+  "liveVerification": "pending deployment",
+  "acceptance": "not performed; material sculpt and rendering smoothness unfinished"
+}
