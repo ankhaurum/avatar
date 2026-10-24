@@ -1,0 +1,500 @@
+{
+  "date": "2026-10-24T12:52:37.170Z",
+  "status": "PARTIAL",
+  "sources": [
+    "https://recruit.group.gmo/engineer/jisedai/blog/see-through-x-kaggle-x-claude-code/",
+    "https://docs.live2d.com/cubism-editor-manual/face-auto-edit/",
+    "https://docs.live2d.com/cubism-editor-manual/auto-generation-of-deformer/",
+    "https://docs.live2d.com/cubism-editor-manual/mesh-edit/"
+  ],
+  "finding": "GMO uses Editor GUI built-in rigging plus port 22033 parameter control. Cubism 5.4 editing API is not a prerequisite for that workflow.",
+  "editor": {
+    "title": "Live2D Cubism Editor 5.3.04 [FREE] - haru_t01.cmo3",
+    "captureAttempts": [
+      "FrameArrived timed out: timed out waiting on channel",
+      "window capture timed out: timed out waiting on channel"
+    ],
+    "inputActions": "None; target reselected and activated only.",
+    "importedHibiki": false,
+    "producedCmo3": false,
+    "producedMoc3": false
+  },
+  "psd": {
+    "path": "v3/artwork/split-e/hibiki-v3-motion-f.psd",
+    "savedFileSha256": "f06eb1e5e129867b496c01463d757dde91d19fef01ea778bacea44bca931e7d0",
+    "liveDocuments": [
+      {
+        "name": "hibiki-v3-motion-f.psd",
+        "saved": false,
+        "layers": [
+          {
+            "name": "28_FACE_eyelids_painted",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "FACE_eyelid_closed_l",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "FACE_eyelid_closed_r",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "10_BODY_identity",
+            "type": "LayerSet",
+            "visible": true,
+            "layers": [
+              {
+                "name": "FACE_lip_lower",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "FACE_lip_upper",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_hand_viewer_left_edge_recovered_motion",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_leg_edge_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_hair_tip_right_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_hair",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_legs_visible",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_hand_viewer_right",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_hand_viewer_left",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_neck",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "BODY_face",
+                "type": "ArtLayer",
+                "visible": true
+              }
+            ]
+          },
+          {
+            "name": "34_HAND_side_skin",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "HAND_side_skin_viewer_right",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "HAND_side_skin_viewer_left",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "30_HAND_volar_materials",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "HAND_volar_viewer_right",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "HAND_volar_viewer_left",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "32_BODY_wrist_underlaps",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "BODY_wrist_underlap_viewer_right",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "BODY_wrist_underlap_viewer_left",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "33_SHIRT_cuff_facings",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "SHIRT_cuff_inner_viewer_right",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_cuff_inner_viewer_left",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "31_HAND_front_registered",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "HAND_front_viewer_right_registered",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "HAND_front_viewer_left_registered",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "27_FACE_mouth_hidden",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "FACE_mouth_tongue",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "FACE_mouth_teeth_upper",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "FACE_mouth_cavity",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "29_FACE_skin_underlap",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "FACE_skin_lip_underlap",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "23_WARDROBE_lower",
+            "type": "LayerSet",
+            "visible": true,
+            "layers": [
+              {
+                "name": "LOWER_hem_recovered_from_leg",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "LOWER_edge_recovered_from_hand",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "WARDROBE_lower_skirt",
+                "type": "ArtLayer",
+                "visible": true
+              }
+            ]
+          },
+          {
+            "name": "22_WARDROBE_tie",
+            "type": "LayerSet",
+            "visible": true,
+            "layers": [
+              {
+                "name": "WARDROBE_tie",
+                "type": "ArtLayer",
+                "visible": true
+              }
+            ]
+          },
+          {
+            "name": "21_WARDROBE_shirt",
+            "type": "LayerSet",
+            "visible": true,
+            "layers": [
+              {
+                "name": "WARDROBE_shirt",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "WARDROBE_shirt_cuff_viewer_right",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "WARDROBE_shirt_cuff_viewer_left",
+                "type": "ArtLayer",
+                "visible": true
+              }
+            ]
+          },
+          {
+            "name": "20_WARDROBE_jacket",
+            "type": "LayerSet",
+            "visible": true,
+            "layers": [
+              {
+                "name": "JACKET_pocket_edge_recovered_motion",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "JACKET_right_hem_underlap_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "JACKET_left_hem_underlap_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "JACKET_blue_hem_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "JACKET_lapel_tip_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "JACKET_inner_lapel_recovered",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "WARDROBE_jacket_front",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "WARDROBE_jacket_sleeve_viewer_right",
+                "type": "ArtLayer",
+                "visible": true
+              },
+              {
+                "name": "WARDROBE_jacket_sleeve_viewer_left",
+                "type": "ArtLayer",
+                "visible": true
+              }
+            ]
+          },
+          {
+            "name": "26_JOINT_fabric_underlaps",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "JACKET_armhole_viewer_right",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "JACKET_armhole_viewer_left",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "09_SOURCE_fringe",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": []
+          },
+          {
+            "name": "25_LOWER_waist_underlap",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "LOWER_waistband",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "LOWER_complete_pleated_fabric",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "24_SHIRT_photographic_fabric_completion",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "SHIRT_original_collar_clean",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_button_6",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_button_5",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_button_4",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_button_3",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_button_2",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_button_1",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_center_placket",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "SHIRT_completed_fabric",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "11_BODY_underclothing_paint",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "BODY_neck_collar_underlap",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "BODY_arm_viewer_right_hidden",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "BODY_arm_viewer_left_hidden",
+                "type": "ArtLayer",
+                "visible": false
+              },
+              {
+                "name": "BODY_torso_hidden_surface",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "name": "00_REFERENCE_hidden",
+            "type": "LayerSet",
+            "visible": false,
+            "layers": [
+              {
+                "name": "APPROVED_A_UNMODIFIED",
+                "type": "ArtLayer",
+                "visible": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "liveReadOnly": true,
+    "savedFileEqualsLive": "UNVERIFIED; live document has unsaved changes",
+    "exportedLeafCount": 59
+  },
+  "approvedArtwork": {
+    "path": "v3/artwork/hibiki-static-a.png",
+    "sha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf"
+  },
+  "materialFindings": [
+    "Viewed rig-BODY_face.png: both open eyes, eyebrows and nose remain combined in face; mouth is cut out.",
+    "Live PSD and export hierarchy have no independent iris/eyebrow/open-eye layers for approved A. Closed eyelids and lips are separate.",
+    "Existing numbered PSD groups preserve body/wardrobe ownership but do not yet supply the facial part mapping required by auto face rigging.",
+    "Do not substitute old pre-A face layers or apply a template indiscriminately."
+  ],
+  "adopt": [
+    "Keep Photoshop-authored PSD; no GIMP/Kaggle environment rebuild.",
+    "Use explicit facial part mapping and inspect auto-generated mesh/deformer results in Editor.",
+    "Use existing authorized 22033 connection for parameter readback after real keyforms exist."
+  ],
+  "corrections": [
+    "Ctrl+A selects ArtMeshes; Ctrl+Shift+A opens auto-mesh dialog according to official documentation.",
+    "Official face rigging expects eyes and eyeballs in separate Parts; article wording about a standard single eye part is not used as modelling authority."
+  ],
+  "remaining": [
+    "Restore observable Cubism native UI capture before import and GUI rigging.",
+    "Separate approved-A facial organs and provide hidden surfaces without altering neutral identity.",
+    "Create/save model and export runtime data in Editor; verify actual rendering and motion.",
+    "Apply only verified findings from completed Cubism output to independent V3."
+  ],
+  "humanAcceptance": false
+}
