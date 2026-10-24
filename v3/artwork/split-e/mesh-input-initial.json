@@ -6,7 +6,7 @@
   "authoringStatus": "初期メッシュ。姿勢キー・接合・可動範囲は制作中。",
   "source": {
     "manifest": "export-manifest.json",
-    "sha256": "af7d082443e8a99fffbd674affb2b23ca9d65d3d130b3c71420aa8d4cc784f51"
+    "sha256": "d579a509e153b80a5f20e05eae4d0b708cbef5f37d7dbcaa9d2d061a11e9be0c"
   },
   "parameters": [],
   "nodes": [
