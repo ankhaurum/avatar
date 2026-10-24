@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-24T23:27:10.6872766+09:00",
+  "status": "PARTIAL",
+  "editor": "Cubism Editor 5.3.04 FREE",
+  "sourcePsd": "v3/artwork/split-e/hibiki-v3-motion-f.psd",
+  "sourcePsdSha256": "f06eb1e5e129867b496c01463d757dde91d19fef01ea778bacea44bca931e7d0",
+  "approvedArtworkSha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "cmo3": "v3/artwork/split-e/hibiki-v3-cubism-r1.cmo3",
+  "cmo3Sha256": "ed3e534fff452d91c64a205d58b3dae66a29395e9372f32d72711e9175e27413",
+  "verified": [
+    "PSD imported as new Cubism model",
+    "Model canvas and layer list visually inspected",
+    "Separate cmo3 saved",
+    "BODY_face standard initial mesh generated and saved",
+    "Native pointer and keyboard file-path input verified",
+    "Existing 22033 restarted; authorized read-only parameter query succeeded"
+  ],
+  "capture": "DPI-aware PrintWindow for main and owned windows",
+  "officialComputerUse": "Capture path not repaired",
+  "parameters": 27,
+  "parameterKeys": 0,
+  "remaining": [
+    "Independent approved-A eyes/iris/brows/nose and hidden surfaces",
+    "Production mesh refinement and deformer hierarchy",
+    "Pose keyforms and actual motion",
+    "Runtime export and analysis",
+    "Independent V3 improvements and Human Acceptance"
+  ],
+  "preserved": [
+    "Source PSD SHA unchanged",
+    "Approved A SHA unchanged",
+    "Existing dirty work not committed",
+    "Public Pages unchanged"
+  ],
+  "errors": [
+    "22033 initial Connect failed; listener absent; resolved by restarting existing Editor connection",
+    "Save file read attempted before progress ended; checked after completion without repeated save",
+    "Capture verification script name typo after close; corrected to existing capture-cubism-dpi.ps1 without repeating click"
+  ]
+}
