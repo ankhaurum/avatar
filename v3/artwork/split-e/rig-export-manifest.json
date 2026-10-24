@@ -5,7 +5,7 @@
   "height": 1536,
   "source": {
     "path": "hibiki-v3-motion-f.psd",
-    "sha256": "a9799977d50bdaf6501f92a5d09db1bb54ff6d9878096b096e403821b318ce46"
+    "sha256": "11abb7d069e2ffd111c8bcb577a43b7642843a47376d44f859b2931c0b589e60"
   },
   "layers": [
     {
@@ -895,14 +895,14 @@
       "file": "parts/rig-BODY_neck_collar_underlap.png",
       "bounds": [
         437,
-        407,
+        382,
         612,
         565
       ],
       "width": 175,
-      "height": 158,
-      "sha256": "aae4480357d9946ec923a3869f30570b36dc18a96b41b01575cb6cd62c43d47e",
-      "visible": false
+      "height": 183,
+      "sha256": "511ae02cba612e31127505870c891be9a3b7a66a2cce9ae7a32a5e7f1df3e6ea",
+      "visible": true
     },
     {
       "id": "BODY_arm_viewer_right_hidden",

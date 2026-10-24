@@ -3,32 +3,32 @@
   "neutralXYExcludingRefinedNeckGrid": 0,
   "nonHandDepth": 0,
   "maximumHandDepthChange": 4.956937313079834,
-  "modelSHA256": "54abe846558b76ffd92a0163722171d1c07806e4042e3503171e6aec4816c175",
+  "modelSHA256": "ac1239a93275ec9c19aa89b687f62c3c9cf407866096924634753393526c982e",
   "transfers": {
     "approved-neutral": {
-      "allBytesPerFrame": 407688,
-      "requiredBytesPerFrame": 328320,
-      "omittedBytesPerFrame": 79368
+      "allBytesPerFrame": 410712,
+      "requiredBytesPerFrame": 337896,
+      "omittedBytesPerFrame": 72816
     },
     "shirt-with-tie": {
-      "allBytesPerFrame": 407688,
-      "requiredBytesPerFrame": 314772,
-      "omittedBytesPerFrame": 92916
+      "allBytesPerFrame": 410712,
+      "requiredBytesPerFrame": 324348,
+      "omittedBytesPerFrame": 86364
     },
     "shirt-without-tie": {
-      "allBytesPerFrame": 407688,
-      "requiredBytesPerFrame": 313620,
-      "omittedBytesPerFrame": 94068
+      "allBytesPerFrame": 410712,
+      "requiredBytesPerFrame": 323196,
+      "omittedBytesPerFrame": 87516
     },
     "jacket-without-tie": {
-      "allBytesPerFrame": 407688,
-      "requiredBytesPerFrame": 347712,
-      "omittedBytesPerFrame": 59976
+      "allBytesPerFrame": 410712,
+      "requiredBytesPerFrame": 357288,
+      "omittedBytesPerFrame": 53424
     },
     "lower-material-exchange": {
-      "allBytesPerFrame": 407688,
-      "requiredBytesPerFrame": 327348,
-      "omittedBytesPerFrame": 80340
+      "allBytesPerFrame": 410712,
+      "requiredBytesPerFrame": 336924,
+      "omittedBytesPerFrame": 73788
     }
   },
   "limits": "Rounded existing relaxed hand sections only. Finger hidden surfaces, large opening and high-angle joins remain unfinished. Transfer byte reduction is not measured frame-time improvement."

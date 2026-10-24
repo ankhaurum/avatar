@@ -57,7 +57,7 @@
         "progress": 0.25,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9917542800928155,
+        "minActiveAreaRatio": 0.9884433485912504,
         "locations": {},
         "reversed": []
       },
@@ -65,7 +65,7 @@
         "progress": 0.5,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9835079002838868,
+        "minActiveAreaRatio": 0.9768993633419827,
         "locations": {},
         "reversed": []
       },
@@ -73,7 +73,7 @@
         "progress": 0.75,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9752604254784111,
+        "minActiveAreaRatio": 0.9653596685405958,
         "locations": {},
         "reversed": []
       },
@@ -81,7 +81,7 @@
         "progress": 1,
         "activeTriangleFlips": 0,
         "allTriangleFlips": 0,
-        "minActiveAreaRatio": 0.9670022880324186,
+        "minActiveAreaRatio": 0.9538128985850899,
         "locations": {},
         "reversed": []
       }
@@ -596,7 +596,7 @@
   "sourceChecks": {
     "approvedArtwork": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
     "wardrobeE": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99",
-    "motionF": "a9799977d50bdaf6501f92a5d09db1bb54ff6d9878096b096e403821b318ce46",
+    "motionF": "11abb7d069e2ffd111c8bcb577a43b7642843a47376d44f859b2931c0b589e60",
     "splitDAll14PartsAndPsdUnchanged": true
   },
   "wardrobeOwnershipRepair": {
