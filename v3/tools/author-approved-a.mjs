@@ -71,19 +71,19 @@ m.meshes.push(mesh);
 }
 // Actual original-photo outline topology includes finger gaps, with a closed
 // side surface at every exterior and interior boundary. No alpha-only hand holes.
-const handContours=JSON.parse(read('rig-hand-contours.json')),handTopology=JSON.parse(read('rig-hand-topology.json')),fingerLandmarks=JSON.parse(read('rig-finger-landmarks.json'));
+const handContours=JSON.parse(read('rig-hand-contours.json')),handTopology=JSON.parse(read('rig-hand-topology.json')),fingerLandmarks=JSON.parse(read('rig-finger-landmarks.json')),handVolume=JSON.parse(read('rig-hand-volume-profile.json'));
 m.rig.fingers=fingerLandmarks.sides;
 for(const side of ['r','l'])registerFingerRig(m,side,m.rig.fingers[side]);
 for(const s of ['r','l']){
- const suffix=s==='r'?'left':'right',frontId='HAND_front_viewer_'+suffix+'_registered',backId='HAND_volar_viewer_'+suffix,front=m.meshes.find(x=>x.id===frontId),back=m.meshes.find(x=>x.id===backId),topology=handTopology[s];
+ const suffix=s==='r'?'left':'right',frontId='HAND_front_viewer_'+suffix+'_registered',backId='HAND_volar_viewer_'+suffix,front=m.meshes.find(x=>x.id===frontId),back=m.meshes.find(x=>x.id===backId),topology=handTopology[s],profile=handVolume.sides[s],authoredHandDepth=topology.depth.map((d,i)=>{const x=topology.rest[i*2],y=topology.rest[i*2+1],bulge=Math.exp(-(((x-profile.center[0])/profile.radius[0])**2+((y-profile.center[1])/profile.radius[1])**2));return 1.5+(d-1.5)*(1+profile.palmGain*bulge*smooth(...profile.wristBlend,y));});
  for(const [mesh,isBack]of [[front,false],[back,true]]){
   const rest=[...topology.rest],uv=[],t=m.textures.find(t=>t.id===mesh.texture),box=mesh.authoring.bounds;
   for(let i=0;i<rest.length;i+=2)uv.push(Math.max(0,Math.min(1,(rest[i]-box[0])/t.width)),Math.max(0,Math.min(1,(rest[i+1]-box[1])/t.height)));
   const triangles=[...topology.triangles];if(isBack)for(let i=0;i<triangles.length;i+=3)[triangles[i+1],triangles[i+2]]=[triangles[i+2],triangles[i+1]];
-  Object.assign(mesh,{rest,uv,triangles,node:'wrist.'+s,shapes:[],visible:true,order:s==='r'?101:102,surface:{group:'hand.'+s,blend:'dual-quaternion',depth:topology.depth.map(d=>isBack?-d:d),weights:rest.flatMap((_,i)=>i%2?[]:[fingerSurfaceWeights(s,m.rig.fingers[s],rest[i],rest[i+1])])}});delete mesh.weights;mesh.authoring={...mesh.authoring,kind:'registered-original-front-and-painted-palm-volume',side:s,face:isBack?'volar':'original',baseOrder:mesh.order,fingerRig:'registered-3d-digits-relaxed-source-pose',topologySource:'rig-hand-topology.json'};delete mesh.authoring.xRows;delete mesh.authoring.yRows;
+  Object.assign(mesh,{rest,uv,triangles,node:'wrist.'+s,shapes:[],visible:true,order:s==='r'?101:102,surface:{group:'hand.'+s,blend:'dual-quaternion',depth:authoredHandDepth.map(d=>isBack?-d:d),weights:rest.flatMap((_,i)=>i%2?[]:[fingerSurfaceWeights(s,m.rig.fingers[s],rest[i],rest[i+1])])}});delete mesh.weights;mesh.authoring={...mesh.authoring,kind:'registered-original-front-and-painted-palm-volume',side:s,face:isBack?'volar':'original',baseOrder:mesh.order,fingerRig:'registered-3d-digits-relaxed-source-pose',topologySource:'rig-hand-topology.json',volumeProfile:'rig-hand-volume-profile.json'};delete mesh.authoring.xRows;delete mesh.authoring.yRows;
  }
  const wallId='HAND_side_skin_viewer_'+suffix,wall=m.meshes.find(x=>x.id===wallId),texture=m.textures.find(x=>x.id===wall.texture),box=wall.authoring.bounds,boundary=[...new Set(topology.boundaryEdges.flat())],rows=new Map(boundary.map((v,i)=>[v,i])),rest=[],uv=[],depth=[],skin=[],triangles=[];
- for(const i of boundary){const x=front.rest[2*i],y=front.rest[2*i+1],d=topology.depth[i];for(const z of [-d,0,d]){rest.push(x,y);uv.push(Math.max(0,Math.min(1,(x-box[0])/texture.width)),Math.max(0,Math.min(1,(y-box[1])/texture.height)));depth.push(z);skin.push(fingerSurfaceWeights(s,m.rig.fingers[s],x,y));}}
+ for(const i of boundary){const x=front.rest[2*i],y=front.rest[2*i+1],d=authoredHandDepth[i];for(const z of [-d,0,d]){rest.push(x,y);uv.push(Math.max(0,Math.min(1,(x-box[0])/texture.width)),Math.max(0,Math.min(1,(y-box[1])/texture.height)));depth.push(z);skin.push(fingerSurfaceWeights(s,m.rig.fingers[s],x,y));}}
  for(const [i,j]of topology.boundaryEdges)for(let z=0;z<2;z++){const a=rows.get(i)*3+z,b=rows.get(j)*3+z,c=a+1,d=b+1;triangles.push(a,b,c,b,d,c);}
  Object.assign(wall,{rest,uv,triangles,node:'wrist.'+s,shapes:[],visible:true,order:s==='r'?101:102,surface:{group:'hand.'+s,blend:'dual-quaternion',depth,weights:skin}});delete wall.weights;wall.authoring={...wall.authoring,kind:'registered-hand-side-wall',side:s,edge:'full-outline-and-finger-gaps',frontBoundaryIndices:boundary,wallColumns:3,baseOrder:wall.order};
 }
