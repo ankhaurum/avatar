@@ -5,8 +5,8 @@ export function applyApprovedAppearance(model,state={},mode='approved-neutral'){
  const foreground={r:-(state['arm.r.elbow']??0)>.25||-(state['arm.r.upper']??0)>.15,l:(state['arm.l.elbow']??0)>.25||(state['arm.l.upper']??0)>.15};
  for(const part of model.meshes){
   const g=part.authoring.group,id=part.id;let visible=false;part.opacity=1;part.order=part.authoring.baseOrder??part.order;
-  if(g==='10_BODY_identity')visible=id!=='BODY_hand_viewer_left'&&id!=='BODY_hand_viewer_left_edge_recovered_motion';
-  if(g==='30_HAND_volar_materials'||g==='31_HAND_front_registered')visible=true;
+  if(g==='10_BODY_identity')visible=id!=='BODY_hand_viewer_left'&&id!=='BODY_hand_viewer_right'&&id!=='BODY_hand_viewer_left_edge_recovered_motion';
+  if(g==='30_HAND_volar_materials'||g==='31_HAND_front_registered'||g==='34_HAND_side_skin')visible=true;
   if(g==='32_BODY_wrist_underlaps'){
    visible=true;const side=part.authoring.side,suffix=side==='r'?'left':'right',shirt=model.meshes.find(m=>m.authoring.role==='shirt-sleeve'&&m.authoring.side===side),coat=model.meshes.find(m=>m.id==='WARDROBE_jacket_sleeve_viewer_'+suffix);part.order=foreground[side]?88.8:Math.min(shirt?.authoring.baseOrder??part.authoring.baseOrder,coat?.authoring.baseOrder??part.authoring.baseOrder)-.3;
   }
@@ -21,7 +21,7 @@ export function applyApprovedAppearance(model,state={},mode='approved-neutral'){
   if(g==='21_WARDROBE_shirt'){visible=id==='WARDROBE_shirt'?legacyShirt:true;if(id.includes('cuff_viewer')&&foreground[id.includes('left')?'r':'l'])part.order=91;}
   if(g==='24_SHIRT_photographic_fabric_completion'){visible=!legacyShirt||part.authoring.role==='shirt-sleeve';if(part.authoring.role==='shirt-sleeve'&&foreground[part.authoring.side])part.order=89;}
   if(g==='25_LOWER_waist_underlap')visible=['shirt-with-tie','shirt-without-tie','lower-material-exchange'].includes(mode);
-  if(part.authoring.kind==='registered-original-front-and-painted-palm-volume'){const side=part.authoring.side,cuff=model.meshes.find(m=>m.id==='WARDROBE_shirt_cuff_viewer_'+(side==='r'?'left':'right'));part.order=foreground[side]?90.95:cuff.authoring.baseOrder-.05;}
+  if(part.authoring.kind==='registered-original-front-and-painted-palm-volume'||part.authoring.kind==='registered-hand-side-wall'){const side=part.authoring.side,cuff=model.meshes.find(m=>m.id==='WARDROBE_shirt_cuff_viewer_'+(side==='r'?'left':'right'));part.order=foreground[side]?90.95:cuff.authoring.baseOrder-.05;}
   part.visible=visible;
  }
 }

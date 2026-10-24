@@ -1,0 +1,85 @@
+{
+  "modelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738",
+  "motionSHA256": "df7ba61eff4805a6b10b502c94f205393f99904996eb79d2be7ae0532b69adf1",
+  "sourcePSD_SHA256": "aff1bd7954656cf4684cb1324bdb091a27c23bce4a4b941e091986cf04ffc677",
+  "digitJoints": 30,
+  "meshCount": 61,
+  "vertices": 32842,
+  "images": [
+    {
+      "file": "approved-a-digit-twist-before-screen.png",
+      "sha256": "dea9fa4d30179f9df48227e211ded2436a1b323e1c74a3f645805df1541d0883",
+      "capturedModelSHA256": "400fc2271d1c5ad15e2a0be2eaba7344a9e5cd726d4e72f38d994d9f2ce25360"
+    },
+    {
+      "file": "approved-a-hand-topology-side-screen.png",
+      "sha256": "0f95b000a23b9742fbcfc8d846c209bbd8e450aa6e3a8a6e4a19aec01a4feb54",
+      "capturedModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738"
+    },
+    {
+      "file": "approved-a-hand-topology-flex-screen.png",
+      "sha256": "8ae7072f1d832f522226df33e36ed0358c9f4fd14b216158d2bd56113bc71f73",
+      "capturedModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738"
+    },
+    {
+      "file": "approved-a-hand-topology-left-screen.png",
+      "sha256": "1b8dc4ee370aea89c59bee41f16ab77e1e57b5abe5582f3b457b50bc4ec66aec",
+      "capturedModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738"
+    },
+    {
+      "file": "approved-a-digits-conversation-screen.png",
+      "sha256": "4966d3025c13c7379c10e69d5eb5e05be49f4f3f7f86eae2c29c76f9224b214c",
+      "capturedModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738"
+    },
+    {
+      "file": "approved-a-digits-shirt-screen.png",
+      "sha256": "3673e4dcbcd0f066c15d705f45899ccad873e3fab12667d664d2390b07bcc2ab",
+      "capturedModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738"
+    },
+    {
+      "file": "approved-a-final-conversation-screen.png",
+      "sha256": "4f0a2d973ba13581d0f5a5468ab88e9c60737deaab7a9cd376c8da6ef776f2e6",
+      "capturedModelSHA256": "e29180cb0c7b11f623faa9f86bff04bdc0231769c8338de52f16b7d1927a3738"
+    }
+  ],
+  "gutterRevision": {
+    "before": "c73f6a13a9c6b4b026f5d3813459e46266c28206d052670fc070866ed5caaf90",
+    "after": "fdd4ae301869ed8b3dee57cad0fb4681d8949d3f4e1d25b190ce9295c26b3707",
+    "geometryMaximumError": 0,
+    "note": "Historical intermediate texture-only revision; final hand topology was then deliberately replaced with original-photo outline including inner gaps"
+  },
+  "topology": "rig-hand-topology.json; original retained PNG alpha; no source image writes",
+  "checks": [
+    "30 joints drive real depth; opposite hand unaffected",
+    "Front/back and every inner/outer boundary wall remain connected through twist/flex",
+    "Both hand side views and right-hand composite flex inspected",
+    "Static neutral PSD remains exact original A, wardrobe E and split D unchanged"
+  ],
+  "remaining": [
+    "Full finger opening/newly exposed finger surfaces",
+    "Palm and side sculpt refinement",
+    "High-angle face/neck/shoulder and combined cloth occlusion",
+    "Smooth runtime performance and independent visual audit",
+    "Human Acceptance"
+  ],
+  "reviewRejection": {
+    "action": "Merge a full rectangle underpaint into volume hand materials and overwrite PSD",
+    "executed": false,
+    "alternative": "Retained materials; geometry traced from original photo alpha including inner gaps"
+  },
+  "acceptance": "NOT PERFORMED",
+  "currentConversationMetrics": "approved-a-digits-conversation-metrics.json",
+  "regressionTests": {
+    "passed": 35,
+    "failed": 0
+  },
+  "currentConversationHasAll30DigitInputs": true,
+  "finalConversationMetrics": "approved-a-final-conversation-metrics.json",
+  "fixedPoseNodeEvaluation": {
+    "beforeMs": 27.791792499999996,
+    "afterMs": 12.425763749999996,
+    "warmup": 20,
+    "samples": 80,
+    "scope": "Fixed explain pose, CPU evaluation only; not GPU or browser frame latency"
+  }
+}

@@ -11,14 +11,14 @@ export function rigidPair(m){
  const n=Math.hypot(...q);q=q.map(v=>v/n);
  return [q,mul([0,m[3],m[7],m[11]],q).map(v=>v*.5)];
 }
-export function rigidBlendPoint(weights,matrices,x,y,z){
+export function rigidBlendPoint(weights,matrices,x,y,z,out=[]){
  const blends=matrices.rigidBlends??=new Map(),key=matrices.weightKeys?.get(weights)??weights.map(w=>w.node+':'+w.weight).join('|');let blend=blends.get(key);
  if(!blend){
- const cache=matrices.rigidPairs??=new Map(),a=[0,0,0,0],b=[0,0,0,0];let reference;
- for(const w of weights){if(!w.weight)continue;let pair=cache.get(w.node);if(!pair){pair=rigidPair(matrices.get(w.node));cache.set(w.node,pair);}reference??=pair[0];const k=w.weight*(dot(reference,pair[0])<0?-1:1);for(let i=0;i<4;i++){a[i]+=pair[0][i]*k;b[i]+=pair[1][i]*k;}}
- const n=Math.hypot(...a);if(n<1e-10)throw Error('Degenerate rigid blend');
- const q=a.map(v=>v/n),raw=b.map(v=>v/n),parallel=dot(q,raw),d=raw.map((v,i)=>v-q[i]*parallel),qi=conj(q),t=mul(d,qi);blend={q,t};blends.set(key,blend);
+  const cache=matrices.rigidPairs??=new Map();let aw=0,ax=0,ay=0,az=0,bw=0,bx=0,by=0,bz=0,reference;
+  for(const w of weights){if(!w.weight)continue;let pair=cache.get(w.node);if(!pair){pair=rigidPair(matrices.get(w.node));cache.set(w.node,pair);}const q=pair[0],d=pair[1];reference??=q;const k=w.weight*(reference[0]*q[0]+reference[1]*q[1]+reference[2]*q[2]+reference[3]*q[3]<0?-1:1);aw+=q[0]*k;ax+=q[1]*k;ay+=q[2]*k;az+=q[3]*k;bw+=d[0]*k;bx+=d[1]*k;by+=d[2]*k;bz+=d[3]*k;}
+  const norm=Math.hypot(aw,ax,ay,az);if(norm<1e-10)throw Error('Degenerate rigid blend');const inverse=1/norm,qw=aw*inverse,qx=ax*inverse,qy=ay*inverse,qz=az*inverse,rw=bw*inverse,rx=bx*inverse,ry=by*inverse,rz=bz*inverse,parallel=qw*rw+qx*rx+qy*ry+qz*rz,dw=rw-qw*parallel,dx=rx-qx*parallel,dy=ry-qy*parallel,dz=rz-qz*parallel;
+  blend=new Float64Array([qw,qx,qy,qz,2*(-dw*qx+dx*qw-dy*qz+dz*qy),2*(-dw*qy+dx*qz+dy*qw-dz*qx),2*(-dw*qz-dx*qy+dy*qx+dz*qw)]);blends.set(key,blend);
  }
- const {q,t}=blend,ux=2*(q[2]*z-q[3]*y),uy=2*(q[3]*x-q[1]*z),uz=2*(q[1]*y-q[2]*x);
- return [x+q[0]*ux+q[2]*uz-q[3]*uy+2*t[1],y+q[0]*uy+q[3]*ux-q[1]*uz+2*t[2],z+q[0]*uz+q[1]*uy-q[2]*ux+2*t[3]];
+ const qw=blend[0],qx=blend[1],qy=blend[2],qz=blend[3],ux=2*(qy*z-qz*y),uy=2*(qz*x-qx*z),uz=2*(qx*y-qy*x);
+ out[0]=x+qw*ux+qy*uz-qz*uy+blend[4];out[1]=y+qw*uy+qz*ux-qx*uz+blend[5];out[2]=z+qw*uz+qx*uy-qy*ux+blend[6];return out;
 }

@@ -1,4 +1,4 @@
-import {rigidBlendPoint} from './rigid-blend.mjs';
+import {rigidBlendPoint} from './rigid-blend.mjs?scalar=1';
 // Local volume deformation for authored hand surfaces. The surrounding avatar
 // remains a 2D layered mesh; these coordinates supply foreshortening and occlusion.
 const unit=()=>[1,0,0,0,0,1,0,0,0,0,1,0];
@@ -13,6 +13,9 @@ export function compileSurfaces(model,parameters){
  order.weightKeys=new WeakMap();for(const mesh of model.meshes)if(mesh.surface?.blend==='dual-quaternion')for(const row of mesh.surface.weights)order.weightKeys.set(row,row.map(w=>w.node+':'+w.weight).join('|'));
  return order;
 }
-export function surfaceMatrices(order,state){const matrices=new Map();matrices.weightKeys=order.weightKeys;for(const n of order){const value=k=>(n.bindings?.[k]||[]).reduce((s,t)=>s+state[t.parameter]*t.factor,0),x=value('x'),y=value('y'),z=value('z'),cx=Math.cos(x),sx=Math.sin(x),cy=Math.cos(y),sy=Math.sin(y),cz=Math.cos(z),sz=Math.sin(z);
- const [ax,ay,az]=n.axis||[1,0,0],t=1-cx,rx=[cx+ax*ax*t,ax*ay*t-az*sx,ax*az*t+ay*sx,0,ay*ax*t+az*sx,cx+ay*ay*t,ay*az*t-ax*sx,0,az*ax*t-ay*sx,az*ay*t+ax*sx,cx+az*az*t,0],ry=[cy,0,sy,0,0,1,0,0,-sy,0,cy,0],rz=[cz,-sz,0,0,sz,cz,0,0,0,0,1,0],local=compose(rz,compose(ry,rx)),p=transform(local,...n.pivot);for(let i=0;i<3;i++)local[i*4+3]=n.pivot[i]-p[i];matrices.set(n.id,compose(n.parent?matrices.get(n.parent):unit(),local));}return matrices;}
-export function surfacePoint(surface,matrices,vertex,x,y,z=surface.depth[vertex]){if(surface.blend==='dual-quaternion')return rigidBlendPoint(surface.weights[vertex],matrices,x,y,z);const out=[0,0,0];for(const w of surface.weights[vertex]){const p=transform(matrices.get(w.node),x,y,z);for(let i=0;i<3;i++)out[i]+=p[i]*w.weight;}return out;}
+export function surfaceMatrices(order,state){
+ const angles=order.map(n=>['x','y','z'].map(k=>(n.bindings?.[k]||[]).reduce((s,t)=>s+state[t.parameter]*t.factor,0))),signature=order.flatMap((n,i)=>[...angles[i],...n.pivot,...(n.axis||[1,0,0])]);
+ if(order.lastSurfaceSignature?.length===signature.length&&signature.every((v,i)=>v===order.lastSurfaceSignature[i]))return order.lastSurfaceMatrices;
+ const matrices=new Map();matrices.weightKeys=order.weightKeys;let index=0;for(const n of order){const [x,y,z]=angles[index++],cx=Math.cos(x),sx=Math.sin(x),cy=Math.cos(y),sy=Math.sin(y),cz=Math.cos(z),sz=Math.sin(z);
+ const [ax,ay,az]=n.axis||[1,0,0],t=1-cx,rx=[cx+ax*ax*t,ax*ay*t-az*sx,ax*az*t+ay*sx,0,ay*ax*t+az*sx,cx+ay*ay*t,ay*az*t-ax*sx,0,az*ax*t-ay*sx,az*ay*t+ax*sx,cx+az*az*t,0],ry=[cy,0,sy,0,0,1,0,0,-sy,0,cy,0],rz=[cz,-sz,0,0,sz,cz,0,0,0,0,1,0],local=compose(rz,compose(ry,rx)),p=transform(local,...n.pivot);for(let i=0;i<3;i++)local[i*4+3]=n.pivot[i]-p[i];matrices.set(n.id,compose(n.parent?matrices.get(n.parent):unit(),local));}order.lastSurfaceSignature=signature;order.lastSurfaceMatrices=matrices;return matrices;}
+export function surfacePoint(surface,matrices,vertex,x,y,z=surface.depth[vertex],out=[0,0,0]){if(surface.blend==='dual-quaternion')return rigidBlendPoint(surface.weights[vertex],matrices,x,y,z,out);out[0]=0;out[1]=0;out[2]=0;for(const w of surface.weights[vertex]){const m=matrices.get(w.node);out[0]+=(m[0]*x+m[1]*y+m[2]*z+m[3])*w.weight;out[1]+=(m[4]*x+m[5]*y+m[6]*z+m[7])*w.weight;out[2]+=(m[8]*x+m[9]*y+m[10]*z+m[11])*w.weight;}return out;}

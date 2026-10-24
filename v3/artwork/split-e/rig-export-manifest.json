@@ -5,7 +5,7 @@
   "height": 1536,
   "source": {
     "path": "hibiki-v3-motion-f.psd",
-    "sha256": "8e5e9ef84e16f42c1153c8b3e9738e8dddb001c286e77131cac8d185ff8fd60b"
+    "sha256": "aff1bd7954656cf4684cb1324bdb091a27c23bce4a4b941e091986cf04ffc677"
   },
   "layers": [
     {
@@ -166,7 +166,7 @@
       "width": 112,
       "height": 175,
       "sha256": "2929335ac685f5d171aa82e8cd5a0fcfd2a7ba177cd6a6410131820c44b09080",
-      "visible": true
+      "visible": false
     },
     {
       "id": "BODY_hand_viewer_left",
@@ -217,19 +217,51 @@
       "visible": true
     },
     {
+      "id": "HAND_side_skin_viewer_right",
+      "path": "34_HAND_side_skin/HAND_side_skin_viewer_right",
+      "group": "34_HAND_side_skin",
+      "file": "parts/rig-HAND_side_skin_viewer_right.png",
+      "bounds": [
+        795,
+        1275,
+        920,
+        1465
+      ],
+      "width": 125,
+      "height": 190,
+      "sha256": "4d478a8c96deee8f41b4a8f06a0efb179e121ec4992d4f40254549ae4421698b",
+      "visible": true
+    },
+    {
+      "id": "HAND_side_skin_viewer_left",
+      "path": "34_HAND_side_skin/HAND_side_skin_viewer_left",
+      "group": "34_HAND_side_skin",
+      "file": "parts/rig-HAND_side_skin_viewer_left.png",
+      "bounds": [
+        110,
+        1280,
+        220,
+        1475
+      ],
+      "width": 110,
+      "height": 195,
+      "sha256": "4bff26f06cab8cb063264ec03ec62cc78e5349618cd77bd947245e0955d29651",
+      "visible": true
+    },
+    {
       "id": "HAND_volar_viewer_right",
       "path": "30_HAND_volar_materials/HAND_volar_viewer_right",
       "group": "30_HAND_volar_materials",
       "file": "parts/rig-HAND_volar_viewer_right.png",
       "bounds": [
-        800,
-        1281,
-        912,
-        1456
+        799,
+        1278,
+        913,
+        1457
       ],
-      "width": 112,
-      "height": 175,
-      "sha256": "472f1c8ea2513a673532beb896a108da3da1c2b2068be1df52fb91142fbc9c37",
+      "width": 114,
+      "height": 179,
+      "sha256": "3183a91780753a061af27d784f9c970a773a6441344e97bf35d4e33eacdf674d",
       "visible": true
     },
     {
@@ -239,13 +271,13 @@
       "file": "parts/rig-HAND_volar_viewer_left.png",
       "bounds": [
         80,
-        1289,
-        216,
+        1286,
+        218,
         1497
       ],
-      "width": 136,
-      "height": 208,
-      "sha256": "16ade4d0be3c8130e6df3c624bd72034e1c9eaa0371e1ca9ebf5e2b05543bc78",
+      "width": 138,
+      "height": 211,
+      "sha256": "9c3b66fb39b770204c0c60ac802e23f9bb78d6fc1dff2e750dcbcd1448baddf4",
       "visible": true
     },
     {
@@ -313,19 +345,35 @@
       "visible": true
     },
     {
+      "id": "HAND_front_viewer_right_registered",
+      "path": "31_HAND_front_registered/HAND_front_viewer_right_registered",
+      "group": "31_HAND_front_registered",
+      "file": "parts/rig-HAND_front_viewer_right_registered.png",
+      "bounds": [
+        799,
+        1278,
+        913,
+        1457
+      ],
+      "width": 114,
+      "height": 179,
+      "sha256": "1dbb0f5a46ae967465a3e135ab600b2cc300593e0633ee412e6256fb4c3eaded",
+      "visible": true
+    },
+    {
       "id": "HAND_front_viewer_left_registered",
       "path": "31_HAND_front_registered/HAND_front_viewer_left_registered",
       "group": "31_HAND_front_registered",
       "file": "parts/rig-HAND_front_viewer_left_registered.png",
       "bounds": [
         80,
-        1289,
-        216,
+        1286,
+        218,
         1497
       ],
-      "width": 136,
-      "height": 208,
-      "sha256": "15f6b642d52e63d2aad7652f32b4ba29f4509e4556ca115ac8d97387522495e6",
+      "width": 138,
+      "height": 211,
+      "sha256": "861767aa6f80b6943bc461880e8e9790c61c8ad1456b7726a44820c3ffb4c9c9",
       "visible": true
     },
     {

@@ -1,7 +1,7 @@
 async function readModelBytes(bytes){loadedModelSHA=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');return JSON.parse(new TextDecoder().decode(bytes));}
-import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=10';
+import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=12';
 import {MODEL_PATH} from './model-source.mjs?approvedA=1';
-import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=2';
+import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=5';
 import {solveArm} from './runtime/arm-solver.mjs?limits=2';
 import {solveArmAndShoulder} from './runtime/shoulder-solver.mjs';
 import {inverseSkin} from './tools/landmark-warp.mjs?approvedA=1';
@@ -10,7 +10,7 @@ const $=id=>document.getElementById(id),canvas=$('render'),overlay=$('overlay'),
 let model,compiled,renderer,frame,drag=null,history=[],state={},baseURL=new URL(MODEL_PATH,location.href),generation=0,loadedModelSHA='',assetImages=new Map();
 for(const element of document.querySelectorAll('aside input,aside select,aside button'))element.disabled=true;
 const view=[-470,-40,1964,1610];
-document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-470,-40,1964,1610],r:[95,1250,170,270],l:[775,1240,170,270],face:[290,0,470,540]};let box=boxes[button.dataset.view];if(frame&&['r','l'].includes(button.dataset.view)){const side=button.dataset.view==='r'?'left':'right',mesh=model.meshes.find(m=>m.id===(side==='left'?'HAND_front_viewer_left_registered':'BODY_hand_viewer_right'))||model.meshes.find(m=>m.id==='BODY_hand_viewer_'+side);if(mesh){const p=frame.positions.get(mesh.id),xs=p.filter((_,i)=>i%2===0),ys=p.filter((_,i)=>i%2===1),x0=Math.min(...xs)-25,y0=Math.min(...ys)-25;box=[x0,y0,Math.max(...xs)-x0+25,Math.max(...ys)-y0+25];}}view.splice(0,4,...box);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
+document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const boxes={all:[-470,-40,1964,1610],r:[95,1250,170,270],l:[775,1240,170,270],face:[290,0,470,540]};let box=boxes[button.dataset.view];if(frame&&['r','l'].includes(button.dataset.view)){const side=button.dataset.view==='r'?'left':'right',mesh=model.meshes.find(m=>m.id===(side==='left'?'HAND_front_viewer_left_registered':'HAND_front_viewer_right_registered'))||model.meshes.find(m=>m.id==='BODY_hand_viewer_'+side);if(mesh){const p=frame.positions.get(mesh.id),xs=p.filter((_,i)=>i%2===0),ys=p.filter((_,i)=>i%2===1),x0=Math.min(...xs)-25,y0=Math.min(...ys)-25;box=[x0,y0,Math.max(...xs)-x0+25,Math.max(...ys)-y0+25];}}view.splice(0,4,...box);const stage=document.querySelector('.stage');stage.style.aspectRatio=view[2]+'/'+view[3];stage.style.width=`min(100%,calc((100vh - 145px)*${view[2]}/${view[3]}))`;redraw();}));
 const error=e=>{$('error').textContent=e.message;if(!renderer){$('status').textContent='制作素材の読込みを完了できませんでした。';$('load').disabled=false;}console.error(e);};
 function selected(){return model.meshes.find(m=>m.id===$('part').value);}
 function modelPoint(e){const r=overlay.getBoundingClientRect();return [view[0]+(e.clientX-r.left)/r.width*view[2],view[1]+(e.clientY-r.top)/r.height*view[3]];}

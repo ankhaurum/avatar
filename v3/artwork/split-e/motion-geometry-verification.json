@@ -1,6 +1,6 @@
 {
   "neutralMaximumVertexError": 0.009999999999990905,
-  "neutralVisibleMaximumVertexError": 2.929687502728484e-05,
+  "neutralVisibleMaximumVertexError": 6.10156250786531e-05,
   "poses": {
     "idle": [
       {
@@ -413,112 +413,112 @@
       "maximumVertexChange": 176.49148559570312
     },
     "finger.r.thumb.mcp": {
-      "maximumVertexChange": 3.25537109375
+      "maximumVertexChange": 9.504638671875
     },
     "finger.r.thumb.pip": {
-      "maximumVertexChange": 2.438232421875
+      "maximumVertexChange": 5.614013671875
     },
     "finger.r.thumb.dip": {
-      "maximumVertexChange": 1.6214599609375
+      "maximumVertexChange": 2.9083251953125
     },
     "finger.r.index.mcp": {
-      "maximumVertexChange": 3.300048828125
+      "maximumVertexChange": 9.844970703125
     },
     "finger.r.index.pip": {
-      "maximumVertexChange": 2.4749755859375
+      "maximumVertexChange": 5.06591796875
     },
     "finger.r.index.dip": {
-      "maximumVertexChange": 1.6500244140625
+      "maximumVertexChange": 3.0459136962890625
     },
     "finger.r.middle.mcp": {
-      "maximumVertexChange": 3.2769775390625
+      "maximumVertexChange": 11.3919677734375
     },
     "finger.r.middle.pip": {
-      "maximumVertexChange": 2.4544677734375
+      "maximumVertexChange": 6.6319732666015625
     },
     "finger.r.middle.dip": {
-      "maximumVertexChange": 1.6322021484375
+      "maximumVertexChange": 4.257568359375
     },
     "finger.r.ring.mcp": {
-      "maximumVertexChange": 3.25634765625
+      "maximumVertexChange": 9.0074462890625
     },
     "finger.r.ring.pip": {
-      "maximumVertexChange": 2.428955078125
+      "maximumVertexChange": 5.8531341552734375
     },
     "finger.r.ring.dip": {
-      "maximumVertexChange": 1.603271484375
+      "maximumVertexChange": 3.4556732177734375
     },
     "finger.r.little.mcp": {
-      "maximumVertexChange": 3.248779296875
+      "maximumVertexChange": 2.451904296875
     },
     "finger.r.little.pip": {
-      "maximumVertexChange": 2.4366455078125
+      "maximumVertexChange": 0.75701904296875
     },
     "finger.r.little.dip": {
-      "maximumVertexChange": 1.6243896484375
+      "maximumVertexChange": 0.4464263916015625
     },
     "shoulder.l.lift": {
       "maximumVertexChange": 12
     },
     "arm.l.upper": {
-      "maximumVertexChange": 874.8695545196533
+      "maximumVertexChange": 910.9586186408997
     },
     "arm.l.elbow": {
-      "maximumVertexChange": 656.5371704101562
+      "maximumVertexChange": 708.7071990966797
     },
     "wrist.l.rotation": {
-      "maximumVertexChange": 74.01763916015625
+      "maximumVertexChange": 81.3585205078125
     },
     "wrist.l.bend": {
-      "maximumVertexChange": 16.106201171875
+      "maximumVertexChange": 15.571533203125
     },
     "forearm.l.twist": {
-      "maximumVertexChange": 138.20062255859375
+      "maximumVertexChange": 162.26519775390625
     },
     "finger.l.thumb.mcp": {
-      "maximumVertexChange": 3.21630859375
+      "maximumVertexChange": 8.7706298828125
     },
     "finger.l.thumb.pip": {
-      "maximumVertexChange": 2.4122314453125
+      "maximumVertexChange": 4.782958984375
     },
     "finger.l.thumb.dip": {
-      "maximumVertexChange": 1.608154296875
+      "maximumVertexChange": 2.481201171875
     },
     "finger.l.index.mcp": {
-      "maximumVertexChange": 3.18603515625
+      "maximumVertexChange": 9.8272705078125
     },
     "finger.l.index.pip": {
-      "maximumVertexChange": 2.3895263671875
+      "maximumVertexChange": 4.9874267578125
     },
     "finger.l.index.dip": {
-      "maximumVertexChange": 1.593017578125
+      "maximumVertexChange": 3.43682861328125
     },
     "finger.l.middle.mcp": {
-      "maximumVertexChange": 3.246826171875
+      "maximumVertexChange": 10.7774658203125
     },
     "finger.l.middle.pip": {
-      "maximumVertexChange": 2.421875
+      "maximumVertexChange": 6.69378662109375
     },
     "finger.l.middle.dip": {
-      "maximumVertexChange": 1.5985107421875
+      "maximumVertexChange": 4.27655029296875
     },
     "finger.l.ring.mcp": {
-      "maximumVertexChange": 3.10009765625
+      "maximumVertexChange": 7.404541015625
     },
     "finger.l.ring.pip": {
-      "maximumVertexChange": 2.3250732421875
+      "maximumVertexChange": 5.1368408203125
     },
     "finger.l.ring.dip": {
-      "maximumVertexChange": 1.550048828125
+      "maximumVertexChange": 3.1138916015625
     },
     "finger.l.little.mcp": {
-      "maximumVertexChange": 3.2884521484375
+      "maximumVertexChange": 2.0712890625
     },
     "finger.l.little.pip": {
-      "maximumVertexChange": 2.4630126953125
+      "maximumVertexChange": 1.36431884765625
     },
     "finger.l.little.dip": {
-      "maximumVertexChange": 1.6378173828125
+      "maximumVertexChange": 1.01123046875
     }
   },
   "limits": {
@@ -596,7 +596,7 @@
   "sourceChecks": {
     "approvedArtwork": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
     "wardrobeE": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99",
-    "motionF": "8e5e9ef84e16f42c1153c8b3e9738e8dddb001c286e77131cac8d185ff8fd60b",
+    "motionF": "aff1bd7954656cf4684cb1324bdb091a27c23bce4a4b941e091986cf04ffc677",
     "splitDAll14PartsAndPsdUnchanged": true
   },
   "wardrobeOwnershipRepair": {

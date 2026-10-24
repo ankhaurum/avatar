@@ -1,6 +1,6 @@
-import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=10';
+import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=12';
 import {MODEL_PATH,MOTION_PATH} from './model-source.mjs?approvedA=1';
-import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=2';
+import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=5';
 import {Renderer,loadImages} from './runtime/renderer.mjs?approvedA=1';
 import {MotionController} from './runtime/motion-controller.mjs?approvedA=2';
 import {AudioInput} from './runtime/audio-input.mjs';
@@ -46,7 +46,7 @@ try{[model,motion]=await Promise.all([json(MODEL_PATH),json(MOTION_PATH)]);compi
 // Wardrobe visibility uses independently exported PSD layers in the same rig.
 function wardrobe(){applyApprovedAppearance(model,frame?.state,$('wardrobe').value);}
 if(ready){
-$('wardrobe').onchange=wardrobe;
+$('wardrobe').onchange=()=>wardrobe();
 $('neutral').onclick=()=>{controller.resetToRest();$('expression').value='auto';$('animate').checked=false;for(const b of $('states').children)b.setAttribute('aria-pressed',String(b.textContent==='待機'));speechIntent='silent';audio.stop();};
 $('parameter').replaceChildren(...model.parameters.map(p=>new Option(p.id,p.id)));
 function parameter(){const p=compiled.params.get($('parameter').value);$('poseValue').min=p.min;$('poseValue').max=p.max;$('poseValue').step=.001;$('poseValue').value=frame?.state[p.id]??p.default;}

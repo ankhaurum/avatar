@@ -1,3 +1,4 @@
+import {registerFingerRig,fingerSurfaceWeights} from './approved-finger-rig.mjs';
 // Authored A-space registration. Technical evaluator reused; no r33/r34 data.
 import {applyApprovedAppearance} from '../runtime/approved-appearance.mjs';
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
@@ -58,22 +59,26 @@ for(const [i,f]of ['thumb','index','middle','ring','little'].entries())for(const
 if(cavity){const cx=axis(482,570,6,[490,503,512,526,535,552]);mesh.rest=[];mesh.uv=[];mesh.triangles=[];mesh.weights=[];mesh.shapes=[];for(const y of [347.99,348.01])for(const x of cx){mesh.rest.push(x,y);mesh.uv.push((x-x0)/(x1-x0),(y-y0)/(y1-y0));mesh.weights.push([{node:'head',weight:1}]);}for(let i=0;i<cx.length-1;i++){const a=i,b=i+1,c=i+cx.length,d=c+1;mesh.triangles.push(a,b,c,b,d,c);}shape(mesh,'mouth.open',[0,.5,1],(x,y,k)=>[0,348-y+k*(y<348?-3:8)*Math.max(0,1-((x-526)/44)**2)**2]);shape(mesh,'head.yaw',[-.2,0,.2],(x,y,k)=>{const f=gauss(y,305,150);return[(x-525)*(-Math.abs(k)*.09)*f+k*9*f,k*(x-525)*.015*f];});shape(mesh,'head.pitch',[-.3,0,.3],(x,y,k)=>[0,k*8*gauss(y,320,150)]);mesh.authoring.kind='oral-aperture-between-authored-lip-boundaries';}
 m.meshes.push(mesh);
 }
-// Fit the original front and separately painted back to one continuous volume.
-const handContours=JSON.parse(read('rig-hand-contours.json'));
+// Actual original-photo outline topology includes finger gaps, with a closed
+// side surface at every exterior and interior boundary. No alpha-only hand holes.
+const handContours=JSON.parse(read('rig-hand-contours.json')),handTopology=JSON.parse(read('rig-hand-topology.json')),fingerLandmarks=JSON.parse(read('rig-finger-landmarks.json'));
+m.rig.fingers=fingerLandmarks.sides;
+for(const side of ['r','l'])registerFingerRig(m,side,m.rig.fingers[side]);
 for(const s of ['r','l']){
- const frontId=s==='r'?'HAND_front_viewer_left_registered':'BODY_hand_viewer_right',backId='HAND_volar_viewer_'+(s==='r'?'left':'right'),front=m.meshes.find(x=>x.id===frontId),back=m.meshes.find(x=>x.id===backId),fc=handContours[frontId],bc=handContours[backId];if(!front||!back||!fc||!bc)throw Error('Missing hand surface input '+s);
- const y0=fc.bounds[1],x0=fc.bounds[0],ys=axis(y0+fc.firstOpaqueRow,y0+fc.lastOpaqueRow+1,4,[...arms[s].wrist.slice(1),1353,1367,1380,1395,1410,1425,1440,1455]),columns=12;
- for(const [mesh,isBack,contour]of [[front,false,fc],[back,true,bc]]){
-  const rest=[],uv=[],depth=[],skin=[],triangles=[];const t=m.textures.find(x=>x.id===mesh.texture);
-  for(const y of ys){const row=fc.rows[Math.max(0,Math.min(fc.height-1,Math.floor(y-y0)))],by=Math.max(0,Math.min(bc.height-1,Math.floor(y-bc.bounds[1]))),br=bc.rows[by];
-   for(let c=0;c<=columns;c++){const u=c/columns,left=x0+row[0],right=x0+row[1]+1,x=left+(right-left)*u;rest.push(x,y);const tx=isBack?br[0]+(br[1]-br[0]+1)*u:x-x0,ty=isBack?y-bc.bounds[1]:y-y0;uv.push(Math.max(0,Math.min(1,tx/t.width)),Math.max(0,Math.min(1,ty/t.height)));depth.push((isBack?-1:1)*(5+7*gauss(y,1367,70))*Math.sqrt(Math.max(0,1-(2*u-1)**2)));skin.push([{node:'handBend.'+s,weight:1}]);}
-  }
-  for(let y=0;y<ys.length-1;y++)for(let x=0;x<columns;x++){const a=y*(columns+1)+x,b=a+1,c=a+columns+1,d=c+1;triangles.push(...(isBack?[a,c,b,b,c,d]:[a,b,c,b,d,c]));}
-  Object.assign(mesh,{rest,uv,triangles,node:'wrist.'+s,shapes:[],visible:true,order:s==='r'?101:102,surface:{group:'hand.'+s,blend:'dual-quaternion',depth,weights:skin}});delete mesh.weights;mesh.authoring.kind='registered-original-front-and-painted-palm-volume';delete mesh.authoring.xRows;delete mesh.authoring.yRows;mesh.authoring.volumeColumns=columns;mesh.authoring.volumeRows=ys;mesh.authoring.contourSource='rig-hand-contours.json';mesh.authoring.side=s;mesh.authoring.face=isBack?'volar':'original';mesh.authoring.baseOrder=mesh.order;
-  const centres=s==='r'?[[183,1387],[200,1450],[184,1447],[162,1438],[144,1425]]:[[845,1380],[826,1440],[845,1438],[865,1425],[885,1411]];
-  for(const [i,f]of ['thumb','index','middle','ring','little'].entries())for(const [j,joint]of ['mcp','pip','dip'].entries()){const [cx,cy]=centres[i];shape(mesh,`finger.${s}.${f}.${joint}`,[-.15,0,.55],(x,y,k)=>{const w=gauss(x,cx,i===0?13:8)*gauss(y,cy,18-j*3);return[(s==='r'?-1:1)*k*(3-j)*w,-k*(6-j*1.5)*w];});}
+ const suffix=s==='r'?'left':'right',frontId='HAND_front_viewer_'+suffix+'_registered',backId='HAND_volar_viewer_'+suffix,front=m.meshes.find(x=>x.id===frontId),back=m.meshes.find(x=>x.id===backId),topology=handTopology[s];
+ for(const [mesh,isBack]of [[front,false],[back,true]]){
+  const rest=[...topology.rest],uv=[],t=m.textures.find(t=>t.id===mesh.texture),box=mesh.authoring.bounds;
+  for(let i=0;i<rest.length;i+=2)uv.push(Math.max(0,Math.min(1,(rest[i]-box[0])/t.width)),Math.max(0,Math.min(1,(rest[i+1]-box[1])/t.height)));
+  const triangles=[...topology.triangles];if(isBack)for(let i=0;i<triangles.length;i+=3)[triangles[i+1],triangles[i+2]]=[triangles[i+2],triangles[i+1]];
+  Object.assign(mesh,{rest,uv,triangles,node:'wrist.'+s,shapes:[],visible:true,order:s==='r'?101:102,surface:{group:'hand.'+s,blend:'dual-quaternion',depth:topology.depth.map(d=>isBack?-d:d),weights:rest.flatMap((_,i)=>i%2?[]:[fingerSurfaceWeights(s,m.rig.fingers[s],rest[i],rest[i+1])])}});delete mesh.weights;mesh.authoring={...mesh.authoring,kind:'registered-original-front-and-painted-palm-volume',side:s,face:isBack?'volar':'original',baseOrder:mesh.order,fingerRig:'registered-3d-digits-relaxed-source-pose',topologySource:'rig-hand-topology.json'};delete mesh.authoring.xRows;delete mesh.authoring.yRows;
  }
+ const wallId='HAND_side_skin_viewer_'+suffix,wall=m.meshes.find(x=>x.id===wallId),texture=m.textures.find(x=>x.id===wall.texture),box=wall.authoring.bounds,boundary=[...new Set(topology.boundaryEdges.flat())],rows=new Map(boundary.map((v,i)=>[v,i])),rest=[],uv=[],depth=[],skin=[],triangles=[];
+ for(const i of boundary){const x=front.rest[2*i],y=front.rest[2*i+1],d=topology.depth[i];for(const z of [-d,0,d]){rest.push(x,y);uv.push(Math.max(0,Math.min(1,(x-box[0])/texture.width)),Math.max(0,Math.min(1,(y-box[1])/texture.height)));depth.push(z);skin.push(fingerSurfaceWeights(s,m.rig.fingers[s],x,y));}}
+ for(const [i,j]of topology.boundaryEdges)for(let z=0;z<2;z++){const a=rows.get(i)*3+z,b=rows.get(j)*3+z,c=a+1,d=b+1;triangles.push(a,b,c,b,d,c);}
+ Object.assign(wall,{rest,uv,triangles,node:'wrist.'+s,shapes:[],visible:true,order:s==='r'?101:102,surface:{group:'hand.'+s,blend:'dual-quaternion',depth,weights:skin}});delete wall.weights;wall.authoring={...wall.authoring,kind:'registered-hand-side-wall',side:s,edge:'full-outline-and-finger-gaps',frontBoundaryIndices:boundary,wallColumns:3,baseOrder:wall.order};
 }
+// Remove the old XY-only finger approximations, including the hidden original helper.
+for(const mesh of m.meshes)mesh.shapes=mesh.shapes.filter(shape=>!shape.axes.some(axis=>axis.parameter.startsWith('finger.')));
 // Reuse the independently painted torso/arm footprints recorded in the E
 // artwork script. One photographic cloth atlas supplies the actual surfaces;
 // the body is not dragged by forearm skin weights across the resting armpit.
@@ -91,7 +96,7 @@ for(const s of ['r','l']){
 // Skin shaft under the cuff is real photographic underpaint, with its own
 // forearm-to-wrist blend and front/back faces behind the garment draw order.
 for(const s of ['r','l']){
- const suffix=s==='r'?'left':'right',id='BODY_wrist_underlap_viewer_'+suffix,mesh=m.meshes.find(x=>x.id===id),contour=handContours[id],frontId=s==='r'?'HAND_front_viewer_left_registered':'BODY_hand_viewer_right',hc=handContours[frontId],a=arms[s],tex=m.textures.find(t=>t.id===id),[x0,y0]=contour.bounds,rows=axis(y0+contour.firstOpaqueRow,y0+contour.lastOpaqueRow+1,4,[a.wrist[1]-24,a.wrist[1],a.wrist[1]+12]),columns=12,rest=[],uv=[],depth=[],skin=[],weights=[],triangles=[];
+ const suffix=s==='r'?'left':'right',id='BODY_wrist_underlap_viewer_'+suffix,mesh=m.meshes.find(x=>x.id===id),contour=handContours[id],frontId=s==='r'?'HAND_front_viewer_left_registered':'HAND_front_viewer_right_registered',hc=handContours[frontId],a=arms[s],tex=m.textures.find(t=>t.id===id),[x0,y0]=contour.bounds,rows=axis(y0+contour.firstOpaqueRow,y0+contour.lastOpaqueRow+1,4,[a.wrist[1]-24,a.wrist[1],a.wrist[1]+12]),columns=12,rest=[],uv=[],depth=[],skin=[],weights=[],triangles=[];
  const cuff=m.meshes.find(x=>x.id==='WARDROBE_shirt_cuff_viewer_'+suffix),order=cuff.authoring.baseOrder-.3;
  for(const y of rows){const r=contour.rows[Math.max(0,Math.min(contour.height-1,Math.floor(y-y0)))],hr=hc.rows[Math.max(0,Math.min(hc.height-1,Math.floor(y-hc.bounds[1])))],join=smooth(a.wrist[1]+12,a.wrist[1]+24,y),left=(x0+r[0])*(1-join)+(hc.bounds[0]+hr[0])*join,right=(x0+r[1]+1)*(1-join)+(hc.bounds[0]+hr[1]+1)*join,t=smooth(a.wrist[1]-24,a.wrist[1]+5,y);for(let c=0;c<=columns;c++){const u=c/columns,x=left+(right-left)*u;rest.push(x,y);uv.push(Math.max(0,Math.min(1,(x-x0)/tex.width)),Math.max(0,Math.min(1,(y-y0)/tex.height)));depth.push((5+7*gauss(y,1367,70))*Math.sqrt(Math.max(0,1-(2*u-1)**2)));skin.push([{node:'handTwist.'+s,weight:1-t},{node:'handBend.'+s,weight:t}]);weights.push([{node:'forearm.'+s,weight:1-t},{node:'wrist.'+s,weight:t}]);}}
  for(let r=0;r<rows.length-1;r++)for(let c=0;c<columns;c++){const a=r*(columns+1)+c,b=a+1,e=a+columns+1,d=e+1;triangles.push(a,b,e,b,d,e);}

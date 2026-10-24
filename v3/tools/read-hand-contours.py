@@ -24,16 +24,18 @@ def span(polygon,y):
   b=polygon[(i+1)%len(polygon)]
   if min(a[1],b[1])<=y<max(a[1],b[1]):xs.append(a[0]+(b[0]-a[0])*(y-a[1])/(b[1]-a[1]))
  return [min(xs),max(xs)] if xs else None
-model=json.loads(model_path.read_text(encoding='utf-8'));result={}
+model=json.loads(model_path.read_text(encoding='utf-8-sig'));result={}
+if 'layers' in model and 'meshes' not in model:
+    layers=model['layers'];model={'textures':layers,'meshes':[{'id':l['id'],'texture':l['id'],'authoring':{'bounds':l['bounds']}} for l in layers]}
 for mesh in model['meshes']:
     if approved_shirt and mesh.get('authoring',{}).get('role') not in ['shirt-torso','shirt-sleeve']:continue
-    if approved_hands and not (mesh['id'].startswith('BODY_wrist_underlap') or mesh['id'].startswith('HAND_volar') or mesh['id']=='HAND_front_viewer_left_registered' or mesh['id']=='BODY_hand_viewer_right'):continue
+    if approved_hands and not (mesh['id'].startswith('BODY_wrist_underlap') or mesh['id'].startswith('HAND_volar') or mesh['id'].startswith('HAND_front_viewer_') or mesh['id']=='BODY_hand_viewer_right'):continue
     if approved_sleeves and not mesh['id'].startswith('WARDROBE_jacket_sleeve'): continue
     if not approved_sleeves and not approved_hands and not approved_shirt and not (mesh['id'].startswith('hand.') or mesh['id'].startswith('arm.') and mesh['id'].split('.')[-1] in ['upper','fore','cuff']): continue
     texture=next(t for t in model['textures'] if t['id']==mesh['texture'])
     im=Image.open(root/texture['file']).convert('RGBA');alpha=im.getchannel('A');rows=[];critical_rows=[];previous_separation=(False,False)
     for y in range(im.height):
-        xs=[x for x in range(im.width) if alpha.getpixel((x,y))>=(3 if approved_sleeves or approved_hands or approved_shirt else 128)]
+        xs=[x for x in range(im.width) if alpha.getpixel((x,y))>=(20 if approved_hands else 3 if approved_sleeves or approved_shirt else 128)]
         # Detached antialias/fringe pixels are not a contour bridge. Use the
         # principal connected span of each already separated anatomical part.
         runs=[]
