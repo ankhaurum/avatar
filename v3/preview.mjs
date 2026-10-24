@@ -1,4 +1,4 @@
-import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=12';
+import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=13';
 import {MODEL_PATH,MOTION_PATH} from './model-source.mjs?approvedA=1';
 import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=7';
 import {Renderer,loadImages} from './runtime/renderer.mjs?approvedA=3';

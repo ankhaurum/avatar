@@ -12,7 +12,7 @@ export function applyApprovedAppearance(model,state={},mode='approved-neutral'){
   }
   if(g==='33_SHIRT_cuff_facings'){visible=true;const side=id.includes('left')?'r':'l',cuff=model.meshes.find(m=>m.id==='WARDROBE_shirt_cuff_viewer_'+(side==='r'?'left':'right'));const coat=model.meshes.find(m=>m.id==='WARDROBE_jacket_sleeve_viewer_'+(side==='r'?'left':'right'));part.order=foreground[side]?89.9:Math.min(cuff.authoring.baseOrder,coat.authoring.baseOrder)-.1;}
   if(g==='28_FACE_eyelids_painted'){const side=id.endsWith('_r')?'r':'l';part.opacity=(state['eye.'+side+'.blink']??0)**3;visible=part.opacity>.001;}
-  if(g==='29_FACE_skin_underlap')visible=true;
+  if(g==='29_FACE_skin_underlap'||id==='BODY_neck_collar_underlap')visible=true;
   if(g==='27_FACE_mouth_hidden')visible=(state['mouth.open']??0)>.001;
   if(g==='26_JOINT_fabric_underlaps'){const side=id.includes('left')?'r':'l';visible=jacket&&Math.abs(state['arm.'+side+'.upper']??0)>.025;}
   if(g==='20_WARDROBE_jacket'){visible=jacket;if(id.includes('sleeve_viewer')){const side=id.includes('left')?'r':'l';if(foreground[side])part.order=90;}}

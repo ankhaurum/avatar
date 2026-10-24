@@ -1,5 +1,5 @@
 async function readModelBytes(bytes){loadedModelSHA=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');return JSON.parse(new TextDecoder().decode(bytes));}
-import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=12';
+import {applyApprovedAppearance} from './runtime/approved-appearance.mjs?approvedA=13';
 import {MODEL_PATH} from './model-source.mjs?approvedA=1';
 import {compile,evaluate,point} from './runtime/evaluate.mjs?approvedA=7';
 import {solveArm} from './runtime/arm-solver.mjs?limits=2';
