@@ -1,0 +1,481 @@
+{
+  "width": 1024,
+  "height": 1536,
+  "layerComps": [
+    "approved-neutral",
+    "shirt-with-tie",
+    "shirt-without-tie",
+    "jacket-without-tie",
+    "lower-material-exchange"
+  ],
+  "layers": [
+    {
+      "path": "10_BODY_identity/BODY_leg_edge_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        240,
+        1378,
+        790,
+        1423
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_hair_tip_right_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        621,
+        457,
+        651,
+        463
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_hair",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        303,
+        30,
+        950,
+        463
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_legs_visible",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        252,
+        1385,
+        776,
+        1536
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_hand_viewer_right",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        800,
+        1281,
+        912,
+        1456
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_hand_viewer_left",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        122,
+        1289,
+        216,
+        1466
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_neck",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        450,
+        383,
+        594,
+        549
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "10_BODY_identity/BODY_face",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        414,
+        218,
+        629,
+        413
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "23_WARDROBE_lower/LOWER_hem_recovered_from_leg",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        265,
+        1380,
+        776,
+        1414
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "23_WARDROBE_lower/LOWER_edge_recovered_from_hand",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        800,
+        1331,
+        821,
+        1378
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "23_WARDROBE_lower/WARDROBE_lower_skirt",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        207,
+        1060,
+        824,
+        1536
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "22_WARDROBE_tie/WARDROBE_tie",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        465,
+        512,
+        590,
+        849
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "21_WARDROBE_shirt/WARDROBE_shirt",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        438,
+        446,
+        618,
+        749
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "21_WARDROBE_shirt/WARDROBE_shirt_cuff_viewer_right",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        817,
+        1264,
+        902,
+        1290
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "21_WARDROBE_shirt/WARDROBE_shirt_cuff_viewer_left",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        130,
+        1270,
+        217,
+        1297
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/JACKET_right_hem_underlap_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        576,
+        1166,
+        778,
+        1221
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/JACKET_left_hem_underlap_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        253,
+        1184,
+        408,
+        1221
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/JACKET_blue_hem_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        231,
+        1061,
+        798,
+        1271
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/JACKET_lapel_tip_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        527,
+        833,
+        537,
+        852
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/JACKET_inner_lapel_recovered",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        439,
+        570,
+        572,
+        851
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/WARDROBE_jacket_front",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        80,
+        449,
+        910,
+        1520
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/WARDROBE_jacket_sleeve_viewer_right",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        715,
+        493,
+        1009,
+        1287
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "20_WARDROBE_jacket/WARDROBE_jacket_sleeve_viewer_left",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        105,
+        498,
+        322,
+        1288
+      ],
+      "opacity": 100,
+      "visible": true
+    },
+    {
+      "path": "25_LOWER_waist_underlap/LOWER_waistband",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        319,
+        1082,
+        705,
+        1110
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "25_LOWER_waist_underlap/LOWER_complete_pleated_fabric",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        210,
+        1082,
+        819,
+        1420
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_original_collar_clean",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        436,
+        450,
+        616,
+        579
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_6",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_5",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        525,
+        1016,
+        535,
+        1026
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_4",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        525,
+        917,
+        535,
+        927
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_3",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        525,
+        818,
+        535,
+        828
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_2",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        525,
+        719,
+        535,
+        729
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_button_1",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        525,
+        620,
+        535,
+        630
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_center_placket",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        520,
+        548,
+        541,
+        1110
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "24_SHIRT_photographic_fabric_completion/SHIRT_completed_fabric",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        141,
+        449,
+        893,
+        1292
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "11_BODY_underclothing_paint/BODY_neck_collar_underlap",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        437,
+        407,
+        612,
+        565
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "11_BODY_underclothing_paint/BODY_arm_viewer_right_hidden",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        683,
+        524,
+        885,
+        1312
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "11_BODY_underclothing_paint/BODY_arm_viewer_left_hidden",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        139,
+        524,
+        341,
+        1312
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "11_BODY_underclothing_paint/BODY_torso_hidden_surface",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        293,
+        449,
+        734,
+        1244
+      ],
+      "opacity": 100,
+      "visible": false
+    },
+    {
+      "path": "00_REFERENCE_hidden/APPROVED_A_UNMODIFIED",
+      "kind": "LayerKind.NORMAL",
+      "bounds": [
+        80,
+        30,
+        1009,
+        1536
+      ],
+      "opacity": 100,
+      "visible": false
+    }
+  ]
+}

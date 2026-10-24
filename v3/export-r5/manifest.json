@@ -1,0 +1,999 @@
+{
+  "format": "hibiki-art-export",
+  "version": 1,
+  "width": 1800,
+  "height": 2300,
+  "sourceName": "hibiki-v3-art-r5.psd",
+  "layers": [
+    {
+      "id": "hair.front",
+      "path": [
+        "art.hair.front"
+      ],
+      "bounds": [
+        568,
+        27,
+        1281,
+        455
+      ],
+      "visible": true,
+      "file": "hair.front.png",
+      "width": 713,
+      "height": 428,
+      "sha256": "3b463731156c446586338049df7b38d364d3e426beb78740650bb6d2c6196513"
+    },
+    {
+      "id": "hair.l",
+      "path": [
+        "art.hair.l"
+      ],
+      "bounds": [
+        1050,
+        300,
+        1268,
+        865
+      ],
+      "visible": true,
+      "file": "hair.l.png",
+      "width": 218,
+      "height": 565,
+      "sha256": "2e406cef3aeefe48c23f5e1f697220d55cdac96deec832c8b0d46092cb7778ac"
+    },
+    {
+      "id": "hair.r",
+      "path": [
+        "art.hair.r"
+      ],
+      "bounds": [
+        532,
+        300,
+        830,
+        865
+      ],
+      "visible": true,
+      "file": "hair.r.png",
+      "width": 298,
+      "height": 565,
+      "sha256": "9b897cd107dd430fb0cfb30efe110007841a0ccb26d55b3b6ae890fe5714e304"
+    },
+    {
+      "id": "brow.l",
+      "path": [
+        "art.brow.l"
+      ],
+      "bounds": [
+        953,
+        377,
+        1127,
+        441
+      ],
+      "visible": true,
+      "file": "brow.l.png",
+      "width": 174,
+      "height": 64,
+      "sha256": "753d9a23070965890f459a514800a0bd1eb7bd04b03c2524d1c41b5567740bd4"
+    },
+    {
+      "id": "brow.r",
+      "path": [
+        "art.brow.r"
+      ],
+      "bounds": [
+        755,
+        382,
+        919,
+        446
+      ],
+      "visible": true,
+      "file": "brow.r.png",
+      "width": 164,
+      "height": 64,
+      "sha256": "d351643b7f7a3e83a940b65b27511ef3638589711807bb2442c82852b4608ef7"
+    },
+    {
+      "id": "eye.l.lower",
+      "path": [
+        "art.eye.l.lower"
+      ],
+      "bounds": [
+        973,
+        468,
+        1122,
+        522
+      ],
+      "visible": true,
+      "file": "eye.l.lower.png",
+      "width": 149,
+      "height": 54,
+      "sha256": "19cc6c6d493982e6560127fcd08308ed35377237826cbf5aae4698ff923e8d63"
+    },
+    {
+      "id": "eye.l.upper",
+      "path": [
+        "art.eye.l.upper"
+      ],
+      "bounds": [
+        973,
+        418,
+        1122,
+        487
+      ],
+      "visible": true,
+      "file": "eye.l.upper.png",
+      "width": 149,
+      "height": 69,
+      "sha256": "e8bc11fc26dac17511c93e5eb2378b3db69934d6b95c6de310a9c335ff75054b"
+    },
+    {
+      "id": "eye.r.lower",
+      "path": [
+        "art.eye.r.lower"
+      ],
+      "bounds": [
+        768,
+        473,
+        917,
+        527
+      ],
+      "visible": true,
+      "file": "eye.r.lower.png",
+      "width": 149,
+      "height": 54,
+      "sha256": "cb15bf1aa3f1a0b14200048723d559b67de30f8cc20aadbc5517bd9016a9d7c4"
+    },
+    {
+      "id": "eye.r.upper",
+      "path": [
+        "art.eye.r.upper"
+      ],
+      "bounds": [
+        768,
+        423,
+        917,
+        492
+      ],
+      "visible": true,
+      "file": "eye.r.upper.png",
+      "width": 149,
+      "height": 69,
+      "sha256": "3d9e4ec6c6e11363921907bc23402bce938285a9f43bafc19d7c6d9aa565fdc4"
+    },
+    {
+      "id": "mouth.upper",
+      "path": [
+        "art.mouth.upper"
+      ],
+      "bounds": [
+        849,
+        605,
+        1036,
+        662
+      ],
+      "visible": true,
+      "file": "mouth.upper.png",
+      "width": 187,
+      "height": 57,
+      "sha256": "76dae7caba881e42e5d3138d84655699cafa307ea77b2dfc815b746667c16930"
+    },
+    {
+      "id": "mouth.lower",
+      "path": [
+        "art.mouth.lower"
+      ],
+      "bounds": [
+        853,
+        623,
+        1042,
+        722
+      ],
+      "visible": true,
+      "file": "mouth.lower.png",
+      "width": 189,
+      "height": 99,
+      "sha256": "d73dc85435a8aaed30f4512d78846c13c8b61f320b18f3ece5f64b0b4c25fcf3"
+    },
+    {
+      "id": "eye.l.iris",
+      "path": [
+        "art.eye.l.iris"
+      ],
+      "bounds": [
+        1011,
+        449,
+        1049,
+        487
+      ],
+      "visible": true,
+      "file": "eye.l.iris.png",
+      "width": 38,
+      "height": 38,
+      "sha256": "62d862472909953be77d0657fa3153532f9454b77eb395508682a7a139b65a92"
+    },
+    {
+      "id": "eye.r.iris",
+      "path": [
+        "art.eye.r.iris"
+      ],
+      "bounds": [
+        828,
+        455,
+        866,
+        493
+      ],
+      "visible": true,
+      "file": "eye.r.iris.png",
+      "width": 38,
+      "height": 38,
+      "sha256": "c80864b5cbd0fa57d203230d55d0c13dc0caa07c5c41056ce0903521bb0ed6f3"
+    },
+    {
+      "id": "eye.l.white",
+      "path": [
+        "art.eye.l.white"
+      ],
+      "bounds": [
+        994,
+        449,
+        1096,
+        489
+      ],
+      "visible": true,
+      "file": "eye.l.white.png",
+      "width": 102,
+      "height": 40,
+      "sha256": "0ad5c9697bc5dafda3949c1c17b003ad83443b2742366154eb42dbf1ad1b8341"
+    },
+    {
+      "id": "eye.r.white",
+      "path": [
+        "art.eye.r.white"
+      ],
+      "bounds": [
+        788,
+        455,
+        895,
+        493
+      ],
+      "visible": true,
+      "file": "eye.r.white.png",
+      "width": 107,
+      "height": 38,
+      "sha256": "ac40cd4f6b42d9fd7e449eedfa1e7aec95240c4ce228b236e427e5fce3f5475f"
+    },
+    {
+      "id": "mouth.tongue",
+      "path": [
+        "art.mouth.tongue"
+      ],
+      "bounds": [
+        881,
+        665,
+        1000,
+        687
+      ],
+      "visible": false,
+      "file": "mouth.tongue.png",
+      "width": 119,
+      "height": 22,
+      "sha256": "125362e127f97452976e3752cdb3b019f21cf462acddf421d13533f3899c8f8a"
+    },
+    {
+      "id": "mouth.teeth",
+      "path": [
+        "art.mouth.teeth"
+      ],
+      "bounds": [
+        868,
+        639,
+        1012,
+        665
+      ],
+      "visible": false,
+      "file": "mouth.teeth.png",
+      "width": 144,
+      "height": 26,
+      "sha256": "cc080f0ca852b388c61c20f1bbc4965ed9ac45746fcd209d898cdc652cbfa766"
+    },
+    {
+      "id": "mouth.cavity",
+      "path": [
+        "art.mouth.cavity"
+      ],
+      "bounds": [
+        850,
+        620,
+        1030,
+        720
+      ],
+      "visible": false,
+      "file": "mouth.cavity.png",
+      "width": 180,
+      "height": 100,
+      "sha256": "344725ce3b7fbec3f3ad4905622f6f5c42a1d70e3392a46bcf9cac6bde736d3a"
+    },
+    {
+      "id": "face.skin",
+      "path": [
+        "art.face.skin"
+      ],
+      "bounds": [
+        700,
+        325,
+        1140,
+        769
+      ],
+      "visible": true,
+      "file": "face.skin.png",
+      "width": 440,
+      "height": 444,
+      "sha256": "a26f8902d075909302842d7e81f2636cb70229fa674e93b5fb1187bf11094ccb"
+    },
+    {
+      "id": "ear.r",
+      "path": [
+        "art.ear.r"
+      ],
+      "bounds": [
+        666,
+        438,
+        738,
+        592
+      ],
+      "visible": true,
+      "file": "ear.r.png",
+      "width": 72,
+      "height": 154,
+      "sha256": "7a0fdabeac3a6202e8fac941d3cd12be5967359c9992bfd0333dba85d2b19d5b"
+    },
+    {
+      "id": "hair.back",
+      "path": [
+        "art.hair.back"
+      ],
+      "bounds": [
+        509,
+        48,
+        1284,
+        900
+      ],
+      "visible": true,
+      "file": "hair.back.png",
+      "width": 775,
+      "height": 852,
+      "sha256": "b0d1e77a6015b55909b21c0efdb4ba43f750d3a836f913005ca106c41e7a2198"
+    },
+    {
+      "id": "hand.l.volar.little",
+      "path": [
+        "art.hand.l.volar.little"
+      ],
+      "bounds": [
+        1298,
+        1816,
+        1327,
+        1944
+      ],
+      "visible": false,
+      "file": "hand.l.volar.little.png",
+      "width": 29,
+      "height": 128,
+      "sha256": "4e0e13672796d505cded2fd71fa448b96bf855c01a625391ce871ea5e78bdda8"
+    },
+    {
+      "id": "hand.l.volar.ring",
+      "path": [
+        "art.hand.l.volar.ring"
+      ],
+      "bounds": [
+        1328,
+        1836,
+        1359,
+        1987
+      ],
+      "visible": false,
+      "file": "hand.l.volar.ring.png",
+      "width": 31,
+      "height": 151,
+      "sha256": "81220836e6f0f83b39e24e622b4157734c0976c2110a55f36a4a50355a676ba9"
+    },
+    {
+      "id": "hand.l.volar.middle",
+      "path": [
+        "art.hand.l.volar.middle"
+      ],
+      "bounds": [
+        1359,
+        1840,
+        1392,
+        1999
+      ],
+      "visible": false,
+      "file": "hand.l.volar.middle.png",
+      "width": 33,
+      "height": 159,
+      "sha256": "6b609929c699bcf7137ebcf239100ff5ff94b52cd282c4456842fddd2b7026f7"
+    },
+    {
+      "id": "hand.l.volar.index",
+      "path": [
+        "art.hand.l.volar.index"
+      ],
+      "bounds": [
+        1393,
+        1840,
+        1423,
+        1987
+      ],
+      "visible": false,
+      "file": "hand.l.volar.index.png",
+      "width": 30,
+      "height": 147,
+      "sha256": "766fccfa8d382ae0d3f661977779eeb7535e8724a4350604ba81e8870c8e5774"
+    },
+    {
+      "id": "hand.l.volar.thumb",
+      "path": [
+        "art.hand.l.volar.thumb"
+      ],
+      "bounds": [
+        1424,
+        1788,
+        1484,
+        1883
+      ],
+      "visible": false,
+      "file": "hand.l.volar.thumb.png",
+      "width": 60,
+      "height": 95,
+      "sha256": "6a0cb01c2c49239882866fd083a83a55f27e8c13bcfaa423f8633778c75faa48"
+    },
+    {
+      "id": "hand.l.volar",
+      "path": [
+        "art.hand.l.volar"
+      ],
+      "bounds": [
+        1304,
+        1658,
+        1450,
+        1862
+      ],
+      "visible": false,
+      "file": "hand.l.volar.png",
+      "width": 146,
+      "height": 204,
+      "sha256": "27b095aa3e2525fe7adb9c89d3063f29c6f42c59fe950c241cf79b2ee760984a"
+    },
+    {
+      "id": "hand.r.volar.little",
+      "path": [
+        "art.hand.r.volar.little"
+      ],
+      "bounds": [
+        537,
+        1816,
+        566,
+        1944
+      ],
+      "visible": false,
+      "file": "hand.r.volar.little.png",
+      "width": 29,
+      "height": 128,
+      "sha256": "030ba998f7ad1152d381e2763ebd46e49343e757442dc58552824700ca4314ec"
+    },
+    {
+      "id": "hand.r.volar.ring",
+      "path": [
+        "art.hand.r.volar.ring"
+      ],
+      "bounds": [
+        506,
+        1836,
+        537,
+        1987
+      ],
+      "visible": false,
+      "file": "hand.r.volar.ring.png",
+      "width": 31,
+      "height": 151,
+      "sha256": "e92566db9ac600902a49fa46f689db85a7ed8b50b5b3de156240a9c3f4e0edc2"
+    },
+    {
+      "id": "hand.r.volar.middle",
+      "path": [
+        "art.hand.r.volar.middle"
+      ],
+      "bounds": [
+        472,
+        1840,
+        505,
+        1999
+      ],
+      "visible": false,
+      "file": "hand.r.volar.middle.png",
+      "width": 33,
+      "height": 159,
+      "sha256": "43b6576ab37853f7883d78d67835b0b1774c5c121ab30313c3c4746c541c0062"
+    },
+    {
+      "id": "hand.r.volar.index",
+      "path": [
+        "art.hand.r.volar.index"
+      ],
+      "bounds": [
+        442,
+        1840,
+        472,
+        1987
+      ],
+      "visible": false,
+      "file": "hand.r.volar.index.png",
+      "width": 30,
+      "height": 147,
+      "sha256": "58c182e4471bb4b91b350f21ea1e9f1816395814e0d2502db06963345de1189d"
+    },
+    {
+      "id": "hand.r.volar.thumb",
+      "path": [
+        "art.hand.r.volar.thumb"
+      ],
+      "bounds": [
+        381,
+        1788,
+        441,
+        1883
+      ],
+      "visible": false,
+      "file": "hand.r.volar.thumb.png",
+      "width": 60,
+      "height": 95,
+      "sha256": "b7378ce5f63cc379cf915f298d53835631c4b74856c52a476401593db70fd35c"
+    },
+    {
+      "id": "hand.r.volar",
+      "path": [
+        "art.hand.r.volar"
+      ],
+      "bounds": [
+        414,
+        1658,
+        560,
+        1862
+      ],
+      "visible": false,
+      "file": "hand.r.volar.png",
+      "width": 146,
+      "height": 204,
+      "sha256": "efbd3bab1444d4b07998014b3cf53363379dfcb77e096a6844ae2761be828218"
+    },
+    {
+      "id": "hand.l.little",
+      "path": [
+        "art.hand.l.little"
+      ],
+      "bounds": [
+        1417,
+        1811,
+        1445,
+        1939
+      ],
+      "visible": true,
+      "file": "hand.l.little.png",
+      "width": 28,
+      "height": 128,
+      "sha256": "64958e854564b923fa0add014eb134dbd4c2aca7576c655c55199e710c8c6a32"
+    },
+    {
+      "id": "hand.l.ring",
+      "path": [
+        "art.hand.l.ring"
+      ],
+      "bounds": [
+        1388,
+        1830,
+        1417,
+        1984
+      ],
+      "visible": true,
+      "file": "hand.l.ring.png",
+      "width": 29,
+      "height": 154,
+      "sha256": "1d565024b7997aa80804c667e6d22355d851db5d143e9b469f221c8c33c835fd"
+    },
+    {
+      "id": "hand.l.middle",
+      "path": [
+        "art.hand.l.middle"
+      ],
+      "bounds": [
+        1356,
+        1835,
+        1388,
+        2000
+      ],
+      "visible": true,
+      "file": "hand.l.middle.png",
+      "width": 32,
+      "height": 165,
+      "sha256": "44223cef182ab5438cf53ef452826b1063cb9ab36e83e14852bf1094faaca8ee"
+    },
+    {
+      "id": "hand.l.index",
+      "path": [
+        "art.hand.l.index"
+      ],
+      "bounds": [
+        1320,
+        1832,
+        1356,
+        1984
+      ],
+      "visible": true,
+      "file": "hand.l.index.png",
+      "width": 36,
+      "height": 152,
+      "sha256": "860af3a93f2505f8bc03d26f82ecdbf6f481091ac6fd8da705841610232ed99b"
+    },
+    {
+      "id": "hand.l.thumb",
+      "path": [
+        "art.hand.l.thumb"
+      ],
+      "bounds": [
+        1267,
+        1781,
+        1325,
+        1883
+      ],
+      "visible": true,
+      "file": "hand.l.thumb.png",
+      "width": 58,
+      "height": 102,
+      "sha256": "4ad23918efc9d0e36f465293dc8b65cc0f18f463169be38fe3429d0ab4e3eb81"
+    },
+    {
+      "id": "hand.l.palm",
+      "path": [
+        "art.hand.l.palm"
+      ],
+      "bounds": [
+        1303,
+        1658,
+        1444,
+        1863
+      ],
+      "visible": true,
+      "file": "hand.l.palm.png",
+      "width": 141,
+      "height": 205,
+      "sha256": "b801fa8bc485937a58840128704bb0af68698dbeee88b4cd6e26a45d80dda1a1"
+    },
+    {
+      "id": "hand.r.little",
+      "path": [
+        "art.hand.r.little"
+      ],
+      "bounds": [
+        418,
+        1811,
+        446,
+        1939
+      ],
+      "visible": true,
+      "file": "hand.r.little.png",
+      "width": 28,
+      "height": 128,
+      "sha256": "27db2238dcca34f22853b9dcd3576d21fe6aa7ed23dc1587b5cee4285d7ad89d"
+    },
+    {
+      "id": "hand.r.ring",
+      "path": [
+        "art.hand.r.ring"
+      ],
+      "bounds": [
+        445,
+        1830,
+        474,
+        1984
+      ],
+      "visible": true,
+      "file": "hand.r.ring.png",
+      "width": 29,
+      "height": 154,
+      "sha256": "a76e4aa0622c708a7e2cc4b48d74eabcd78d849d57f4af8c2ee6a8ae4e8a48bc"
+    },
+    {
+      "id": "hand.r.middle",
+      "path": [
+        "art.hand.r.middle"
+      ],
+      "bounds": [
+        474,
+        1835,
+        506,
+        2000
+      ],
+      "visible": true,
+      "file": "hand.r.middle.png",
+      "width": 32,
+      "height": 165,
+      "sha256": "58f3aa87a3f6a485286c4f41de880fb06c3bb534c4b0a28fec0dbeedc46cb485"
+    },
+    {
+      "id": "hand.r.index",
+      "path": [
+        "art.hand.r.index"
+      ],
+      "bounds": [
+        506,
+        1832,
+        542,
+        1984
+      ],
+      "visible": true,
+      "file": "hand.r.index.png",
+      "width": 36,
+      "height": 152,
+      "sha256": "9fc301b9459a7580fc249ff68489abfcdc799ad1109346f5676de3feb7d8be89"
+    },
+    {
+      "id": "hand.r.thumb",
+      "path": [
+        "art.hand.r.thumb"
+      ],
+      "bounds": [
+        538,
+        1781,
+        596,
+        1883
+      ],
+      "visible": true,
+      "file": "hand.r.thumb.png",
+      "width": 58,
+      "height": 102,
+      "sha256": "504363aede5338acf7b16f8e100285eecdde7d5adfb50bc4ccd015681f81fd44"
+    },
+    {
+      "id": "hand.r.palm",
+      "path": [
+        "art.hand.r.palm"
+      ],
+      "bounds": [
+        419,
+        1658,
+        560,
+        1863
+      ],
+      "visible": true,
+      "file": "hand.r.palm.png",
+      "width": 141,
+      "height": 205,
+      "sha256": "8ea6ba17cd3bb2f5ad91fcb18e339f141e727768989795bc052687813e47c8d0"
+    },
+    {
+      "id": "arm.l.cuff",
+      "path": [
+        "art.arm.l.cuff"
+      ],
+      "bounds": [
+        1311,
+        1559,
+        1441,
+        1681
+      ],
+      "visible": true,
+      "file": "arm.l.cuff.png",
+      "width": 130,
+      "height": 122,
+      "sha256": "c2b564b58f4938dfd4e4b362aabe624f0b29b83cfc2baa9ccd8c185042996b38"
+    },
+    {
+      "id": "arm.l.fore",
+      "path": [
+        "art.arm.l.fore"
+      ],
+      "bounds": [
+        1300,
+        1263,
+        1435,
+        1589
+      ],
+      "visible": true,
+      "file": "arm.l.fore.png",
+      "width": 135,
+      "height": 326,
+      "sha256": "1fc23a085ec00c6670e21cb4e222b7a9147226af9e0b608856a4b700da45c1df"
+    },
+    {
+      "id": "arm.l.upper",
+      "path": [
+        "art.arm.l.upper"
+      ],
+      "bounds": [
+        1240,
+        878,
+        1431,
+        1338
+      ],
+      "visible": true,
+      "file": "arm.l.upper.png",
+      "width": 191,
+      "height": 460,
+      "sha256": "da74c167a4641a10c156ecf8ef5e17a4c5810968908dcab52dd3d312acdfdb9f"
+    },
+    {
+      "id": "arm.r.cuff",
+      "path": [
+        "art.arm.r.cuff"
+      ],
+      "bounds": [
+        435,
+        1559,
+        563,
+        1679
+      ],
+      "visible": true,
+      "file": "arm.r.cuff.png",
+      "width": 128,
+      "height": 120,
+      "sha256": "2aaf9762aac8c833084cc79afdad6c437c03a51615f7966334f116f3a07b3a1a"
+    },
+    {
+      "id": "arm.r.fore",
+      "path": [
+        "art.arm.r.fore"
+      ],
+      "bounds": [
+        441,
+        1263,
+        589,
+        1574
+      ],
+      "visible": true,
+      "file": "arm.r.fore.png",
+      "width": 148,
+      "height": 311,
+      "sha256": "602ab29d603fed5c8c0f4f5821ab245a84de5b28b565eb74cf255c8638c90950"
+    },
+    {
+      "id": "arm.r.upper",
+      "path": [
+        "art.arm.r.upper"
+      ],
+      "bounds": [
+        440,
+        876,
+        630,
+        1336
+      ],
+      "visible": true,
+      "file": "arm.r.upper.png",
+      "width": 190,
+      "height": 460,
+      "sha256": "ab3a863b6d34a189afa037fb48e4ec99219ddab7c9f4b65d46fd8654e33a4818"
+    },
+    {
+      "id": "tie.knot",
+      "path": [
+        "art.tie.knot"
+      ],
+      "bounds": [
+        855,
+        1015,
+        980,
+        1105
+      ],
+      "visible": true,
+      "file": "tie.knot.png",
+      "width": 125,
+      "height": 90,
+      "sha256": "104a0484abb12a061ce8f32763f1eef3f72ed3a9bb90a478396dca38de655bb4"
+    },
+    {
+      "id": "tie.tail",
+      "path": [
+        "art.tie.tail"
+      ],
+      "bounds": [
+        855,
+        1080,
+        1000,
+        1590
+      ],
+      "visible": true,
+      "file": "tie.tail.png",
+      "width": 145,
+      "height": 510,
+      "sha256": "ce5ca19fc11c548a91859207a820056b96fe87e0e022064fa574a78da15b0659"
+    },
+    {
+      "id": "lapel.l",
+      "path": [
+        "art.lapel.l"
+      ],
+      "bounds": [
+        910,
+        778,
+        1265,
+        1610
+      ],
+      "visible": true,
+      "file": "lapel.l.png",
+      "width": 355,
+      "height": 832,
+      "sha256": "3293ef2bebd3319a23005d53b9b5ad483cd3905940a8a05405592b5905f0ace8"
+    },
+    {
+      "id": "lapel.r",
+      "path": [
+        "art.lapel.r"
+      ],
+      "bounds": [
+        600,
+        777,
+        915,
+        1610
+      ],
+      "visible": true,
+      "file": "lapel.r.png",
+      "width": 315,
+      "height": 833,
+      "sha256": "507970df39a26ef35cdf177e3af6a3a66d2cced1b2ffeac3ae088ab0c7a79627"
+    },
+    {
+      "id": "shirt",
+      "path": [
+        "art.shirt"
+      ],
+      "bounds": [
+        720,
+        770,
+        1100,
+        1630
+      ],
+      "visible": true,
+      "file": "shirt.png",
+      "width": 380,
+      "height": 860,
+      "sha256": "2d9b5bf55dd82cde51efedd3dd76dc0a378e9b7fe3b7555bbcc0b111c223880e"
+    },
+    {
+      "id": "neck",
+      "path": [
+        "art.neck"
+      ],
+      "bounds": [
+        765,
+        725,
+        1100,
+        1030
+      ],
+      "visible": true,
+      "file": "neck.png",
+      "width": 335,
+      "height": 305,
+      "sha256": "79c199c678911f9c6a3db421985de1b2839adc01e25fa144456dded4e4dc1097"
+    },
+    {
+      "id": "body.base",
+      "path": [
+        "art.body.base"
+      ],
+      "bounds": [
+        439,
+        750,
+        1359,
+        2010
+      ],
+      "visible": true,
+      "file": "body.base.png",
+      "width": 920,
+      "height": 1260,
+      "sha256": "95c2dcff6f504b2eb208f56ab205cff8002fc2e6e0ccc247206c7d96850d3711"
+    }
+  ],
+  "source": {
+    "path": "../source/hibiki-v3-art-r5.psd",
+    "sha256": "906400b16824dfca658443941800df2684e85ffe6b006611745d48e92e3c9ee5"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "PARTIAL; not Human Acceptance",
+  "model": "../model-head-r28.json",
+  "psd": "../source/hibiki-v3-art-r28.psd",
+  "preview": "http://127.0.0.1:8796/v3/preview.html",
+  "author": "http://127.0.0.1:8796/v3/author.html",
+  "implemented": [
+    "Bilateral inward/outward elbow contours, clavicle-aware IK and captured bend side",
+    "Independent mouth open/form, gaze, blink, brows and authored head projection",
+    "Shared facial depth sampled after expression shapes to preserve closed surface coincidence",
+    "Eight conversation states, independent expression/audio/manual arms and secondary hair/cloth damping",
+    "Local audio RMS and explicit silence after stop/end; no automatic synthetic fallback",
+    "Responsive view fitting, visibility pause, context restoration and resource disposal"
+  ],
+  "verification": {
+    "unitTests": {
+      "passed": 16,
+      "scope": "evaluation, IK, surface hierarchy, shoulder solver, motion arbitration, post-expression shared depth"
+    },
+    "elbowAuthoredChecks": {
+      "count": 54,
+      "inverted": 0
+    },
+    "closedEyes": {
+      "image": "closed-eyes-r28.jpg",
+      "observation": "Both eyes close; duplicated static lash in front hair removed. Fringe matte and skin boundaries still need finishing."
+    },
+    "responsive": {
+      "image": "mobile-explain-r25.jpg",
+      "model": "local model-head-r23.json",
+      "viewport": [
+        390,
+        844
+      ],
+      "observation": "Both explaining hands fit; controls below stage remain reachable. This is a browser viewport check, not physical-device proof.",
+      "correction": "Filename r25 identified the source-work revision, but the preview load path remained r23. Corrected after finding a duplicated model path; this screenshot is not r25 validation."
+    },
+    "audio": {
+      "metrics": "audio-r16-metrics.json",
+      "model": "local model-head-r16.json",
+      "source": "Windows SAPI Haruka synthetic Japanese speech WAV, 500616 bytes, generated locally; no human recording or external TTS",
+      "observation": "Measured audio drives mouth; after end the visible status remains silent, not synthetic speech. Earlier PSD revision, current audio implementation."
+    }
+  },
+  "remaining": [
+    "Hair alpha/skin edge finish and high-angle head shape",
+    "Finger crease/web volume, sleeve back shading and shoulder/chest compound shape",
+    "Final integrated visual review and measured performance on intended target",
+    "Human Acceptance of identity and natural movement"
+  ],
+  "performanceCaution": "Metrics measure CPU evaluation and WebGL submission only, not GPU completion. Texture byte count is an estimate. No performance guarantee.",
+  "previewLoadCorrection": "At cca71ae the author screen used r28, but preview loaded uncommitted r23 while metrics mislabeled r28. This checkpoint does not prove r28 conversation rendering. Fixed by a single MODEL_PATH and manifest identity in diagnostics."
+}

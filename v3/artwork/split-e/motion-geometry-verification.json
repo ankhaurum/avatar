@@ -1,0 +1,613 @@
+{
+  "neutralMaximumVertexError": 0.009999999999990905,
+  "neutralVisibleMaximumVertexError": 6.10156250786531e-05,
+  "poses": {
+    "idle": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "listening": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9933163193233597,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9866389781326199,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9799534681772527,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9732748116545665,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "speaking": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9610018795717249,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9218518314406126,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.8825096158505866,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.8429413967692023,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "explain": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.8894726617597105,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.7793293026368813,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.668895011427844,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.5574564849436627,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "nod": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "happy": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9242992918970091,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.8488825581278941,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.7735418599357218,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.6980241010636249,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "surprised": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9901388594117247,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9802664624007926,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9704093241178526,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9605521858349126,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "thinking": [
+      {
+        "progress": 0,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.9997558593745454,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.25,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.8296821345280535,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.5,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.6529827381952756,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 0.75,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.4662635733996517,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "progress": 1,
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.2607772200062246,
+        "locations": {},
+        "reversed": []
+      }
+    ]
+  },
+  "independentParameters": {
+    "body.x": {
+      "maximumVertexChange": 70.00001525878906
+    },
+    "body.y": {
+      "maximumVertexChange": 40
+    },
+    "body.lean": {
+      "maximumVertexChange": 109.88253784179688
+    },
+    "body.breath": {
+      "maximumVertexChange": 2.49932861328125
+    },
+    "chest.turn": {
+      "maximumVertexChange": 6.99993896484375
+    },
+    "head.tilt": {
+      "maximumVertexChange": 58.59632110595703
+    },
+    "head.yaw": {
+      "maximumVertexChange": 5.818603515625
+    },
+    "head.pitch": {
+      "maximumVertexChange": 2.399993896484375
+    },
+    "hair.sway": {
+      "maximumVertexChange": 5
+    },
+    "cloth.sway": {
+      "maximumVertexChange": 2.99688720703125
+    },
+    "mouth.open": {
+      "maximumVertexChange": 8
+    },
+    "mouth.smile": {
+      "maximumVertexChange": 1.78936767578125
+    },
+    "gaze.x": {
+      "maximumVertexChange": 1.3782958984375
+    },
+    "gaze.y": {
+      "maximumVertexChange": 0.88604736328125
+    },
+    "eye.r.blink": {
+      "maximumVertexChange": 4.814605712890625
+    },
+    "brow.r.raise": {
+      "maximumVertexChange": 2.96319580078125
+    },
+    "eye.l.blink": {
+      "maximumVertexChange": 4.673004150390625
+    },
+    "brow.l.raise": {
+      "maximumVertexChange": 2.8228607177734375
+    },
+    "shoulder.r.lift": {
+      "maximumVertexChange": 12
+    },
+    "arm.r.upper": {
+      "maximumVertexChange": 794.1978149414062
+    },
+    "arm.r.elbow": {
+      "maximumVertexChange": 917.36181640625
+    },
+    "wrist.r.rotation": {
+      "maximumVertexChange": 86.7265739440918
+    },
+    "wrist.r.bend": {
+      "maximumVertexChange": 16.942138671875
+    },
+    "forearm.r.twist": {
+      "maximumVertexChange": 176.49148559570312
+    },
+    "finger.r.thumb.mcp": {
+      "maximumVertexChange": 9.504638671875
+    },
+    "finger.r.thumb.pip": {
+      "maximumVertexChange": 5.614013671875
+    },
+    "finger.r.thumb.dip": {
+      "maximumVertexChange": 2.9083251953125
+    },
+    "finger.r.index.mcp": {
+      "maximumVertexChange": 9.844970703125
+    },
+    "finger.r.index.pip": {
+      "maximumVertexChange": 5.06591796875
+    },
+    "finger.r.index.dip": {
+      "maximumVertexChange": 3.0459136962890625
+    },
+    "finger.r.middle.mcp": {
+      "maximumVertexChange": 11.3919677734375
+    },
+    "finger.r.middle.pip": {
+      "maximumVertexChange": 6.6319732666015625
+    },
+    "finger.r.middle.dip": {
+      "maximumVertexChange": 4.257568359375
+    },
+    "finger.r.ring.mcp": {
+      "maximumVertexChange": 9.0074462890625
+    },
+    "finger.r.ring.pip": {
+      "maximumVertexChange": 5.8531341552734375
+    },
+    "finger.r.ring.dip": {
+      "maximumVertexChange": 3.4556732177734375
+    },
+    "finger.r.little.mcp": {
+      "maximumVertexChange": 2.451904296875
+    },
+    "finger.r.little.pip": {
+      "maximumVertexChange": 0.75701904296875
+    },
+    "finger.r.little.dip": {
+      "maximumVertexChange": 0.4464263916015625
+    },
+    "shoulder.l.lift": {
+      "maximumVertexChange": 12
+    },
+    "arm.l.upper": {
+      "maximumVertexChange": 910.9586186408997
+    },
+    "arm.l.elbow": {
+      "maximumVertexChange": 708.7071990966797
+    },
+    "wrist.l.rotation": {
+      "maximumVertexChange": 81.3585205078125
+    },
+    "wrist.l.bend": {
+      "maximumVertexChange": 15.571533203125
+    },
+    "forearm.l.twist": {
+      "maximumVertexChange": 162.26519775390625
+    },
+    "finger.l.thumb.mcp": {
+      "maximumVertexChange": 8.7706298828125
+    },
+    "finger.l.thumb.pip": {
+      "maximumVertexChange": 4.782958984375
+    },
+    "finger.l.thumb.dip": {
+      "maximumVertexChange": 2.481201171875
+    },
+    "finger.l.index.mcp": {
+      "maximumVertexChange": 9.8272705078125
+    },
+    "finger.l.index.pip": {
+      "maximumVertexChange": 4.9874267578125
+    },
+    "finger.l.index.dip": {
+      "maximumVertexChange": 3.43682861328125
+    },
+    "finger.l.middle.mcp": {
+      "maximumVertexChange": 10.7774658203125
+    },
+    "finger.l.middle.pip": {
+      "maximumVertexChange": 6.69378662109375
+    },
+    "finger.l.middle.dip": {
+      "maximumVertexChange": 4.27655029296875
+    },
+    "finger.l.ring.mcp": {
+      "maximumVertexChange": 7.404541015625
+    },
+    "finger.l.ring.pip": {
+      "maximumVertexChange": 5.1368408203125
+    },
+    "finger.l.ring.dip": {
+      "maximumVertexChange": 3.1138916015625
+    },
+    "finger.l.little.mcp": {
+      "maximumVertexChange": 2.0712890625
+    },
+    "finger.l.little.pip": {
+      "maximumVertexChange": 1.36431884765625
+    },
+    "finger.l.little.dip": {
+      "maximumVertexChange": 1.01123046875
+    }
+  },
+  "limits": {
+    "r": {
+      "activeTriangleFlips": 0,
+      "allTriangleFlips": 0,
+      "minActiveAreaRatio": 0.2122247465472323,
+      "locations": {},
+      "reversed": []
+    },
+    "l": {
+      "activeTriangleFlips": 0,
+      "allTriangleFlips": 0,
+      "minActiveAreaRatio": 0.13799720223983952,
+      "locations": {},
+      "reversed": []
+    }
+  },
+  "wardrobeMotion": {
+    "explain": [
+      {
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.8392108642536628,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.6739842563867542,
+        "locations": {},
+        "reversed": []
+      }
+    ],
+    "thinking": [
+      {
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.7115072856346766,
+        "locations": {},
+        "reversed": []
+      },
+      {
+        "activeTriangleFlips": 0,
+        "allTriangleFlips": 0,
+        "minActiveAreaRatio": 0.4088054281782438,
+        "locations": {},
+        "reversed": []
+      }
+    ]
+  },
+  "staticPsdRoundTrip": {
+    "approved-neutral": {
+      "alphaDifferentPixels": 0,
+      "visibleRGBDifferentPixels": 0
+    },
+    "shirt-with-tie": {
+      "alphaDifferentPixels": 349,
+      "visibleRGBDifferentPixels": 349
+    },
+    "shirt-without-tie": {
+      "alphaDifferentPixels": 349,
+      "visibleRGBDifferentPixels": 349
+    },
+    "jacket-without-tie": {
+      "alphaDifferentPixels": 0,
+      "visibleRGBDifferentPixels": 0
+    },
+    "lower-material-exchange": {
+      "alphaDifferentPixels": 0,
+      "visibleRGBDifferentPixels": 0
+    }
+  },
+  "sourceChecks": {
+    "approvedArtwork": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+    "wardrobeE": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99",
+    "motionF": "aff1bd7954656cf4684cb1324bdb091a27c23bce4a4b941e091986cf04ffc677",
+    "splitDAll14PartsAndPsdUnchanged": true
+  },
+  "wardrobeOwnershipRepair": {
+    "shirt-with-tie": {
+      "repairedVisiblePixels": 349,
+      "changedPixelsEqualApprovedMaster": true
+    },
+    "shirt-without-tie": {
+      "repairedVisiblePixels": 349,
+      "changedPixelsEqualApprovedMaster": true
+    }
+  },
+  "note": "Hidden mouth aperture collapses at rest (not rendered); visible neutral vertices preserve coordinates. Planar triangle probes exclude curved depth-tested hand faces (which intentionally turn away and are culled); they use texture alpha>20 at vertices/centroid; misses subpixel slivers and does not establish seam or visual quality. Limits may remain unresolved."
+}

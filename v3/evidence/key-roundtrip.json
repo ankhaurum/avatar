@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-23",
+  "scope": "Edit one elbow shape key in browser, download JSON, compare saved changes, re-import through file chooser, display same key",
+  "savedSHA256": "700af55480087c9a4a322a621caf93dd83badfe5983ed2084cf05786e605bb89",
+  "changes": [
+    {
+      "mesh": "arm.r.fore",
+      "restChanged": false,
+      "keys": [
+        {
+          "at": [
+            1.6599258885636436
+          ],
+          "indices": [
+            0,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "texturesUnchanged": true,
+  "originalIssue": "First re-import raised an image decode error. Exact failing image was unavailable in the original aggregate error.",
+  "repair": "Image-specific diagnostics, response/hash/dimension checks and reuse of verified unchanged images.",
+  "result": "Re-imported file displayed the selected elbow key without error. Test edit remains in downloaded file; production model was not replaced.",
+  "limitations": [
+    "Only this authoring roundtrip is verified, not overall avatar quality.",
+    "Independent body, shoulder, hand twist, finger flexion, expression and conversation work remains."
+  ]
+}

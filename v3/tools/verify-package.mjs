@@ -1,0 +1,11 @@
+// Verify exact indexed source/texture bytes for the shared production candidate.
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';
+const root=process.cwd(),preview=fs.readFileSync('v3/preview.mjs','utf8'),author=fs.readFileSync('v3/author.mjs','utf8'),config=fs.readFileSync('v3/model-source.mjs','utf8');
+const name=/export const MODEL_PATH='([^']+)'/.exec(config)?.[1],motion=/export const MOTION_PATH='([^']+)'/.exec(config)?.[1];if(!name||!motion||!preview.includes('json(MODEL_PATH)')||!preview.includes('new URL(MODEL_PATH,location.href)')||!author.includes('baseURL=new URL(MODEL_PATH,location.href)'))throw Error('Both views must load the shared declared model');
+const modelPath=path.resolve('v3',name),m=JSON.parse(fs.readFileSync(modelPath)),manifestPath=path.resolve(path.dirname(modelPath),m.source.manifest),manifest=JSON.parse(fs.readFileSync(manifestPath)),digest=b=>crypto.createHash('sha256').update(b).digest('hex'),sha=p=>digest(fs.readFileSync(p)),files=[modelPath,manifestPath,path.resolve(path.dirname(manifestPath),manifest.source.path)];
+if(sha(manifestPath)!==m.source.sha256||sha(files[2])!==manifest.source.sha256)throw Error('Source identity mismatch');
+for(const t of m.textures){const file=path.resolve(path.dirname(modelPath),t.file);if(sha(file)!==t.sha256)throw Error('Texture identity mismatch '+t.id);files.push(file);}
+const relative=files.map(p=>path.relative(root,p).replaceAll('\\','/'));if(relative.some(p=>p.startsWith('../')))throw Error('Asset outside repository');
+for(let i=0;i<files.length;i++){const blob=execFileSync('git',['show',':'+relative[i]],{maxBuffer:50*1024*1024});if(digest(blob)!==sha(files[i]))throw Error('Git-index bytes differ '+relative[i]);}
+const motionData=JSON.parse(fs.readFileSync(path.resolve('v3',motion))),ids=new Set(m.parameters.map(p=>p.id));for(const [id,clip]of Object.entries(motionData.states))for(const key of Object.keys(clip.pose))if(!ids.has(key))throw Error('Motion input not present '+id+':'+key);
+console.log(JSON.stringify({model:name,manifest:m.source.manifest,indexedAssets:files.length,sourceSHA256:manifest.source.sha256,modelSHA256:sha(modelPath),scope:'Exact Git-index source/manifest/model/texture bytes; not a visual quality verdict'}));

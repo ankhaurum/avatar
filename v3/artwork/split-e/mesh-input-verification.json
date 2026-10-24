@@ -1,0 +1,15 @@
+{
+  "canvas": [
+    1024,
+    1536
+  ],
+  "meshes": 12,
+  "defaultVisible": 5,
+  "poseKeys": 0,
+  "sourceManifest": "export-manifest.json",
+  "scope": "Existing import contract and initial coordinates only; joint, seam and pose authoring remain unfinished",
+  "trackedManifestSHA256": "d579a509e153b80a5f20e05eae4d0b708cbef5f37d7dbcaa9d2d061a11e9be0c",
+  "trackedPSDSourceSHA256": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99",
+  "trackedTextureCount": 12,
+  "gitIndexClosure": "Verified against Git-normalized JSON bytes and tracked PSD/PNG blobs"
+}

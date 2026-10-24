@@ -1,0 +1,8 @@
+{
+  "purpose": "Hidden skin underpainting only, official central face/eye/lip assets retained and original master unchanged",
+  "tool": "built-in image_gen",
+  "reference": "../../assets/approved-front.png",
+  "output": "skin-underpaint.png",
+  "prompt": "Edit target: attached official character portrait. Produce production underpainting for a layered 2D model. Keep exactly the SAME face identity, facial proportions, eyes, nose, lips, skin coloration, facial mole, expression, head position, neck proportions, lighting, clothing and framing. Remove ONLY all blue scalp hair, bangs, side locks and every blue strand over cheeks and neck; reveal anatomically plausible smooth forehead, temples, ears, jaw outline, full neck and clavicle skin beneath. Bald scalp is intentional hidden production art, not a character design change. Clean continuous natural skin, no blue shadows or residual hairs, no duplicated features. Preserve entire original canvas composition, do not zoom or crop. Transparent background. This is a hidden skin reconstruction asset; no text, no guides, no new accessories.",
+  "compositing": "Photoshop PSD revisions: original skin isolated, blue hair support removed, generated hidden skin registered; original neck center retained. Hair fill uses original master strand patches. Remaining matte edges explicitly unaccepted."
+}

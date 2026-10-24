@@ -1,0 +1,206 @@
+{
+  "format": "hibiki-psd-export",
+  "version": 1,
+  "width": 1024,
+  "height": 1536,
+  "source": {
+    "path": "hibiki-v3-wardrobe-e.psd",
+    "sha256": "8a0be1398fec67b90cadee5d00bdcc1ed4e75458933400f05b71872eee869f99"
+  },
+  "identity": {
+    "file": "../hibiki-static-a.png",
+    "commit": "d8e3a9c",
+    "sha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf"
+  },
+  "layers": [
+    {
+      "id": "body-visible",
+      "file": "parts/body-visible.png",
+      "sha256": "679e74807ed79725f7e0493a4514550b7682fec669a8eb17b2e7a05ec4b86463",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": true,
+      "psdGroup": "10_BODY_identity"
+    },
+    {
+      "id": "lower-approved-visible",
+      "file": "parts/lower-approved-visible.png",
+      "sha256": "d3911981bfe0c442a4023c2d80e66473b15615ead2b3ca26162c39a4b9234557",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": true,
+      "psdGroup": "23_WARDROBE_lower"
+    },
+    {
+      "id": "tie-approved",
+      "file": "parts/tie-approved.png",
+      "sha256": "efd6ddc032b91e5ffd6122b25287e48f44ce96782b0e1501764a7c0f55a2d991",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": true,
+      "psdGroup": "22_WARDROBE_tie"
+    },
+    {
+      "id": "shirt-approved-visible",
+      "file": "parts/shirt-approved-visible.png",
+      "sha256": "492feca890d9acb17b43991186fefc52f2bd324f1393aa0eaf19bf0ef25eaa46",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": true,
+      "psdGroup": "21_WARDROBE_shirt"
+    },
+    {
+      "id": "jacket-approved",
+      "file": "parts/jacket-approved.png",
+      "sha256": "204bbb62ea437ad890237148eed4b7a4e0fbeffbf2fc1a0c0c01cb7e21b1f554",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": true,
+      "psdGroup": "20_WARDROBE_jacket"
+    },
+    {
+      "id": "lower-complete",
+      "file": "parts/lower-complete.png",
+      "sha256": "369a367eda0ec3d7d5a5f66b905d4c8dac410a392128efc15e4b875294ac91fb",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "25_LOWER_waist_underlap"
+    },
+    {
+      "id": "shirt-cuffs",
+      "file": "parts/shirt-cuffs.png",
+      "sha256": "2353a10d8257a94fcfe712abc0c5880cdb35b8c5d4d03c21209b020572d738ef",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "21_WARDROBE_shirt",
+      "psdLayers": [
+        "WARDROBE_shirt_cuff_viewer_left",
+        "WARDROBE_shirt_cuff_viewer_right"
+      ]
+    },
+    {
+      "id": "shirt-complete",
+      "file": "parts/shirt-complete.png",
+      "sha256": "d06519b466db0fc507d408575c99adc80ad1f6d6fab49c86f07dca3901869b07",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "24_SHIRT_photographic_fabric_completion"
+    },
+    {
+      "id": "BODY_neck_collar_underlap",
+      "file": "parts/BODY_neck_collar_underlap.png",
+      "sha256": "f6e419e724a59211c1907baca16d9a25b9c8d8f79d3148ae950379d7c9b4d0ac",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "11_BODY_underclothing_paint",
+      "psdLayer": "BODY_neck_collar_underlap"
+    },
+    {
+      "id": "BODY_arm_viewer_left_hidden",
+      "file": "parts/BODY_arm_viewer_left_hidden.png",
+      "sha256": "e6bbf166524d6c27f4cdcf52a737043c85e5960d584e44d3e0a206c307ef1e49",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "11_BODY_underclothing_paint",
+      "psdLayer": "BODY_arm_viewer_left_hidden"
+    },
+    {
+      "id": "BODY_arm_viewer_right_hidden",
+      "file": "parts/BODY_arm_viewer_right_hidden.png",
+      "sha256": "0669dded7df94cc31c7ba4f017ddd23716393ccd95179ca20f17fb55ad5ca1eb",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "11_BODY_underclothing_paint",
+      "psdLayer": "BODY_arm_viewer_right_hidden"
+    },
+    {
+      "id": "BODY_torso_hidden_surface",
+      "file": "parts/BODY_torso_hidden_surface.png",
+      "sha256": "c033555f323b436913352a9386b409621e6a19d6d795e76ac86d1a2187c75f5a",
+      "width": 1024,
+      "height": 1536,
+      "bounds": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "visible": false,
+      "psdGroup": "11_BODY_underclothing_paint",
+      "psdLayer": "BODY_torso_hidden_surface"
+    }
+  ],
+  "scope": "HV3-04 input registration only; full-canvas textures retain their original pixel coordinates; starter grids are not sculpted joints or pose keys"
+}

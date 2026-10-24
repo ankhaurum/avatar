@@ -1,0 +1,51 @@
+{
+  "masterSHA256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96",
+  "candidate": "32",
+  "regions": {
+    "nose": {
+      "canvasBounds": [
+        910,
+        535,
+        990,
+        610
+      ],
+      "pixels": 6000,
+      "changedRGB": 0,
+      "maximumRGBDifference": 0
+    },
+    "mole": {
+      "canvasBounds": [
+        795,
+        515,
+        815,
+        535
+      ],
+      "pixels": 400,
+      "changedRGB": 0,
+      "maximumRGBDifference": 0
+    },
+    "cheek": {
+      "canvasBounds": [
+        820,
+        545,
+        870,
+        600
+      ],
+      "pixels": 2750,
+      "changedRGB": 1,
+      "maximumRGBDifference": 1
+    },
+    "chin": {
+      "canvasBounds": [
+        915,
+        720,
+        975,
+        740
+      ],
+      "pixels": 1200,
+      "changedRGB": 0,
+      "maximumRGBDifference": 0
+    }
+  },
+  "scope": "Selected visible RGB only; does not prove full-image or moving Identity"
+}

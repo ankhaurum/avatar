@@ -1,0 +1,65 @@
+{
+  "block": "HV3-01",
+  "date": "2026-10-23",
+  "scope": "Selected public model observations and static analysis; not full authoring/Core reconstruction",
+  "identity": {
+    "path": "assets/approved-front.png",
+    "sha256": "4d2e31e4171cca295e807c578946a754c0167c868160615268afbc0634364c96"
+  },
+  "records": [
+    {
+      "file": "v3-material-research-20261021/natori-editor-keys.json",
+      "sha256": "1894ada1a4566303f1188d767cec24ce733a04463a94972e6a54e9ae806710f6",
+      "bytes": 36085,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-material-research-20261021/natori-arm-observation.json",
+      "sha256": "885703e5b1e6678a8d2ebbe5252be234857a4495b85e84346e9279f539c5f5cc",
+      "bytes": 33183,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-material-research-20261021/natori-wrist-rotation-20261023.json",
+      "sha256": "bd79a29cd9f8588e3505912d3ac20879eb5c0a0c344b3c12e5ca485ad4602eb1",
+      "bytes": 8166,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-material-research-20261021/four-editor-keys-20261023.json",
+      "sha256": "de5059d027dec5ad53c6447610acd683af01c00504ae12d7f49e6b9c6bbb252b",
+      "bytes": 104941,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-material-research-20261021/rea-haru-arm-pose-20261023.json",
+      "sha256": "18e1c088508fe26aaf7e0a228514725e81e291b34be4bb548e2ed529d11d8512",
+      "bytes": 27850,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-material-research-20261021/rea-motion-physics-pose-20261022.json",
+      "sha256": "a30604b8de989b3084563fdd6f35cf2aeb2c75672678978156abb323a50c8186",
+      "bytes": 24721,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-editor-internals-20261022/internal-analysis-manifest.json",
+      "sha256": "81de6bc89f4d29b9324d6d26113ccff252e418f01054ced0f6f76427f17d741e",
+      "bytes": 12827,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-editor-internals-20261022/pipeline-analysis-manifest.json",
+      "sha256": "dd321ba98327b6045a0c53d2ac2d10e0cdfea055681982d64d4de93058fa0b31",
+      "bytes": 3479,
+      "availability": "preserved local research; not redistributed"
+    },
+    {
+      "file": "v3-editor-internals-20261022/bytecode-call-evidence.json",
+      "sha256": "3cff1f192a0e9296f5796443c9eb5f98c3492cec936e09493fa70bff8e9c633f",
+      "bytes": 542106,
+      "availability": "preserved local research; not redistributed"
+    }
+  ]
+}
