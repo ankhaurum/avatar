@@ -1,0 +1,37 @@
+{
+  "source": "d8e3a9c / relaxed source-A hand silhouette",
+  "purpose": "Authored palm/knuckle thickness supplement; front reference XY and boundary topology remain fixed",
+  "status": "Partial sculpt; not open fingers, not full palm anatomy or acceptance",
+  "sides": {
+    "r": {
+      "center": [
+        170,
+        1348
+      ],
+      "radius": [
+        29,
+        62
+      ],
+      "palmGain": 0.6,
+      "wristBlend": [
+        1295,
+        1320
+      ]
+    },
+    "l": {
+      "center": [
+        854,
+        1340
+      ],
+      "radius": [
+        30,
+        62
+      ],
+      "palmGain": 0.6,
+      "wristBlend": [
+        1288,
+        1313
+      ]
+    }
+  }
+}

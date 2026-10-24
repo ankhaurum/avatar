@@ -1,0 +1,42 @@
+{
+  "baseline": "c966c76",
+  "neutralMaximumXYDelta": 0,
+  "nonHandDepthDelta": 0,
+  "handDepthDelta": 4.7987518310546875,
+  "silhouetteAndTopologyUnchanged": true,
+  "sideBounds": {
+    "r": {
+      "before": [
+        133.14100646972656,
+        178.9951934814453
+      ],
+      "after": [
+        133.14100646972656,
+        180.74241638183594
+      ]
+    },
+    "l": {
+      "before": [
+        848.50244140625,
+        888.0850219726562
+      ],
+      "after": [
+        846.3928833007812,
+        888.5745239257812
+      ]
+    }
+  },
+  "nativeSidePainting": {
+    "status": "UNVERIFIED",
+    "transport": "300 second MCP timeout; COM RPC_E_SERVERCALL_RETRYLATER",
+    "savedPSDUnchanged": true
+  },
+  "modelSHA256": "45b5c81ceead84cb9a428f9a93789c3752343ae801b983c5e04066f30a7a0fb8",
+  "note": "Authored palm thickness only. No large finger separation, hidden finger materials or complete hand anatomy claim.",
+  "images": {
+    "before": "approved-a-side-detail-before.png",
+    "after": "approved-a-palm-volume-after.png",
+    "left": "approved-a-palm-volume-left.png"
+  },
+  "artAssessment": "Palm side width is less planar, but curled fingers still lack anatomical separation and full depth sculpt. Not hand completion."
+}

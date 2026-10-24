@@ -2,6 +2,7 @@ import {rigidBlendPoint} from './rigid-blend.mjs?scalar=2';
 import {compileFields,sampleField} from './projection-field.mjs';
 // Original author-data evaluator. No Cubism runtime or legacy V3 imports.
 import {compileSurfaces,surfaceMatrices,surfacePoint} from './surface.mjs?axis=7';
+const frameCompilations=new WeakMap();
 const identity=()=>[1,0,0,1,0,0];
 export function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];}
 export const point=(m,x,y)=>[m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]];
@@ -41,8 +42,10 @@ export function compile(model){
  return {model,params,nodes,meshes,order,shapeIndexes,weightKeys,surfaceOrder:compileSurfaces(model,params),projectionFields:compileFields(model)};
 }
 function bracket(keys,x){if(x<=keys[0])return [[keys[0],1]];if(x>=keys.at(-1))return [[keys.at(-1),1]];for(let i=1;i<keys.length;i++)if(x<=keys[i]){const t=(x-keys[i-1])/(keys[i]-keys[i-1]);return [[keys[i-1],1-t],[keys[i],t]];}}
-export function evaluate(compiled,input={}){
- const {model,params,order,shapeIndexes}=compiled,state={},matrices=new Map(),positions=new Map(),depths=new Map();
+// Optional output reuse is confined to one compiled model. Default frames remain snapshots.
+export function evaluate(compiled,input={},reuse=null){
+ if(reuse&&frameCompilations.get(reuse)!==compiled)throw Error('Output reuse requires the same compiled model');
+ const {model,params,order,shapeIndexes}=compiled,state={},matrices=new Map(),positions=reuse?.positions??new Map(),depths=reuse?.depths??new Map();
  for(const [id,p]of params){const v=input[id]??p.default;check(finite(v),'Non-finite input '+id);state[id]=Math.max(p.min,Math.min(p.max,v));}
  for(const n of order){
   const value=(key,base=0)=>(n.base?.[key]??base)+(n.bindings?.[key]||[]).reduce((s,t)=>s+state[t.parameter]*t.factor,0);
@@ -53,13 +56,15 @@ export function evaluate(compiled,input={}){
   const surfaceTransforms=surfaceMatrices(compiled.surfaceOrder,state);
  const rigidMatrices=new Map();rigidMatrices.weightKeys=compiled.weightKeys;if(model.meshes.some(m=>m.blend==='dual-quaternion'))for(const [id,a]of matrices)rigidMatrices.set(id,[a[0],a[2],0,a[4],a[1],a[3],0,a[5],0,0,1,0]);
  for(const mesh of model.meshes){
-  const local=Float64Array.from(mesh.rest),scratch=new Float64Array(3);let localDepth=null;
+  const workspaces=compiled.meshWorkspaces??=new WeakMap();let workspace=workspaces.get(mesh);
+  if(!workspace||workspace.local.length!==mesh.rest.length){workspace={local:new Float64Array(mesh.rest.length),scratch:new Float64Array(3),depth:new Float64Array(mesh.rest.length/2)};workspaces.set(mesh,workspace);}
+  const {local,scratch}=workspace;local.set(mesh.rest);let localDepth=null;
   for(const shape of mesh.shapes||[]){
    let corners=[{at:[],weight:1}];
    for(const a of shape.axes)corners=corners.flatMap(c=>bracket(a.keys,state[a.parameter]).map(([v,w])=>({at:[...c.at,v],weight:c.weight*w})));
-   for(const c of corners){if(c.weight===0)continue;const key=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=key.delta[i]*c.weight;if(key.depthDelta){localDepth??=new Float64Array(local.length/2);for(let i=0;i<localDepth.length;i++)localDepth[i]+=key.depthDelta[i]*c.weight;}}
+   for(const c of corners){if(c.weight===0)continue;const key=shapeIndexes.get(shape).get(c.at.join('|'));for(let i=0;i<local.length;i++)local[i]+=key.delta[i]*c.weight;if(key.depthDelta){if(!localDepth){localDepth=workspace.depth;localDepth.fill(0);}for(let i=0;i<localDepth.length;i++)localDepth[i]+=key.depthDelta[i]*c.weight;}}
   }
-  const out=new Float32Array(local.length),matrix=matrices.get(mesh.node),depth=new Float32Array(local.length/2);
+  let out=positions.get(mesh.id),depth=depths.get(mesh.id);if(!out||out.length!==local.length)out=new Float32Array(local.length);else out.fill(0);if(!depth||depth.length!==local.length/2)depth=new Float32Array(local.length/2);else depth.fill(0);const matrix=matrices.get(mesh.node);
   if(mesh.surface)for(let i=0;i<local.length;i+=2){const p=surfacePoint(mesh.surface,surfaceTransforms,i/2,local[i],local[i+1],(mesh.surface.depthField?sampleField(compiled.projectionFields.get(mesh.surface.depthField),local[i],local[i+1]):mesh.surface.depth[i/2])+(localDepth?.[i/2]??0),scratch);local[i]=p[0];local[i+1]=p[1];depth[i/2]=p[2];}
   for(let i=0;i<local.length;i+=2){
    if(mesh.weights&&mesh.blend==='dual-quaternion'){const p=rigidBlendPoint(mesh.weights[i/2],rigidMatrices,local[i],local[i+1],0,scratch);out[i]=p[0];out[i+1]=p[1];}
@@ -76,5 +81,5 @@ export function evaluate(compiled,input={}){
   for(const v of seam.vertices)updates.push({...v,x,y,strength});
  }
  for(const v of updates){const p=positions.get(v.mesh),i=v.vertex*2;p[i]+=(v.x-p[i])*v.strength;p[i+1]+=(v.y-p[i+1])*v.strength;}
- return {positions,matrices,state,depths};
+ const result={positions,matrices,state,depths};frameCompilations.set(result,compiled);return result;
 }
