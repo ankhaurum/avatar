@@ -1,0 +1,52 @@
+{
+  "observedAt": "2026-10-24T23:46:50.8494783+09:00",
+  "status": "PARTIAL_NOT_ACCEPTED",
+  "cmo3": "v3/artwork/split-e/hibiki-v3-cubism-r1.cmo3",
+  "cmo3Sha256": "5f9c559ade74400be9b2cf38c28413becaaabda414737ed96b8c852f28be2005",
+  "workflow": "Cubism GUI deformer generation; manually corrected assignment before creation",
+  "corrections": [
+    "Viewer-left hand edge moved from lower body to anatomical right arm",
+    "LOWER_edge_recovered_from_hand moved from left arm to lower body",
+    "Three JACKET hem recovery parts moved from lower body to breathing/torso",
+    "Hidden hand surfaces, palms, wrists, cuffs and arm underlayers assigned to corresponding arms",
+    "Mouth tongue, teeth, cavity and lip underlay assigned to mouth",
+    "Closed eyelids assigned to corresponding eye",
+    "Neck underlay assigned to neck; torso and shirt material layers assigned to torso",
+    "Only APPROVED_A_UNMODIFIED excluded from generated hierarchy"
+  ],
+  "keyforms": {
+    "parameter": "ParamAngleZ",
+    "rotationDegrees": [
+      -8,
+      0,
+      8
+    ],
+    "restoredValue": 0,
+    "visuallyChanged": true,
+    "apiReadback": true,
+    "keys": [
+      -30,
+      0,
+      30
+    ]
+  },
+  "defects": [
+    "Head tilt exposes white gaps at neck/hair junction",
+    "Existing neck underlay visibility did not resolve the gaps; restored original visibility",
+    "Face eyes/iris/brows/nose remain combined",
+    "Full shirt completion still spans torso and sleeves; needs suitable split before independent arm deformation"
+  ],
+  "notCompleted": [
+    "Final mesh refinement",
+    "High-angle geometry and hidden-surface correction",
+    "Bilateral arm/hand/finger keyforms",
+    "Conversation and expressions",
+    "moc3/motion export",
+    "Independent V3 integration",
+    "Human Acceptance"
+  ],
+  "sourcePsdSha256": "f06eb1e5e129867b496c01463d757dde91d19fef01ea778bacea44bca931e7d0",
+  "sourcePsdUnchanged": true,
+  "approvedArtworkUnchanged": true,
+  "publicPagesChanged": false
+}
