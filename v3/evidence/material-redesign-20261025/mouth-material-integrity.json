@@ -58,6 +58,10 @@
       "interior_holes_at_alpha16": 0
     }
   },
-  "psd_sha256": "0925c7368709ccb463f0684d4bc7809a5865ea0cdf617cd3f5689ec27885cb97",
+  "psd_sha256": "ea97b7b4e998036b364d85b4385f245b2ccda4bc6c988a0bee9fa2e9108eade2",
+  "inner_alpha_changed": {
+    "0": 0,
+    "1": 0
+  },
   "passed_integrity": true
 }

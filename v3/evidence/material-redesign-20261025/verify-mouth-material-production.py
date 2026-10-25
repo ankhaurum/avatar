@@ -30,7 +30,8 @@ for name in ["MOUTH_cavity_continuous_painted","MOUTH_inner_wall_L_painted","MOU
     components=flood(solid); void=np.pad(~solid,1,constant_values=True); holes=max(0,len(flood(void))-1)
     result["painted_parts"][name]={"sha256":digest(path),"bbox":box,"alpha_range":[int(a.min()),int(a.max())],"components_at_alpha16":len(components),"interior_holes_at_alpha16":holes}
 result["psd_sha256"]=digest(Path(sys.argv[3]) if len(sys.argv)>3 else base/"hibiki-mouth-material-production.psd")
-result["passed_integrity"]=all(v["changed_rgba_pixels"]==0 for v in result["comparisons"].values()) and all(v["components_at_alpha16"]==1 and v["interior_holes_at_alpha16"]==0 for v in result["painted_parts"].values())
+result["inner_alpha_changed"]={str(i):int(np.sum(rgba("mouth-inner-source-"+str(i)+".png")[:,:,3]!=rgba("mouth-inner-refined-"+str(i)+".png")[:,:,3])) for i in range(2)}
+result["passed_integrity"]=all(v==0 for v in result["inner_alpha_changed"].values()) and all(v["changed_rgba_pixels"]==0 for v in result["comparisons"].values()) and all(v["components_at_alpha16"]==1 and v["interior_holes_at_alpha16"]==0 for v in result["painted_parts"].values())
 target.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print(json.dumps(result,ensure_ascii=False))
 if not result["passed_integrity"]: sys.exit(1)
