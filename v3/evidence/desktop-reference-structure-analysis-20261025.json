@@ -1,0 +1,8832 @@
+{
+  "date": "2026-10-25",
+  "scope": "Desktop reference structure analysis; no Hibiki asset production or source model save",
+  "editorModelCount": 9,
+  "sourceHashesUnchanged": true,
+  "runtimeBundles": 14,
+  "runtimeLoadSuccess": 13,
+  "runtimeRecords": [
+    {
+      "model": "kei_ja__kei_vowels_pro",
+      "drawables": 59,
+      "parameters": 31,
+      "maskedDrawables": 11,
+      "poseGroups": [],
+      "loadError": null
+    },
+    {
+      "model": "kei_ja__kei_basic_free",
+      "drawables": 59,
+      "parameters": 27,
+      "maskedDrawables": 11,
+      "poseGroups": [],
+      "loadError": null
+    },
+    {
+      "model": "haru_ja__haru",
+      "drawables": 84,
+      "parameters": 33,
+      "maskedDrawables": 0,
+      "poseGroups": [
+        [
+          {
+            "Id": "PARTS_01_ARM_R_A_001",
+            "Link": []
+          },
+          {
+            "Id": "PARTS_01_ARM_R_B_001",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PARTS_01_ARM_L_A_001",
+            "Link": []
+          },
+          {
+            "Id": "PARTS_01_ARM_L_B_001",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "izumi_ja__izumi_illust",
+      "drawables": 69,
+      "parameters": 30,
+      "maskedDrawables": 0,
+      "poseGroups": [],
+      "loadError": null
+    },
+    {
+      "model": "mao_ja__mao_pro",
+      "drawables": 260,
+      "parameters": 128,
+      "maskedDrawables": 37,
+      "poseGroups": [
+        [
+          {
+            "Id": "PartArmLA",
+            "Link": []
+          },
+          {
+            "Id": "PartArmLB",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PartArmRA",
+            "Link": []
+          },
+          {
+            "Id": "PartArmRB",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "natori_ja__natori_pro_t06",
+      "drawables": 176,
+      "parameters": 96,
+      "maskedDrawables": 9,
+      "poseGroups": [
+        [
+          {
+            "Id": "PartArmAL",
+            "Link": []
+          },
+          {
+            "Id": "PartArmCL",
+            "Link": []
+          },
+          {
+            "Id": "PartArmDL",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PartArmAR",
+            "Link": []
+          },
+          {
+            "Id": "PartArmBR",
+            "Link": []
+          },
+          {
+            "Id": "PartArmER",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PartWatchA",
+            "Link": []
+          },
+          {
+            "Id": "PartWatchB",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Haru",
+      "drawables": 84,
+      "parameters": 42,
+      "maskedDrawables": 10,
+      "poseGroups": [
+        [
+          {
+            "Id": "Part01ArmRA001",
+            "Link": []
+          },
+          {
+            "Id": "Part01ArmRB001",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "Part01ArmLA001",
+            "Link": []
+          },
+          {
+            "Id": "Part01ArmLB001",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Hiyori",
+      "drawables": 134,
+      "parameters": 70,
+      "maskedDrawables": 8,
+      "poseGroups": [
+        [
+          {
+            "Id": "PartArmA",
+            "Link": []
+          },
+          {
+            "Id": "PartArmB",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Mao",
+      "drawables": 262,
+      "parameters": 132,
+      "maskedDrawables": 37,
+      "poseGroups": [
+        [
+          {
+            "Id": "PartArmLA",
+            "Link": []
+          },
+          {
+            "Id": "PartArmLB",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PartArmRA",
+            "Link": []
+          },
+          {
+            "Id": "PartArmRB",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Mark",
+      "drawables": 30,
+      "parameters": 21,
+      "maskedDrawables": 6,
+      "poseGroups": [],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Natori",
+      "drawables": 176,
+      "parameters": 96,
+      "maskedDrawables": 9,
+      "poseGroups": [
+        [
+          {
+            "Id": "PartArmAL",
+            "Link": []
+          },
+          {
+            "Id": "PartArmCL",
+            "Link": []
+          },
+          {
+            "Id": "PartArmDL",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PartArmAR",
+            "Link": []
+          },
+          {
+            "Id": "PartArmBR",
+            "Link": []
+          },
+          {
+            "Id": "PartArmER",
+            "Link": []
+          }
+        ],
+        [
+          {
+            "Id": "PartWatchA",
+            "Link": []
+          },
+          {
+            "Id": "PartWatchB",
+            "Link": []
+          }
+        ]
+      ],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Ren",
+      "drawables": null,
+      "parameters": null,
+      "maskedDrawables": null,
+      "poseGroups": [],
+      "loadError": "Error: Official Core did not load model\n    at load (http://127.0.0.1:8796/observer.js:17:109)"
+    },
+    {
+      "model": "CubismWebSamples-develop__Rice",
+      "drawables": 178,
+      "parameters": 96,
+      "maskedDrawables": 12,
+      "poseGroups": [],
+      "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Wanko",
+      "drawables": 34,
+      "parameters": 25,
+      "maskedDrawables": 0,
+      "poseGroups": [],
+      "loadError": null
+    }
+  ],
+  "renCompatibility": {
+    "coreVersion": 83951616,
+    "latestMocVersion": 5,
+    "observedMocHeaderVersionByte": 6
+  },
+  "editorParameters": {
+    "haru_t01.cmo3": [
+      {
+        "Id": "PARAM_ANGLE_X",
+        "Name": "角度 X",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Y",
+        "Name": "角度 Y",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Z",
+        "Name": "角度 Z",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_OPEN",
+        "Name": "左眼　開閉",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 1,
+        "Max": 2,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.8
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_SMILE",
+        "Name": "左眼　笑顔",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_OPEN",
+        "Name": "右眼　開閉",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 1,
+        "Max": 2,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.8
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_SMILE",
+        "Name": "右眼　笑顔",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_FORM",
+        "Name": "眼　変形",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_X",
+        "Name": "目玉 X",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_Y",
+        "Name": "目玉 Y",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_FORM",
+        "Name": "目玉　収縮",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_Y",
+        "Name": "左眉　上下",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_Y",
+        "Name": "右眉　上下",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_X",
+        "Name": "左眉　左右",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_X",
+        "Name": "右眉　左右",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_ANGLE",
+        "Name": "左眉　角度",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_ANGLE",
+        "Name": "右眉　角度",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_FORM",
+        "Name": "左眉　変形",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_FORM",
+        "Name": "右眉　変形",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_FORM",
+        "Name": "口　変形",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 1,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_OPEN_Y",
+        "Name": "口　開閉",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_TERE",
+        "Name": "照れ",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_X",
+        "Name": "体の回転　X",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Y",
+        "Name": "体の回転　Y",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Z",
+        "Name": "体の回転　Z",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BREATH",
+        "Name": "呼吸",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_L_A",
+        "Name": "左腕 A",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0.5,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_R_A",
+        "Name": "右腕 A",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0.5,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_L_B",
+        "Name": "左腕 B",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 5,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_R_B",
+        "Name": "右腕 B",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 5,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BUST_Y",
+        "Name": "胸　揺れ",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_FRONT",
+        "Name": "髪揺れ　前",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_BACK",
+        "Name": "髪揺れ　後ろ",
+        "GroupUID": "a94f2c140b164d05b70bcac2eab271b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "izumi_anime_t01.cmo3": [
+      {
+        "Id": "PARAM_ANGLE_X",
+        "Name": "角度 X",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": -30,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": -15
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Y",
+        "Name": "角度 Y",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Z",
+        "Name": "角度 Z",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_OPEN",
+        "Name": "左眼　開閉",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_SMILE",
+        "Name": "左眼　笑顔",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_OPEN",
+        "Name": "右眼　開閉",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_SMILE",
+        "Name": "右眼　笑顔",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_X",
+        "Name": "目玉 X",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0.7,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.7
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_Y",
+        "Name": "目玉 Y",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_FORM",
+        "Name": "目玉　縮小",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_Y",
+        "Name": "左眉　上下",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_Y",
+        "Name": "右眉　上下",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_X",
+        "Name": "左眉　左右",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_X",
+        "Name": "右眉　左右",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_ANGLE",
+        "Name": "左眉　角度",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_ANGLE",
+        "Name": "右眉　角度",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_FORM",
+        "Name": "左眉　変形",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_FORM",
+        "Name": "右眉　変形",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_FORM",
+        "Name": "口　変形",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 1,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_OPEN_Y",
+        "Name": "口　開閉",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_TERE",
+        "Name": "照れ",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_X",
+        "Name": "体の回転　X",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": -10,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": -5
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Y",
+        "Name": "体の回転　Y",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Z",
+        "Name": "体の回転　Z",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_L",
+        "Name": "左腕",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_R",
+        "Name": "右腕",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BREATH",
+        "Name": "呼吸",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_FRONT",
+        "Name": "髪揺れ　前",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_SIDE",
+        "Name": "髪揺れ　横",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_BACK",
+        "Name": "髪揺れ　後ろ",
+        "GroupUID": "44054576f34f47d0bdc5ce671598bbb8",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "izumi_atsu_t01.cmo3": [
+      {
+        "Id": "PARAM_ANGLE_X",
+        "Name": "角度 X",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": -30,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": -15
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Y",
+        "Name": "角度 Y",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Z",
+        "Name": "角度 Z",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_OPEN",
+        "Name": "左眼　開閉",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_SMILE",
+        "Name": "左眼　笑顔",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_OPEN",
+        "Name": "右眼　開閉",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_SMILE",
+        "Name": "右眼　笑顔",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_X",
+        "Name": "目玉 X",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0.7,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.7
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_Y",
+        "Name": "目玉 Y",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_FORM",
+        "Name": "目玉　縮小",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_Y",
+        "Name": "左眉　上下",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_Y",
+        "Name": "右眉　上下",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_X",
+        "Name": "左眉　左右",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_X",
+        "Name": "右眉　左右",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_ANGLE",
+        "Name": "左眉　角度",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_ANGLE",
+        "Name": "右眉　角度",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_FORM",
+        "Name": "左眉　変形",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_FORM",
+        "Name": "右眉　変形",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_FORM",
+        "Name": "口　変形",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 1,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_OPEN_Y",
+        "Name": "口　開閉",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_TERE",
+        "Name": "照れ",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": []
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_X",
+        "Name": "体の回転　X",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": -10,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": -5
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Y",
+        "Name": "体の回転　Y",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Z",
+        "Name": "体の回転　Z",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_L",
+        "Name": "左腕",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_R",
+        "Name": "右腕",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BREATH",
+        "Name": "呼吸",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_FRONT",
+        "Name": "髪揺れ　前",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_SIDE",
+        "Name": "髪揺れ　横",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_BACK",
+        "Name": "髪揺れ　後ろ",
+        "GroupUID": "c084b50ea53e42008fc0a291104462cf",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "izumi_illust_t01.cmo3": [
+      {
+        "Id": "PARAM_ANGLE_X",
+        "Name": "角度 X",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": -30,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": -15
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Y",
+        "Name": "角度 Y",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Z",
+        "Name": "角度 Z",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_OPEN",
+        "Name": "左眼　開閉",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_SMILE",
+        "Name": "左眼　笑顔",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_OPEN",
+        "Name": "右眼　開閉",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_SMILE",
+        "Name": "右眼　笑顔",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_X",
+        "Name": "目玉 X",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0.7,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.7
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_Y",
+        "Name": "目玉 Y",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_FORM",
+        "Name": "目玉　縮小",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_Y",
+        "Name": "左眉　上下",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_Y",
+        "Name": "右眉　上下",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_X",
+        "Name": "左眉　左右",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_X",
+        "Name": "右眉　左右",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_ANGLE",
+        "Name": "左眉　角度",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_ANGLE",
+        "Name": "右眉　角度",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_FORM",
+        "Name": "左眉　変形",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_FORM",
+        "Name": "右眉　変形",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_FORM",
+        "Name": "口　変形",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 1,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_OPEN_Y",
+        "Name": "口　開閉",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_TERE",
+        "Name": "照れ",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": []
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_X",
+        "Name": "体の回転　X",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": -10,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": -5
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Y",
+        "Name": "体の回転　Y",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Z",
+        "Name": "体の回転　Z",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_L",
+        "Name": "左腕",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_R",
+        "Name": "右腕",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BREATH",
+        "Name": "呼吸",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_FRONT",
+        "Name": "髪揺れ　前",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_SIDE",
+        "Name": "髪揺れ　横",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_BACK",
+        "Name": "髪揺れ　後ろ",
+        "GroupUID": "410a1524a82b4b25a2d082ec221e6710",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "izumi_suisai_t01.cmo3": [
+      {
+        "Id": "PARAM_ANGLE_X",
+        "Name": "角度 X",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": -30,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": -15
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Y",
+        "Name": "角度 Y",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ANGLE_Z",
+        "Name": "角度 Z",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_OPEN",
+        "Name": "左眼　開閉",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_L_SMILE",
+        "Name": "左眼　笑顔",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_OPEN",
+        "Name": "右眼　開閉",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 1,
+        "Max": 1.5,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.5
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_R_SMILE",
+        "Name": "右眼　笑顔",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_X",
+        "Name": "目玉 X",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0.7,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.7
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_Y",
+        "Name": "目玉 Y",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_EYE_BALL_FORM",
+        "Name": "目玉　縮小",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_Y",
+        "Name": "左眉　上下",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_Y",
+        "Name": "右眉　上下",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_X",
+        "Name": "左眉　左右",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_X",
+        "Name": "右眉　左右",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_ANGLE",
+        "Name": "左眉　角度",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_ANGLE",
+        "Name": "右眉　角度",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_L_FORM",
+        "Name": "左眉　変形",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BROW_R_FORM",
+        "Name": "右眉　変形",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_FORM",
+        "Name": "口　変形",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 1,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_MOUTH_OPEN_Y",
+        "Name": "口　開閉",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_TERE",
+        "Name": "照れ",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": []
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_X",
+        "Name": "体の回転　X",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": -10,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": -5
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Y",
+        "Name": "体の回転　Y",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BODY_ANGLE_Z",
+        "Name": "体の回転　Z",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_L",
+        "Name": "左腕",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_ARM_R",
+        "Name": "右腕",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_BREATH",
+        "Name": "呼吸",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_FRONT",
+        "Name": "髪揺れ　前",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_SIDE",
+        "Name": "髪揺れ　横",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "PARAM_HAIR_BACK",
+        "Name": "髪揺れ　後ろ",
+        "GroupUID": "cb6b2b1d188d4497b160d37f09b9c977",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "kei_vowels_pro_t02.cmo3": [
+      {
+        "Id": "ParamAngleX",
+        "Name": "角度 X",
+        "GroupUID": "fa23e938b4824383ba0895e8633969c1",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAngleY",
+        "Name": "角度 Y",
+        "GroupUID": "fa23e938b4824383ba0895e8633969c1",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAngleZ",
+        "Name": "角度 Z",
+        "GroupUID": "fa23e938b4824383ba0895e8633969c1",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamCheek",
+        "Name": "照れ",
+        "GroupUID": "fa23e938b4824383ba0895e8633969c1",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleX",
+        "Name": "体の回転　X",
+        "GroupUID": "1569166b541640e29cc098712faf8f8e",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleY",
+        "Name": "体の回転　Y",
+        "GroupUID": "1569166b541640e29cc098712faf8f8e",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleZ",
+        "Name": "体の回転　Z",
+        "GroupUID": "1569166b541640e29cc098712faf8f8e",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBreath",
+        "Name": "呼吸",
+        "GroupUID": "1569166b541640e29cc098712faf8f8e",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLY",
+        "Name": "左眉　上下",
+        "GroupUID": "4d742345805a4fd9a38529130274f3eb",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRY",
+        "Name": "右眉　上下",
+        "GroupUID": "4d742345805a4fd9a38529130274f3eb",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLForm",
+        "Name": "左眉　変形",
+        "GroupUID": "4d742345805a4fd9a38529130274f3eb",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRForm",
+        "Name": "右眉　変形",
+        "GroupUID": "4d742345805a4fd9a38529130274f3eb",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLOpen",
+        "Name": "左目　開閉",
+        "GroupUID": "dcfd76efde0f4e309508953db039e874",
+        "Default": 1,
+        "Max": 1.2,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.2
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLSmile",
+        "Name": "左目　笑顔",
+        "GroupUID": "dcfd76efde0f4e309508953db039e874",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeROpen",
+        "Name": "右目　開閉",
+        "GroupUID": "dcfd76efde0f4e309508953db039e874",
+        "Default": 1,
+        "Max": 1.2,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.2
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeRSmile",
+        "Name": "右目　笑顔",
+        "GroupUID": "dcfd76efde0f4e309508953db039e874",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallX",
+        "Name": "目玉 X",
+        "GroupUID": "96e5e207c2ca487689a0a829fc3e9958",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallY",
+        "Name": "目玉 Y",
+        "GroupUID": "96e5e207c2ca487689a0a829fc3e9958",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthOpenY",
+        "Name": "口　開閉",
+        "GroupUID": "99c365a7181b425885e0fa632d99b31c",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamA",
+        "Name": "A",
+        "GroupUID": "99c365a7181b425885e0fa632d99b31c",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamI",
+        "Name": "I",
+        "GroupUID": "99c365a7181b425885e0fa632d99b31c",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamU",
+        "Name": "U",
+        "GroupUID": "99c365a7181b425885e0fa632d99b31c",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamE",
+        "Name": "E",
+        "GroupUID": "99c365a7181b425885e0fa632d99b31c",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamO",
+        "Name": "O",
+        "GroupUID": "99c365a7181b425885e0fa632d99b31c",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairFront",
+        "Name": "髪揺れ　前",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSide",
+        "Name": "髪揺れ　左横",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSide2",
+        "Name": "髪揺れ　右横",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBack",
+        "Name": "髪揺れ　後",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairFrontFuwa",
+        "Name": "髪ふわ　前",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSideFuwa",
+        "Name": "髪ふわ　横",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBackFuwa",
+        "Name": "髪ふわ　後",
+        "GroupUID": "0566b7d5eb8c49038d00d0fda13e2a9a",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "mao_pro_t06.cmo3": [
+      {
+        "Id": "ParamAngleX",
+        "Name": "角度 X",
+        "GroupUID": "8038c9db31d54fa38aff52a099e74519",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAngleY",
+        "Name": "角度 Y",
+        "GroupUID": "8038c9db31d54fa38aff52a099e74519",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAngleZ",
+        "Name": "角度 Z",
+        "GroupUID": "8038c9db31d54fa38aff52a099e74519",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamCheek",
+        "Name": "照れ",
+        "GroupUID": "8038c9db31d54fa38aff52a099e74519",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamFaceInkOn",
+        "Name": "顔インク　表示",
+        "GroupUID": "8038c9db31d54fa38aff52a099e74519",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLOpen",
+        "Name": "左目　開閉",
+        "GroupUID": "6d1d4b961bd44fb8acba8283830a4eef",
+        "Default": 1,
+        "Max": 1.2,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.2
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLSmile",
+        "Name": "左目　笑顔",
+        "GroupUID": "6d1d4b961bd44fb8acba8283830a4eef",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLForm",
+        "Name": "左目　変形",
+        "GroupUID": "6d1d4b961bd44fb8acba8283830a4eef",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeROpen",
+        "Name": "右目　開閉",
+        "GroupUID": "6d1d4b961bd44fb8acba8283830a4eef",
+        "Default": 1,
+        "Max": 1.2,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.2
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeRSmile",
+        "Name": "右目　笑顔",
+        "GroupUID": "6d1d4b961bd44fb8acba8283830a4eef",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeRForm",
+        "Name": "右目　変形",
+        "GroupUID": "6d1d4b961bd44fb8acba8283830a4eef",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallX",
+        "Name": "目玉 X",
+        "GroupUID": "28a6ec22a35b404995693b62cf242d29",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallY",
+        "Name": "目玉 Y",
+        "GroupUID": "28a6ec22a35b404995693b62cf242d29",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallForm",
+        "Name": "目玉　縮小",
+        "GroupUID": "28a6ec22a35b404995693b62cf242d29",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeEffect",
+        "Name": "目　エフェクト",
+        "GroupUID": "28a6ec22a35b404995693b62cf242d29",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLY",
+        "Name": "左眉　上下",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRY",
+        "Name": "右眉　上下",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLX",
+        "Name": "左眉　左右",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRX",
+        "Name": "右眉　左右",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLAngle",
+        "Name": "左眉　角度",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRAngle",
+        "Name": "右眉　角度",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLForm",
+        "Name": "左眉　変形",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRForm",
+        "Name": "右眉　変形",
+        "GroupUID": "e44f866f08544026a2be2c16b042bd56",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamA",
+        "Name": "あ",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamI",
+        "Name": "い",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamU",
+        "Name": "う",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamE",
+        "Name": "え",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamO",
+        "Name": "お",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthUp",
+        "Name": "上がり口",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 1,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthDown",
+        "Name": "下がり口",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthAngry",
+        "Name": "むくれ口",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthAngryLine",
+        "Name": "むくれ口線",
+        "GroupUID": "2f1810a92e3b45888e2ddc5e71a3aabe",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.2
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleX",
+        "Name": "体の回転　X",
+        "GroupUID": "11b4c7d4fe9441ceaea573ab3be27a57",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleY",
+        "Name": "体の回転　Y",
+        "GroupUID": "11b4c7d4fe9441ceaea573ab3be27a57",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleZ",
+        "Name": "体の回転　Z",
+        "GroupUID": "11b4c7d4fe9441ceaea573ab3be27a57",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBreath",
+        "Name": "呼吸",
+        "GroupUID": "11b4c7d4fe9441ceaea573ab3be27a57",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamLeftShoulderUp",
+        "Name": "左肩の上下",
+        "GroupUID": "11b4c7d4fe9441ceaea573ab3be27a57",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamRightShoulderUp",
+        "Name": "右肩の上下",
+        "GroupUID": "11b4c7d4fe9441ceaea573ab3be27a57",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmLA01",
+        "Name": "左腕A　肩の回転",
+        "GroupUID": "dd862205c31b46a796035ee5b394f8d2",
+        "Default": 0,
+        "Max": 30,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmLA02",
+        "Name": "左腕A　肘の回転",
+        "GroupUID": "dd862205c31b46a796035ee5b394f8d2",
+        "Default": 0,
+        "Max": 10,
+        "Min": -20,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -20
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmLA03",
+        "Name": "左腕A　手首の回転",
+        "GroupUID": "dd862205c31b46a796035ee5b394f8d2",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamHandLA",
+        "Name": "左手A",
+        "GroupUID": "dd862205c31b46a796035ee5b394f8d2",
+        "Default": 0,
+        "Max": 0,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRA01",
+        "Name": "右腕A　肩の回転",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 30,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRA02",
+        "Name": "右腕A　肘の回転",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 10,
+        "Min": -20,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -20
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRA03",
+        "Name": "右腕A　手首の回転",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamWandRotate",
+        "Name": "杖の回転",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 10,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamHandRA",
+        "Name": "右手A",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 0,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamInkDrop",
+        "Name": "インク垂れ",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamInkDropRotate",
+        "Name": "インク垂れ　回転",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamInkDropOn",
+        "Name": "インク垂れ　表示",
+        "GroupUID": "ef413d46b3da4bfda1bd43cba626c439",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmLB01",
+        "Name": "左腕B　肩の回転",
+        "GroupUID": "657c3941d2214fc99478ac6817d21557",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmLB02",
+        "Name": "左腕B　肘の回転",
+        "GroupUID": "657c3941d2214fc99478ac6817d21557",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmLB03",
+        "Name": "左腕B　手首の回転",
+        "GroupUID": "657c3941d2214fc99478ac6817d21557",
+        "Default": 0,
+        "Max": 10,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamHandLB",
+        "Name": "左手B",
+        "GroupUID": "657c3941d2214fc99478ac6817d21557",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamHatForm",
+        "Name": "帽子の変形",
+        "GroupUID": "657c3941d2214fc99478ac6817d21557",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRB01",
+        "Name": "右腕B　肩の回転",
+        "GroupUID": "b798817d8c3c456dad16149038e397d0",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRB02",
+        "Name": "右腕B　肘の回転",
+        "GroupUID": "b798817d8c3c456dad16149038e397d0",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRB02Y",
+        "Name": "右腕B　腕のY",
+        "GroupUID": "b798817d8c3c456dad16149038e397d0",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmRB03",
+        "Name": "右腕B　手首の回転",
+        "GroupUID": "b798817d8c3c456dad16149038e397d0",
+        "Default": 0,
+        "Max": 20,
+        "Min": -20,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -20
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 20
+          }
+        ]
+      },
+      {
+        "Id": "ParamHandRB",
+        "Name": "右手B",
+        "GroupUID": "b798817d8c3c456dad16149038e397d0",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllX",
+        "Name": "全体の移動　X",
+        "GroupUID": "d8948762e1a746029df8623fecb9f0f6",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllY",
+        "Name": "全体の移動　Y",
+        "GroupUID": "d8948762e1a746029df8623fecb9f0f6",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllRotate",
+        "Name": "全体の回転",
+        "GroupUID": "d8948762e1a746029df8623fecb9f0f6",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairFront",
+        "Name": "髪揺れ　前",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSideL",
+        "Name": "髪揺れ　左横",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSideR",
+        "Name": "髪揺れ　右横",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBack",
+        "Name": "髪揺れ　後",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBackR",
+        "Name": "髪揺れ　右後",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBackL",
+        "Name": "髪揺れ　左後",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamoHairMesh",
+        "Name": "メッシュの揺れ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairFrontFuwa",
+        "Name": "前髪　ふわ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSideFuwa",
+        "Name": "横髪　ふわ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBackFuwa",
+        "Name": "後ろ髪　ふわ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWing",
+        "Name": "羽の揺れ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRibbon",
+        "Name": "帽子リボンの揺れ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHatBrim",
+        "Name": "帽子つばの揺れ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHatTop",
+        "Name": "帽子　上の揺れ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamAccessory1",
+        "Name": "首飾りの揺れ1",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamAccessory2",
+        "Name": "首飾りの揺れ2",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamString",
+        "Name": "パーカーひもの揺れ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRobeL",
+        "Name": "ローブの揺れ　左",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRobeR",
+        "Name": "ローブの揺れ　右",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRobeFuwa",
+        "Name": "ローブのふわ",
+        "GroupUID": "6d8f4951b9e34148ae980c7815347081",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartMissOn",
+        "Name": "ハート失敗　表示",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartBackMissOn",
+        "Name": "ハート失敗後ろ　表示",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartColorRainbow",
+        "Name": "ハート失敗　虹色",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 25
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartHealOn",
+        "Name": "ハート回復　表示",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartBackHealOn",
+        "Name": "ハート回復後ろ　表示",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartColorHeal",
+        "Name": "ハート回復　緑色",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartDrow",
+        "Name": "ハート　描画",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 3
+          },
+          {
+            "Value": 6
+          },
+          {
+            "Value": 9
+          },
+          {
+            "Value": 10.5
+          },
+          {
+            "Value": 12
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 18
+          },
+          {
+            "Value": 19.5
+          },
+          {
+            "Value": 21
+          },
+          {
+            "Value": 24
+          },
+          {
+            "Value": 27
+          },
+          {
+            "Value": 28.5
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartSize",
+        "Name": "ハート　拡縮",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartColorLight",
+        "Name": "ハート  色変化",
+        "GroupUID": "840bcf39aae84dd4b1d5ffc113bd5066",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWandInkColorRainbow",
+        "Name": "杖インク　虹色",
+        "GroupUID": "a5f2022194a4477a967247e1f5552e2a",
+        "Default": 0,
+        "Max": 35,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 25
+          },
+          {
+            "Value": 30
+          },
+          {
+            "Value": 35
+          }
+        ]
+      },
+      {
+        "Id": "ParamWandInkColorHeal",
+        "Name": "杖インク　緑色",
+        "GroupUID": "a5f2022194a4477a967247e1f5552e2a",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWandInk",
+        "Name": "杖インク",
+        "GroupUID": "a5f2022194a4477a967247e1f5552e2a",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamSmokeOn",
+        "Name": "煙　表示",
+        "GroupUID": "70086e8bdbfa478b854a2a4507dc34f6",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamSmoke",
+        "Name": "煙",
+        "GroupUID": "70086e8bdbfa478b854a2a4507dc34f6",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamExplosionChargeOn",
+        "Name": "爆発光溜め　表示",
+        "GroupUID": "70086e8bdbfa478b854a2a4507dc34f6",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamExplosionLightCharge",
+        "Name": "爆発光溜め",
+        "GroupUID": "70086e8bdbfa478b854a2a4507dc34f6",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 25
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamExplosionOn",
+        "Name": "爆発　表示",
+        "GroupUID": "70086e8bdbfa478b854a2a4507dc34f6",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamExplosion",
+        "Name": "爆発",
+        "GroupUID": "70086e8bdbfa478b854a2a4507dc34f6",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 6
+          },
+          {
+            "Value": 7.5
+          },
+          {
+            "Value": 8
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 10.5
+          },
+          {
+            "Value": 12
+          },
+          {
+            "Value": 13.5
+          },
+          {
+            "Value": 14
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 16
+          },
+          {
+            "Value": 16.5
+          },
+          {
+            "Value": 18
+          },
+          {
+            "Value": 19.5
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 21
+          },
+          {
+            "Value": 22
+          },
+          {
+            "Value": 24
+          },
+          {
+            "Value": 25
+          },
+          {
+            "Value": 26
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitElimination",
+        "Name": "うさぎ　消滅",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 2
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 7.5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 12
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitAppearance",
+        "Name": "うさぎ　出現",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 2
+          },
+          {
+            "Value": 7.5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 12
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitSize",
+        "Name": "うさぎ　拡縮",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitDraworder",
+        "Name": "うさぎ　描画順",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitEar",
+        "Name": "うさぎ　耳",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitDirection",
+        "Name": "うさぎ　向き",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitLight",
+        "Name": "うさぎ　色変化",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitLightSize",
+        "Name": "うさぎ光　拡縮",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitX",
+        "Name": "うさぎの移動　X",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitY",
+        "Name": "うさぎの移動　Y",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 1,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamRabbitRotate",
+        "Name": "うさぎの回転",
+        "GroupUID": "f66d69b8e7fd442bafbc61c78c64f1dd",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamAuraOn",
+        "Name": "オーラ　表示",
+        "GroupUID": "49aaec2704094922bb2a990955481225",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamAura",
+        "Name": "オーラ",
+        "GroupUID": "49aaec2704094922bb2a990955481225",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 25
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAuraColor1",
+        "Name": "オーラ　色変化1",
+        "GroupUID": "49aaec2704094922bb2a990955481225",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamAuraColor2",
+        "Name": "オーラ　色変化2",
+        "GroupUID": "49aaec2704094922bb2a990955481225",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.5
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartLightOn",
+        "Name": "光　表示",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 0.3
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartLight",
+        "Name": "光　星",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 6
+          },
+          {
+            "Value": 7.5
+          },
+          {
+            "Value": 10
+          },
+          {
+            "Value": 12
+          },
+          {
+            "Value": 18
+          },
+          {
+            "Value": 20
+          },
+          {
+            "Value": 24
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamHeartLightColor",
+        "Name": "光　色変化",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHealLightOn",
+        "Name": "回復魔法光　表示",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHealLight",
+        "Name": "回復魔法光",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamStrengthenLightOn",
+        "Name": "強化魔法光　表示",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamStrengthenLight",
+        "Name": "強化魔法光",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamStrengthenLightMove",
+        "Name": "強化魔法光　移動",
+        "GroupUID": "eff1478577fb4884bce9c65a2eb68677",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMagicPositionX",
+        "Name": "魔法の位置X",
+        "GroupUID": "b0083e6d9c0a4a9ab093f34d0e6b032f",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamMagicPositionY",
+        "Name": "魔法の位置Y",
+        "GroupUID": "b0083e6d9c0a4a9ab093f34d0e6b032f",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllColor1",
+        "Name": "全体の色1",
+        "GroupUID": "b0083e6d9c0a4a9ab093f34d0e6b032f",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllColor2",
+        "Name": "全体の色2",
+        "GroupUID": "b0083e6d9c0a4a9ab093f34d0e6b032f",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 1,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "natori_pro_t06.cmo3": [
+      {
+        "Id": "ParamAngleX",
+        "Name": "角度 X",
+        "GroupUID": "8652881e98e545a19b4cb414038b5f03",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAngleY",
+        "Name": "角度 Y",
+        "GroupUID": "8652881e98e545a19b4cb414038b5f03",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAngleZ",
+        "Name": "角度 Z",
+        "GroupUID": "8652881e98e545a19b4cb414038b5f03",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLOpen",
+        "Name": "左目　開閉",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 1,
+        "Max": 1.3,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.2
+          },
+          {
+            "Value": 1.3
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLSmile",
+        "Name": "左目　笑顔",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeLForm",
+        "Name": "左目　変形",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 3,
+        "Min": -2,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -2
+          },
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 2
+          },
+          {
+            "Value": 3
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeROpen",
+        "Name": "右目　開閉",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 1,
+        "Max": 1.3,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 1.2
+          },
+          {
+            "Value": 1.3
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeRSmile",
+        "Name": "右目　笑顔",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeRForm",
+        "Name": "右目　変形",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 3,
+        "Min": -2,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -2
+          },
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          },
+          {
+            "Value": 2
+          },
+          {
+            "Value": 3
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallX",
+        "Name": "目玉 X",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallY",
+        "Name": "目玉 Y",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamEyeBallForm",
+        "Name": "目玉 収縮",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLY",
+        "Name": "左眉　上下",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRY",
+        "Name": "右眉　上下",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLX",
+        "Name": "左眉　左右",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRX",
+        "Name": "右眉　左右",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLAngle",
+        "Name": "左眉　角度",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRAngle",
+        "Name": "右眉　角度",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLForm",
+        "Name": "左眉　変形",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowLForm2",
+        "Name": "左眉　変形2",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRForm",
+        "Name": "右眉　変形",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamBrowRForm2",
+        "Name": "右眉　変形2",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthForm",
+        "Name": "口　変形",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -3,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -3
+          },
+          {
+            "Value": -2
+          },
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthOpenY",
+        "Name": "口　開閉",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamMouthForm2",
+        "Name": "口　変形2",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamTeethOn",
+        "Name": "歯の表示",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamCheek",
+        "Name": "照れ",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamGlassUD",
+        "Name": "メガネ　上下",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamGrassWhite",
+        "Name": "メガネ　白",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamGrassHighlight",
+        "Name": "メガネ　HL表示",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamGrassHighlightMove",
+        "Name": "メガネ　HL移動",
+        "GroupUID": "c675ac5c62494c23bb104d69bdab36b3",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleX",
+        "Name": "体の回転　X",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleY",
+        "Name": "体の回転　Y",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyAngleZ",
+        "Name": "体の回転　Z",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamWaistAngleZ",
+        "Name": "腰の回転　Z",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBodyPosition",
+        "Name": "体の前後",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamBreath",
+        "Name": "呼吸",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamLeftShoulderUp",
+        "Name": "左肩の上下",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamRightShoulderUp",
+        "Name": "右肩の上下",
+        "GroupUID": "c6b7c207953d4135a81b0bae5a0ebd5d",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllX",
+        "Name": "全体の移動 X",
+        "GroupUID": "94e91ec9ce424886b3ab15e8b4f4338f",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllY",
+        "Name": "全体の移動 Y",
+        "GroupUID": "94e91ec9ce424886b3ab15e8b4f4338f",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamAllRotate",
+        "Name": "全体の回転",
+        "GroupUID": "94e91ec9ce424886b3ab15e8b4f4338f",
+        "Default": 0,
+        "Max": 10,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairFront",
+        "Name": "髪揺れ　前",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSide",
+        "Name": "髪揺れ　横",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBack",
+        "Name": "髪揺れ　後",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairFrontFuwa",
+        "Name": "前髪　ふわ",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairSideFuwa",
+        "Name": "横髪　ふわ",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamHairBackFuwa",
+        "Name": "後ろ髪　ふわ",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamJacket",
+        "Name": "ジャケット燕尾の揺れ",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamChainWaist",
+        "Name": "チェーンAの揺れ",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchSwingA1",
+        "Name": "時計A　揺れ1",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchSwingA2",
+        "Name": "時計A　揺れ2",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBChain",
+        "Name": "時計B　チェーン揺れ",
+        "GroupUID": "a468ca0799af49a9acee6e9411db83d5",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchAX",
+        "Name": "時計A　横回転",
+        "GroupUID": "bf43e9d922c44abeaa2a6e6b207b4fa3",
+        "Default": 0,
+        "Max": 1,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBSwitch",
+        "Name": "時計B　スイッチ",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBOpen",
+        "Name": "時計B　ふた開閉",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBOpen2",
+        "Name": "時計B　内側開閉",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBX",
+        "Name": "時計B　横回転",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 0,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBRoll",
+        "Name": "時計B　回転",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBLR",
+        "Name": "時計B　左右",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamWatchBUD",
+        "Name": "時計B　上下",
+        "GroupUID": "0997ab0955584430a20d700ffd8a670a",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAL01",
+        "Name": "左腕A　肩",
+        "GroupUID": "b503e0dc5d114ed09eb085ef9d84b6f6",
+        "Default": 0,
+        "Max": 30,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAL02",
+        "Name": "左肩A　肘回転",
+        "GroupUID": "b503e0dc5d114ed09eb085ef9d84b6f6",
+        "Default": 0,
+        "Max": 10,
+        "Min": -40,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -40
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAL03",
+        "Name": "左腕A　手首",
+        "GroupUID": "b503e0dc5d114ed09eb085ef9d84b6f6",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAL04",
+        "Name": "左腕A　前腕の前後",
+        "GroupUID": "b503e0dc5d114ed09eb085ef9d84b6f6",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAR01",
+        "Name": "右腕A　肩の回転",
+        "GroupUID": "bf746ec0ad564e4baf995e7d08b4ad41",
+        "Default": 0,
+        "Max": 30,
+        "Min": -10,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -10
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAR02",
+        "Name": "右腕A　肘回転",
+        "GroupUID": "bf746ec0ad564e4baf995e7d08b4ad41",
+        "Default": 0,
+        "Max": 10,
+        "Min": -40,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -40
+          },
+          {
+            "Value": -20
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAR03",
+        "Name": "右腕A　手首回転",
+        "GroupUID": "bf746ec0ad564e4baf995e7d08b4ad41",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmAR04",
+        "Name": "右腕A　前腕の前後",
+        "GroupUID": "bf746ec0ad564e4baf995e7d08b4ad41",
+        "Default": 0,
+        "Max": 0,
+        "Min": -1,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -1
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBR01",
+        "Name": "右腕B　肩の回転",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBR02",
+        "Name": "右腕B　肘の回転",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 20,
+        "Min": -40,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -40
+          },
+          {
+            "Value": -20
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 20
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBR03",
+        "Name": "右腕B　手首の回転",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBRHand01",
+        "Name": "右手01　表示",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 1,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBRHand01Roll",
+        "Name": "右手01　指曲げ",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBRHand05",
+        "Name": "右手05　表示",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBRHand05Roll1",
+        "Name": "右手05　指曲げ1",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBRHand05Roll2",
+        "Name": "右手05　指曲げ2",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmBRHand05Roll3",
+        "Name": "右手05　指曲げ3",
+        "GroupUID": "e7fd41cba2c04ee5ae3f06959ab756c4",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 15
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmCR01",
+        "Name": "左腕C　肩の回転",
+        "GroupUID": "bc522941c3f54ef1afe1d24ce8dd53b1",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmCR02",
+        "Name": "左腕C　肘の回転",
+        "GroupUID": "bc522941c3f54ef1afe1d24ce8dd53b1",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmCR03",
+        "Name": "左腕C　手首回転",
+        "GroupUID": "bc522941c3f54ef1afe1d24ce8dd53b1",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmCLHandRoll1",
+        "Name": "左手C　指曲げ1",
+        "GroupUID": "bc522941c3f54ef1afe1d24ce8dd53b1",
+        "Default": 0,
+        "Max": 0,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmDL01",
+        "Name": "左腕D 肩回転",
+        "GroupUID": "06cc2b58ce9e4c1e942447199b4a9a5c",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmDL02",
+        "Name": "左腕D 肘回転",
+        "GroupUID": "06cc2b58ce9e4c1e942447199b4a9a5c",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmDL03",
+        "Name": "左腕D 手首回転",
+        "GroupUID": "06cc2b58ce9e4c1e942447199b4a9a5c",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmDLHand03Roll",
+        "Name": "左手03　指曲げ",
+        "GroupUID": "06cc2b58ce9e4c1e942447199b4a9a5c",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmER01",
+        "Name": "右腕E　肩回転",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmER02",
+        "Name": "右腕E　肘回転",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmER03",
+        "Name": "右腕E　手首回転",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmER04",
+        "Name": "右腕E　上腕の長さ",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmERHand04",
+        "Name": "右手04　表示",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 1,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmERHand04Roll1",
+        "Name": "右手04　指曲げ1",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmERHand04Roll2",
+        "Name": "右手04　指曲げ2",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmERHand06",
+        "Name": "右手06　表示",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 1,
+        "Min": 0,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": 0
+          },
+          {
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmERHand06Roll1",
+        "Name": "右手06　指曲げ1",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      },
+      {
+        "Id": "ParamArmERHand06Roll2",
+        "Name": "右手06　指曲げ2",
+        "GroupUID": "b5d2565fcafc48d2bfd0a9bde1c1f437",
+        "Default": 0,
+        "Max": 30,
+        "Min": -30,
+        "Repeat": false,
+        "Type": 0,
+        "Keyform": [
+          {
+            "Value": -30
+          },
+          {
+            "Value": 0
+          },
+          {
+            "Value": 30
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Runtime vertex response does not recover editor deformer hierarchy or glue",
+    "Not every authored key combination verified",
+    "Ren runtime load unavailable with retained Core",
+    "Reference hand pose switches do not prove Hibiki 30-joint continuous articulation"
+  ]
+}
