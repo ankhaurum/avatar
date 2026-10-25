@@ -1,0 +1,16 @@
+{
+  "status": "PARTIAL",
+  "editable_review_sha256": "b365fe62600d71aae5318b8bbb6db2c8c779305333e9203247b574a39b2accae",
+  "editable_review_bytes": 28074262,
+  "full_working_sha256": "d7906ab7301f14f3cc2b5b6c5a9b8ebccf203dca0afc76edc84d5366cf55a99e",
+  "full_working_bytes": 129504454,
+  "working_vs_review_rgba_changed_pixels": 0,
+  "working_vs_reopened_review_rgba_changed_pixels": 0,
+  "reopened_review_layer_tree_equal": true,
+  "source_hair_partition_rgba_changed_pixels": 0,
+  "source_hair_overlap_rgba_changed_pixels": 0,
+  "hair_overlap_is_not_motion_completion_proof": true,
+  "mouth_internals_closed_visible": false,
+  "cubism_imported": false,
+  "completed": false
+}
