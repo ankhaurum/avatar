@@ -1,0 +1,743 @@
+{
+  "document": "hibiki-head-materials-review.psd",
+  "width": 1024,
+  "height": 1536,
+  "saved": true,
+  "layers": [
+    {
+      "name": "HAIR_fringe_hair_only_v2__REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "433 px,152 px,610 px,249 px",
+      "children": [
+        {
+          "name": "HAIR_fringe_hair_only_v2_RGB__REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "433 px,152 px,610 px,249 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "HAIR_ear_front_L_source_matte__REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "608 px,243 px,644 px,323 px",
+      "children": [
+        {
+          "name": "HAIR_ear_front_L_source_RGB",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "608 px,243 px,644 px,323 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "HAIR_ear_front_R_source_matte_v2__REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "377 px,229 px,444 px,327 px",
+      "children": [
+        {
+          "name": "HAIR_ear_front_R_source_RGB",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "377 px,229 px,444 px,327 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "A_SOURCE_COLOR_J_SURFACE_HAIR_crown_fringe__MASK_REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "320 px,33 px,704 px,246 px",
+      "children": [
+        {
+          "name": "prior_surface_outside_fringe",
+          "type": "LayerSet",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "320 px,33 px,704 px,246 px",
+          "children": [
+            {
+              "name": "A_original_visible_hair_RGB__neck_excluded",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "320 px,33 px,704 px,246 px",
+              "clipped": true
+            },
+            {
+              "name": "J_existing_mask_J_SURFACE_HAIR_crown_fringe",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "320 px,35 px,702 px,244 px",
+              "clipped": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A_SOURCE_COLOR_J_SURFACE_HAIR_front_L__MASK_REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "530 px,86 px,668 px,314 px",
+      "children": [
+        {
+          "name": "prior_surface_outside_fringe",
+          "type": "LayerSet",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "530 px,86 px,668 px,314 px",
+          "children": [
+            {
+              "name": "A_visible_hair_RGB__skin_occlusion_excluded",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "530 px,86 px,668 px,314 px",
+              "clipped": true
+            },
+            {
+              "name": "J_existing_mask_J_SURFACE_HAIR_front_L",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "532 px,88 px,666 px,312 px",
+              "clipped": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A_SOURCE_COLOR_J_SURFACE_HAIR_front_R__MASK_REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "367 px,93 px,509 px,314 px",
+      "children": [
+        {
+          "name": "prior_surface_outside_fringe",
+          "type": "LayerSet",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "367 px,93 px,509 px,314 px",
+          "children": [
+            {
+              "name": "A_visible_hair_RGB__skin_occlusion_excluded",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "367 px,93 px,509 px,314 px",
+              "clipped": true
+            },
+            {
+              "name": "J_existing_mask_J_SURFACE_HAIR_front_R",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "369 px,95 px,507 px,312 px",
+              "clipped": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A_SOURCE_COLOR_J_SURFACE_HAIR_bob_L__MASK_REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "552 px,110 px,715 px,457 px",
+      "children": [
+        {
+          "name": "A_visible_hair_RGB__skin_occlusion_excluded",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "552 px,110 px,715 px,457 px",
+          "clipped": true
+        },
+        {
+          "name": "J_existing_mask_J_SURFACE_HAIR_bob_L",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "554 px,112 px,713 px,455 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "A_SOURCE_COLOR_J_SURFACE_HAIR_bob_R__MASK_REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "308 px,110 px,460 px,457 px",
+      "children": [
+        {
+          "name": "A_visible_hair_RGB__skin_occlusion_excluded",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "308 px,110 px,460 px,457 px",
+          "clipped": true
+        },
+        {
+          "name": "J_existing_mask_J_SURFACE_HAIR_bob_R",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "310 px,112 px,458 px,455 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "BROWS_source_material_review",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "442 px,215 px,613 px,244 px",
+      "children": [
+        {
+          "name": "BROW_L_original_visible__EDGE_REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "566 px,217 px,596 px,231 px",
+          "clipped": false
+        },
+        {
+          "name": "BROW_L_hidden_continuation__PAINT_REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 70.1960784313726,
+          "bounds": "547 px,215 px,613 px,236 px",
+          "clipped": false
+        },
+        {
+          "name": "BROW_R_original_visible__EDGE_REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "457 px,224 px,489 px,239 px",
+          "clipped": false
+        },
+        {
+          "name": "BROW_R_hidden_continuation__PAINT_REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 70.1960784313726,
+          "bounds": "442 px,223 px,508 px,244 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "NOSE_original_visible",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "492 px,278 px,560 px,332 px",
+      "children": [
+        {
+          "name": "FACE_nose_original",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "492 px,278 px,560 px,332 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "MOUTH_original_visible",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "486 px,336 px,569 px,368 px",
+      "children": [
+        {
+          "name": "MOUTH_lower_lip_original_visible",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "486 px,339 px,567 px,368 px",
+          "clipped": false
+        },
+        {
+          "name": "MOUTH_upper_lip_original_visible",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "486 px,336 px,569 px,352 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "EYES_original_visible",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "437 px,236 px,612 px,289 px",
+      "children": [
+        {
+          "name": "EYE_L_materials",
+          "type": "LayerSet",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "545 px,236 px,612 px,282 px",
+          "children": [
+            {
+              "name": "EYE_L_highlight_main",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "567 px,248 px,572 px,251 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_L_highlight_secondary",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "571 px,248 px,576 px,251 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_L_upper_lid_lash_original_visible",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "552 px,237 px,606 px,260 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_L_lower_lid_original_visible",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "552 px,253 px,604 px,266 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_L_lower_skin_original",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "545 px,250 px,612 px,282 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_L_eyeball_surface",
+              "type": "LayerSet",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "549 px,236 px,605 px,268 px",
+              "children": [
+                {
+                  "name": "EYE_L_iris_original_visible",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "560 px,244 px,585 px,259 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_L_iris_J_hidden_completion__REVIEW",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "562 px,238 px,583 px,260 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_L_iris_hidden_outer_rim__PAINT_REVIEW",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "560 px,238 px,585 px,261 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_L_sclera_original_visible",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "554 px,245 px,599 px,260 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_L_sclera_hidden_surface__PAINT",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "549 px,236 px,605 px,268 px",
+                  "clipped": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EYE_R_materials",
+          "type": "LayerSet",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "437 px,243 px,510 px,289 px",
+          "children": [
+            {
+              "name": "EYE_R_highlight_main",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "471 px,254 px,476 px,258 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_R_highlight_secondary",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "476 px,254 px,481 px,258 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_R_upper_lid_lash_original_visible",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "442 px,245 px,503 px,265 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_R_lower_lid_original_visible",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "442 px,261 px,503 px,274 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_R_lower_skin_original",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "437 px,259 px,510 px,289 px",
+              "clipped": false
+            },
+            {
+              "name": "EYE_R_eyeball_surface",
+              "type": "LayerSet",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "444 px,243 px,506 px,273 px",
+              "children": [
+                {
+                  "name": "EYE_R_iris_original_visible",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "463 px,254 px,487 px,265 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_R_iris_J_hidden_completion__REVIEW",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "464 px,245 px,486 px,266 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_R_iris_hidden_outer_rim__PAINT_REVIEW",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "463 px,244 px,487 px,267 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_R_sclera_original_visible",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "454 px,254 px,498 px,265 px",
+                  "clipped": false
+                },
+                {
+                  "name": "EYE_R_sclera_hidden_surface__PAINT",
+                  "type": "ArtLayer",
+                  "visible": true,
+                  "opacity": 100,
+                  "bounds": "444 px,243 px,506 px,273 px",
+                  "clipped": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FACE_SKIN_material_review",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "373 px,94 px,676 px,413 px",
+      "children": [
+        {
+          "name": "FACE_jaw_contour_original__REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "438 px,324 px,614 px,413 px",
+          "clipped": false
+        },
+        {
+          "name": "FACE_L_temporal_visible_original_v2",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "596 px,249 px,621 px,339 px",
+          "clipped": false
+        },
+        {
+          "name": "FACE_forehead_L_visible_original__REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "558 px,178 px,583 px,223 px",
+          "clipped": false
+        },
+        {
+          "name": "FACE_forehead_R_visible_original__REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "466 px,166 px,495 px,222 px",
+          "clipped": false
+        },
+        {
+          "name": "FACE_upper_visible_skin_source__BLEND_REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "428 px,231 px,622 px,316 px",
+          "clipped": false
+        },
+        {
+          "name": "FACE_cheek_chin_source__BOUNDARY_REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "432 px,268 px,616 px,409 px",
+          "clipped": false
+        },
+        {
+          "name": "FACE_upper_hidden_skin__PAINT_REVIEW",
+          "type": "LayerSet",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "373 px,94 px,676 px,341 px",
+          "children": [
+            {
+              "name": "SKIN_hidden_temple_L_shade",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "558 px,105 px,676 px,339 px",
+              "clipped": false
+            },
+            {
+              "name": "SKIN_hidden_temple_R_shade",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "373 px,109 px,491 px,341 px",
+              "clipped": false
+            },
+            {
+              "name": "SKIN_hidden_forehead_light",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "419 px,94 px,623 px,326 px",
+              "clipped": false
+            },
+            {
+              "name": "SKIN_hidden_foundation",
+              "type": "ArtLayer",
+              "visible": true,
+              "opacity": 100,
+              "bounds": "426 px,111 px,622 px,315 px",
+              "clipped": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EARS_material_review",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "380 px,242 px,636 px,323 px",
+      "children": [
+        {
+          "name": "EAR_L_original_visible_rim",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "616 px,285 px,624 px,310 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_L_hidden_concha_shadow__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "615 px,269 px,634 px,305 px",
+          "clipped": true
+        },
+        {
+          "name": "EAR_L_hidden_foundation__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "614 px,262 px,636 px,312 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_R_upper_visible_shadow_original",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "380 px,242 px,392 px,271 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_R_original_visible_rim__REVIEW",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "381 px,248 px,400 px,297 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_R_hidden_helix_light__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "389 px,255 px,423 px,317 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_R_hidden_concha_shadow__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "385 px,248 px,416 px,296 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_R_lobule_shadow__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "402 px,290 px,433 px,323 px",
+          "clipped": false
+        },
+        {
+          "name": "EAR_R_hidden_foundation__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "382 px,244 px,430 px,319 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "NECK_original_visible_and_hidden__REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "436 px,327 px,608 px,522 px",
+      "children": [
+        {
+          "name": "NECK_original_visible_jaw_aligned",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "443 px,351 px,602 px,522 px",
+          "clipped": false
+        },
+        {
+          "name": "NECK_hidden_side_shade__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "554 px,339 px,602 px,433 px",
+          "clipped": true
+        },
+        {
+          "name": "NECK_hidden_upper_shadow__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 45.0980392156863,
+          "bounds": "436 px,327 px,608 px,437 px",
+          "clipped": true
+        },
+        {
+          "name": "NECK_hidden_upper_foundation__PAINT",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "446 px,342 px,594 px,436 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "J_BACK_HAIR_COVERAGE__REVIEW_ONLY",
+      "type": "ArtLayer",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "320 px,36 px,705 px,455 px",
+      "clipped": false
+    },
+    {
+      "name": "レイヤー 1",
+      "type": "ArtLayer",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "0 px,0 px,0 px,0 px",
+      "clipped": false
+    },
+    {
+      "name": "APPROVED_A_REFERENCE_ONLY__NOT_A_COMPLETED_FACE",
+      "type": "ArtLayer",
+      "visible": false,
+      "opacity": 100,
+      "bounds": "80 px,30 px,1009 px,1536 px",
+      "clipped": false
+    }
+  ]
+}

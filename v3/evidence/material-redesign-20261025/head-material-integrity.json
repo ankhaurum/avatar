@@ -1,0 +1,119 @@
+{
+  "original_sha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "protected_parts": {
+    "EYE_L_highlight_main.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_L_highlight_secondary.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_L_lower_lid_original_visible.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_L_lower_skin_original.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_L_upper_lid_lash_original_visible.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_R_highlight_main.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_R_highlight_secondary.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_R_lower_lid_original_visible.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_R_lower_skin_original.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "EYE_R_upper_lid_lash_original_visible.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "FACE_nose_original.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "MOUTH_lower_lip_original_visible.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    },
+    "MOUTH_upper_lip_original_visible.png": {
+      "changed_pixels": 0,
+      "max_channel_delta": 0
+    }
+  },
+  "cleanup": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0
+  },
+  "reopen": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0
+  },
+  "visible_pixels_below_y550": 0,
+  "size": [
+    1024,
+    1536
+  ],
+  "roi_rgb_mean_absolute_error_not_acceptance": {
+    "forehead": {
+      "source_bounds": [
+        440,
+        170,
+        607,
+        250
+      ],
+      "before": 17.7442,
+      "after": 5.4082
+    },
+    "ear_R": {
+      "source_bounds": [
+        381,
+        240,
+        434,
+        324
+      ],
+      "before": 21.5264,
+      "after": 6.3474
+    },
+    "ear_L": {
+      "source_bounds": [
+        612,
+        260,
+        637,
+        315
+      ],
+      "before": 34.9074,
+      "after": 9.8633
+    },
+    "central_face": {
+      "source_bounds": [
+        450,
+        260,
+        600,
+        370
+      ],
+      "before": 2.6379,
+      "after": 2.4963
+    }
+  },
+  "psd_sha256": "2cd2ef22325f9d57f5081820d61a03f1bfd7de806955fad57da6d9bc6c7b76c2",
+  "limitations": [
+    "13 source parts unchanged does not prove full face Identity or expression quality",
+    "ROI error is a diagnostic, not an acceptance criterion",
+    "fringe and brow transition remain unfinished",
+    "No Cubism import, deformation or publication"
+  ]
+}
