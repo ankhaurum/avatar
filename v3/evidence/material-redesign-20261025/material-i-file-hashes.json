@@ -10,6 +10,36 @@
     "sha256": "fd610fc39f1c1822454621485ee02ffbe64b982112c077d2c38e48745f29d587"
   },
   {
+    "path": "v3/artwork/split-e/parts/i-EYE_L_highlight_main.png",
+    "bytes": 1679,
+    "sha256": "23862a27eac200c978bc1b2843687cfc1ccd5ce57d1d09be23271caf09b1511c"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/i-EYE_L_highlight_secondary.png",
+    "bytes": 1679,
+    "sha256": "5ffc3b78f062471b69c89380cad105484d778b7dd370c5c86903efb901f30012"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/i-EYE_L_iris_complete_candidate.png",
+    "bytes": 3486,
+    "sha256": "1f9e1c34b654fcaca83122f0dd4d3b6e1692a3eecbe669cf7e5b783a57d0102d"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/i-EYE_L_lower_lid_candidate.png",
+    "bytes": 4333,
+    "sha256": "7778bcf531473a1cd25ed5defb4b2588bd546f11da9f27a8880449f6aadf76d7"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/i-EYE_L_sclera_complete_candidate.png",
+    "bytes": 4512,
+    "sha256": "af193c2289a70c5c67fa0b69f99b7fe3ce9957763e545eaa3fe9bdc13150a5c8"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/i-EYE_L_upper_lid_lash_candidate.png",
+    "bytes": 6607,
+    "sha256": "a9f717e9a0dceadb02acbbcf5119bd438dc1ed6f49f9b41485809052fb3058c1"
+  },
+  {
     "path": "v3/artwork/split-e/parts/i-EYE_R_highlight_main.png",
     "bytes": 1700,
     "sha256": "9ab5899e74d327aa81cfa55522081f924a78da6ac652965c909b47d37aea04de"
@@ -176,7 +206,12 @@
   },
   {
     "path": "v3/artwork/split-e/hibiki-v3-parts-i.psd",
-    "bytes": 11030251,
-    "sha256": "0f6b9a1c057075290359a067df29b13426726c69533e3fe123b8f38245c93e29"
+    "bytes": 11042403,
+    "sha256": "02c4801458b0cb649a4bbfd54463e84c259321beb5a57a3c145071efccafc086"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/h-EYE_R_iris-source.png",
+    "bytes": 1372176,
+    "sha256": "a8fbefd26d0fb448236b8e517429f355879d29cbcfe8415c7dc0d56ad7a49c71"
   }
 ]

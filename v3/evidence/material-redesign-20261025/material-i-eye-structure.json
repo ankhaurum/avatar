@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-25",
+  "psd": "v3/artwork/split-e/hibiki-v3-parts-i.psd",
+  "verification": "Native Photoshop PNG rendering and disk reload",
+  "eyes": [
+    {
+      "group": "40_EYE_R_material_candidate",
+      "layerCount": 6,
+      "hidden": true,
+      "eyeballGroup": "EYE_R_eyeball_position",
+      "maskSource": "EYE_R_sclera_complete_candidate",
+      "maskType": "Photoshop nondestructive group layer mask",
+      "diskReloadMaskVerified": true,
+      "cubismClippingConfigured": false
+    },
+    {
+      "group": "41_EYE_L_material_candidate",
+      "layerCount": 6,
+      "hidden": true,
+      "eyeballGroup": "EYE_L_eyeball_position",
+      "maskSource": "EYE_L_sclera_complete_candidate",
+      "maskType": "Photoshop nondestructive group layer mask",
+      "diskReloadMaskVerified": true,
+      "cubismClippingConfigured": false
+    }
+  ],
+  "errors": [
+    {
+      "action": "Create clipping mask on eyeball group",
+      "message": "「クリッピングマスクを作成」コマンドは現在使用できません。",
+      "response": "No repeat; use nondestructive group mask from sclera alpha"
+    },
+    {
+      "action": "Create group mask",
+      "message": "ReferenceError: a.putNewClass が関数でありません",
+      "response": "Corrected ActionDescriptor call to putClass; masking and native rendering succeeded"
+    }
+  ],
+  "remaining": [
+    "iris hidden-region tone continuity",
+    "neutral shading match",
+    "closed eyelids",
+    "gaze and blink motion",
+    "face base and other facial parts",
+    "Cubism reimport and motion validation"
+  ],
+  "humanAccepted": false
+}
