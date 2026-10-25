@@ -1,0 +1,13 @@
+{
+  "status": "PARTIAL",
+  "psd_sha256": "1c268a810c274277d367273cd3131345236e272fe78c9d749baf9b121409656b",
+  "psd_bytes": 57157106,
+  "reopened_layer_tree_equal": true,
+  "reopened_face_rgba_changed_pixels": 0,
+  "face_opaque_rgb_changed_pixels": 0,
+  "lip_opaque_rgb_changed_pixels": 0,
+  "eye_opaque_rgb_changed_pixels": 387,
+  "eye_max_channel_difference": 43,
+  "complete_materials": false,
+  "cubism_imported": false
+}
