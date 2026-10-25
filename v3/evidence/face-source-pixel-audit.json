@@ -1,0 +1,319 @@
+{
+  "source": "approved A d8e3a9c",
+  "sourceSha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "scope": "Read-only original-coordinate RGB comparison; differences can include intentional hidden surfaces. This is not identity acceptance or a quality score.",
+  "parts": [
+    {
+      "name": "EYE_L_lower_skin_original",
+      "bounds": [
+        545,
+        250,
+        612,
+        282
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 487,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_L_upper_lid_closed_candidate",
+      "bounds": [
+        550,
+        238,
+        607,
+        267
+      ],
+      "sourceVisible": false,
+      "comparedPixels": 916,
+      "meanRgbAbsoluteDifference": 65.43813682678312,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "EYE_L_upper_lid_lash_candidate",
+      "bounds": [
+        552,
+        237,
+        606,
+        260
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 336,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_L_lower_lid_candidate",
+      "bounds": [
+        552,
+        253,
+        604,
+        266
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 298,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_L_highlight_secondary",
+      "bounds": [
+        571,
+        248,
+        576,
+        251
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 3,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_L_highlight_main",
+      "bounds": [
+        567,
+        248,
+        572,
+        251
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 5,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_L_iris_complete_candidate",
+      "bounds": [
+        562,
+        238,
+        583,
+        260
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 342,
+      "meanRgbAbsoluteDifference": 20.57699805068226,
+      "sameRgbFraction": 0.5409356725146199
+    },
+    {
+      "name": "EYE_L_sclera_complete_candidate",
+      "bounds": [
+        554,
+        244,
+        599,
+        260
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 393,
+      "meanRgbAbsoluteDifference": 82.92705682782018,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "EYE_R_lower_skin_original",
+      "bounds": [
+        437,
+        259,
+        510,
+        289
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 519,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_R_upper_lid_closed_candidate",
+      "bounds": [
+        442,
+        245,
+        504,
+        270
+      ],
+      "sourceVisible": false,
+      "comparedPixels": 829,
+      "meanRgbAbsoluteDifference": 73.51990349819059,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "EYE_R_upper_lid_lash_candidate",
+      "bounds": [
+        442,
+        245,
+        503,
+        265
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 433,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_R_lower_lid_candidate",
+      "bounds": [
+        442,
+        261,
+        503,
+        274
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 417,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_R_highlight_secondary",
+      "bounds": [
+        476,
+        254,
+        481,
+        258
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 6,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_R_highlight_main",
+      "bounds": [
+        471,
+        254,
+        476,
+        258
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 6,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "EYE_R_iris_complete_candidate",
+      "bounds": [
+        464,
+        245,
+        486,
+        266
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 342,
+      "meanRgbAbsoluteDifference": 22.841130604288498,
+      "sameRgbFraction": 0.39473684210526316
+    },
+    {
+      "name": "EYE_R_sclera_complete_candidate",
+      "bounds": [
+        454,
+        254,
+        498,
+        265
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 301,
+      "meanRgbAbsoluteDifference": 94.6655592469546,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "BROW_L_complete_candidate",
+      "bounds": [
+        548,
+        211,
+        610,
+        226
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 126,
+      "meanRgbAbsoluteDifference": 90.80423280423281,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "BROW_R_complete_candidate",
+      "bounds": [
+        440,
+        219,
+        507,
+        233
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 214,
+      "meanRgbAbsoluteDifference": 73.16355140186916,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "MOUTH_lower_lip_original_visible",
+      "bounds": [
+        486,
+        339,
+        567,
+        368
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 822,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "MOUTH_upper_lip_original_visible",
+      "bounds": [
+        486,
+        336,
+        569,
+        352
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 543,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "FACE_nose_original",
+      "bounds": [
+        492,
+        278,
+        560,
+        332
+      ],
+      "sourceVisible": true,
+      "comparedPixels": 1960,
+      "meanRgbAbsoluteDifference": 0.0,
+      "sameRgbFraction": 1.0
+    },
+    {
+      "name": "MOUTH_upper_teeth_complete_candidate",
+      "bounds": [
+        495,
+        341,
+        562,
+        356
+      ],
+      "sourceVisible": false,
+      "comparedPixels": 764,
+      "meanRgbAbsoluteDifference": 48.39485165794066,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "MOUTH_tongue_complete_candidate",
+      "bounds": [
+        503,
+        354,
+        555,
+        371
+      ],
+      "sourceVisible": false,
+      "comparedPixels": 675,
+      "meanRgbAbsoluteDifference": 44.33481481481481,
+      "sameRgbFraction": 0.0
+    },
+    {
+      "name": "MOUTH_cavity_complete_candidate",
+      "bounds": [
+        489,
+        342,
+        567,
+        370
+      ],
+      "sourceVisible": false,
+      "comparedPixels": 1635,
+      "meanRgbAbsoluteDifference": 104.74067278287461,
+      "sameRgbFraction": 0.0
+    }
+  ]
+}
