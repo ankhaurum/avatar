@@ -1,0 +1,23 @@
+{
+  "master_sha256": "5e9c79145e8defc4463af797af990cf4e53248589622bb89bcc8580df7d85847",
+  "psd_sha256": "0cd1a839373028127325a4bfc5bd6c1abb7768b469acc793122a528555051022",
+  "size": [
+    1024,
+    1280
+  ],
+  "face_region": [
+    380,
+    390,
+    700,
+    700
+  ],
+  "face_rgb_changed_pixels": 0,
+  "opaque_source_rgb_changed_pixels": 0,
+  "reopen_rgba_changed_pixels": 0,
+  "status": "SOURCE_EXTRACTION_ONLY_NOT_COMPLETED_MATERIALS",
+  "limitations": [
+    "hair face neck ears not yet separated",
+    "lower head extraction boundary provisional",
+    "no Cubism import or publication"
+  ]
+}
