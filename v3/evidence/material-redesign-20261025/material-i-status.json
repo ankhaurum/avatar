@@ -1,0 +1,24 @@
+{
+  "status": "IN_PROGRESS_NOT_ACCEPTED",
+  "reference": "v3/artwork/hibiki-static-a.png",
+  "referenceSha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "preservedFFileSha256": "f06eb1e5e129867b496c01463d757dde91d19fef01ea778bacea44bca931e7d0",
+  "neck": {
+    "document": "hibiki-v3-parts-i.psd",
+    "layer": "BODY_neck_complete__CANDIDATE_UNVERIFIED",
+    "canvas": [1024, 1536],
+    "bounds": [437, 350, 612, 565],
+    "source": "i-neck-source-candidate.png",
+    "nativeAuthoring": "Photoshop CC 2018 COM/JSX; new PSD, hidden locked approved reference",
+    "singlePart": "No blue hair or collar in visible skin. Transparency checked by compositing over gray. Colored transparent-RGB preview artifacts must not be treated as visible contamination without alpha compositing.",
+    "assembly": "G temporarily duplicated, original neck layers hidden and new neck placed behind clothing/face. Saved inspection image only; G not saved.",
+    "remainingDefects": [
+      "White gaps remain between neck and hair, exposing absent hair formerly carried by old neck layer",
+      "Jaw edge and neck lighting transition need comparison against approved A",
+      "Side silhouette and root position are provisional; no Cubism motion validation",
+      "Not adopted into runtime, published assets or r2"
+    ]
+  },
+  "preservation": "A/F/G/H/r1/r2 not saved or overwritten by I authoring; existing dirty files retained",
+  "humanAcceptance": false
+}
