@@ -1,0 +1,63 @@
+{
+  "scope": "Material integrity only; not open-mouth quality, whole-face Identity, Cubism verification or Human Acceptance",
+  "comparisons": {
+    "neutral_reopen": {
+      "changed_rgba_pixels": 0
+    },
+    "upper_preserved": {
+      "changed_rgba_pixels": 0
+    },
+    "lower_preserved": {
+      "changed_rgba_pixels": 0
+    }
+  },
+  "painted_parts": {
+    "MOUTH_cavity_continuous_painted": {
+      "sha256": "36925c29bf65fe4172a7e6d81be67d8330b165429feaaa35ecd0ebbe3b96b34f",
+      "bbox": [
+        485,
+        335,
+        573,
+        382
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "components_at_alpha16": 1,
+      "interior_holes_at_alpha16": 0
+    },
+    "MOUTH_inner_wall_L_painted": {
+      "sha256": "85c59d8931f36855d84f0b352b94300fe09fb21813b57252d8be7ac537e07e72",
+      "bbox": [
+        485,
+        340,
+        505,
+        377
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "components_at_alpha16": 1,
+      "interior_holes_at_alpha16": 0
+    },
+    "MOUTH_inner_wall_R_painted": {
+      "sha256": "7ca1dfcfa01f46a36fcbb81dcd40f7724dcb7e360c60463ae1c14d8323a5e1b3",
+      "bbox": [
+        552,
+        336,
+        574,
+        377
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "components_at_alpha16": 1,
+      "interior_holes_at_alpha16": 0
+    }
+  },
+  "psd_sha256": "0925c7368709ccb463f0684d4bc7809a5865ea0cdf617cd3f5689ec27885cb97",
+  "passed_integrity": true
+}
