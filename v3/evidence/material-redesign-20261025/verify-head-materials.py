@@ -30,8 +30,14 @@ for name,(x,y,u,v) in rois.items():
     report["roi_rgb_mean_absolute_error_not_acceptance"][name]={"source_bounds":[x,y,u,v],"before":round(float(np.abs(source[sl]-before[sl]).mean()),4),"after":round(float(np.abs(source[sl]-after[sl]).mean()),4)}
 report["psd_sha256"]=hashlib.sha256(psd.read_bytes()).hexdigest()
 report["limitations"]=["13 source parts unchanged does not prove full face Identity or expression quality","ROI error is a diagnostic, not an acceptance criterion","fringe and brow transition remain unfinished","No Cubism import, deformation or publication"]
+report["ear_hair_alpha_preservation"]={}
+for side in ("r","l"):
+    before_alpha=rgba(base/f"head-component-hair-ear-{side}-alpha-baseline.png")[:,:,3]
+    after_alpha=rgba(base/f"head-component-hair-ear-{side}.png")[:,:,3]
+    report["ear_hair_alpha_preservation"][side]={"changed_pixels":int((before_alpha!=after_alpha).sum()),"max_delta":int(np.abs(before_alpha.astype(int)-after_alpha.astype(int)).max())}
 print(json.dumps(report,ensure_ascii=False,indent=2))
 assert len(parts)==13 and all(v["changed_pixels"]==0 for v in parts.values())
 assert report["cleanup"]["changed_pixels"]==0 and report["reopen"]["changed_pixels"]==0
 assert report["visible_pixels_below_y550"]==0
+assert all(x["changed_pixels"]==0 for x in report["ear_hair_alpha_preservation"].values())
 assert report["original_sha256"]=="a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf"

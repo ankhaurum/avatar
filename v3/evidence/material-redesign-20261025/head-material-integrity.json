@@ -76,7 +76,7 @@
         250
       ],
       "before": 17.7442,
-      "after": 5.4082
+      "after": 5.3731
     },
     "ear_R": {
       "source_bounds": [
@@ -86,7 +86,7 @@
         324
       ],
       "before": 21.5264,
-      "after": 6.3474
+      "after": 5.3176
     },
     "ear_L": {
       "source_bounds": [
@@ -96,7 +96,7 @@
         315
       ],
       "before": 34.9074,
-      "after": 9.8633
+      "after": 9.0068
     },
     "central_face": {
       "source_bounds": [
@@ -109,11 +109,21 @@
       "after": 2.4963
     }
   },
-  "psd_sha256": "2cd2ef22325f9d57f5081820d61a03f1bfd7de806955fad57da6d9bc6c7b76c2",
+  "psd_sha256": "2d5412acec3cb4a547f4c4bcbf6d1b8e2b7017b57b8c1a9d6179405b7335327d",
   "limitations": [
     "13 source parts unchanged does not prove full face Identity or expression quality",
     "ROI error is a diagnostic, not an acceptance criterion",
     "fringe and brow transition remain unfinished",
     "No Cubism import, deformation or publication"
-  ]
+  ],
+  "ear_hair_alpha_preservation": {
+    "r": {
+      "changed_pixels": 0,
+      "max_delta": 0
+    },
+    "l": {
+      "changed_pixels": 0,
+      "max_delta": 0
+    }
+  }
 }

@@ -5,6 +5,40 @@
   "saved": true,
   "layers": [
     {
+      "name": "HAIR_ear_front_L_decontaminated__REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "609 px,243 px,644 px,323 px",
+      "children": [
+        {
+          "name": "HAIR_ear_L_color_without_skin",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "609 px,243 px,644 px,323 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "name": "HAIR_ear_front_R_decontaminated__REVIEW",
+      "type": "LayerSet",
+      "visible": true,
+      "opacity": 100,
+      "bounds": "377 px,229 px,444 px,327 px",
+      "children": [
+        {
+          "name": "HAIR_ear_R_color_without_skin",
+          "type": "ArtLayer",
+          "visible": true,
+          "opacity": 100,
+          "bounds": "377 px,229 px,444 px,327 px",
+          "clipped": false
+        }
+      ]
+    },
+    {
       "name": "HAIR_fringe_hair_only_v2__REVIEW",
       "type": "LayerSet",
       "visible": true,
@@ -24,14 +58,14 @@
     {
       "name": "HAIR_ear_front_L_source_matte__REVIEW",
       "type": "LayerSet",
-      "visible": true,
+      "visible": false,
       "opacity": 100,
       "bounds": "608 px,243 px,644 px,323 px",
       "children": [
         {
           "name": "HAIR_ear_front_L_source_RGB",
           "type": "ArtLayer",
-          "visible": true,
+          "visible": false,
           "opacity": 100,
           "bounds": "608 px,243 px,644 px,323 px",
           "clipped": false
@@ -41,14 +75,14 @@
     {
       "name": "HAIR_ear_front_R_source_matte_v2__REVIEW",
       "type": "LayerSet",
-      "visible": true,
+      "visible": false,
       "opacity": 100,
       "bounds": "377 px,229 px,444 px,327 px",
       "children": [
         {
           "name": "HAIR_ear_front_R_source_RGB",
           "type": "ArtLayer",
-          "visible": true,
+          "visible": false,
           "opacity": 100,
           "bounds": "377 px,229 px,444 px,327 px",
           "clipped": false

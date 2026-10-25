@@ -3,7 +3,7 @@
 対象: HV3-03 / Ankhaurum-Development #98 / avatar PR #27。基点push 8f5c483。全素材完成・Human Acceptanceではない。
 
 ## 編集成果
-`v3/artwork/split-e/hibiki-head-materials-review.psd` は1024×1536、トップレベル18、グループを含む89要素。原画由来の目鼻唇を保ち、耳・耳前髪・前髪・顎輪郭・首を組み立てた検査用PSD。口内の制作PSDとは別であり、Cubism用完成PSDではない。
+`v3/artwork/split-e/hibiki-head-materials-review.psd` は1024×1536、トップレベル20、グループを含む93要素。原画由来の目鼻唇を保ち、耳・耳前髪・前髪・顎輪郭・首を組み立てた検査用PSD。口内の制作PSDとは別であり、Cubism用完成PSDではない。
 
 - 過大に見えていたJ由来の右耳を採用せず、原画の可視縁と手描きの隠れ耳・陰影を分離。左耳も同様に制作し、こめかみの接合を補った。
 - 耳前髪は原画の局所RGBと青−赤チャンネル由来のマスクを用い、既存髪の重複領域をマスクで隠した。画素の移動・拡大縮小で合わせていない。
@@ -21,18 +21,21 @@
 - ディスク上のPSDを別名コピーから開き直し、合成RGBA差分0。既に開いているPSDを取得しただけの検査ではない。
 - 全身参照が表示されたままの不正な検査出力を検出・修正。最終出力は参照非表示、y550以降の可視画素0。髪クリッピング解除による整理前後の不一致も検出して修正した。
 - 正面の白/暗背景、髪・耳・首の単独素材を確認。顔の比較画像はA / 着手前 / 今回候補の順に `face-ear-proof-0/1/2.png`。
-- 部分領域のRGB平均絶対誤差は診断値であり採用条件ではない。額17.7442→5.4082、右耳21.5264→6.3474、左耳34.9074→9.8633。小さい数値を品質やIdentityの受入へ読み替えない。
+- 部分領域のRGB平均絶対誤差は診断値であり採用条件ではない。額17.7442→5.3731、右耳21.5264→5.3176、左耳34.9074→9.0068。小さい数値を品質やIdentityの受入へ読み替えない。
 - PNG保存は検査用複製だけで実施。元PSDへの直接PNG保存は自動承認レビューが保存状態へのリスクを理由に拒否したため、推奨された複製経路へ変更した。
 
 再検査: `python v3/evidence/material-redesign-20261025/verify-head-materials.py`（Pillow/numpyが必要）。13部品PNG、整理前後/再読込みPNG、原画SHA、検査域外の参照漏れを比較する。実描画/可動試験ではない。
+
+## 耳前髪の追加色分離
+57708b5保存後も制作を継続し、左右の耳前髪について実効alphaをそのまま保持した色分離を追加した。各耳前髪を非表示にした下地Bと原画CからPhotoshop内で前景色を再構成。位置・輪郭・透明度は動かさず、補正前後の各alpha差分0を確認。補正前PNGは `head-component-hair-ear-r/l-alpha-baseline.png` として保存。再合成で原画との部分色差は低減したが、隠れ耳の造形と可動時の色分離の妥当性は未完了であり採用確定ではない。
 
 ## 素材PNG対応
 以下は検査用書出しであり、ランタイム登録・Cubism取り込みは行っていない。
 | PNG | PSDグループ |
 |---|---|
 | head-component-fringe.png | HAIR_fringe_hair_only_v2__REVIEW |
-| head-component-hair-ear-r.png | HAIR_ear_front_R_source_matte_v2__REVIEW |
-| head-component-hair-ear-l.png | HAIR_ear_front_L_source_matte__REVIEW |
+| head-component-hair-ear-r.png | HAIR_ear_front_R_decontaminated__REVIEW |
+| head-component-hair-ear-l.png | HAIR_ear_front_L_decontaminated__REVIEW |
 | head-component-ears.png | EARS_material_review |
 | head-component-neck.png | NECK_original_visible_and_hidden__REVIEW |
 
