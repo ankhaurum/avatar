@@ -1,0 +1,49 @@
+{
+  "approvedAUnchanged": true,
+  "jUnchanged": true,
+  "reopenedCompositeIdentical": true,
+  "parts": [
+    {
+      "file": "m-HAIR_back_complete.png",
+      "size": [
+        403,
+        427
+      ],
+      "mode": "RGBA",
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "alphaNonzeroPixels": 108904,
+      "sha256": "409f7cef4969fa693590e1591e5b57590eb9ee0791cbf71981d625c565ee0d60"
+    },
+    {
+      "file": "m-HAIR_side_R_complete.png",
+      "size": [
+        148,
+        385
+      ],
+      "mode": "RGBA",
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "alphaNonzeroPixels": 28238,
+      "sha256": "37e9051163f2ac0e288911b92be521ccec1726b2d2be80d4bfca2fe15634bdc0"
+    },
+    {
+      "file": "m-HAIR_side_L_complete.png",
+      "size": [
+        159,
+        385
+      ],
+      "mode": "RGBA",
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "alphaNonzeroPixels": 32652,
+      "sha256": "70d40e5acfc1166205beef3a4b473d57e59c00350f098e2a2f686b6872413d0d"
+    }
+  ],
+  "limits": [
+    "Three hair material candidates, not completed hair assembly or avatar.",
+    "White/dark native Photoshop previews inspected; Cubism deformation not tested.",
+    "A and J source hashes are preservation evidence, not proof of new assembled identity.",
+    "Generated front candidate rejected for silhouette; first left candidate rejected for diffuse halo."
+  ]
+}

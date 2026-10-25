@@ -1,0 +1,109 @@
+{
+  "format": "hibiki-independent-materials",
+  "version": "m-hair",
+  "canvas": [
+    1024,
+    1536
+  ],
+  "psd": "hibiki-v3-independent-hair-m.psd",
+  "approvedA": "d8e3a9c",
+  "parts": [
+    {
+      "id": "M_HAIR_side_R",
+      "file": "parts/m-HAIR_side_R_complete.png",
+      "canvasSize": [
+        148,
+        385
+      ],
+      "alphaBounds": [
+        0,
+        10,
+        147,
+        382
+      ],
+      "layerBounds": [
+        310,
+        70,
+        457,
+        442
+      ],
+      "textureOrigin": [
+        310,
+        60
+      ],
+      "source": "parts/m-source-HAIR_side_R.png",
+      "sourceSize": [
+        941,
+        1672
+      ],
+      "sourceSHA256": "a24da94e0fc6fa46061a4e9289a707ef7178e21bfaead5d53a73a66eb9c52629",
+      "status": "independent material review; not integrated"
+    },
+    {
+      "id": "M_HAIR_side_L",
+      "file": "parts/m-HAIR_side_L_complete.png",
+      "canvasSize": [
+        159,
+        385
+      ],
+      "alphaBounds": [
+        12,
+        4,
+        159,
+        373
+      ],
+      "layerBounds": [
+        554,
+        70,
+        701,
+        439
+      ],
+      "textureOrigin": [
+        542,
+        66
+      ],
+      "source": "parts/m-source-HAIR_side_L.png",
+      "sourceSize": [
+        941,
+        1671
+      ],
+      "sourceSHA256": "988eff16b1e38793e8257eb8cab9741dd96a3a74caa63ca5deac129ff723d5f7",
+      "status": "independent material review; not integrated"
+    },
+    {
+      "id": "M_HAIR_back",
+      "file": "parts/m-HAIR_back_complete.png",
+      "canvasSize": [
+        403,
+        427
+      ],
+      "alphaBounds": [
+        10,
+        5,
+        394,
+        416
+      ],
+      "layerBounds": [
+        310,
+        35,
+        694,
+        446
+      ],
+      "textureOrigin": [
+        300,
+        30
+      ],
+      "source": "parts/m-source-HAIR_back.png",
+      "sourceSize": [
+        1312,
+        1199
+      ],
+      "sourceSHA256": "398e17a92a5dd0e8344d8fc6cb5dbf31116a16435cdfd31577c3b1ff88931133",
+      "status": "independent material review; not integrated"
+    }
+  ],
+  "design": "../../docs/hibiki-motion-led-part-design-20261025.md",
+  "completeAvatar": false,
+  "segmentationUsed": false,
+  "patchRepairUsed": false
+}
