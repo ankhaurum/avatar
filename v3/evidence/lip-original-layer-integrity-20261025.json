@@ -1,0 +1,15 @@
+{
+  "upper": {
+    "identical_rgba": true,
+    "changed_pixels": 0,
+    "source_sha256": "b55d0edc572fbb13d9581bcfc56edc3b6d86d3c0f02c1f75c705293a0687fb2d",
+    "draft_sha256": "b55d0edc572fbb13d9581bcfc56edc3b6d86d3c0f02c1f75c705293a0687fb2d"
+  },
+  "lower": {
+    "identical_rgba": true,
+    "changed_pixels": 0,
+    "source_sha256": "51cc5f3cbb7b1dbe1fad6369042deeddc3be178d0e9e0fb2bb878edebd77a4b5",
+    "draft_sha256": "51cc5f3cbb7b1dbe1fad6369042deeddc3be178d0e9e0fb2bb878edebd77a4b5"
+  },
+  "scope": "Original visible lip layers only. Does not establish complete face identity, open-mouth quality or Human Acceptance."
+}
