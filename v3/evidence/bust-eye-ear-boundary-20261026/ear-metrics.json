@@ -1,0 +1,15 @@
+{
+  "rgba_changed": 266,
+  "alpha_changed": 0,
+  "outside_ear_changes": 0,
+  "before": {
+    "mean": 0.7092543859649123,
+    "max": 76,
+    "gt30": 92
+  },
+  "after": {
+    "mean": 0.4293421052631579,
+    "max": 61,
+    "gt30": 26
+  }
+}
