@@ -1,0 +1,86 @@
+{
+  "saved_reopened_rgba_different_pixels": 0,
+  "original_sha256": "a62d7badad8801b9cd91994436eaf0ad77e4ef09401b84cea3d9a51d3543e5cf",
+  "face_psd_sha256": "9af1d7caba43e088684b5509e3b695a5f1b37e3f6f9d957675c53b27ba5d3305",
+  "skin_source_psd_sha256": "cd98cff4738cdf1a6362f1ab99becd2334a178bd4c1096cc34e84fcfcf0f683a",
+  "original_parts": [
+    {
+      "layer": "FACE_nose_original",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "MOUTH_upper_lip_original_visible",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "MOUTH_lower_lip_original_visible",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_R_highlight_main",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_R_highlight_secondary",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_R_upper_lid_lash_original_visible",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_R_lower_lid_original_visible",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_R_lower_skin_original",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_L_highlight_main",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_L_highlight_secondary",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_L_upper_lid_lash_original_visible",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_L_lower_lid_original_visible",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    },
+    {
+      "layer": "EYE_L_lower_skin_original",
+      "rgba_different_pixels": 0,
+      "maximum_channel_delta": 0
+    }
+  ],
+  "eye_comparison": {
+    "maximum_rgb_delta": 27,
+    "mean_channel_delta": 0.3278664302600473,
+    "pixels_over_10": 42,
+    "region": [
+      430,
+      230,
+      618,
+      290
+    ],
+    "limitation": "Comparison over original A backdrop; not independent whole-face identity proof"
+  },
+  "status": "PARTIAL: forehead, brows, hair fit and complete hidden surfaces not accepted; no Cubism import"
+}
