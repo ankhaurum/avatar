@@ -1,0 +1,1657 @@
+{
+  "appliedMasks": 86,
+  "removedCopiedItems": [
+    "EARS_bust_source__IN_PROGRESS__PRESERVED_PRIOR",
+    "FACE_bust_original_contour__IN_PROGRESS__PRESERVED_PRIOR",
+    "MOUTH_original_bust_visible__PRESERVED_PRIOR",
+    "HAIR_back_bust_original__MATERIAL__BEFORE_SOFT_MATTE",
+    "NECK_bust_visible_and_hidden__IN_PROGRESS__BEFORE_SOFT_MATTE",
+    "FACE_bust_original_contour__IN_PROGRESS__BEFORE_SOFT_MATTE",
+    "EYES_original_bust_visible__BEFORE_HIGHLIGHTS",
+    "HAIR_bust_visible_source__IN_PROGRESS__BEFORE_SOFT_MATTE",
+    "HAIR_bust_visible_source__IN_PROGRESS__BEFORE_NATIVE_NECK_ALPHA",
+    "SOURCE_bust_pixels__working のコピー 2",
+    "SOURCE_bust_pixels__working のコピー",
+    "HAIR_back_hidden_flow_dark__REVIEW",
+    "HAIR_back_hidden_flow_mid__REVIEW",
+    "HAIR_back_hidden_flow_light__REVIEW",
+    "HIDDEN_native_central_band_0",
+    "HIDDEN_native_central_band_1",
+    "HIDDEN_native_central_band_2",
+    "HIDDEN_native_central_band_3"
+  ],
+  "states": [
+    {
+      "p": [
+        0
+      ],
+      "v": true,
+      "n": "PARTS_bust_master__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        0
+      ],
+      "v": false,
+      "n": "REJECTED_local_rectangle_HAIR_neck_native_unmixed__TRIAL"
+    },
+    {
+      "p": [
+        0,
+        0,
+        0
+      ],
+      "v": false,
+      "n": "HAIR_neck_strands_and_shadow_unmixed__TRIAL"
+    },
+    {
+      "p": [
+        0,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_bust_visible_source__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        1,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_temple_native_boundary__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_temple_L_native_edge__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_temple_R_native_edge__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        1,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_neck_native_without_head_cutoff__TRIAL"
+    },
+    {
+      "p": [
+        0,
+        1,
+        2
+      ],
+      "v": false,
+      "n": "HAIR_neck_front_native_1__TRIAL"
+    },
+    {
+      "p": [
+        0,
+        1,
+        3
+      ],
+      "v": false,
+      "n": "HAIR_neck_front_native_0__TRIAL"
+    },
+    {
+      "p": [
+        0,
+        1,
+        4
+      ],
+      "v": true,
+      "n": "HAIR_side_L_bust_original__MATERIAL"
+    },
+    {
+      "p": [
+        0,
+        1,
+        4,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_side_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        1,
+        4,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_side_L_bust_original_hidden_source_overlap_12px__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        1,
+        5
+      ],
+      "v": true,
+      "n": "HAIR_side_R_bust_original__MATERIAL"
+    },
+    {
+      "p": [
+        0,
+        1,
+        5,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_side_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        1,
+        5,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_side_R_bust_original_hidden_source_overlap_12px__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        1,
+        6
+      ],
+      "v": true,
+      "n": "HAIR_fringe_bust_original__MATERIAL"
+    },
+    {
+      "p": [
+        0,
+        1,
+        6,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_fringe_bust_original"
+    },
+    {
+      "p": [
+        0,
+        1,
+        6,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_fringe_bust_original_hidden_source_overlap_12px__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        1,
+        7
+      ],
+      "v": false,
+      "n": "HAIR_bust_source_color_separation__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        2
+      ],
+      "v": true,
+      "n": "MOUTH_original_bust_visible"
+    },
+    {
+      "p": [
+        0,
+        2,
+        0
+      ],
+      "v": true,
+      "n": "MOUTH_corner_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        2,
+        1
+      ],
+      "v": true,
+      "n": "MOUTH_corner_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        2,
+        2
+      ],
+      "v": true,
+      "n": "MOUTH_lower_lip_bust_original"
+    },
+    {
+      "p": [
+        0,
+        2,
+        3
+      ],
+      "v": true,
+      "n": "MOUTH_upper_lip_bust_original"
+    },
+    {
+      "p": [
+        0,
+        3
+      ],
+      "v": false,
+      "n": "MOUTH_internals_bust__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        3,
+        0
+      ],
+      "v": false,
+      "n": "MOUTH_upper_teeth_J_texture_bust_fit__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        3,
+        1
+      ],
+      "v": false,
+      "n": "MOUTH_tongue_J_texture_bust_fit__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        3,
+        2
+      ],
+      "v": false,
+      "n": "MOUTH_lower_lining_bust__OPEN_ONLY"
+    },
+    {
+      "p": [
+        0,
+        3,
+        3
+      ],
+      "v": false,
+      "n": "MOUTH_inner_wall_L_bust_anchor__OPEN_ONLY"
+    },
+    {
+      "p": [
+        0,
+        3,
+        4
+      ],
+      "v": false,
+      "n": "MOUTH_inner_wall_R_bust_anchor__OPEN_ONLY"
+    },
+    {
+      "p": [
+        0,
+        3,
+        5
+      ],
+      "v": false,
+      "n": "MOUTH_cavity_bust_complete__OPEN_ONLY"
+    },
+    {
+      "p": [
+        0,
+        4
+      ],
+      "v": true,
+      "n": "NOSE_original_bust_visible"
+    },
+    {
+      "p": [
+        0,
+        4,
+        0
+      ],
+      "v": true,
+      "n": "NOSE_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5
+      ],
+      "v": true,
+      "n": "EYES_original_bust_visible"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0
+      ],
+      "v": true,
+      "n": "EYE_L_original_bust"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        0
+      ],
+      "v": true,
+      "n": "EYE_L_native_upper_skin_continuity__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        1
+      ],
+      "v": true,
+      "n": "EYE_L_outer_corner_bust_original_v2"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        2
+      ],
+      "v": true,
+      "n": "EYE_L_outer_corner_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        3
+      ],
+      "v": true,
+      "n": "EYE_L_inner_corner_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        4
+      ],
+      "v": true,
+      "n": "EYE_L_lower_lid_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        5
+      ],
+      "v": true,
+      "n": "EYE_L_upper_lid_lash_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6
+      ],
+      "v": true,
+      "n": "EYE_L_eyeball_surface__ASSEMBLY_MASK"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        0
+      ],
+      "v": true,
+      "n": "EYE_L_highlight_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        1
+      ],
+      "v": true,
+      "n": "EYE_L_iris_complete__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        1,
+        0
+      ],
+      "v": true,
+      "n": "EYE_L_pupil_beneath_highlight__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        1,
+        1
+      ],
+      "v": true,
+      "n": "EYE_L_iris_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        1,
+        2
+      ],
+      "v": true,
+      "n": "EYE_L_iris_hidden_radial_source_patch__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        1,
+        3
+      ],
+      "v": true,
+      "n": "EYE_L_iris_hidden_stroma__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        1,
+        4
+      ],
+      "v": true,
+      "n": "EYE_L_iris_hidden_rim__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        2
+      ],
+      "v": true,
+      "n": "EYE_L_sclera_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        5,
+        0,
+        6,
+        3
+      ],
+      "v": true,
+      "n": "EYE_L_sclera_hidden_continuous__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1
+      ],
+      "v": true,
+      "n": "EYE_R_original_bust"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        0
+      ],
+      "v": true,
+      "n": "EYE_R_upper_inner_join_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        1
+      ],
+      "v": true,
+      "n": "EYE_R_native_upper_skin_continuity__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        2
+      ],
+      "v": true,
+      "n": "EYE_R_inner_corner_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        3
+      ],
+      "v": true,
+      "n": "EYE_R_outer_corner_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        4
+      ],
+      "v": true,
+      "n": "EYE_R_lower_lid_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        5
+      ],
+      "v": true,
+      "n": "EYE_R_upper_lid_lash_bust_original"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6
+      ],
+      "v": true,
+      "n": "EYE_R_eyeball_surface__ASSEMBLY_MASK"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        0
+      ],
+      "v": true,
+      "n": "EYE_R_highlight_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        1
+      ],
+      "v": true,
+      "n": "EYE_R_iris_complete__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        1,
+        0
+      ],
+      "v": true,
+      "n": "EYE_R_pupil_beneath_highlight__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        1,
+        1
+      ],
+      "v": true,
+      "n": "EYE_R_iris_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        1,
+        2
+      ],
+      "v": true,
+      "n": "EYE_R_iris_hidden_radial_source_patch__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        1,
+        3
+      ],
+      "v": true,
+      "n": "EYE_R_iris_hidden_stroma__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        1,
+        4
+      ],
+      "v": true,
+      "n": "EYE_R_iris_hidden_rim__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        2
+      ],
+      "v": true,
+      "n": "EYE_R_sclera_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        5,
+        1,
+        6,
+        3
+      ],
+      "v": true,
+      "n": "EYE_R_sclera_hidden_continuous__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        6
+      ],
+      "v": true,
+      "n": "BROWS_original_bust_visible"
+    },
+    {
+      "p": [
+        0,
+        6,
+        0
+      ],
+      "v": true,
+      "n": "BROW_L_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        6,
+        1
+      ],
+      "v": true,
+      "n": "BROW_R_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        7
+      ],
+      "v": true,
+      "n": "FACE_bust_original_contour__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        7,
+        0
+      ],
+      "v": true,
+      "n": "FACE_jaw_L_contact_shadow_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        1
+      ],
+      "v": true,
+      "n": "FACE_jaw_R_contact_shadow_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        2
+      ],
+      "v": true,
+      "n": "FACE_native_jaw_contact_underlap__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        3
+      ],
+      "v": true,
+      "n": "FACE_temple_R_original_skin__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        4
+      ],
+      "v": true,
+      "n": "FACE_temple_L_original_skin__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        5
+      ],
+      "v": false,
+      "n": "FACE_forehead_soft_native_trial"
+    },
+    {
+      "p": [
+        0,
+        7,
+        6
+      ],
+      "v": true,
+      "n": "FACE_skin_local_nose_cleanup_v2__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        7
+      ],
+      "v": false,
+      "n": "FACE_skin_local_nose_cleanup__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        8
+      ],
+      "v": true,
+      "n": "FACE_skin_without_features__FILL_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        9
+      ],
+      "v": true,
+      "n": "FACE_hidden_temple_L_shade__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        10
+      ],
+      "v": true,
+      "n": "FACE_hidden_temple_R_shade__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        11
+      ],
+      "v": true,
+      "n": "FACE_hidden_forehead_light__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        12
+      ],
+      "v": true,
+      "n": "FACE_hidden_continuous_foundation__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        7,
+        13
+      ],
+      "v": false,
+      "n": "FACE_bust_source_contour__FEATURE_REMOVAL_PENDING"
+    },
+    {
+      "p": [
+        0,
+        8
+      ],
+      "v": true,
+      "n": "EARS_bust_source__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        8,
+        0
+      ],
+      "v": true,
+      "n": "EAR_R_outer_rim_bust_original"
+    },
+    {
+      "p": [
+        0,
+        8,
+        1
+      ],
+      "v": true,
+      "n": "EAR_R_lower_attachment_bust_original"
+    },
+    {
+      "p": [
+        0,
+        8,
+        2
+      ],
+      "v": true,
+      "n": "EAR_L_bust_source_visible"
+    },
+    {
+      "p": [
+        0,
+        8,
+        3
+      ],
+      "v": true,
+      "n": "EAR_R_bust_source_visible"
+    },
+    {
+      "p": [
+        0,
+        8,
+        4
+      ],
+      "v": true,
+      "n": "EAR_R_hidden_antihelix_light__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        8,
+        5
+      ],
+      "v": true,
+      "n": "EAR_R_hidden_helix_light__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        8,
+        6
+      ],
+      "v": true,
+      "n": "EAR_R_hidden_concha_shade__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        8,
+        7
+      ],
+      "v": true,
+      "n": "EAR_R_hidden_continuous_foundation__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        9
+      ],
+      "v": true,
+      "n": "HAIR_neck_full_native_unmixed__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        9,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_neck_full_strands_and_shadow_unmixed__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        10
+      ],
+      "v": true,
+      "n": "COLLAR_front_bust_original__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        10,
+        0
+      ],
+      "v": true,
+      "n": "COLLAR_neck_contact_L_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        10,
+        1
+      ],
+      "v": true,
+      "n": "COLLAR_neck_contact_R_native__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        10,
+        2
+      ],
+      "v": true,
+      "n": "COLLAR_front_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        10,
+        3
+      ],
+      "v": true,
+      "n": "COLLAR_front_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        11
+      ],
+      "v": true,
+      "n": "TIE_bust_original_parts__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        11,
+        0
+      ],
+      "v": true,
+      "n": "TIE_knot_bust_original"
+    },
+    {
+      "p": [
+        0,
+        11,
+        1
+      ],
+      "v": true,
+      "n": "TIE_band_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        11,
+        2
+      ],
+      "v": true,
+      "n": "TIE_band_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        11,
+        3
+      ],
+      "v": false,
+      "n": "TIE_band_L_bust_original__PRIOR_MASK"
+    },
+    {
+      "p": [
+        0,
+        11,
+        4
+      ],
+      "v": false,
+      "n": "TIE_band_R_bust_original__PRIOR_MASK"
+    },
+    {
+      "p": [
+        0,
+        11,
+        5
+      ],
+      "v": true,
+      "n": "TIE_body_bust_original"
+    },
+    {
+      "p": [
+        0,
+        12
+      ],
+      "v": true,
+      "n": "NECK_bust_visible_and_hidden__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        12,
+        0
+      ],
+      "v": true,
+      "n": "NECK_native_full_under_hair_unmixed__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        12,
+        1
+      ],
+      "v": false,
+      "n": "REJECTED_local_rectangle_NECK_native_under_hair_unmixed__TRIAL"
+    },
+    {
+      "p": [
+        0,
+        12,
+        2
+      ],
+      "v": false,
+      "n": "NECK_bust_visible_lower_native_v2"
+    },
+    {
+      "p": [
+        0,
+        12,
+        3
+      ],
+      "v": false,
+      "n": "NECK_bust_original_visible"
+    },
+    {
+      "p": [
+        0,
+        12,
+        4
+      ],
+      "v": false,
+      "n": "NECK_bust_original_visible__prior_hair_exclusion"
+    },
+    {
+      "p": [
+        0,
+        12,
+        5
+      ],
+      "v": false,
+      "n": "NECK_hidden_side_R_shade"
+    },
+    {
+      "p": [
+        0,
+        12,
+        6
+      ],
+      "v": false,
+      "n": "NECK_hidden_side_L_shade"
+    },
+    {
+      "p": [
+        0,
+        12,
+        7
+      ],
+      "v": false,
+      "n": "NECK_hidden_center_light"
+    },
+    {
+      "p": [
+        0,
+        12,
+        8
+      ],
+      "v": false,
+      "n": "NECK_hidden_under_jaw_shade"
+    },
+    {
+      "p": [
+        0,
+        12,
+        9
+      ],
+      "v": false,
+      "n": "NECK_hidden_native_fill_v2__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        12,
+        10
+      ],
+      "v": true,
+      "n": "NECK_hidden_native_clean_v6__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        12,
+        11
+      ],
+      "v": true,
+      "n": "NECK_hidden_continuous_foundation__PAINT_REVIEW"
+    },
+    {
+      "p": [
+        0,
+        13
+      ],
+      "v": true,
+      "n": "COLLAR_back_bust_original__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        13,
+        0
+      ],
+      "v": true,
+      "n": "COLLAR_back_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        13,
+        1
+      ],
+      "v": true,
+      "n": "COLLAR_back_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        14
+      ],
+      "v": true,
+      "n": "HAIR_back_bust_original__MATERIAL"
+    },
+    {
+      "p": [
+        0,
+        14,
+        0
+      ],
+      "v": true,
+      "n": "HAIR_back_bust_original"
+    },
+    {
+      "p": [
+        0,
+        14,
+        1
+      ],
+      "v": true,
+      "n": "HAIR_back_bust_original_hidden_source_overlap_12px__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2
+      ],
+      "v": true,
+      "n": "HAIR_back_hidden_native_texture__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        0
+      ],
+      "v": true,
+      "n": "HIDDEN_native_crown_source_transition"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        1
+      ],
+      "v": true,
+      "n": "HIDDEN_native_blue_center_v2_3"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        2
+      ],
+      "v": true,
+      "n": "HIDDEN_native_blue_center_v2_2"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        3
+      ],
+      "v": true,
+      "n": "HIDDEN_native_blue_center_v2_1"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        4
+      ],
+      "v": true,
+      "n": "HIDDEN_native_blue_center_v2_0"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        5
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_6"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        6
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_5"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        7
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_4"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        8
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_3"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        9
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_2"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        10
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_1"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        11
+      ],
+      "v": true,
+      "n": "HIDDEN_native_right_band_0"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        12
+      ],
+      "v": true,
+      "n": "HIDDEN_native_left_band_5"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        13
+      ],
+      "v": true,
+      "n": "HIDDEN_native_left_band_4"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        14
+      ],
+      "v": true,
+      "n": "HIDDEN_native_left_band_3"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        15
+      ],
+      "v": true,
+      "n": "HIDDEN_native_left_band_2"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        16
+      ],
+      "v": true,
+      "n": "HIDDEN_native_left_band_1"
+    },
+    {
+      "p": [
+        0,
+        14,
+        2,
+        17
+      ],
+      "v": true,
+      "n": "HIDDEN_native_left_band_0"
+    },
+    {
+      "p": [
+        0,
+        14,
+        3
+      ],
+      "v": true,
+      "n": "HAIR_back_hidden_center_depth__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        14,
+        4
+      ],
+      "v": true,
+      "n": "HAIR_back_hidden_left_shadow__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        14,
+        5
+      ],
+      "v": true,
+      "n": "HAIR_back_hidden_right_light__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        14,
+        6
+      ],
+      "v": true,
+      "n": "HAIR_back_complete_hidden_scalp__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        15
+      ],
+      "v": true,
+      "n": "JACKET_lapels_bust_original__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        15,
+        0
+      ],
+      "v": false,
+      "n": "REJECTED_lapel_L_patch_contains_background"
+    },
+    {
+      "p": [
+        0,
+        15,
+        1
+      ],
+      "v": true,
+      "n": "JACKET_lapel_R_top_original_patch__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        15,
+        2
+      ],
+      "v": true,
+      "n": "JACKET_lapel_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        15,
+        3
+      ],
+      "v": true,
+      "n": "JACKET_lapel_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        16
+      ],
+      "v": true,
+      "n": "JACKET_body_bust_original__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        16,
+        0
+      ],
+      "v": true,
+      "n": "JACKET_front_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        16,
+        1
+      ],
+      "v": true,
+      "n": "JACKET_front_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        17
+      ],
+      "v": true,
+      "n": "JACKET_upper_sleeves_bust_original__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        17,
+        0
+      ],
+      "v": true,
+      "n": "JACKET_upper_sleeve_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        17,
+        1
+      ],
+      "v": true,
+      "n": "JACKET_upper_sleeve_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        18
+      ],
+      "v": true,
+      "n": "SHIRT_bust_continuous__IN_PROGRESS"
+    },
+    {
+      "p": [
+        0,
+        18,
+        0
+      ],
+      "v": true,
+      "n": "SHIRT_front_L_bust_original"
+    },
+    {
+      "p": [
+        0,
+        18,
+        1
+      ],
+      "v": true,
+      "n": "SHIRT_front_R_bust_original"
+    },
+    {
+      "p": [
+        0,
+        18,
+        2
+      ],
+      "v": true,
+      "n": "SHIRT_hidden_side_L_light__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        18,
+        3
+      ],
+      "v": true,
+      "n": "SHIRT_hidden_side_R_shade__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        18,
+        4
+      ],
+      "v": true,
+      "n": "SHIRT_hidden_center_fold__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        18,
+        5
+      ],
+      "v": true,
+      "n": "SHIRT_hidden_continuous_front__REVIEW"
+    },
+    {
+      "p": [
+        0,
+        18,
+        6
+      ],
+      "v": true,
+      "n": "SHIRT_hidden_neckline_overlap__REVIEW"
+    },
+    {
+      "p": [
+        1
+      ],
+      "v": false,
+      "n": "HEAD_bust_source_white_removed_v2__REVIEW"
+    },
+    {
+      "p": [
+        2
+      ],
+      "v": false,
+      "n": "HEAD_bust_source_white_removed__REVIEW"
+    },
+    {
+      "p": [
+        3
+      ],
+      "v": false,
+      "n": "SOURCE_bust_pixels__working"
+    },
+    {
+      "p": [
+        4
+      ],
+      "v": false,
+      "n": "REFERENCE_bust_master_20261026__LOCKED"
+    }
+  ]
+}

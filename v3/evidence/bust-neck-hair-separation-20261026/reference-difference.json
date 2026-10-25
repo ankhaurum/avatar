@@ -1,0 +1,33 @@
+{
+  "before": {
+    "face": {
+      "mean": 0.50807757885763,
+      "gt30": 79,
+      "max": 112
+    },
+    "neck": {
+      "mean": 2.9313011695906432,
+      "gt30": 3047,
+      "max": 190
+    }
+  },
+  "candidate": {
+    "face": {
+      "mean": 0.44998721227621485,
+      "gt30": 78,
+      "max": 112
+    },
+    "neck": {
+      "mean": 2.5791569200779727,
+      "gt30": 2690,
+      "max": 190
+    }
+  },
+  "features_changed": {
+    "eye_R": 0,
+    "eye_L": 0,
+    "nose": 0,
+    "mouth": 0
+  },
+  "alpha_changed_pixels": 14
+}
