@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-25",
+  "method": "Built-in image_gen referenced-image editing; Photoshop CC 2018 JSX assembly. Pillow used only for measurement and review sheets.",
+  "sources": [
+    {
+      "file": "j-hand-palm-R-source.png",
+      "generatedFile": "exec-377b908c-2301-46d8-982f-0a87fb1a7208.png",
+      "prompt": "Create ONE precise photographic supplemental Live2D RIGHT HAND PALM material matching this approved hand reference's slender small adult feminine proportions, warm pale skin tone, short natural pink nails, soft lighting and smooth texture. This is an OPENING POSE source for rig construction, not a replacement for the reference's relaxed curled neutral pose. Wrist at TOP, fingers pointing DOWN. PALM facing camera, anatomically correct right hand, thumb on VIEWER LEFT. Five complete distinct fingers: thumb, index, longest middle, ring, shortest little; moderate natural separation to expose the web spaces, fingers gently relaxed rather than rigid or exaggerated splayed. Full palm with subtle thenar/hypothenar volumes, continuous webbing at each finger base and realistic creases. All finger side edges fully visible with no occlusion by another finger, no fused digits, no extra fingers. Complete short wrist extension for sleeve overlap. Match the reference's delicate hand rather than large muscular or bony hands; do not make long nails. No sleeves, jewelry, face, other body parts, labels, diagram or background. One hand only, complete uncropped silhouette, actual RGBA transparency outside, generous transparent margin. High quality texture for palm and continuous finger meshes.",
+      "use": "Supplemental palmar opening source; not replacement for neutral curled hand"
+    },
+    {
+      "file": "j-hand-palm-L-source.png",
+      "generatedFile": "exec-e6d4077a-ee19-4c6a-949d-c6ddec612fbf.png",
+      "prompt": "Create ONE precise photographic supplemental Live2D LEFT HAND PALM material matching this approved hand reference's small slender adult feminine proportions, warm pale skin tone, short natural pink nails and soft lighting. Wrist at TOP, fingers DOWN, palm toward camera, anatomically LEFT hand with thumb on VIEWER RIGHT. This is a supplemental opening-pose material, not a replacement for the curled neutral hand. Five complete distinct fingers with correct lengths: longest middle, index and ring a little shorter, little shortest, thumb at side. Moderate relaxed separation exposes every interdigital web space; all digits fully visible with continuous natural finger bases and no overlaps hiding sides. Delicate thenar/hypothenar volume, gentle realistic palm creases, not muscular or bony, no exaggerated splay or long nails. Include a short whole wrist for sleeve overlap. One hand only, complete silhouette and generous transparent margin. No sleeve, jewelry, face, background, diagram, labels, duplicated fingers, skin-colored filler patches or unrelated body parts. Actual RGBA transparency outside the hand. High precision realistic texture for independently deformable palm and fingers, same hand identity and scale family as the reference.",
+      "use": "Supplemental palmar opening source; not replacement for neutral curled hand"
+    },
+    {
+      "file": "j-HAIR_crown_fringe-source.png",
+      "prompt": "Use case: precise-object-edit. Produce one isolated FRONT CROWN AND BANGS layer for a professional Live2D model of the woman in the reference. Preserve the exact original electric-blue fine realistic hair, crown part position, strand directions, soft lighting and delicate thin straight central bangs ending just above her eyes. This asset includes the full rounded crown from the top part down to the tapered fringe tips, with the upper side sweep continuing toward both temples; it does NOT include the long cheek/neck-length bob side locks or back hair. All hidden root area above the fringe is fully painted continuous opaque blue hair; only the natural tiny gaps BETWEEN wispy fringe tips are transparent. The middle fringe must remain fine vertical wisps, not an arched solid heavy fringe or swept curtain. Same front view, slight original asymmetry, no redesign. Only hair on genuine transparent background. Remove all skin, face, eyes, brows, ears, clothing and background; not even small flesh or eye fragments may remain between strands. Large detailed isolated asset with transparent margin and full uncropped top and sides. Render only this single hair layer, not multiple components, not a whole wig, no text.",
+      "use": "Rejected visible shape; retained hidden. Existing identity-preserving visible hair surfaces retained."
+    }
+  ],
+  "limitations": [
+    "Generated parts are candidates subject to visual inspection; no blanket quality acceptance.",
+    "Hair source target rectangles in j-hair-authoring-measured.json predate refined assembly; material-j-manifest.json holds actual exported bounds.",
+    "Palmar fingers are continuous textures, not 30 rigged joints; hidden side surfaces and compound motion are not verified."
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "reference": "v3/artwork/hibiki-static-a.png",
+  "referenceCommit": "d8e3a9c",
+  "tool": "image_gen.imagegen",
+  "specs": [
+    {
+      "name": "HAIR_back_cap",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-7a2210b1-93d6-49a5-bcf6-c44ef25d4d58.png",
+      "target": [
+        320,
+        36,
+        705,
+        455
+      ],
+      "prompt": "Complete opaque rear head hair surface matching approved A; full prompt in task tool record.",
+      "sourceCrop": [
+        52,
+        80,
+        1156,
+        1202
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "HAIR_nape",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-e9a7c0f7-09c1-4aa1-9a6b-cafdf700f6e8.png",
+      "target": [
+        373,
+        335,
+        653,
+        462
+      ],
+      "prompt": "Create ONE complete isolated NAPE UNDER-HAIR layer for the cobalt electric-blue chin-length bob in the reference. It is the deep-blue short lower rear hair mass BEHIND the neck, seen from the front, normally mostly concealed by the face, neck and side bob. Broad shallow gently curved band of fine downward hair, fully painted upper root volume, bottom ending in natural wispy inward-curving tips. Shape approximately 2.3 times wider than tall, thicker at sides and very subtly shorter at middle, but NO neck-shaped hole or missing central material: the hidden middle must be continuous dark blue hair. Match realistic photographic strand texture, color and soft lighting of reference, with darker underside than the exterior bob. This one underlay only, no full wig, crown, bangs, side-lock pair, skin, neck, face, clothing, mannequin, text, hard rectangular edge, glow or background. Entire asset on genuine transparent background with ample margin, antialiased hair tips.",
+      "sourceCrop": [
+        115,
+        66,
+        1799,
+        710
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "name": "HAIR_side_outer_R",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-8aec1f64-0d4e-4054-b7c0-23257b2c6121.png",
+      "target": [
+        311,
+        67,
+        484,
+        454
+      ],
+      "prompt": "Create one isolated OUTER SIDE HAIR panel for the electric cobalt-blue bob in the reference, viewer-left side (character right). Photographic fine realistic hair strands matching reference. This is the long broad outer side panel running from a rounded fully painted root near the upper head, curving out along the side and then inward toward the neck at its complete feathered bottom. Preserve the original bob length, width, inward curve, strand flow and blue highlights. It is NOT a short fringe lock, not a full head or full wig. One continuous thick crescent-shaped lock, roughly 40 percent as wide as tall, including the inner hair surface that will normally be hidden behind the short temple lock; no hard cut lines, holes or flat rectangle patches. Fully visible entire root to tip with generous transparent margin. Exact one panel only, no face, ears, neck, eyes, skin, clothing, mannequin, text, duplicated view, glow or background. Actual RGBA transparency outside hair and between fine tips. Match reference's cool blue with subtle dark interior strand volume.",
+      "sourceCrop": [
+        119,
+        35,
+        945,
+        1424
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "name": "HAIR_side_outer_L",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-01cd98f9-9719-4720-ba2a-b8f2b603260f.png",
+      "target": [
+        550,
+        68,
+        712,
+        454
+      ],
+      "prompt": "Create one isolated OUTER SIDE HAIR panel for the exact electric cobalt-blue photographic bob in the reference, VIEWER RIGHT (character left). A complete long broad curved outer panel, from a fully painted rounded upper root at the upper LEFT side of the asset, bowing outward to the RIGHT and curving inward at the bottom toward the neck. Match the original chin-length blue bob's fine strands, soft photographic lighting, highlights and inward-curving lower silhouette. Width roughly 40 percent of height. Include the complete inner surface normally hidden under the short temple lock; no straight sliced edge or missing root. Natural wispy tips, continuous thick hair volume. This is one side panel only, not a full wig, not bangs, not a mirrored pair. No face, ear, skin, neck, body, clothing, label, extra object or cast shadow. Fully uncropped with transparent margin; genuine RGBA transparency outside the hair and between tips, no opaque background or blue fog. High precision material for a separate Live2D hair layer.",
+      "sourceCrop": [
+        99,
+        16,
+        975,
+        1309
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "name": "HAIR_side_inner_R",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-8fe095b8-c0fc-4e72-a0bd-7ef34037ecaa.png",
+      "target": [
+        365,
+        80,
+        502,
+        319
+      ],
+      "prompt": "Create ONE isolated production Live2D hair lock matching the exact cobalt electric-blue photographic bob in the reference. Asset is the INNER FACE-FRAMING LOCK ON THE VIEWER'S LEFT (character's right). It starts with a broad fully painted rounded root near the upper crown, slopes gently left outward, then hangs vertically beside the temple, ending in fine tapered strands at upper-cheek height, just below the eye. It is the short lock in front of the ear, NOT the broad long outer bob. Preserve blue strand texture, original direction, highlight and subtle dark underside. Complete the concealed upper root as smooth continuous hair, without hard straight crop lines or cutouts. Slim naturally curved shape, a little fuller at top, transparent outside and between fine tips; overall width about 40% of its height. Display this one complete lock large with generous transparent margins. No other locks, no mirrored copy, no skin, eyes, ear, face, clothing, scalp hole, mannequin, labels, outline or shadows outside the hair. Do not change to an anime illustration; realistic individual hairs consistent with the approved reference.",
+      "sourceCrop": [
+        299,
+        51,
+        778,
+        1300
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "name": "HAIR_side_inner_L",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-11730de7-09f4-4cd3-ab45-6bc0c52e71d8.png",
+      "target": [
+        544,
+        80,
+        666,
+        316
+      ],
+      "prompt": "Create one isolated INNER FACE-FRAMING hair lock for the exact electric cobalt blue photographic bob in the reference, VIEWER RIGHT / character left side. Complete rounded root begins at upper crown toward the LEFT of the asset, hair curves gently out to the RIGHT then down alongside the temple, with fine tips ending beside the upper cheek just below the eye. This is the short narrow lock in FRONT of the ear, not the long outer bob. Whole lock with coherent fully painted concealed root and subtle dark underside; no straight cut edges. Preserve reference hair color, detailed fine realistic strands and soft light. One slim curve with width around 40% of its height, isolated on actual transparent background and generous margin. No skin, eyes, ear, face, body, clothing, multiple copies, full wig, labels, black background, blue fog or halo. Natural tapering tips and fully opaque main strand mass; transparency only outside and between tips. Same style as the original reference, no new hairstyle.",
+      "sourceCrop": [
+        282,
+        81,
+        832,
+        1324
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "name": "HAIR_crown_fringe",
+      "source": "C:/Users/ANKHAURUM/.codex/generated_images/01a16cbf-1efc-7573-9d15-b7294644f30e/exec-c3c16212-f13c-4301-8abb-3f411f18e222.png",
+      "target": [
+        358,
+        39,
+        665,
+        314
+      ],
+      "prompt": "Use case: precise-object-edit. Produce one isolated FRONT CROWN AND BANGS layer for a professional Live2D model of the woman in the reference. Preserve the exact original electric-blue fine realistic hair, crown part position, strand directions, soft lighting and delicate thin straight central bangs ending just above her eyes. This asset includes the full rounded crown from the top part down to the tapered fringe tips, with the upper side sweep continuing toward both temples; it does NOT include the long cheek/neck-length bob side locks or back hair. All hidden root area above the fringe is fully painted continuous opaque blue hair; only the natural tiny gaps BETWEEN wispy fringe tips are transparent. The middle fringe must remain fine vertical wisps, not an arched solid heavy fringe or swept curtain. Same front view, slight original asymmetry, no redesign. Only hair on genuine transparent background. Remove all skin, face, eyes, brows, ears, clothing and background; not even small flesh or eye fragments may remain between strands. Large detailed isolated asset with transparent margin and full uncropped top and sides. Render only this single hair layer, not multiple components, not a whole wig, no text.",
+      "sourceCrop": [
+        212,
+        63,
+        1329,
+        987
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    }
+  ]
+}

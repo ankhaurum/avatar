@@ -1,0 +1,587 @@
+[
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-hair-authoring-inputs.json",
+    "size": 8669,
+    "sha256": "6167ce06245ba544d2dc57562108888b9b209626712f131453f05a2dba7477df"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-hair-authoring-measured.json",
+    "size": 9786,
+    "sha256": "1607ddb06b7c6bfe61a83ed830c8c96f25ef134f9b09ae0d8cc74e999b393335"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-material-source-record.json",
+    "size": 5031,
+    "sha256": "93e6e85067bdaa4bd5767663c103f95355da6e0f32e3fb304e524587ae6684df"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-face-source-record.json",
+    "size": 1672,
+    "sha256": "b122555d129a8c29052b42a93548efbd0acd762bc8b5af06469c028dd5ef0e14"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-export-checks.json",
+    "size": 20672,
+    "sha256": "c24f764d90303c59272bd3c8156a73b52058b5ce51baab0c648b6b0bc37d7ce6"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-preservation-checks.json",
+    "size": 110,
+    "sha256": "a56748be5fd0f0c9f15ae24a387529e04a5f8c017c3120ec596276c83bad11fb"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-disk-reopen-check.json",
+    "size": 18092,
+    "sha256": "38933578217b0c70ad72520bf90d8301f3c9be067d05b6380b06fba2aa646f3d"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-neutral-final-review.jpg",
+    "size": 235313,
+    "sha256": "bff04d757e4f8c4fdd184a4dee29715cfaaf6792993955024e97777f72b07571"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-head-final-review.jpg",
+    "size": 100936,
+    "sha256": "e5c872e1e74e473337a6ce05c93424b5fda8d5f3b270d259614e360456a835ce"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-hands-final-review.jpg",
+    "size": 38664,
+    "sha256": "cdfec5c619c70d5268f845eba739d608e2114ba7129fecf09cc8aedfa32d5e03"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-shirt-material-review.jpg",
+    "size": 32068,
+    "sha256": "68aef3c4c8a0d1b84aa3d41417f651b33508d9c00091f6afc8cce3df3a2c4180"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-hand-component-review.jpg",
+    "size": 78856,
+    "sha256": "5858edd0dc12a54d07869b32df7542f0b54d2c0cd3669a8f33804d7c08c380b3"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-face-parts-review.jpg",
+    "size": 218748,
+    "sha256": "b557acc0f2f5ecc94466be26413b0df0c32bf0232a3b3d16488ddcc10ce2671f"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-garment-parts-review.jpg",
+    "size": 139896,
+    "sha256": "2730a76fb18f3c46593e43c0cf3e973d0ad187aeace6add3a4706a59b6975226"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-hair-parts-review.jpg",
+    "size": 188202,
+    "sha256": "3034b8029e64339a20d68fab5bd60bf8664772104523c5015e46a9c002cb95b0"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-face-clean-review.jpg",
+    "size": 19608,
+    "sha256": "ca9a8fe16374634c28f0a354e79e4f2c5bbdfa236d5a6cb45407f1d3964e0ab5"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/j-face-base-before-cleanup.png",
+    "size": 231401,
+    "sha256": "249b189431c3f97b1ee565abd03e8b2069ede3503980c59d6d69683e8e700a47"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/build-j-assembly.jsx",
+    "size": 3789,
+    "sha256": "b461eeea303c5a835be596d5d967a8f84ec634e98a7bd1e46e9455658df1360d"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/refine-j-neutral.jsx",
+    "size": 2088,
+    "sha256": "b31a0ab422054243f705dd4a736efbf4ff05ae95708e083a18450d9ec6dd8552"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/refine-j-overlap.jsx",
+    "size": 2054,
+    "sha256": "ff1d9b4435a4542aeb64e9cc24cb8fb9519e394c226d731f35acdd911663d69b"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/retain-j-visible-hair.jsx",
+    "size": 1471,
+    "sha256": "8e37859757790f3a58334200cd127b0560a3b06ce4a844a472313608889ffbb6"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/author-j-collars-hands.jsx",
+    "size": 3539,
+    "sha256": "9c28cdfc85a9e553e675993bfd1a088b42d66d797f336e61fa125be281fe0b64"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/refine-j-materials.jsx",
+    "size": 2998,
+    "sha256": "0abc1ce0c9e5dc805f3faf4808bf3c9ce8a9f89a4ef135416a53c5743b2e4e66"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/adopt-j-clean-skin.jsx",
+    "size": 2938,
+    "sha256": "7db3d187628b779e9ca09db287878ddba816951d855b3c69ba726310f1032713"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/extend-j-skin-edge.jsx",
+    "size": 1809,
+    "sha256": "12cf00f3a22ee3bd799f1da885a3e71652351289bf8b8e7e0ebe8465babfe427"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/align-j-skin-base.jsx",
+    "size": 1148,
+    "sha256": "42846f3e6353e8a27cdbf0c9ffab1d3c79159acdc2d6460ddfa945f970a3af42"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/adopt-j-shoulder-overlap.jsx",
+    "size": 1432,
+    "sha256": "c1c5c3ed5350ebe7297da98cbd4bed818f32c3c7ab4d54703a8420b23d700782"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/fit-j-cuff-overlap.jsx",
+    "size": 608,
+    "sha256": "7e8abd5a9e79c68a386f61ae5916beb58ce27bdb452e7ef23b8698f133c97688"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/export-j-parts.jsx",
+    "size": 3407,
+    "sha256": "2f7f115e63d826fc12657b12d31ae106ca3f66e4d5c3997675d2f6cb498240b5"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/export-j-face-proof.jsx",
+    "size": 1546,
+    "sha256": "e3f244cf5fe81091a3ed674fe628a15684db4d5893c04113566d7a80497ac80c"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/export-j-cuff-update.jsx",
+    "size": 2110,
+    "sha256": "8f5de1f7e973210ecc83966c7660113874f69a8a4c44a3ef6c9465f35b2f22d6"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/verify-j-reopen.jsx",
+    "size": 1512,
+    "sha256": "aedcf4398479039d9a2e6169ad7a5646c4c0ff84fca85597aabfee3cc96fd978"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/review-j-assemblies.py",
+    "size": 1503,
+    "sha256": "2fbb6f02babd2dc6dbf8a006f5e5f6df89988b11f1cf26facfd4333f625e924b"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/review-j-parts.py",
+    "size": 1497,
+    "sha256": "038d7d4cdf3b387176f2e5407dfbe6c0379dc501fbb6a2dc2a14276a97a9008b"
+  },
+  {
+    "path": "v3/evidence/material-redesign-20261025/measure-j-hair.py",
+    "size": 915,
+    "sha256": "60439aa14b800b87ddc6b923a9b908cdfce90d470f1a7625c2e119e80ca321b6"
+  },
+  {
+    "path": "v3/docs/material-j-production-20261025.md",
+    "size": 5754,
+    "sha256": "4359056745c625d233a021cc2478fe41272c515864182f07d0879a8f30b578cf"
+  },
+  {
+    "path": "v3/artwork/split-e/hibiki-v3-parts-j.psd",
+    "size": 19165077,
+    "sha256": "ffbfb053ece2a646ce5d4ca36ee29ae3e1bd34eff858df07f448cddf8739d435"
+  },
+  {
+    "path": "v3/artwork/split-e/material-j-manifest.json",
+    "size": 13034,
+    "sha256": "31446580515db7ccea20da7da0a5f662eede06762ef636ef9a3a9ca89c83c06d"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SHIRT_collar_L_front_fold.png",
+    "size": 33821,
+    "sha256": "56fe2f7dff79d387ccd518047c34aaac2bac7c61ba97e4d926da28a571060b2d"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SHIRT_collar_R_front_fold.png",
+    "size": 32245,
+    "sha256": "29fa93aa7096fcd0a3bd8f8885c0a787bf7205bba17324340bf562031cc2a47c"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SURFACE_HAIR_crown_fringe.png",
+    "size": 321222,
+    "sha256": "20aa4e42fcafb176136edd2d179fd7a3f2bf77c3a6956852d14fcfa47a170b20"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SURFACE_HAIR_front_L.png",
+    "size": 121919,
+    "sha256": "7845f263905f37d84f8cde2f55d2f3232e8e83a2367ad674770cb7ca8373258f"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SURFACE_HAIR_front_R.png",
+    "size": 121632,
+    "sha256": "c6fc47e9b2589deb30b22d882bd2294b8d95553f1b7029eba16281938fef38e5"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SURFACE_HAIR_bob_L.png",
+    "size": 220137,
+    "sha256": "b8e440f4d027a9a9cbbee207d110b0d58278945ddabe8b77ed51f684e697f6eb"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SURFACE_HAIR_bob_R.png",
+    "size": 205045,
+    "sha256": "fdd45d9d07ff1680819db1dee1291ffb56040b551731fe7dd517f6bf2834764a"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAIR_side_inner_L.png",
+    "size": 43831,
+    "sha256": "cacb611a7218846c0c787792cb99eb5a2f756c2ca2f732e9d1f6a4e220d4d000"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAIR_side_inner_R.png",
+    "size": 49136,
+    "sha256": "0c889a638d7c5e68e2e4a4ba79e9ebb6b855c724f8cba76543ef7ed397a86382"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAIR_side_outer_L.png",
+    "size": 176061,
+    "sha256": "c456756515e18529be9a8ade1003b91d5f1ccd1544d897d5009ae0499a74b21c"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAIR_side_outer_R.png",
+    "size": 199186,
+    "sha256": "30db7fe6459c44f0dbf1526f8942e53760405a12e7ee15dc6ee4ec6986c78988"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_lower_skin_original.png",
+    "size": 10224,
+    "sha256": "f4227b82e1efca07c5ce52e05b7576b03a33f76f6298389b67f561999cef86b8"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_upper_lid_closed_candidate.png",
+    "size": 8257,
+    "sha256": "980f836f4eae7fa431c22007124c1404fa85181b290a7ae1e70d1d777eab1c51"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_upper_lid_lash_candidate.png",
+    "size": 6607,
+    "sha256": "328866e76acae30fe72d1132015bac7a0e95742be746e317ca82d98fe2e9243e"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_lower_lid_candidate.png",
+    "size": 4333,
+    "sha256": "8295a13a832137f4f65005ac52613b63a667278b25a5df366b97b912a25bf17f"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_highlight_secondary.png",
+    "size": 1679,
+    "sha256": "ad70829d528d42b04f78251eccc44472cf8640b12e7b6a729c1d11f98282a6db"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_highlight_main.png",
+    "size": 1679,
+    "sha256": "dd82df60f84205a214425b3a19568768ef6aeadcb04e42da7e5f82774ea05a60"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_iris_complete_candidate.png",
+    "size": 3486,
+    "sha256": "7747028491276a91910d0fbb029cb1e24601ea4110fafce1c6f47e92afaf49c1"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_L_sclera_complete_candidate.png",
+    "size": 4512,
+    "sha256": "aa095d916ba9ba900498b375cdbd80ef25e4dcc7769ad4d5b2726958518786df"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_lower_skin_original.png",
+    "size": 10406,
+    "sha256": "944456959a860d5c18a06b80044058f87de1f59896657448d2b7f85fa8016117"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_upper_lid_closed_candidate.png",
+    "size": 7841,
+    "sha256": "5d7a41755a43091eb160fdd315708377469e3df3be442c4d8aca4d4d2f3dd71c"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_upper_lid_lash_candidate.png",
+    "size": 6516,
+    "sha256": "739ec5d6de1e245bb8581968a44766109a6d9ad4263116b60748b513294b9b67"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_lower_lid_candidate.png",
+    "size": 4801,
+    "sha256": "301fc9d21f4436fb54218988cfd80a2b6cfd6da33f1fb7974c6494bd5e900e64"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_highlight_secondary.png",
+    "size": 1700,
+    "sha256": "370842e29c4de00766e289260ba897772d68cad6e616983763e49efb9b294310"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_highlight_main.png",
+    "size": 1700,
+    "sha256": "c2999001e931036793db8b763627ca7ad7a51218f7b78334bdb52ac5f869bd78"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_iris_complete_candidate.png",
+    "size": 3485,
+    "sha256": "324e53d87bff475e8c50eebafad0ec5102acdc91a6a1b7af985c51d2808879c7"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EYE_R_sclera_complete_candidate.png",
+    "size": 3563,
+    "sha256": "4f59f85add81022357577c7b2a33482473ab78780f47010882d126319b42da54"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-BROW_L_complete_candidate.png",
+    "size": 5351,
+    "sha256": "ff5416b26e03688ce03bc128b788a707f66e8ac3781fec445e287444009766e2"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-BROW_R_complete_candidate.png",
+    "size": 5382,
+    "sha256": "0860a56b453da27746a1238d26262b88fddc4c7357620842f8cff390763c5544"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-MOUTH_lower_lip_original_visible.png",
+    "size": 11041,
+    "sha256": "7979a7c99a9f391ef19cfab1839db38e00568a72517f70b1a0fa840951470fbc"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-MOUTH_upper_lip_original_visible.png",
+    "size": 6944,
+    "sha256": "0d813102f1bbec8114e1c0fa516e7015ebf5ccb29b894bc587694af03076dc89"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-FACE_nose_original.png",
+    "size": 16358,
+    "sha256": "b5cd36e501ffecaf02feb7961ac363b37baa6014388f05dc86d44a5d19e309b3"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-MOUTH_upper_teeth_complete_candidate.png",
+    "size": 5651,
+    "sha256": "1be4ee25f375e1415b4e95726d2f5dc806d53ce49f80d5495d5a9069ee2c610c"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-MOUTH_tongue_complete_candidate.png",
+    "size": 5169,
+    "sha256": "deaaf2a4098b3a109953b769169d1e7affd8d4914f475c97225cdcbeb892c917"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-MOUTH_cavity_complete_candidate.png",
+    "size": 10380,
+    "sha256": "4d082d4f602858e3bb3fa6dba990a8a847e22f28828ca9703a5d17950a2eab15"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_FACE_identity.png",
+    "size": 231401,
+    "sha256": "fd964853023a43baef9cc1bdc6a71f148fbbb8358e0031e9ded95dec2f1022eb"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EAR_L_complete_candidate.png",
+    "size": 9187,
+    "sha256": "9a724f69812204f116ada993fd31c5b9a24c59e6819ed3b0494a021498d8aabf"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-EAR_R_complete_candidate.png",
+    "size": 12763,
+    "sha256": "89bc8e19b53b204a446d84aaf9ea04b256ae5d78ee99aaaa2e6e60d312afcae9"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_WARDROBE_tie.png",
+    "size": 170478,
+    "sha256": "b59ae5ff5b622786f03d9ece20cc09c9fabbf2dd09d400a5d2357e973741dc0e"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-JACKET_torso_complete.png",
+    "size": 1770689,
+    "sha256": "63d304f501022eec101ef1d97cbada0dfc47f87e40d5c80f45bb95da2e3bcef5"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-JACKET_sleeve_viewer_right.png",
+    "size": 626559,
+    "sha256": "9682d67ed3f3f81be00c455f407d2abbf830aca5bf87fdca59bd4d12719e86cd"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-JACKET_sleeve_viewer_left.png",
+    "size": 626559,
+    "sha256": "6627c3962b9cfc6a370fdbd95c02a4cef22228fe21f4e4512c15249531eda1ef"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-SHIRT_torso_complete.png",
+    "size": 1276148,
+    "sha256": "d44a537fd3264e2f4f36ae118864f2d0b89f16b8550e128f2a877bc1308dce10"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-SHIRT_cuff_viewer_right.png",
+    "size": 30234,
+    "sha256": "3a85330ea5b367a0edee7bf79beab04f86864a88fabfac08b85d897691dece58"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-SHIRT_cuff_viewer_left.png",
+    "size": 30234,
+    "sha256": "bd727dc5bbb8fdb0d4f402093d15e22491134c3eb72a7bd5fd50ab1280623e40"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-SHIRT_sleeve_viewer_right.png",
+    "size": 730251,
+    "sha256": "cb6b73bb8be475e44348b789a3e9af5073eb794f87351ab8024e4277228f55c5"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-SHIRT_sleeve_viewer_left.png",
+    "size": 730251,
+    "sha256": "1a55712497c8800297fb485a4f8af43138c8db343bfe8683aa8651ebb595fe64"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-HAND_L_neutral_original_pose_candidate.png",
+    "size": 69507,
+    "sha256": "017ac9f6f0c77a9e009aec1d5d64500853b473d853de41425b4cc385c9ff5376"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-HAND_R_neutral_original_pose_candidate.png",
+    "size": 71349,
+    "sha256": "77b68e18b707cfabf6f658d555b6da9331086dbb2f181e20e0af9c6689482aa0"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_L_thumb_palmar.png",
+    "size": 14804,
+    "sha256": "de2de1002caaaab51e2f76c4990b416752135c27ab6a58a407d984596c0fbd2b"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_L_little_palmar.png",
+    "size": 11116,
+    "sha256": "08b8924c4d8de01f9b1303a4140c2bb617366fa604bc6b99102d935d30a6d6ac"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_L_ring_palmar.png",
+    "size": 10504,
+    "sha256": "bd9d3f5102e3ecc25de4776840f1815191bdd8facf7fc914f7ffcdca856f9154"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_L_middle_palmar.png",
+    "size": 12116,
+    "sha256": "e57eb1fadb1ab2cfa464f6d78814a867283f9a81c1d4929eb041df4b9293f1fe"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_L_index_palmar.png",
+    "size": 14877,
+    "sha256": "53ed7fc9aeca01866a07b262dc0d4b4b6a5d97d24e8d0745cd134ce6490ae4a1"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_L_palm_palmar.png",
+    "size": 54778,
+    "sha256": "466d918a7cfbd319c751590a197c76a54a9360910e9445d1a25b99e81058f87a"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_R_thumb_palmar.png",
+    "size": 18248,
+    "sha256": "456664a0625014168dcd599b3facf34d84304eba93d77393478bd2babdec8f07"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_R_little_palmar.png",
+    "size": 8891,
+    "sha256": "178c615215ea845dc8b52b82e5313c73c41dc327700e47a90a420ca5bf904bec"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_R_ring_palmar.png",
+    "size": 11276,
+    "sha256": "5579f58ef8f22e957d0c0233c8f5e4449d565686ff4914de2b4753f5df0880e7"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_R_middle_palmar.png",
+    "size": 10916,
+    "sha256": "f03947aab124a0cb95a3e42677e80539f6517f3ab6a6ec78dd6d3c43fec27b0b"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_R_index_palmar.png",
+    "size": 12497,
+    "sha256": "614d52277f9f18965c6076aa346914211b56c97899a413ad822324c2c9f1976f"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAND_R_palm_palmar.png",
+    "size": 52356,
+    "sha256": "b3fd916ab09d57f36b1fffe5568ff8f00b061077b49708c38818e15c86e02052"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-LOWER_skirt_complete.png",
+    "size": 830316,
+    "sha256": "9da0a67e132cc1a19659e8528a8ee6d744f254945dcb541a0ed8b132d0f6dc0c"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_BODY_neck_complete.png",
+    "size": 152351,
+    "sha256": "1ff1f0ce603b4bc0b186df27b965ffc604ae34654513ad678bcd3fd93e0f4a54"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SHIRT_collar_L_rear_root.png",
+    "size": 37354,
+    "sha256": "31226e71ac03ae09e88cc2dace40f602049be294b288d1dad338613a50780e0e"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_SHIRT_collar_R_rear_root.png",
+    "size": 37111,
+    "sha256": "f4ba22ba5de528254752c59330ab846cd81a6e3df65a4a7dd0f376af99457fa8"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_REAR_SHIRT_collar_rear_band.png",
+    "size": 26078,
+    "sha256": "37cb78b81ba1d74dbaecc6abaeb7e2378d1b0e9f2096a18c22b1e8b38632dba3"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_REAR_JACKET_collar_rear_band.png",
+    "size": 39121,
+    "sha256": "d63f0b24f89aca6d700c8a1b24d0c476bf047f5eb0c3a1a10673c538fb334e5e"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAIR_nape.png",
+    "size": 144003,
+    "sha256": "8db9899ebf9d9618c307dfc0c154776e327b2e952d584b4bc4e44f0ec217bed7"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-export-J_HAIR_back_cap.png",
+    "size": 647390,
+    "sha256": "c39e61dd437f1a3dae3e548779a145fc23a16dcce4970a70527aaa6692733085"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_back_cap-source.png",
+    "size": 2108301,
+    "sha256": "68ace832d4fde374e398ded097e02cf2085939bf25d439f6406112bb10db0a55"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_nape-source.png",
+    "size": 1676711,
+    "sha256": "765a02e430010e2f78dd08411157b80369306d150473261d06e835503198f871"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_side_inner_R-source.png",
+    "size": 1525917,
+    "sha256": "fa894e2dbacfe3bd41672cf194c72faf2bf369902304c97638d331ee913fe2bb"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_side_inner_L-source.png",
+    "size": 1476136,
+    "sha256": "565b808911a82c64355c7bf8368ca69f552497a0bc49dc21d1a87214bf6dd5e2"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_side_outer_R-source.png",
+    "size": 2329373,
+    "sha256": "9110a9e72089c027891e900b3183454ef5e5d449c0191fd3aacdeefed7b0503e"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_side_outer_L-source.png",
+    "size": 2358135,
+    "sha256": "4fc1d739c0cae05161e53b0dffa32e41cb26c970ae47d99022357b87d6e9935d"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-HAIR_crown_fringe-source.png",
+    "size": 2186111,
+    "sha256": "0a429215aa096a360936dc00a322228932a1149e9ec1c85c8bd375b5df7a55f5"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-hand-palm-R-source.png",
+    "size": 1343837,
+    "sha256": "e50fd65afed9421c275f21001e5b76461434ca0ff8b71167174072bbbf404546"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-hand-palm-L-source.png",
+    "size": 1317668,
+    "sha256": "47036105c0f12ffe31904b330e1b7da263a37cf8c404a36ec980dede7d933f29"
+  },
+  {
+    "path": "v3/artwork/split-e/parts/j-face-clean-skin-source.png",
+    "size": 1456034,
+    "sha256": "3b38664a24ac4a5a065ac71c0c99847272121fda271723e28df81024d9ce6606"
+  }
+]

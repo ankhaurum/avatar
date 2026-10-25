@@ -1,0 +1,12 @@
+{
+  "prompt": "Precise-object-edit of this isolated Live2D face SKIN BASE texture. Keep exactly the same oval outline, chin/jaw, nose shading, cheek volumes, skin color, soft light, small mole on viewer-left cheek, scale and frontal angle. This texture intentionally has NO eyes, eyebrows or lips because they are separate animation layers: do not add them. Remove ONLY the small blue hair fragments at the middle forehead and blue/purple hair contamination along both outer cheek edges, replacing those contamination zones with seamless matching natural skin. Smooth the abrupt texture seams at the outer eye/cheek transition very locally. Do not redesign the face, beautify it, reshape the jaw or nose, change age, change lighting, or add hair/ears/neck/features. The result is one continuous clean face skin foundation for the same identity. Preserve real alpha transparency outside the face; no backdrop or border. Keep the same framing and full uncropped contour.",
+  "source": "j-face-clean-skin-source.png",
+  "generatedFile": "exec-88a15387-88f4-479a-9966-a0043979ef3e.png",
+  "application": "Only bounded forehead/outer-cheek skin sampled; clipped to preserved original base alpha. Original face contour and central skin verified pixel-identical. Eyes, brows, nose and lips are existing separate layers.",
+  "nativeAttempt": {
+    "tool": "Photoshop CC 2018 Fill ActionDescriptor",
+    "attempts": 2,
+    "result": "塗りつぶしコマンドのパラメーターが無効です。",
+    "handling": "Stopped native content-aware attempts; temporary candidate closed without save. Used built-in imagegen for skin source and Photoshop clipped compositing."
+  }
+}

@@ -1,0 +1,1175 @@
+[
+  {
+    "name": "J_SHIRT_collar_L_front_fold",
+    "size": [
+      71,
+      113
+    ],
+    "expectedSize": [
+      71,
+      113
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "56fe2f7dff79d387ccd518047c34aaac2bac7c61ba97e4d926da28a571060b2d"
+  },
+  {
+    "name": "J_SHIRT_collar_R_front_fold",
+    "size": [
+      70,
+      109
+    ],
+    "expectedSize": [
+      70,
+      109
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "29fa93aa7096fcd0a3bd8f8885c0a787bf7205bba17324340bf562031cc2a47c"
+  },
+  {
+    "name": "J_SURFACE_HAIR_crown_fringe",
+    "size": [
+      382,
+      209
+    ],
+    "expectedSize": [
+      382,
+      209
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "20aa4e42fcafb176136edd2d179fd7a3f2bf77c3a6956852d14fcfa47a170b20"
+  },
+  {
+    "name": "J_SURFACE_HAIR_front_L",
+    "size": [
+      134,
+      224
+    ],
+    "expectedSize": [
+      134,
+      224
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "7845f263905f37d84f8cde2f55d2f3232e8e83a2367ad674770cb7ca8373258f"
+  },
+  {
+    "name": "J_SURFACE_HAIR_front_R",
+    "size": [
+      138,
+      217
+    ],
+    "expectedSize": [
+      138,
+      217
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "c6fc47e9b2589deb30b22d882bd2294b8d95553f1b7029eba16281938fef38e5"
+  },
+  {
+    "name": "J_SURFACE_HAIR_bob_L",
+    "size": [
+      159,
+      343
+    ],
+    "expectedSize": [
+      159,
+      343
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "b8e440f4d027a9a9cbbee207d110b0d58278945ddabe8b77ed51f684e697f6eb"
+  },
+  {
+    "name": "J_SURFACE_HAIR_bob_R",
+    "size": [
+      148,
+      343
+    ],
+    "expectedSize": [
+      148,
+      343
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "fdd45d9d07ff1680819db1dee1291ffb56040b551731fe7dd517f6bf2834764a"
+  },
+  {
+    "name": "J_HAIR_side_inner_L",
+    "size": [
+      50,
+      210
+    ],
+    "expectedSize": [
+      50,
+      210
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "cacb611a7218846c0c787792cb99eb5a2f756c2ca2f732e9d1f6a4e220d4d000"
+  },
+  {
+    "name": "J_HAIR_side_inner_R",
+    "size": [
+      55,
+      215
+    ],
+    "expectedSize": [
+      55,
+      215
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "0c889a638d7c5e68e2e4a4ba79e9ebb6b855c724f8cba76543ef7ed397a86382"
+  },
+  {
+    "name": "J_HAIR_side_outer_L",
+    "size": [
+      128,
+      340
+    ],
+    "expectedSize": [
+      128,
+      340
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "c456756515e18529be9a8ade1003b91d5f1ccd1544d897d5009ae0499a74b21c"
+  },
+  {
+    "name": "J_HAIR_side_outer_R",
+    "size": [
+      145,
+      340
+    ],
+    "expectedSize": [
+      145,
+      340
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "30db7fe6459c44f0dbf1526f8942e53760405a12e7ee15dc6ee4ec6986c78988"
+  },
+  {
+    "name": "EYE_L_lower_skin_original",
+    "size": [
+      67,
+      32
+    ],
+    "expectedSize": [
+      67,
+      32
+    ],
+    "alpha": [
+      0,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "f4227b82e1efca07c5ce52e05b7576b03a33f76f6298389b67f561999cef86b8"
+  },
+  {
+    "name": "EYE_L_upper_lid_closed_candidate",
+    "size": [
+      57,
+      29
+    ],
+    "expectedSize": [
+      57,
+      29
+    ],
+    "alpha": [
+      0,
+      250
+    ],
+    "nonempty": true,
+    "sha256": "980f836f4eae7fa431c22007124c1404fa85181b290a7ae1e70d1d777eab1c51"
+  },
+  {
+    "name": "EYE_L_upper_lid_lash_candidate",
+    "size": [
+      54,
+      23
+    ],
+    "expectedSize": [
+      54,
+      23
+    ],
+    "alpha": [
+      0,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "328866e76acae30fe72d1132015bac7a0e95742be746e317ca82d98fe2e9243e"
+  },
+  {
+    "name": "EYE_L_lower_lid_candidate",
+    "size": [
+      52,
+      13
+    ],
+    "expectedSize": [
+      52,
+      13
+    ],
+    "alpha": [
+      0,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "8295a13a832137f4f65005ac52613b63a667278b25a5df366b97b912a25bf17f"
+  },
+  {
+    "name": "EYE_L_highlight_secondary",
+    "size": [
+      5,
+      3
+    ],
+    "expectedSize": [
+      5,
+      3
+    ],
+    "alpha": [
+      3,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "ad70829d528d42b04f78251eccc44472cf8640b12e7b6a729c1d11f98282a6db"
+  },
+  {
+    "name": "EYE_L_highlight_main",
+    "size": [
+      5,
+      3
+    ],
+    "expectedSize": [
+      5,
+      3
+    ],
+    "alpha": [
+      26,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "dd82df60f84205a214425b3a19568768ef6aeadcb04e42da7e5f82774ea05a60"
+  },
+  {
+    "name": "EYE_L_iris_complete_candidate",
+    "size": [
+      21,
+      22
+    ],
+    "expectedSize": [
+      21,
+      22
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "7747028491276a91910d0fbb029cb1e24601ea4110fafce1c6f47e92afaf49c1"
+  },
+  {
+    "name": "EYE_L_sclera_complete_candidate",
+    "size": [
+      45,
+      16
+    ],
+    "expectedSize": [
+      45,
+      16
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "aa095d916ba9ba900498b375cdbd80ef25e4dcc7769ad4d5b2726958518786df"
+  },
+  {
+    "name": "EYE_R_lower_skin_original",
+    "size": [
+      73,
+      30
+    ],
+    "expectedSize": [
+      73,
+      30
+    ],
+    "alpha": [
+      0,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "944456959a860d5c18a06b80044058f87de1f59896657448d2b7f85fa8016117"
+  },
+  {
+    "name": "EYE_R_upper_lid_closed_candidate",
+    "size": [
+      62,
+      25
+    ],
+    "expectedSize": [
+      62,
+      25
+    ],
+    "alpha": [
+      0,
+      251
+    ],
+    "nonempty": true,
+    "sha256": "5d7a41755a43091eb160fdd315708377469e3df3be442c4d8aca4d4d2f3dd71c"
+  },
+  {
+    "name": "EYE_R_upper_lid_lash_candidate",
+    "size": [
+      61,
+      20
+    ],
+    "expectedSize": [
+      61,
+      20
+    ],
+    "alpha": [
+      0,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "739ec5d6de1e245bb8581968a44766109a6d9ad4263116b60748b513294b9b67"
+  },
+  {
+    "name": "EYE_R_lower_lid_candidate",
+    "size": [
+      61,
+      13
+    ],
+    "expectedSize": [
+      61,
+      13
+    ],
+    "alpha": [
+      0,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "301fc9d21f4436fb54218988cfd80a2b6cfd6da33f1fb7974c6494bd5e900e64"
+  },
+  {
+    "name": "EYE_R_highlight_secondary",
+    "size": [
+      5,
+      4
+    ],
+    "expectedSize": [
+      5,
+      4
+    ],
+    "alpha": [
+      6,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "370842e29c4de00766e289260ba897772d68cad6e616983763e49efb9b294310"
+  },
+  {
+    "name": "EYE_R_highlight_main",
+    "size": [
+      5,
+      4
+    ],
+    "expectedSize": [
+      5,
+      4
+    ],
+    "alpha": [
+      29,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "c2999001e931036793db8b763627ca7ad7a51218f7b78334bdb52ac5f869bd78"
+  },
+  {
+    "name": "EYE_R_iris_complete_candidate",
+    "size": [
+      22,
+      21
+    ],
+    "expectedSize": [
+      22,
+      21
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "324e53d87bff475e8c50eebafad0ec5102acdc91a6a1b7af985c51d2808879c7"
+  },
+  {
+    "name": "EYE_R_sclera_complete_candidate",
+    "size": [
+      44,
+      11
+    ],
+    "expectedSize": [
+      44,
+      11
+    ],
+    "alpha": [
+      0,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "4f59f85add81022357577c7b2a33482473ab78780f47010882d126319b42da54"
+  },
+  {
+    "name": "BROW_L_complete_candidate",
+    "size": [
+      62,
+      15
+    ],
+    "expectedSize": [
+      62,
+      15
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "ff5416b26e03688ce03bc128b788a707f66e8ac3781fec445e287444009766e2"
+  },
+  {
+    "name": "BROW_R_complete_candidate",
+    "size": [
+      67,
+      14
+    ],
+    "expectedSize": [
+      67,
+      14
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "0860a56b453da27746a1238d26262b88fddc4c7357620842f8cff390763c5544"
+  },
+  {
+    "name": "MOUTH_lower_lip_original_visible",
+    "size": [
+      81,
+      29
+    ],
+    "expectedSize": [
+      81,
+      29
+    ],
+    "alpha": [
+      0,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "7979a7c99a9f391ef19cfab1839db38e00568a72517f70b1a0fa840951470fbc"
+  },
+  {
+    "name": "MOUTH_upper_lip_original_visible",
+    "size": [
+      83,
+      16
+    ],
+    "expectedSize": [
+      83,
+      16
+    ],
+    "alpha": [
+      0,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "0d813102f1bbec8114e1c0fa516e7015ebf5ccb29b894bc587694af03076dc89"
+  },
+  {
+    "name": "FACE_nose_original",
+    "size": [
+      68,
+      54
+    ],
+    "expectedSize": [
+      68,
+      54
+    ],
+    "alpha": [
+      0,
+      253
+    ],
+    "nonempty": true,
+    "sha256": "b5cd36e501ffecaf02feb7961ac363b37baa6014388f05dc86d44a5d19e309b3"
+  },
+  {
+    "name": "MOUTH_upper_teeth_complete_candidate",
+    "size": [
+      67,
+      15
+    ],
+    "expectedSize": [
+      67,
+      15
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "1be4ee25f375e1415b4e95726d2f5dc806d53ce49f80d5495d5a9069ee2c610c"
+  },
+  {
+    "name": "MOUTH_tongue_complete_candidate",
+    "size": [
+      52,
+      17
+    ],
+    "expectedSize": [
+      52,
+      17
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "deaaf2a4098b3a109953b769169d1e7affd8d4914f475c97225cdcbeb892c917"
+  },
+  {
+    "name": "MOUTH_cavity_complete_candidate",
+    "size": [
+      78,
+      28
+    ],
+    "expectedSize": [
+      78,
+      28
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "4d082d4f602858e3bb3fa6dba990a8a847e22f28828ca9703a5d17950a2eab15"
+  },
+  {
+    "name": "J_FACE_identity",
+    "size": [
+      225,
+      255
+    ],
+    "expectedSize": [
+      225,
+      255
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "fd964853023a43baef9cc1bdc6a71f148fbbb8358e0031e9ded95dec2f1022eb"
+  },
+  {
+    "name": "EAR_L_complete_candidate",
+    "size": [
+      28,
+      67
+    ],
+    "expectedSize": [
+      28,
+      67
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "9a724f69812204f116ada993fd31c5b9a24c59e6819ed3b0494a021498d8aabf"
+  },
+  {
+    "name": "EAR_R_complete_candidate",
+    "size": [
+      39,
+      71
+    ],
+    "expectedSize": [
+      39,
+      71
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "89bc8e19b53b204a446d84aaf9ea04b256ae5d78ee99aaaa2e6e60d312afcae9"
+  },
+  {
+    "name": "J_WARDROBE_tie",
+    "size": [
+      125,
+      337
+    ],
+    "expectedSize": [
+      125,
+      337
+    ],
+    "alpha": [
+      0,
+      254
+    ],
+    "nonempty": true,
+    "sha256": "b59ae5ff5b622786f03d9ece20cc09c9fabbf2dd09d400a5d2357e973741dc0e"
+  },
+  {
+    "name": "JACKET_torso_complete",
+    "size": [
+      545,
+      811
+    ],
+    "expectedSize": [
+      545,
+      811
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "63d304f501022eec101ef1d97cbada0dfc47f87e40d5c80f45bb95da2e3bcef5"
+  },
+  {
+    "name": "JACKET_sleeve_viewer_right",
+    "size": [
+      199,
+      784
+    ],
+    "expectedSize": [
+      199,
+      784
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "9682d67ed3f3f81be00c455f407d2abbf830aca5bf87fdca59bd4d12719e86cd"
+  },
+  {
+    "name": "JACKET_sleeve_viewer_left",
+    "size": [
+      199,
+      784
+    ],
+    "expectedSize": [
+      199,
+      784
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "6627c3962b9cfc6a370fdbd95c02a4cef22228fe21f4e4512c15249531eda1ef"
+  },
+  {
+    "name": "SHIRT_torso_complete",
+    "size": [
+      441,
+      722
+    ],
+    "expectedSize": [
+      441,
+      722
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "d44a537fd3264e2f4f36ae118864f2d0b89f16b8550e128f2a877bc1308dce10"
+  },
+  {
+    "name": "SHIRT_cuff_viewer_right",
+    "size": [
+      87,
+      82
+    ],
+    "expectedSize": [
+      87,
+      82
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "3a85330ea5b367a0edee7bf79beab04f86864a88fabfac08b85d897691dece58"
+  },
+  {
+    "name": "SHIRT_cuff_viewer_left",
+    "size": [
+      87,
+      82
+    ],
+    "expectedSize": [
+      87,
+      82
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "bd727dc5bbb8fdb0d4f402093d15e22491134c3eb72a7bd5fd50ab1280623e40"
+  },
+  {
+    "name": "SHIRT_sleeve_viewer_right",
+    "size": [
+      226,
+      805
+    ],
+    "expectedSize": [
+      226,
+      805
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "cb6b73bb8be475e44348b789a3e9af5073eb794f87351ab8024e4277228f55c5"
+  },
+  {
+    "name": "SHIRT_sleeve_viewer_left",
+    "size": [
+      226,
+      805
+    ],
+    "expectedSize": [
+      226,
+      805
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "1a55712497c8800297fb485a4f8af43138c8db343bfe8683aa8651ebb595fe64"
+  },
+  {
+    "name": "HAND_L_neutral_original_pose_candidate",
+    "size": [
+      92,
+      184
+    ],
+    "expectedSize": [
+      92,
+      184
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "017ac9f6f0c77a9e009aec1d5d64500853b473d853de41425b4cc385c9ff5376"
+  },
+  {
+    "name": "HAND_R_neutral_original_pose_candidate",
+    "size": [
+      95,
+      183
+    ],
+    "expectedSize": [
+      95,
+      183
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "77b68e18b707cfabf6f658d555b6da9331086dbb2f181e20e0af9c6689482aa0"
+  },
+  {
+    "name": "J_HAND_L_thumb_palmar",
+    "size": [
+      39,
+      84
+    ],
+    "expectedSize": [
+      39,
+      84
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "de2de1002caaaab51e2f76c4990b416752135c27ab6a58a407d984596c0fbd2b"
+  },
+  {
+    "name": "J_HAND_L_little_palmar",
+    "size": [
+      31,
+      76
+    ],
+    "expectedSize": [
+      31,
+      76
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "08b8924c4d8de01f9b1303a4140c2bb617366fa604bc6b99102d935d30a6d6ac"
+  },
+  {
+    "name": "J_HAND_L_ring_palmar",
+    "size": [
+      25,
+      88
+    ],
+    "expectedSize": [
+      25,
+      88
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "bd9d3f5102e3ecc25de4776840f1815191bdd8facf7fc914f7ffcdca856f9154"
+  },
+  {
+    "name": "J_HAND_L_middle_palmar",
+    "size": [
+      26,
+      100
+    ],
+    "expectedSize": [
+      26,
+      100
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "e57eb1fadb1ab2cfa464f6d78814a867283f9a81c1d4929eb041df4b9293f1fe"
+  },
+  {
+    "name": "J_HAND_L_index_palmar",
+    "size": [
+      37,
+      89
+    ],
+    "expectedSize": [
+      37,
+      89
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "53ed7fc9aeca01866a07b262dc0d4b4b6a5d97d24e8d0745cd134ce6490ae4a1"
+  },
+  {
+    "name": "J_HAND_L_palm_palmar",
+    "size": [
+      94,
+      141
+    ],
+    "expectedSize": [
+      94,
+      141
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "466d918a7cfbd319c751590a197c76a54a9360910e9445d1a25b99e81058f87a"
+  },
+  {
+    "name": "J_HAND_R_thumb_palmar",
+    "size": [
+      47,
+      88
+    ],
+    "expectedSize": [
+      47,
+      88
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "456664a0625014168dcd599b3facf34d84304eba93d77393478bd2babdec8f07"
+  },
+  {
+    "name": "J_HAND_R_little_palmar",
+    "size": [
+      24,
+      75
+    ],
+    "expectedSize": [
+      24,
+      75
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "178c615215ea845dc8b52b82e5313c73c41dc327700e47a90a420ca5bf904bec"
+  },
+  {
+    "name": "J_HAND_R_ring_palmar",
+    "size": [
+      26,
+      92
+    ],
+    "expectedSize": [
+      26,
+      92
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "5579f58ef8f22e957d0c0233c8f5e4449d565686ff4914de2b4753f5df0880e7"
+  },
+  {
+    "name": "J_HAND_R_middle_palmar",
+    "size": [
+      23,
+      100
+    ],
+    "expectedSize": [
+      23,
+      100
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "f03947aab124a0cb95a3e42677e80539f6517f3ab6a6ec78dd6d3c43fec27b0b"
+  },
+  {
+    "name": "J_HAND_R_index_palmar",
+    "size": [
+      29,
+      93
+    ],
+    "expectedSize": [
+      29,
+      93
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "614d52277f9f18965c6076aa346914211b56c97899a413ad822324c2c9f1976f"
+  },
+  {
+    "name": "J_HAND_R_palm_palmar",
+    "size": [
+      91,
+      139
+    ],
+    "expectedSize": [
+      91,
+      139
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "b3fd916ab09d57f36b1fffe5568ff8f00b061077b49708c38818e15c86e02052"
+  },
+  {
+    "name": "LOWER_skirt_complete",
+    "size": [
+      609,
+      340
+    ],
+    "expectedSize": [
+      609,
+      340
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "9da0a67e132cc1a19659e8528a8ee6d744f254945dcb541a0ed8b132d0f6dc0c"
+  },
+  {
+    "name": "J_BODY_neck_complete",
+    "size": [
+      175,
+      215
+    ],
+    "expectedSize": [
+      175,
+      215
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "1ff1f0ce603b4bc0b186df27b965ffc604ae34654513ad678bcd3fd93e0f4a54"
+  },
+  {
+    "name": "J_SHIRT_collar_L_rear_root",
+    "size": [
+      69,
+      129
+    ],
+    "expectedSize": [
+      69,
+      129
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "31226e71ac03ae09e88cc2dace40f602049be294b288d1dad338613a50780e0e"
+  },
+  {
+    "name": "J_SHIRT_collar_R_rear_root",
+    "size": [
+      68,
+      130
+    ],
+    "expectedSize": [
+      68,
+      130
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "f4ba22ba5de528254752c59330ab846cd81a6e3df65a4a7dd0f376af99457fa8"
+  },
+  {
+    "name": "J_REAR_SHIRT_collar_rear_band",
+    "size": [
+      113,
+      54
+    ],
+    "expectedSize": [
+      113,
+      54
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "37cb78b81ba1d74dbaecc6abaeb7e2378d1b0e9f2096a18c22b1e8b38632dba3"
+  },
+  {
+    "name": "J_REAR_JACKET_collar_rear_band",
+    "size": [
+      156,
+      60
+    ],
+    "expectedSize": [
+      156,
+      60
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "d63f0b24f89aca6d700c8a1b24d0c476bf047f5eb0c3a1a10673c538fb334e5e"
+  },
+  {
+    "name": "J_HAIR_nape",
+    "size": [
+      280,
+      127
+    ],
+    "expectedSize": [
+      280,
+      127
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "8db9899ebf9d9618c307dfc0c154776e327b2e952d584b4bc4e44f0ec217bed7"
+  },
+  {
+    "name": "J_HAIR_back_cap",
+    "size": [
+      385,
+      419
+    ],
+    "expectedSize": [
+      385,
+      419
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "nonempty": true,
+    "sha256": "c39e61dd437f1a3dae3e548779a145fc23a16dcce4970a70527aaa6692733085"
+  }
+]
