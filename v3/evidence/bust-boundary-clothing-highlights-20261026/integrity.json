@@ -1,0 +1,47 @@
+{
+  "bust-material-v2-after-review.png": {
+    "rgba_changed_pixels": 0,
+    "max_diff": 0
+  },
+  "bust-material-v2-reopened.png": {
+    "rgba_changed_pixels": 0,
+    "max_diff": 0
+  },
+  "layer_count": 135,
+  "applied_leaf_masks": 68,
+  "status": "PARTIAL; not Cubism input",
+  "files": {
+    "bust-material-v2-before-review.png": {
+      "bytes": 5246636,
+      "sha256": "4570e1922b180aeceb6bfc75150ca80143d065014308fcbc98847ec3db3f828f"
+    },
+    "bust-material-v2-after-review.png": {
+      "bytes": 5246636,
+      "sha256": "6cfec178cd9a1aa3e3125be0488392bf574354a49c5c98ffe19455f79ae86c37"
+    },
+    "bust-material-v2-reopened.png": {
+      "bytes": 5246636,
+      "sha256": "b69ddc73bf810a79feee11c6e23b0ba02369343ab2943f20c4044e73f920c9e4"
+    },
+    "bust-material-v2-white.jpg": {
+      "bytes": 402577,
+      "sha256": "67faa443afe10c02712b4e2c9e7141192c61bb60ce9b3523a4784a9e8a62be9b"
+    },
+    "bust-material-v2-dark.jpg": {
+      "bytes": 401164,
+      "sha256": "0585770d37715e52ef5373c9179d522b384bfc18d7af8282772a9e0dcf03803a"
+    },
+    "bust-highlights-off-pupil-v2.jpg": {
+      "bytes": 88882,
+      "sha256": "21a0d6047dd52d6f5bf791ee8b43c2398db84917929abaf1284ed83ab4c4e829"
+    },
+    "bust-eye-highlight-reference.jpg": {
+      "bytes": 100806,
+      "sha256": "03bb6812bf07de980449733b5a63a26ba2e2e3459a98f666bb4941c17cd41b44"
+    }
+  },
+  "psd": {
+    "bytes": 34956250,
+    "sha256": "6784282e501ad2f41510261ab33d4c17d9c3caa9d96f2366d576c4df526ae659"
+  }
+}
