@@ -4,7 +4,7 @@
   "editorModelCount": 9,
   "sourceHashesUnchanged": true,
   "runtimeBundles": 14,
-  "runtimeLoadSuccess": 13,
+  "runtimeLoadSuccess": 14,
   "runtimeRecords": [
     {
       "model": "kei_ja__kei_vowels_pro",
@@ -268,14 +268,6 @@
       "loadError": null
     },
     {
-      "model": "CubismWebSamples-develop__Ren",
-      "drawables": null,
-      "parameters": null,
-      "maskedDrawables": null,
-      "poseGroups": [],
-      "loadError": "Error: Official Core did not load model\n    at load (http://127.0.0.1:8796/observer.js:17:109)"
-    },
-    {
       "model": "CubismWebSamples-develop__Rice",
       "drawables": 178,
       "parameters": 96,
@@ -290,12 +282,2577 @@
       "maskedDrawables": 0,
       "poseGroups": [],
       "loadError": null
+    },
+    {
+      "model": "CubismWebSamples-develop__Ren",
+      "drawables": 198,
+      "parameters": 73,
+      "maskedDrawables": 4,
+      "poseGroups": [],
+      "loadError": null
     }
   ],
   "renCompatibility": {
-    "coreVersion": 83951616,
-    "latestMocVersion": 5,
-    "observedMocHeaderVersionByte": 6
+    "coreVersion": 100663297,
+    "latestMocVersion": 6,
+    "framework": "Live2D/CubismWebFramework tag 5-r.5",
+    "context": "WebGL2",
+    "blendModeEnabled": true,
+    "offscreenCount": 24,
+    "offscreenMaskCounts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    "offscreenOwnerIndices": [
+      0,
+      9,
+      11,
+      16,
+      17,
+      21,
+      22,
+      25,
+      26,
+      27,
+      28,
+      29,
+      33,
+      34,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      49,
+      50
+    ],
+    "imageSHA256": {
+      "neutral": "f3ff1a00d21d397749aa31b9ea9bc600f21e7d16a556833f0a7fc43b003d6657",
+      "left-up": "f054dc1fe4ecd59c076f3dc7b54eaf49c25e8aa1d05a700c9dd6940ec745cb01",
+      "right-down": "e1c866c2cf3727fdfdea53abd3e5c2832ca6a3c43753431e4cd38bc5ba4ef191"
+    },
+    "previousFailure": {
+      "coreVersion": 83951616,
+      "latestMocVersion": 5,
+      "observedMocHeaderVersionByte": 6
+    },
+    "recovery": "Isolated official Core 5.3 and Framework tag 5-r.5; WebGL2, explicit renderer dimensions, asynchronous shader readiness, string ID accessor. Source model unchanged.",
+    "diagnosticErrors": [
+      "Original Core: Official Core did not load model",
+      "Analysis adapter: page.waitForFunction Timeout 45000ms after initial error was cleared",
+      "5-r.5 adapter missing renderer dimensions: Cannot read properties of null (reading bindTexture)",
+      "Removed API: model.getDrawableRenderOrders is not a function",
+      "Old ID accessor produced [object Object] and identical poses; corrected to getString() and validated unique IDs, nonempty pose inputs, distinct images"
+    ],
+    "coreSource": "https://cubism.live2d.com/sdk-web/core/06/live2dcubismcore.min.js",
+    "coreSHA256": "8741f739779b5d5210872bd3d7d99f0f1e56e6c87409e7d26d6bb4b80aa1ef47",
+    "partStructure": {
+      "model": "CubismWebSamples-develop__Ren",
+      "loadError": null,
+      "parts": [
+        {
+          "id": "PartHairFront",
+          "name": "前髪",
+          "meshes": 5,
+          "vertices": 290,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeL",
+          "name": "左目",
+          "meshes": 10,
+          "vertices": 223,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeR",
+          "name": "右目",
+          "meshes": 10,
+          "vertices": 226,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartNose",
+          "name": "鼻",
+          "meshes": 2,
+          "vertices": 64,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartMouth",
+          "name": "口",
+          "meshes": 7,
+          "vertices": 293,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartFace",
+          "name": "顔",
+          "meshes": 4,
+          "vertices": 125,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartNeck",
+          "name": "首",
+          "meshes": 2,
+          "vertices": 88,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartHairBack",
+          "name": "後ろ髪",
+          "meshes": 11,
+          "vertices": 494,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartJacket01",
+          "name": "ジャケット",
+          "meshes": 8,
+          "vertices": 236,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartArmR",
+          "name": "右腕",
+          "meshes": 8,
+          "vertices": 362,
+          "maskedMeshes": 1,
+          "maskLinks": [
+            {
+              "id": "ArtMesh120",
+              "masks": [
+                "ArtMesh84",
+                "ArtMesh85",
+                "ArtMesh95"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "PartNecklace",
+          "name": "ネックレス",
+          "meshes": 3,
+          "vertices": 56,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartLowerBody",
+          "name": "下半身",
+          "meshes": 4,
+          "vertices": 172,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartBrow",
+          "name": "まゆ毛",
+          "meshes": 2,
+          "vertices": 62,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEar",
+          "name": "耳",
+          "meshes": 2,
+          "vertices": 46,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartShirt",
+          "name": "シャツ",
+          "meshes": 3,
+          "vertices": 210,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartJacketShadow",
+          "name": "ジャケット 影",
+          "meshes": 2,
+          "vertices": 88,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartCore",
+          "name": "コア",
+          "meshes": 2,
+          "vertices": 8,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeballR",
+          "name": "右目玉",
+          "meshes": 2,
+          "vertices": 66,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartPupilR",
+          "name": "右瞳",
+          "meshes": 6,
+          "vertices": 33,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeballL",
+          "name": "左目玉",
+          "meshes": 2,
+          "vertices": 66,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartPupilL",
+          "name": "左瞳",
+          "meshes": 6,
+          "vertices": 33,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartHairline",
+          "name": "左生え際",
+          "meshes": 4,
+          "vertices": 140,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartJacketArmR",
+          "name": "ジャケット 右腕",
+          "meshes": 2,
+          "vertices": 121,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartMonochrome",
+          "name": "モノクロ",
+          "meshes": 1,
+          "vertices": 4,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartNight",
+          "name": "夜",
+          "meshes": 1,
+          "vertices": 4,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartShadow",
+          "name": "影",
+          "meshes": 2,
+          "vertices": 8,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartHologram",
+          "name": "ホログラム",
+          "meshes": 3,
+          "vertices": 12,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartDisplay",
+          "name": "ディスプレイ",
+          "meshes": 3,
+          "vertices": 500,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartDisplay02",
+          "name": "ディスプレイ2",
+          "meshes": 2,
+          "vertices": 496,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartDisplay01",
+          "name": "ディスプレイ1",
+          "meshes": 2,
+          "vertices": 496,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartHairShadow",
+          "name": "髪影",
+          "meshes": 1,
+          "vertices": 83,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartJacket02",
+          "name": "ジャケット",
+          "meshes": 6,
+          "vertices": 232,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartArmL",
+          "name": "左腕",
+          "meshes": 8,
+          "vertices": 362,
+          "maskedMeshes": 1,
+          "maskLinks": [
+            {
+              "id": "ArtMesh126",
+              "masks": [
+                "ArtMesh86",
+                "ArtMesh87",
+                "ArtMesh127"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "PartJacketArmL",
+          "name": "ジャケット 左腕",
+          "meshes": 2,
+          "vertices": 121,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartBrow2",
+          "name": "まゆ毛",
+          "meshes": 2,
+          "vertices": 62,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeL2",
+          "name": "左目",
+          "meshes": 7,
+          "vertices": 173,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartPupilL2",
+          "name": "左瞳",
+          "meshes": 6,
+          "vertices": 33,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeballL2",
+          "name": "左目玉",
+          "meshes": 2,
+          "vertices": 66,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeR2",
+          "name": "右目",
+          "meshes": 8,
+          "vertices": 191,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartEyeballR2",
+          "name": "右目玉",
+          "meshes": 2,
+          "vertices": 66,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartPupilR2",
+          "name": "右瞳",
+          "meshes": 6,
+          "vertices": 33,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartBodyOut",
+          "name": "胴 アウト",
+          "meshes": 2,
+          "vertices": 182,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartArmRDrawOrder",
+          "name": "右腕 描画順",
+          "meshes": 10,
+          "vertices": 483,
+          "maskedMeshes": 1,
+          "maskLinks": [
+            {
+              "id": "ArtMesh174",
+              "masks": [
+                "ArtMesh175",
+                "ArtMesh176",
+                "ArtMesh177"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "PartArmLDrawOrder",
+          "name": "左腕 描画順",
+          "meshes": 10,
+          "vertices": 483,
+          "maskedMeshes": 1,
+          "maskLinks": [
+            {
+              "id": "ArtMesh184",
+              "masks": [
+                "ArtMesh185",
+                "ArtMesh186",
+                "ArtMesh187"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "PartHairShadowOut",
+          "name": "髪影 アウト",
+          "meshes": 3,
+          "vertices": 142,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        },
+        {
+          "id": "PartHairBackOut",
+          "name": "後ろ髪 アウト",
+          "meshes": 2,
+          "vertices": 109,
+          "maskedMeshes": 0,
+          "maskLinks": []
+        }
+      ],
+      "declaredParts": [
+        {
+          "Id": "PartAll",
+          "Name": "全体"
+        },
+        {
+          "Id": "PartSketch",
+          "Name": "[ 下絵 ]"
+        },
+        {
+          "Id": "PartEffect",
+          "Name": "エフェクト"
+        },
+        {
+          "Id": "PartCore",
+          "Name": "コア"
+        },
+        {
+          "Id": "PartHairFront",
+          "Name": "前髪"
+        },
+        {
+          "Id": "PartBrow",
+          "Name": "まゆ毛"
+        },
+        {
+          "Id": "PartEyeL",
+          "Name": "左目"
+        },
+        {
+          "Id": "PartEyeR",
+          "Name": "右目"
+        },
+        {
+          "Id": "PartNose",
+          "Name": "鼻"
+        },
+        {
+          "Id": "PartMouth",
+          "Name": "口"
+        },
+        {
+          "Id": "PartFace",
+          "Name": "顔"
+        },
+        {
+          "Id": "PartEar",
+          "Name": "耳"
+        },
+        {
+          "Id": "PartNeck",
+          "Name": "首"
+        },
+        {
+          "Id": "PartHairBack",
+          "Name": "後ろ髪"
+        },
+        {
+          "Id": "PartJacket01",
+          "Name": "ジャケット"
+        },
+        {
+          "Id": "PartArmL",
+          "Name": "左腕"
+        },
+        {
+          "Id": "PartArmR",
+          "Name": "右腕"
+        },
+        {
+          "Id": "PartBody",
+          "Name": "胴体"
+        },
+        {
+          "Id": "PartDisplay",
+          "Name": "ディスプレイ"
+        },
+        {
+          "Id": "PartMonochrome",
+          "Name": "モノクロ"
+        },
+        {
+          "Id": "PartNight",
+          "Name": "夜"
+        },
+        {
+          "Id": "PartHologram",
+          "Name": "ホログラム"
+        },
+        {
+          "Id": "PartTransparent",
+          "Name": "透け"
+        },
+        {
+          "Id": "PartHairShadow",
+          "Name": "髪影"
+        },
+        {
+          "Id": "PartEyeballL",
+          "Name": "左目玉"
+        },
+        {
+          "Id": "PartEyeballR",
+          "Name": "右目玉"
+        },
+        {
+          "Id": "PartHairline",
+          "Name": "左生え際"
+        },
+        {
+          "Id": "PartJacket02",
+          "Name": "ジャケット"
+        },
+        {
+          "Id": "PartJacketArmL",
+          "Name": "ジャケット 左腕"
+        },
+        {
+          "Id": "PartJacketArmR",
+          "Name": "ジャケット 右腕"
+        },
+        {
+          "Id": "PartJacketShadow",
+          "Name": "ジャケット 影"
+        },
+        {
+          "Id": "PartNecklace",
+          "Name": "ネックレス"
+        },
+        {
+          "Id": "PartShirt",
+          "Name": "シャツ"
+        },
+        {
+          "Id": "PartLowerBody",
+          "Name": "下半身"
+        },
+        {
+          "Id": "PartDisplayPaint",
+          "Name": "ディスプレイ 塗り"
+        },
+        {
+          "Id": "PartShadow",
+          "Name": "影"
+        },
+        {
+          "Id": "PartBrow2",
+          "Name": "まゆ毛"
+        },
+        {
+          "Id": "PartEyeL2",
+          "Name": "左目"
+        },
+        {
+          "Id": "PartEyeR2",
+          "Name": "右目"
+        },
+        {
+          "Id": "PartHairShadowOut",
+          "Name": "髪影 アウト"
+        },
+        {
+          "Id": "PartPupilL",
+          "Name": "左瞳"
+        },
+        {
+          "Id": "PartPupilR",
+          "Name": "右瞳"
+        },
+        {
+          "Id": "PartArmLDrawOrder",
+          "Name": "左腕 描画順"
+        },
+        {
+          "Id": "PartArmRDrawOrder",
+          "Name": "右腕 描画順"
+        },
+        {
+          "Id": "PartBodyOut",
+          "Name": "胴 アウト"
+        },
+        {
+          "Id": "PartDisplay01",
+          "Name": "ディスプレイ1"
+        },
+        {
+          "Id": "PartDisplay02",
+          "Name": "ディスプレイ2"
+        },
+        {
+          "Id": "PartEyeballL2",
+          "Name": "左目玉"
+        },
+        {
+          "Id": "PartEyeballR2",
+          "Name": "右目玉"
+        },
+        {
+          "Id": "PartHairBackOut",
+          "Name": "後ろ髪 アウト"
+        },
+        {
+          "Id": "PartPupilL2",
+          "Name": "左瞳"
+        },
+        {
+          "Id": "PartPupilR2",
+          "Name": "右瞳"
+        }
+      ],
+      "declaredParameters": [
+        {
+          "Id": "ParamAngleX",
+          "GroupId": "ParamGroupFace",
+          "Name": "角度 X"
+        },
+        {
+          "Id": "ParamAngleY",
+          "GroupId": "ParamGroupFace",
+          "Name": "角度 Y"
+        },
+        {
+          "Id": "ParamAngleZ",
+          "GroupId": "ParamGroupFace",
+          "Name": "角度 Z"
+        },
+        {
+          "Id": "ParamEyeLOpen",
+          "GroupId": "ParamGroupEye",
+          "Name": "左目 開閉"
+        },
+        {
+          "Id": "ParamEyeLSmile",
+          "GroupId": "ParamGroupEye",
+          "Name": "左目 笑顔"
+        },
+        {
+          "Id": "ParamEyeROpen",
+          "GroupId": "ParamGroupEye",
+          "Name": "右目 開閉"
+        },
+        {
+          "Id": "ParamEyeRSmile",
+          "GroupId": "ParamGroupEye",
+          "Name": "右目 笑顔"
+        },
+        {
+          "Id": "ParamEyeBallX",
+          "GroupId": "ParamGroupEyeballs",
+          "Name": "目玉 X"
+        },
+        {
+          "Id": "ParamEyeBallY",
+          "GroupId": "ParamGroupEyeballs",
+          "Name": "目玉 Y"
+        },
+        {
+          "Id": "ParamEyeSize",
+          "GroupId": "ParamGroupEyeballs",
+          "Name": "目玉 縮小"
+        },
+        {
+          "Id": "ParamBrowLY",
+          "GroupId": "ParamGroupBrows",
+          "Name": "左眉 上下"
+        },
+        {
+          "Id": "ParamBrowRY",
+          "GroupId": "ParamGroupBrows",
+          "Name": "右眉 上下"
+        },
+        {
+          "Id": "ParamBrowLX",
+          "GroupId": "ParamGroupBrows",
+          "Name": "左眉 左右"
+        },
+        {
+          "Id": "ParamBrowRX",
+          "GroupId": "ParamGroupBrows",
+          "Name": "右眉 左右"
+        },
+        {
+          "Id": "ParamBrowLAngle",
+          "GroupId": "ParamGroupBrows",
+          "Name": "左眉 角度"
+        },
+        {
+          "Id": "ParamBrowRAngle",
+          "GroupId": "ParamGroupBrows",
+          "Name": "右眉 角度"
+        },
+        {
+          "Id": "ParamBrowLForm",
+          "GroupId": "ParamGroupBrows",
+          "Name": "左眉 変形"
+        },
+        {
+          "Id": "ParamBrowRForm",
+          "GroupId": "ParamGroupBrows",
+          "Name": "右眉 変形"
+        },
+        {
+          "Id": "ParamMouthForm",
+          "GroupId": "ParamGroupMouth",
+          "Name": "口 変形"
+        },
+        {
+          "Id": "ParamMouthOpenY",
+          "GroupId": "ParamGroupMouth",
+          "Name": "口 開閉"
+        },
+        {
+          "Id": "ParamBodyAngleX",
+          "GroupId": "ParamGroupBody",
+          "Name": "体の回転 X"
+        },
+        {
+          "Id": "ParamBodyAngleY",
+          "GroupId": "ParamGroupBody",
+          "Name": "体の回転 Y"
+        },
+        {
+          "Id": "ParamBodyAngleZ",
+          "GroupId": "ParamGroupBody",
+          "Name": "体の回転 Z"
+        },
+        {
+          "Id": "ParamWaistAngleZ",
+          "GroupId": "ParamGroupBody",
+          "Name": "腰の回転 Z"
+        },
+        {
+          "Id": "ParamBodyCenter",
+          "GroupId": "ParamGroupBody",
+          "Name": "重心移動"
+        },
+        {
+          "Id": "ParamBreath",
+          "GroupId": "ParamGroupBody",
+          "Name": "呼吸"
+        },
+        {
+          "Id": "ParamLeftShoulderUp",
+          "GroupId": "ParamGroupBody",
+          "Name": "左肩 上下"
+        },
+        {
+          "Id": "ParamRightShoulderUp",
+          "GroupId": "ParamGroupBody",
+          "Name": "右肩 上下"
+        },
+        {
+          "Id": "ParamLegR",
+          "GroupId": "ParamGroupBody",
+          "Name": "右脚"
+        },
+        {
+          "Id": "ParamLegL",
+          "GroupId": "ParamGroupBody",
+          "Name": "左脚"
+        },
+        {
+          "Id": "ParamBodyAngleX2",
+          "GroupId": "ParamGroup",
+          "Name": "体の回転 X2"
+        },
+        {
+          "Id": "ParamBodyAngleY2",
+          "GroupId": "ParamGroup",
+          "Name": "体の回転 Y2"
+        },
+        {
+          "Id": "ParamBodyCenter2",
+          "GroupId": "ParamGroup",
+          "Name": "重心移動2"
+        },
+        {
+          "Id": "ParamLeftShoulderUp2",
+          "GroupId": "ParamGroup",
+          "Name": "左肩 上下2"
+        },
+        {
+          "Id": "ParamRightShoulderUp2",
+          "GroupId": "ParamGroup",
+          "Name": "右肩 上下2"
+        },
+        {
+          "Id": "ParamArmL01",
+          "GroupId": "ParamGroupArmL",
+          "Name": "左腕 肩の回転"
+        },
+        {
+          "Id": "ParamArmL02",
+          "GroupId": "ParamGroupArmL",
+          "Name": "左腕 肘の回転"
+        },
+        {
+          "Id": "ParamArmL03",
+          "GroupId": "ParamGroupArmL",
+          "Name": "左腕 手首の回転"
+        },
+        {
+          "Id": "ParamHandL",
+          "GroupId": "ParamGroupArmL",
+          "Name": "左手"
+        },
+        {
+          "Id": "ParamHandLDrawOrder",
+          "GroupId": "ParamGroupArmL",
+          "Name": "左手 描画順"
+        },
+        {
+          "Id": "ParamArmR01",
+          "GroupId": "ParamGroupArmR",
+          "Name": "右腕 肩の回転"
+        },
+        {
+          "Id": "ParamArmR02",
+          "GroupId": "ParamGroupArmR",
+          "Name": "右腕 肘の回転"
+        },
+        {
+          "Id": "ParamArmR03",
+          "GroupId": "ParamGroupArmR",
+          "Name": "右腕 手首の回転"
+        },
+        {
+          "Id": "ParamHandR",
+          "GroupId": "ParamGroupArmR",
+          "Name": "右手"
+        },
+        {
+          "Id": "ParamHandRDrawOrder",
+          "GroupId": "ParamGroupArmR",
+          "Name": "右手 描画順"
+        },
+        {
+          "Id": "ParamHairFront",
+          "GroupId": "ParamGroupSway",
+          "Name": "髪揺れ 前"
+        },
+        {
+          "Id": "ParamHairSide",
+          "GroupId": "ParamGroupSway",
+          "Name": "髪揺れ 横"
+        },
+        {
+          "Id": "ParamHairBack",
+          "GroupId": "ParamGroupSway",
+          "Name": "髪揺れ 後"
+        },
+        {
+          "Id": "ParamHairFrontFuwa",
+          "GroupId": "ParamGroupSway",
+          "Name": "前髪のふわ"
+        },
+        {
+          "Id": "ParamHairSideFuwa",
+          "GroupId": "ParamGroupSway",
+          "Name": "横髪のふわ"
+        },
+        {
+          "Id": "ParamHairBackFuwa",
+          "GroupId": "ParamGroupSway",
+          "Name": "後ろ髪のふわ"
+        },
+        {
+          "Id": "ParamCollarString",
+          "GroupId": "ParamGroupSway",
+          "Name": "襟ひもの揺れ"
+        },
+        {
+          "Id": "ParamNecklace1",
+          "GroupId": "ParamGroupSway",
+          "Name": "ネックレスの揺れ1"
+        },
+        {
+          "Id": "ParamNecklace2",
+          "GroupId": "ParamGroupSway",
+          "Name": "ネックレスの揺れ2"
+        },
+        {
+          "Id": "ParamNecklace3",
+          "GroupId": "ParamGroupSway",
+          "Name": "ネックレスの揺れ3"
+        },
+        {
+          "Id": "ParamPullHandle",
+          "GroupId": "ParamGroupSway",
+          "Name": "引き手の揺れ"
+        },
+        {
+          "Id": "ParamPocketString",
+          "GroupId": "ParamGroupSway",
+          "Name": "ポケットひもの揺れ"
+        },
+        {
+          "Id": "ParamJacket",
+          "GroupId": "ParamGroupSway",
+          "Name": "ジャケットの揺れ"
+        },
+        {
+          "Id": "ParamCollarFuwa",
+          "GroupId": "ParamGroupSway",
+          "Name": "襟のふわ"
+        },
+        {
+          "Id": "ParamCollarStringFuwa",
+          "GroupId": "ParamGroupSway",
+          "Name": "襟ひものふわ"
+        },
+        {
+          "Id": "ParamHologram",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ホログラム"
+        },
+        {
+          "Id": "ParamTransparent",
+          "GroupId": "ParamGroupEffect",
+          "Name": "透け"
+        },
+        {
+          "Id": "ParamHologramPattern",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ホログラム 模様"
+        },
+        {
+          "Id": "ParamMonochrome",
+          "GroupId": "ParamGroupEffect",
+          "Name": "モノクロ"
+        },
+        {
+          "Id": "ParamNight",
+          "GroupId": "ParamGroupEffect",
+          "Name": "夜"
+        },
+        {
+          "Id": "ParamLight",
+          "GroupId": "ParamGroupEffect",
+          "Name": "光"
+        },
+        {
+          "Id": "ParamDisplayWidth1",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ディスプレイ1 横幅"
+        },
+        {
+          "Id": "ParamDisplayHeight1",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ディスプレイ1 縦幅"
+        },
+        {
+          "Id": "ParamDisplayWidth2",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ディスプレイ2 横幅"
+        },
+        {
+          "Id": "ParamDisplayHeight2",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ディスプレイ2 縦幅"
+        },
+        {
+          "Id": "ParamDisplayAngle",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ディスプレイ 角度"
+        },
+        {
+          "Id": "ParamNoise",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ノイズ"
+        },
+        {
+          "Id": "ParamNoiseRotate",
+          "GroupId": "ParamGroupEffect",
+          "Name": "ノイズの回転"
+        }
+      ],
+      "poseGroups": [],
+      "physics": [
+        {
+          "id": "PhysicsSetting1",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleX"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX2"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting2",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleX"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyCenter2"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting3",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleY"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleY2"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting4",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleY"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamLeftShoulderUp2"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamRightShoulderUp2"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting5",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleZ"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamHairFront"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting6",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleZ"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamHairBack"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting7",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleZ"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamHairSide"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting8",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleY"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleY"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamHairFrontFuwa"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting9",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleY"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleY"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamHairSideFuwa"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting10",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamAngleY"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleY"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamHairBackFuwa"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting11",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamCollarString"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting12",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamNecklace1"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamNecklace2"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamNecklace3"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting13",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamPullHandle"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting14",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamPocketString"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting15",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleX"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleZ"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamJacket"
+            }
+          ]
+        },
+        {
+          "id": "PhysicsSetting16",
+          "inputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamBodyAngleY"
+            }
+          ],
+          "outputs": [
+            {
+              "Target": "Parameter",
+              "Id": "ParamCollarFuwa"
+            },
+            {
+              "Target": "Parameter",
+              "Id": "ParamCollarStringFuwa"
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "id": "ParamAngleX",
+          "changedMeshes": 114,
+          "affectedParts": [
+            "まゆ毛",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamAngleY",
+          "changedMeshes": 113,
+          "affectedParts": [
+            "まゆ毛",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamAngleZ",
+          "changedMeshes": 115,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamEyeLOpen",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamEyeLSmile",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamEyeROpen",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamEyeRSmile",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamEyeBallX",
+          "changedMeshes": 24,
+          "affectedParts": [
+            "右瞳",
+            "左瞳"
+          ]
+        },
+        {
+          "id": "ParamEyeBallY",
+          "changedMeshes": 24,
+          "affectedParts": [
+            "右瞳",
+            "左瞳"
+          ]
+        },
+        {
+          "id": "ParamEyeSize",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamBrowLY",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowRY",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowLX",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowRX",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowLAngle",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowRAngle",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowLForm",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamBrowRForm",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "まゆ毛"
+          ]
+        },
+        {
+          "id": "ParamMouthForm",
+          "changedMeshes": 4,
+          "affectedParts": [
+            "口"
+          ]
+        },
+        {
+          "id": "ParamMouthOpenY",
+          "changedMeshes": 14,
+          "affectedParts": [
+            "口",
+            "左生え際",
+            "顔",
+            "髪影 アウト"
+          ]
+        },
+        {
+          "id": "ParamBodyAngleX",
+          "changedMeshes": 183,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamBodyAngleY",
+          "changedMeshes": 184,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamBodyAngleZ",
+          "changedMeshes": 182,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamWaistAngleZ",
+          "changedMeshes": 183,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamBodyCenter",
+          "changedMeshes": 184,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamBreath",
+          "changedMeshes": 179,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamLeftShoulderUp",
+          "changedMeshes": 42,
+          "affectedParts": [
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "左腕",
+            "左腕 描画順",
+            "胴 アウト"
+          ]
+        },
+        {
+          "id": "ParamRightShoulderUp",
+          "changedMeshes": 40,
+          "affectedParts": [
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 影",
+            "ネックレス",
+            "右腕",
+            "右腕 描画順",
+            "胴 アウト"
+          ]
+        },
+        {
+          "id": "ParamLegR",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "下半身"
+          ]
+        },
+        {
+          "id": "ParamLegL",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "下半身"
+          ]
+        },
+        {
+          "id": "ParamBodyAngleX2",
+          "changedMeshes": 183,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamBodyAngleY2",
+          "changedMeshes": 184,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamBodyCenter2",
+          "changedMeshes": 184,
+          "affectedParts": [
+            "まゆ毛",
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "下半身",
+            "前髪",
+            "口",
+            "右目",
+            "右目玉",
+            "右瞳",
+            "右腕",
+            "右腕 描画順",
+            "左生え際",
+            "左目",
+            "左目玉",
+            "左瞳",
+            "左腕",
+            "左腕 描画順",
+            "後ろ髪",
+            "後ろ髪 アウト",
+            "耳",
+            "胴 アウト",
+            "顔",
+            "首",
+            "髪影",
+            "髪影 アウト",
+            "鼻"
+          ]
+        },
+        {
+          "id": "ParamLeftShoulderUp2",
+          "changedMeshes": 42,
+          "affectedParts": [
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 左腕",
+            "ジャケット 影",
+            "ネックレス",
+            "左腕",
+            "左腕 描画順",
+            "胴 アウト"
+          ]
+        },
+        {
+          "id": "ParamRightShoulderUp2",
+          "changedMeshes": 40,
+          "affectedParts": [
+            "コア",
+            "シャツ",
+            "ジャケット",
+            "ジャケット 右腕",
+            "ジャケット 影",
+            "ネックレス",
+            "右腕",
+            "右腕 描画順",
+            "胴 アウト"
+          ]
+        },
+        {
+          "id": "ParamArmL01",
+          "changedMeshes": 21,
+          "affectedParts": [
+            "ジャケット",
+            "ジャケット 左腕",
+            "左腕",
+            "左腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamArmL02",
+          "changedMeshes": 20,
+          "affectedParts": [
+            "ジャケット 左腕",
+            "左腕",
+            "左腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamArmL03",
+          "changedMeshes": 10,
+          "affectedParts": [
+            "左腕",
+            "左腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamHandL",
+          "changedMeshes": 6,
+          "affectedParts": [
+            "左腕",
+            "左腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamHandLDrawOrder",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamArmR01",
+          "changedMeshes": 21,
+          "affectedParts": [
+            "ジャケット",
+            "ジャケット 右腕",
+            "右腕",
+            "右腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamArmR02",
+          "changedMeshes": 20,
+          "affectedParts": [
+            "ジャケット 右腕",
+            "右腕",
+            "右腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamArmR03",
+          "changedMeshes": 10,
+          "affectedParts": [
+            "右腕",
+            "右腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamHandR",
+          "changedMeshes": 6,
+          "affectedParts": [
+            "右腕",
+            "右腕 描画順"
+          ]
+        },
+        {
+          "id": "ParamHandRDrawOrder",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamHairFront",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "前髪",
+            "髪影"
+          ]
+        },
+        {
+          "id": "ParamHairSide",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "前髪"
+          ]
+        },
+        {
+          "id": "ParamHairBack",
+          "changedMeshes": 14,
+          "affectedParts": [
+            "左生え際",
+            "後ろ髪",
+            "後ろ髪 アウト"
+          ]
+        },
+        {
+          "id": "ParamHairFrontFuwa",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "前髪",
+            "髪影"
+          ]
+        },
+        {
+          "id": "ParamHairSideFuwa",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "前髪"
+          ]
+        },
+        {
+          "id": "ParamHairBackFuwa",
+          "changedMeshes": 14,
+          "affectedParts": [
+            "左生え際",
+            "後ろ髪",
+            "後ろ髪 アウト"
+          ]
+        },
+        {
+          "id": "ParamCollarString",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "ジャケット"
+          ]
+        },
+        {
+          "id": "ParamNecklace1",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "ネックレス"
+          ]
+        },
+        {
+          "id": "ParamNecklace2",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "ネックレス"
+          ]
+        },
+        {
+          "id": "ParamNecklace3",
+          "changedMeshes": 1,
+          "affectedParts": [
+            "ネックレス"
+          ]
+        },
+        {
+          "id": "ParamPullHandle",
+          "changedMeshes": 1,
+          "affectedParts": [
+            "ジャケット"
+          ]
+        },
+        {
+          "id": "ParamPocketString",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "ジャケット"
+          ]
+        },
+        {
+          "id": "ParamJacket",
+          "changedMeshes": 12,
+          "affectedParts": [
+            "ジャケット",
+            "ジャケット 影"
+          ]
+        },
+        {
+          "id": "ParamCollarFuwa",
+          "changedMeshes": 6,
+          "affectedParts": [
+            "ジャケット"
+          ]
+        },
+        {
+          "id": "ParamCollarStringFuwa",
+          "changedMeshes": 2,
+          "affectedParts": [
+            "ジャケット"
+          ]
+        },
+        {
+          "id": "ParamHologram",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamTransparent",
+          "changedMeshes": 1,
+          "affectedParts": [
+            "ホログラム"
+          ]
+        },
+        {
+          "id": "ParamHologramPattern",
+          "changedMeshes": 1,
+          "affectedParts": [
+            "ホログラム"
+          ]
+        },
+        {
+          "id": "ParamMonochrome",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamNight",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamLight",
+          "changedMeshes": 1,
+          "affectedParts": [
+            "夜"
+          ]
+        },
+        {
+          "id": "ParamDisplayWidth1",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "ディスプレイ",
+            "ディスプレイ1"
+          ]
+        },
+        {
+          "id": "ParamDisplayHeight1",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "ディスプレイ",
+            "ディスプレイ1"
+          ]
+        },
+        {
+          "id": "ParamDisplayWidth2",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "ディスプレイ",
+            "ディスプレイ2"
+          ]
+        },
+        {
+          "id": "ParamDisplayHeight2",
+          "changedMeshes": 3,
+          "affectedParts": [
+            "ディスプレイ",
+            "ディスプレイ2"
+          ]
+        },
+        {
+          "id": "ParamDisplayAngle",
+          "changedMeshes": 7,
+          "affectedParts": [
+            "ディスプレイ",
+            "ディスプレイ1",
+            "ディスプレイ2"
+          ]
+        },
+        {
+          "id": "ParamNoise",
+          "changedMeshes": 0,
+          "affectedParts": []
+        },
+        {
+          "id": "ParamNoiseRotate",
+          "changedMeshes": 0,
+          "affectedParts": []
+        }
+      ]
+    },
+    "parameterResponses": [
+      {
+        "parameter": "ParamAngleX",
+        "changedMeshCount": 114
+      },
+      {
+        "parameter": "ParamAngleY",
+        "changedMeshCount": 113
+      },
+      {
+        "parameter": "ParamAngleZ",
+        "changedMeshCount": 115
+      },
+      {
+        "parameter": "ParamEyeLOpen",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamEyeLSmile",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamEyeROpen",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamEyeRSmile",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamEyeBallX",
+        "changedMeshCount": 24
+      },
+      {
+        "parameter": "ParamEyeBallY",
+        "changedMeshCount": 24
+      },
+      {
+        "parameter": "ParamEyeSize",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamBrowLY",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowRY",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowLX",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowRX",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowLAngle",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowRAngle",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowLForm",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBrowRForm",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamMouthForm",
+        "changedMeshCount": 4
+      },
+      {
+        "parameter": "ParamMouthOpenY",
+        "changedMeshCount": 14
+      },
+      {
+        "parameter": "ParamBodyAngleX",
+        "changedMeshCount": 183
+      },
+      {
+        "parameter": "ParamBodyAngleY",
+        "changedMeshCount": 184
+      },
+      {
+        "parameter": "ParamBodyAngleZ",
+        "changedMeshCount": 182
+      },
+      {
+        "parameter": "ParamWaistAngleZ",
+        "changedMeshCount": 183
+      },
+      {
+        "parameter": "ParamBodyCenter",
+        "changedMeshCount": 184
+      },
+      {
+        "parameter": "ParamBreath",
+        "changedMeshCount": 179
+      },
+      {
+        "parameter": "ParamLeftShoulderUp",
+        "changedMeshCount": 42
+      },
+      {
+        "parameter": "ParamRightShoulderUp",
+        "changedMeshCount": 40
+      },
+      {
+        "parameter": "ParamLegR",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamLegL",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamBodyAngleX2",
+        "changedMeshCount": 183
+      },
+      {
+        "parameter": "ParamBodyAngleY2",
+        "changedMeshCount": 184
+      },
+      {
+        "parameter": "ParamBodyCenter2",
+        "changedMeshCount": 184
+      },
+      {
+        "parameter": "ParamLeftShoulderUp2",
+        "changedMeshCount": 42
+      },
+      {
+        "parameter": "ParamRightShoulderUp2",
+        "changedMeshCount": 40
+      },
+      {
+        "parameter": "ParamArmL01",
+        "changedMeshCount": 21
+      },
+      {
+        "parameter": "ParamArmL02",
+        "changedMeshCount": 20
+      },
+      {
+        "parameter": "ParamArmL03",
+        "changedMeshCount": 10
+      },
+      {
+        "parameter": "ParamHandL",
+        "changedMeshCount": 6
+      },
+      {
+        "parameter": "ParamHandLDrawOrder",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamArmR01",
+        "changedMeshCount": 21
+      },
+      {
+        "parameter": "ParamArmR02",
+        "changedMeshCount": 20
+      },
+      {
+        "parameter": "ParamArmR03",
+        "changedMeshCount": 10
+      },
+      {
+        "parameter": "ParamHandR",
+        "changedMeshCount": 6
+      },
+      {
+        "parameter": "ParamHandRDrawOrder",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamHairFront",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamHairSide",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamHairBack",
+        "changedMeshCount": 14
+      },
+      {
+        "parameter": "ParamHairFrontFuwa",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamHairSideFuwa",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamHairBackFuwa",
+        "changedMeshCount": 14
+      },
+      {
+        "parameter": "ParamCollarString",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamNecklace1",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamNecklace2",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamNecklace3",
+        "changedMeshCount": 1
+      },
+      {
+        "parameter": "ParamPullHandle",
+        "changedMeshCount": 1
+      },
+      {
+        "parameter": "ParamPocketString",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamJacket",
+        "changedMeshCount": 12
+      },
+      {
+        "parameter": "ParamCollarFuwa",
+        "changedMeshCount": 6
+      },
+      {
+        "parameter": "ParamCollarStringFuwa",
+        "changedMeshCount": 2
+      },
+      {
+        "parameter": "ParamHologram",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamTransparent",
+        "changedMeshCount": 1
+      },
+      {
+        "parameter": "ParamHologramPattern",
+        "changedMeshCount": 1
+      },
+      {
+        "parameter": "ParamMonochrome",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamNight",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamLight",
+        "changedMeshCount": 1
+      },
+      {
+        "parameter": "ParamDisplayWidth1",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamDisplayHeight1",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamDisplayWidth2",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamDisplayHeight2",
+        "changedMeshCount": 3
+      },
+      {
+        "parameter": "ParamDisplayAngle",
+        "changedMeshCount": 7
+      },
+      {
+        "parameter": "ParamNoise",
+        "changedMeshCount": 0
+      },
+      {
+        "parameter": "ParamNoiseRotate",
+        "changedMeshCount": 0
+      }
+    ]
   },
   "editorParameters": {
     "haru_t01.cmo3": [
@@ -8826,7 +11383,7 @@
   "limits": [
     "Runtime vertex response does not recover editor deformer hierarchy or glue",
     "Not every authored key combination verified",
-    "Ren runtime load unavailable with retained Core",
-    "Reference hand pose switches do not prove Hibiki 30-joint continuous articulation"
+    "Reference hand pose switches do not prove Hibiki 30-joint continuous articulation",
+    "Ren uses 24 offscreens, four with masks; drawable mask counts alone do not describe its clipping. Runtime analysis does not supply absent Ren authoring data."
   ]
 }
