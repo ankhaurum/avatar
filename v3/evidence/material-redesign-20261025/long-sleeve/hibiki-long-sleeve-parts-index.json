@@ -1,0 +1,470 @@
+[
+  {
+    "index": 1,
+    "title": "後ろ髪",
+    "psd_layer": "HAIR_back_bust_original__MATERIAL",
+    "kind": "group",
+    "bbox": [
+      176,
+      11,
+      848,
+      808
+    ],
+    "descendant_count": 25
+  },
+  {
+    "index": 2,
+    "title": "首",
+    "psd_layer": "NECK_bust_visible_and_hidden__IN_PROGRESS",
+    "kind": "group",
+    "bbox": [
+      408,
+      610,
+      645,
+      934
+    ],
+    "descendant_count": 3
+  },
+  {
+    "index": 3,
+    "title": "襟足",
+    "psd_layer": "HAIR_neck_full_native_unmixed__REVIEW",
+    "kind": "group",
+    "bbox": [
+      416,
+      631,
+      637,
+      927
+    ],
+    "descendant_count": 1
+  },
+  {
+    "index": 4,
+    "title": "顔・ほくろ",
+    "psd_layer": "FACE_bust_original_contour__IN_PROGRESS",
+    "kind": "group",
+    "bbox": [
+      298,
+      171,
+      767,
+      699
+    ],
+    "descendant_count": 10
+  },
+  {
+    "index": 5,
+    "title": "耳",
+    "psd_layer": "EARS_bust_source__IN_PROGRESS",
+    "kind": "group",
+    "bbox": [
+      0,
+      0,
+      1024,
+      1280
+    ],
+    "descendant_count": 9
+  },
+  {
+    "index": 6,
+    "title": "顎の接続",
+    "psd_layer": "SHADOW_head_neck_contact__MATERIAL",
+    "kind": "group",
+    "bbox": [
+      408,
+      617,
+      655,
+      705
+    ],
+    "descendant_count": 3
+  },
+  {
+    "index": 7,
+    "title": "眉（左右独立）",
+    "psd_layer": "BROWS_original_bust_visible",
+    "kind": "group",
+    "bbox": [
+      340,
+      220,
+      720,
+      425
+    ],
+    "descendant_count": 8
+  },
+  {
+    "index": 8,
+    "title": "右目（内部別層）",
+    "psd_layer": "EYE_R_original_bust",
+    "kind": "group",
+    "bbox": [
+      0,
+      0,
+      1024,
+      1280
+    ],
+    "descendant_count": 18
+  },
+  {
+    "index": 9,
+    "title": "左目（内部別層）",
+    "psd_layer": "EYE_L_original_bust",
+    "kind": "group",
+    "bbox": [
+      0,
+      0,
+      1024,
+      1280
+    ],
+    "descendant_count": 18
+  },
+  {
+    "index": 10,
+    "title": "鼻",
+    "psd_layer": "NOSE_original_bust_visible",
+    "kind": "group",
+    "bbox": [
+      481,
+      455,
+      599,
+      577
+    ],
+    "descendant_count": 1
+  },
+  {
+    "index": 11,
+    "title": "上唇",
+    "psd_layer": "MOUTH_upper_lip_bust_original",
+    "kind": "pixel",
+    "bbox": [
+      471,
+      567,
+      616,
+      599
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 12,
+    "title": "下唇",
+    "psd_layer": "MOUTH_lower_lip_bust_original",
+    "kind": "pixel",
+    "bbox": [
+      469,
+      576,
+      617,
+      632
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 13,
+    "title": "右口角",
+    "psd_layer": "MOUTH_corner_R_bust_original",
+    "kind": "pixel",
+    "bbox": [
+      465,
+      580,
+      489,
+      599
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 14,
+    "title": "左口角",
+    "psd_layer": "MOUTH_corner_L_bust_original",
+    "kind": "pixel",
+    "bbox": [
+      599,
+      571,
+      620,
+      591
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 15,
+    "title": "前髪",
+    "psd_layer": "HAIR_fringe_bust_original__MATERIAL",
+    "kind": "group",
+    "bbox": [
+      339,
+      69,
+      701,
+      542
+    ],
+    "descendant_count": 2
+  },
+  {
+    "index": 16,
+    "title": "右横髪",
+    "psd_layer": "HAIR_side_R_bust_original__MATERIAL",
+    "kind": "group",
+    "bbox": [
+      214,
+      113,
+      482,
+      791
+    ],
+    "descendant_count": 2
+  },
+  {
+    "index": 17,
+    "title": "左横髪",
+    "psd_layer": "HAIR_side_L_bust_original__MATERIAL",
+    "kind": "group",
+    "bbox": [
+      567,
+      86,
+      837,
+      805
+    ],
+    "descendant_count": 2
+  },
+  {
+    "index": 18,
+    "title": "顎横の髪",
+    "psd_layer": "HAIR_jaw_native_identity_preserved",
+    "kind": "group",
+    "bbox": [
+      398,
+      600,
+      665,
+      814
+    ],
+    "descendant_count": 1
+  },
+  {
+    "index": 19,
+    "title": "こめかみの髪",
+    "psd_layer": "HAIR_temple_native_boundary__REVIEW",
+    "kind": "group",
+    "bbox": [
+      363,
+      373,
+      712,
+      536
+    ],
+    "descendant_count": 2
+  },
+  {
+    "index": 20,
+    "title": "前髪境界",
+    "psd_layer": "HAIR_fringe_native_skin_unmixed__REVIEW",
+    "kind": "pixel",
+    "bbox": [
+      340,
+      220,
+      720,
+      425
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 21,
+    "title": "長袖 L",
+    "psd_layer": "SLEEVE_L_complete_cap",
+    "kind": "pixel",
+    "bbox": [
+      55,
+      824,
+      279,
+      1724
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 22,
+    "title": "長袖 R",
+    "psd_layer": "SLEEVE_R_complete_cap",
+    "kind": "pixel",
+    "bbox": [
+      793,
+      824,
+      1017,
+      1724
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 23,
+    "title": "胴体",
+    "psd_layer": "BLOUSE_complete_under_cape",
+    "kind": "pixel",
+    "bbox": [
+      226,
+      772,
+      846,
+      1280
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 24,
+    "title": "肩飾り L",
+    "psd_layer": "CAPE_L_shoulder_yoke",
+    "kind": "pixel",
+    "bbox": [
+      57,
+      772,
+      495,
+      1048
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 25,
+    "title": "肩飾り R",
+    "psd_layer": "CAPE_R_shoulder_yoke",
+    "kind": "pixel",
+    "bbox": [
+      578,
+      772,
+      1016,
+      1048
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 26,
+    "title": "立ち襟",
+    "psd_layer": "COLLAR_stand_complete",
+    "kind": "pixel",
+    "bbox": [
+      384,
+      698,
+      688,
+      848
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 27,
+    "title": "リボン輪 L",
+    "psd_layer": "RIBBON_loop_L_SHARED",
+    "kind": "pixel",
+    "bbox": [
+      345,
+      806,
+      529,
+      930
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 28,
+    "title": "リボン輪 R",
+    "psd_layer": "RIBBON_loop_R_MIRRORED",
+    "kind": "pixel",
+    "bbox": [
+      543,
+      806,
+      727,
+      930
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 29,
+    "title": "リボン垂れ L",
+    "psd_layer": "RIBBON_tail_L_MIRRORED",
+    "kind": "pixel",
+    "bbox": [
+      392,
+      862,
+      532,
+      1172
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 30,
+    "title": "リボン垂れ R",
+    "psd_layer": "RIBBON_tail_R_SHARED",
+    "kind": "pixel",
+    "bbox": [
+      540,
+      862,
+      680,
+      1172
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 31,
+    "title": "リボン結び目",
+    "psd_layer": "RIBBON_knot",
+    "kind": "pixel",
+    "bbox": [
+      511,
+      821,
+      561,
+      875
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 32,
+    "title": "右虹彩（独立）",
+    "psd_layer": "EYE_R_iris_complete__REVIEW",
+    "kind": "group",
+    "bbox": [
+      433,
+      414,
+      473,
+      456
+    ],
+    "descendant_count": 6
+  },
+  {
+    "index": 33,
+    "title": "左虹彩（独立）",
+    "psd_layer": "EYE_L_iris_complete__REVIEW",
+    "kind": "group",
+    "bbox": [
+      601,
+      403,
+      641,
+      450
+    ],
+    "descendant_count": 6
+  },
+  {
+    "index": 34,
+    "title": "右上まぶた",
+    "psd_layer": "EYE_R_upper_lid_lash_bust_original",
+    "kind": "pixel",
+    "bbox": [
+      390,
+      399,
+      502,
+      450
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 35,
+    "title": "左上まぶた",
+    "psd_layer": "EYE_L_upper_lid_lash_bust_original",
+    "kind": "pixel",
+    "bbox": [
+      584,
+      395,
+      691,
+      443
+    ],
+    "descendant_count": 0
+  },
+  {
+    "index": 36,
+    "title": "右眼ハイライト",
+    "psd_layer": "EYE_R_highlight_native__REVIEW",
+    "kind": "pixel",
+    "bbox": [
+      446,
+      424,
+      468,
+      436
+    ],
+    "descendant_count": 0
+  }
+]
