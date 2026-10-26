@@ -1,0 +1,998 @@
+{
+  "status": "STATIC_IMPORT_CANDIDATE_NOT_RIGGED",
+  "source": "hibiki-bust-import-parts.psd",
+  "parts": 54,
+  "layer_masks": 0,
+  "free_memory_after": 1109983232,
+  "limitations": [
+    "Eye aperture masks are baked for neutral display; complete moving iris sources remain in authoring PSD and require Cubism clipping setup before motion validation.",
+    "No Cubism import, mesh, keyform or native render validation performed.",
+    "Long sleeve textures extend below bust canvas."
+  ],
+  "manifest": [
+    {
+      "part": "HAIR_back_bust_original__MATERIAL",
+      "source_group": true,
+      "source_bbox": [
+        176,
+        11,
+        848,
+        808
+      ],
+      "output_bbox": [
+        176,
+        49,
+        848,
+        808
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "NECK_bust_visible_and_hidden__IN_PROGRESS",
+      "source_group": true,
+      "source_bbox": [
+        408,
+        610,
+        645,
+        934
+      ],
+      "output_bbox": [
+        408,
+        610,
+        645,
+        860
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "HAIR_neck_full_native_unmixed__REVIEW",
+      "source_group": true,
+      "source_bbox": [
+        416,
+        631,
+        637,
+        927
+      ],
+      "output_bbox": [
+        416,
+        631,
+        637,
+        860
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "SLEEVE_L_complete_cap",
+      "source_group": false,
+      "source_bbox": [
+        55,
+        824,
+        279,
+        1724
+      ],
+      "output_bbox": [
+        55,
+        824,
+        279,
+        1724
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "SLEEVE_R_complete_cap",
+      "source_group": false,
+      "source_bbox": [
+        793,
+        824,
+        1017,
+        1724
+      ],
+      "output_bbox": [
+        793,
+        824,
+        1017,
+        1724
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "BLOUSE_complete_under_cape",
+      "source_group": false,
+      "source_bbox": [
+        226,
+        772,
+        846,
+        1280
+      ],
+      "output_bbox": [
+        226,
+        772,
+        846,
+        1280
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "CAPE_L_shoulder_yoke",
+      "source_group": false,
+      "source_bbox": [
+        57,
+        772,
+        495,
+        1048
+      ],
+      "output_bbox": [
+        57,
+        772,
+        495,
+        1048
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "CAPE_R_shoulder_yoke",
+      "source_group": false,
+      "source_bbox": [
+        578,
+        772,
+        1016,
+        1048
+      ],
+      "output_bbox": [
+        578,
+        772,
+        1016,
+        1048
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "COLLAR_stand_complete",
+      "source_group": false,
+      "source_bbox": [
+        384,
+        698,
+        688,
+        848
+      ],
+      "output_bbox": [
+        384,
+        698,
+        688,
+        848
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "EARS_bust_source__IN_PROGRESS",
+      "source_group": true,
+      "source_bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ],
+      "output_bbox": [
+        292,
+        408,
+        711,
+        551
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "FACE_bust_original_contour__IN_PROGRESS",
+      "source_group": true,
+      "source_bbox": [
+        298,
+        171,
+        767,
+        699
+      ],
+      "output_bbox": [
+        309,
+        185,
+        755,
+        699
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "SHADOW_head_neck_contact__MATERIAL",
+      "source_group": true,
+      "source_bbox": [
+        408,
+        617,
+        655,
+        705
+      ],
+      "output_bbox": [
+        408,
+        617,
+        655,
+        705
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "BROW_R_native_skin_unmixed__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        340,
+        220,
+        720,
+        425
+      ],
+      "output_bbox": [
+        415,
+        364,
+        503,
+        403
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "BROW_L_native_skin_unmixed__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        340,
+        220,
+        720,
+        425
+      ],
+      "output_bbox": [
+        608,
+        355,
+        667,
+        395
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "EYE_R_sclera_hidden_continuous__PAINT_REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        396,
+        400,
+        510,
+        466
+      ],
+      "output_bbox": [
+        409,
+        418,
+        498,
+        452
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust",
+        "EYE_R_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_R_sclera_bust_original_visible",
+      "source_group": false,
+      "source_bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ],
+      "output_bbox": [
+        409,
+        419,
+        498,
+        452
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust",
+        "EYE_R_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_R_iris_complete__REVIEW",
+      "source_group": true,
+      "source_bbox": [
+        433,
+        414,
+        473,
+        456
+      ],
+      "output_bbox": [
+        434,
+        418,
+        471,
+        450
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust",
+        "EYE_R_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_R_lid_contact_pixels_separated__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        435,
+        420,
+        471,
+        449
+      ],
+      "output_bbox": [
+        435,
+        420,
+        471,
+        449
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust",
+        "EYE_R_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_R_highlight_native__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        446,
+        424,
+        468,
+        436
+      ],
+      "output_bbox": [
+        446,
+        424,
+        468,
+        436
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust",
+        "EYE_R_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_R_upper_lid_lash_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        390,
+        399,
+        502,
+        450
+      ],
+      "output_bbox": [
+        390,
+        410,
+        502,
+        450
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_R_lower_lid_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        391,
+        433,
+        507,
+        475
+      ],
+      "output_bbox": [
+        391,
+        433,
+        507,
+        475
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_R_outer_corner_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        392,
+        433,
+        414,
+        447
+      ],
+      "output_bbox": [
+        392,
+        433,
+        414,
+        447
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_R_inner_corner_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        489,
+        439,
+        503,
+        451
+      ],
+      "output_bbox": [
+        489,
+        439,
+        503,
+        451
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_R_native_upper_skin_continuity__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        391,
+        388,
+        495,
+        431
+      ],
+      "output_bbox": [
+        391,
+        410,
+        490,
+        431
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_R_upper_inner_join_native__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        481,
+        415,
+        499,
+        439
+      ],
+      "output_bbox": [
+        481,
+        415,
+        499,
+        439
+      ],
+      "applied_ancestor_masks": [
+        "EYE_R_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_L_sclera_hidden_continuous__PAINT_REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        565,
+        392,
+        679,
+        458
+      ],
+      "output_bbox": [
+        586,
+        410,
+        662,
+        446
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust",
+        "EYE_L_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_L_sclera_bust_original_visible",
+      "source_group": false,
+      "source_bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ],
+      "output_bbox": [
+        586,
+        410,
+        662,
+        446
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust",
+        "EYE_L_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_L_iris_complete__REVIEW",
+      "source_group": true,
+      "source_bbox": [
+        601,
+        403,
+        641,
+        450
+      ],
+      "output_bbox": [
+        602,
+        410,
+        641,
+        442
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust",
+        "EYE_L_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_L_lid_contact_pixels_separated__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        603,
+        411,
+        640,
+        442
+      ],
+      "output_bbox": [
+        603,
+        411,
+        640,
+        442
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust",
+        "EYE_L_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_L_highlight_native__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        612,
+        417,
+        637,
+        429
+      ],
+      "output_bbox": [
+        612,
+        417,
+        637,
+        429
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust",
+        "EYE_L_eyeball_surface__ASSEMBLY_MASK"
+      ]
+    },
+    {
+      "part": "EYE_L_upper_lid_lash_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        584,
+        395,
+        691,
+        443
+      ],
+      "output_bbox": [
+        584,
+        410,
+        691,
+        443
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_L_lower_lid_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        580,
+        421,
+        694,
+        466
+      ],
+      "output_bbox": [
+        580,
+        421,
+        694,
+        466
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_L_inner_corner_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        584,
+        435,
+        598,
+        447
+      ],
+      "output_bbox": [
+        584,
+        435,
+        598,
+        447
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_L_outer_corner_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        666,
+        422,
+        690,
+        436
+      ],
+      "output_bbox": [
+        666,
+        422,
+        690,
+        436
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_L_outer_corner_bust_original_v2",
+      "source_group": false,
+      "source_bbox": [
+        650,
+        421,
+        680,
+        437
+      ],
+      "output_bbox": [
+        650,
+        421,
+        680,
+        437
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_L_native_upper_skin_continuity__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        589,
+        382,
+        695,
+        429
+      ],
+      "output_bbox": [
+        590,
+        410,
+        695,
+        429
+      ],
+      "applied_ancestor_masks": [
+        "EYE_L_original_bust"
+      ]
+    },
+    {
+      "part": "EYE_R_upper_skin_native_unmixed__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        340,
+        220,
+        720,
+        425
+      ],
+      "output_bbox": [
+        393,
+        388,
+        495,
+        425
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "EYE_L_upper_skin_native_unmixed__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        340,
+        220,
+        720,
+        425
+      ],
+      "output_bbox": [
+        589,
+        382,
+        693,
+        416
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "NOSE_original_bust_visible",
+      "source_group": true,
+      "source_bbox": [
+        481,
+        455,
+        599,
+        577
+      ],
+      "output_bbox": [
+        481,
+        455,
+        599,
+        577
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "MOUTH_upper_lip_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        471,
+        567,
+        616,
+        599
+      ],
+      "output_bbox": [
+        471,
+        567,
+        616,
+        599
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "MOUTH_lower_lip_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        469,
+        576,
+        617,
+        632
+      ],
+      "output_bbox": [
+        469,
+        576,
+        617,
+        632
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "MOUTH_corner_R_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        465,
+        580,
+        489,
+        599
+      ],
+      "output_bbox": [
+        465,
+        580,
+        489,
+        599
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "MOUTH_corner_L_bust_original",
+      "source_group": false,
+      "source_bbox": [
+        599,
+        571,
+        620,
+        591
+      ],
+      "output_bbox": [
+        599,
+        571,
+        620,
+        591
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "HAIR_fringe_bust_original__MATERIAL",
+      "source_group": true,
+      "source_bbox": [
+        339,
+        69,
+        701,
+        542
+      ],
+      "output_bbox": [
+        339,
+        69,
+        700,
+        542
+      ],
+      "applied_ancestor_masks": [
+        "HAIR_bust_visible_source__IN_PROGRESS"
+      ]
+    },
+    {
+      "part": "HAIR_side_R_bust_original__MATERIAL",
+      "source_group": true,
+      "source_bbox": [
+        214,
+        113,
+        482,
+        791
+      ],
+      "output_bbox": [
+        214,
+        113,
+        482,
+        791
+      ],
+      "applied_ancestor_masks": [
+        "HAIR_bust_visible_source__IN_PROGRESS"
+      ]
+    },
+    {
+      "part": "HAIR_side_L_bust_original__MATERIAL",
+      "source_group": true,
+      "source_bbox": [
+        567,
+        86,
+        837,
+        805
+      ],
+      "output_bbox": [
+        567,
+        86,
+        837,
+        805
+      ],
+      "applied_ancestor_masks": [
+        "HAIR_bust_visible_source__IN_PROGRESS"
+      ]
+    },
+    {
+      "part": "HAIR_jaw_native_identity_preserved",
+      "source_group": true,
+      "source_bbox": [
+        398,
+        600,
+        665,
+        814
+      ],
+      "output_bbox": [
+        408,
+        600,
+        665,
+        700
+      ],
+      "applied_ancestor_masks": [
+        "HAIR_bust_visible_source__IN_PROGRESS"
+      ]
+    },
+    {
+      "part": "HAIR_temple_native_boundary__REVIEW",
+      "source_group": true,
+      "source_bbox": [
+        363,
+        373,
+        712,
+        536
+      ],
+      "output_bbox": [
+        363,
+        410,
+        712,
+        536
+      ],
+      "applied_ancestor_masks": [
+        "HAIR_bust_visible_source__IN_PROGRESS"
+      ]
+    },
+    {
+      "part": "HAIR_fringe_native_skin_unmixed__REVIEW",
+      "source_group": false,
+      "source_bbox": [
+        340,
+        220,
+        720,
+        425
+      ],
+      "output_bbox": [
+        340,
+        220,
+        720,
+        414
+      ],
+      "applied_ancestor_masks": [
+        "HAIR_bust_visible_source__IN_PROGRESS"
+      ]
+    },
+    {
+      "part": "RIBBON_loop_L_SHARED",
+      "source_group": false,
+      "source_bbox": [
+        345,
+        806,
+        529,
+        930
+      ],
+      "output_bbox": [
+        345,
+        806,
+        529,
+        930
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "RIBBON_loop_R_MIRRORED",
+      "source_group": false,
+      "source_bbox": [
+        543,
+        806,
+        727,
+        930
+      ],
+      "output_bbox": [
+        543,
+        806,
+        727,
+        930
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "RIBBON_tail_R_SHARED",
+      "source_group": false,
+      "source_bbox": [
+        540,
+        862,
+        680,
+        1172
+      ],
+      "output_bbox": [
+        540,
+        862,
+        680,
+        1172
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "RIBBON_tail_L_MIRRORED",
+      "source_group": false,
+      "source_bbox": [
+        392,
+        862,
+        532,
+        1172
+      ],
+      "output_bbox": [
+        392,
+        862,
+        532,
+        1172
+      ],
+      "applied_ancestor_masks": []
+    },
+    {
+      "part": "RIBBON_knot",
+      "source_group": false,
+      "source_bbox": [
+        511,
+        821,
+        561,
+        875
+      ],
+      "output_bbox": [
+        511,
+        821,
+        561,
+        875
+      ],
+      "applied_ancestor_masks": []
+    }
+  ]
+}

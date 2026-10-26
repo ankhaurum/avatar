@@ -1,0 +1,2302 @@
+{
+  "visible_pixel_layers": 114,
+  "visible_groups": 24,
+  "visible_masked_items": [
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/NECK_bust_visible_and_hidden__IN_PROGRESS",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_neck_full_native_unmixed__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_native_inner_contact__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_continuous_foundation__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_forehead_light__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_temple_R_shade__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_temple_L_shade__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_skin_without_features__FILL_REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_skin_local_nose_cleanup_v2__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_temple_L_original_skin__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_temple_R_original_skin__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_clean_forehead_under_hair__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_R_bust_original_visible",
+    "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_L_bust_original_visible",
+    "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_R_native_skin_unmixed__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_L_native_skin_unmixed__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_upper_native_coverage__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_edge_underlap__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_hidden_upper_native_coverage__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_hidden_edge_underlap__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_upper_skin_native_unmixed__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_upper_skin_native_unmixed__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_fringe_bust_original__MATERIAL",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_R_bust_original__MATERIAL",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_L_bust_original__MATERIAL",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_jaw_native_identity_preserved",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_jaw_native_identity_preserved/HAIR_neck_native_without_head_cutoff__TRIAL",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_temple_native_boundary__REVIEW",
+    "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_fringe_native_skin_unmixed__REVIEW"
+  ],
+  "outside_canvas": [
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1724
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SLEEVE_L_complete_cap",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        55,
+        824,
+        279,
+        1724
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SLEEVE_R_complete_cap",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        793,
+        824,
+        1017,
+        1724
+      ]
+    }
+  ],
+  "ui_verification": "BLOCKED_CAPTURE_TIMEOUT",
+  "rows": [
+    {
+      "path": "/PRESENTATION_white",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/REFERENCE_bust_master_20261026__LOCKED",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1724
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        176,
+        11,
+        848,
+        808
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_complete_hidden_scalp__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        245,
+        87,
+        779,
+        780
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_right_light__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        524,
+        69,
+        788,
+        801
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_left_shadow__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        224,
+        74,
+        519,
+        813
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_center_depth__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        334,
+        82,
+        703,
+        825
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        233,
+        11,
+        828,
+        799
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_left_band_0",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        233,
+        240,
+        365,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_left_band_1",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        268,
+        240,
+        400,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_left_band_2",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        303,
+        240,
+        435,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_left_band_3",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        338,
+        240,
+        470,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_left_band_4",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        373,
+        240,
+        505,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_left_band_5",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        408,
+        240,
+        540,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_0",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        678,
+        240,
+        828,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_1",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        643,
+        240,
+        793,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_2",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        608,
+        240,
+        758,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_3",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        573,
+        240,
+        723,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_4",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        538,
+        240,
+        688,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_5",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        503,
+        240,
+        653,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_right_band_6",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        468,
+        240,
+        618,
+        750
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_blue_center_v2_0",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        446,
+        155,
+        526,
+        799
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_blue_center_v2_1",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        486,
+        155,
+        566,
+        799
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_blue_center_v2_2",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        526,
+        155,
+        606,
+        799
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_blue_center_v2_3",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        566,
+        155,
+        646,
+        799
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_hidden_native_texture__REVIEW/HIDDEN_native_crown_source_transition",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        322,
+        11,
+        762,
+        318
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_bust_original_hidden_source_overlap_12px__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        226,
+        72,
+        820,
+        731
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_back_bust_original__MATERIAL/HAIR_back_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        176,
+        49,
+        848,
+        808
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/NECK_bust_visible_and_hidden__IN_PROGRESS",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        408,
+        610,
+        645,
+        934
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/NECK_bust_visible_and_hidden__IN_PROGRESS/NECK_hidden_continuous_foundation__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        408,
+        610,
+        645,
+        934
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/NECK_bust_visible_and_hidden__IN_PROGRESS/NECK_hidden_native_clean_v6__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        410,
+        612,
+        645,
+        933
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/NECK_bust_visible_and_hidden__IN_PROGRESS/NECK_native_full_under_hair_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        416,
+        631,
+        637,
+        927
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_neck_full_native_unmixed__REVIEW",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        416,
+        631,
+        637,
+        927
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_neck_full_native_unmixed__REVIEW/HAIR_neck_full_strands_and_shadow_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        416,
+        631,
+        637,
+        927
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/ARM_L_complete_under_sleeve",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        90,
+        930,
+        277,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/ARM_R_complete_under_sleeve",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        795,
+        930,
+        982,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SLEEVE_L_complete_cap",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        55,
+        824,
+        279,
+        1724
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SLEEVE_R_complete_cap",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        793,
+        824,
+        1017,
+        1724
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BLOUSE_complete_under_cape",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        226,
+        772,
+        846,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/CAPE_L_shoulder_yoke",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        57,
+        772,
+        495,
+        1048
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/CAPE_R_shoulder_yoke",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        578,
+        772,
+        1016,
+        1048
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/COLLAR_stand_complete",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        384,
+        698,
+        688,
+        848
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_hidden_continuous_foundation__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        297,
+        408,
+        361,
+        517
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_hidden_concha_shade__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        309,
+        420,
+        356,
+        499
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_hidden_helix_light__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        297,
+        415,
+        340,
+        512
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_hidden_antihelix_light__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        319,
+        433,
+        346,
+        490
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_bust_source_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        299,
+        416,
+        346,
+        509
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_L_bust_source_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        688,
+        467,
+        711,
+        522
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_lower_attachment_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        323,
+        494,
+        362,
+        551
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_outer_rim_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        292,
+        413,
+        329,
+        510
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EARS_bust_source__IN_PROGRESS/EAR_R_native_inner_contact__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation",
+      "kind": "group",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_hidden_continuous_foundation__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        341,
+        224,
+        716,
+        699
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_hidden_forehead_light__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        366,
+        171,
+        710,
+        508
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_hidden_temple_R_shade__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        298,
+        298,
+        471,
+        596
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_hidden_temple_L_shade__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        614,
+        303,
+        767,
+        609
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_skin_without_features__FILL_REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        372,
+        403,
+        699,
+        699
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_skin_local_nose_cleanup_v2__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        534,
+        479,
+        620,
+        591
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_temple_L_original_skin__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        670,
+        426,
+        702,
+        540
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/PRESERVED_forehead_clean_calculation/FACE_temple_R_original_skin__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        381,
+        404,
+        421,
+        460
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        298,
+        171,
+        767,
+        699
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_continuous_foundation__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        341,
+        224,
+        716,
+        699
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_forehead_light__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        366,
+        171,
+        710,
+        508
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_temple_R_shade__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        298,
+        298,
+        471,
+        596
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_hidden_temple_L_shade__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        614,
+        303,
+        767,
+        609
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_skin_without_features__FILL_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        372,
+        252,
+        699,
+        699
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_skin_local_nose_cleanup_v2__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        534,
+        479,
+        620,
+        591
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_temple_L_original_skin__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        670,
+        426,
+        702,
+        540
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_temple_R_original_skin__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        381,
+        398,
+        421,
+        460
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/REJECTED_white_matte_FACE_clean_forehead_under_hair__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/FACE_bust_original_contour__IN_PROGRESS/FACE_clean_forehead_under_hair__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SHADOW_head_neck_contact__MATERIAL",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        408,
+        617,
+        655,
+        705
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SHADOW_head_neck_contact__MATERIAL/FACE_native_jaw_contact_underlap__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        409,
+        617,
+        655,
+        705
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SHADOW_head_neck_contact__MATERIAL/FACE_jaw_R_contact_shadow_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        408,
+        617,
+        427,
+        660
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/SHADOW_head_neck_contact__MATERIAL/FACE_jaw_L_contact_shadow_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        624,
+        635,
+        638,
+        673
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_R_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        415,
+        364,
+        503,
+        403
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_L_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        608,
+        355,
+        667,
+        395
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/REJECTED_white_matte_BROW_R_native_skin_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/REJECTED_white_matte_BROW_L_native_skin_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_R_native_skin_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_L_native_skin_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_L_SHARED_0",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        354,
+        220,
+        734,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/BROWS_original_bust_visible/BROW_L_SHARED_1",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        571,
+        364,
+        659,
+        403
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_sclera_hidden_continuous__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        396,
+        400,
+        510,
+        466
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_sclera_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        433,
+        414,
+        473,
+        456
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_rim__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        435,
+        415,
+        471,
+        449
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_stroma__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        434,
+        414,
+        471,
+        450
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_upper_native_coverage__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        436,
+        415,
+        470,
+        426
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_edge_underlap__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        433,
+        414,
+        473,
+        456
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        437,
+        424,
+        469,
+        446
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_pupil_beneath_highlight__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        448,
+        424,
+        460,
+        435
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_lid_contact_pixels_separated__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        435,
+        420,
+        471,
+        449
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_highlight_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        446,
+        424,
+        468,
+        436
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_upper_lid_lash_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        390,
+        399,
+        502,
+        450
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_lower_lid_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        391,
+        433,
+        507,
+        475
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_outer_corner_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        392,
+        433,
+        414,
+        447
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_inner_corner_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        489,
+        439,
+        503,
+        451
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_native_upper_skin_continuity__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        391,
+        388,
+        495,
+        431
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_original_bust/EYE_R_upper_inner_join_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        481,
+        415,
+        499,
+        439
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_sclera_hidden_continuous__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        565,
+        392,
+        679,
+        458
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_sclera_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        1024,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        601,
+        403,
+        641,
+        450
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_hidden_rim__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        603,
+        406,
+        640,
+        442
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_hidden_stroma__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        602,
+        405,
+        641,
+        442
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_hidden_upper_native_coverage__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        604,
+        406,
+        639,
+        417
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_hidden_edge_underlap__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        601,
+        403,
+        641,
+        450
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_iris_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        605,
+        414,
+        637,
+        439
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_iris_complete__REVIEW/EYE_L_pupil_beneath_highlight__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        613,
+        417,
+        626,
+        428
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_lid_contact_pixels_separated__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        603,
+        411,
+        640,
+        442
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_eyeball_surface__ASSEMBLY_MASK/EYE_L_highlight_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        612,
+        417,
+        637,
+        429
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_upper_lid_lash_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        584,
+        395,
+        691,
+        443
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_lower_lid_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        580,
+        421,
+        694,
+        466
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_inner_corner_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        584,
+        435,
+        598,
+        447
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_outer_corner_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        666,
+        422,
+        690,
+        436
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_outer_corner_bust_original_v2",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        650,
+        421,
+        680,
+        437
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_original_bust/EYE_L_native_upper_skin_continuity__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        589,
+        382,
+        695,
+        429
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED",
+      "kind": "group",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK",
+      "kind": "group",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_sclera_hidden_continuous__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        564,
+        400,
+        678,
+        466
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_sclera_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        50,
+        0,
+        1074,
+        1280
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW",
+      "kind": "group",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_rim__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        603,
+        415,
+        639,
+        449
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_stroma__PAINT_REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        603,
+        414,
+        640,
+        450
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_upper_native_coverage__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        604,
+        415,
+        638,
+        426
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_hidden_edge_underlap__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        601,
+        414,
+        641,
+        456
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_iris_bust_original_visible",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        605,
+        424,
+        637,
+        446
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_iris_complete__REVIEW/EYE_R_pupil_beneath_highlight__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        614,
+        424,
+        626,
+        435
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_lid_contact_pixels_separated__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        603,
+        420,
+        639,
+        449
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_eyeball_surface__ASSEMBLY_MASK/EYE_R_highlight_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        606,
+        424,
+        628,
+        436
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_upper_lid_lash_bust_original",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        572,
+        399,
+        684,
+        450
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_lower_lid_bust_original",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        567,
+        433,
+        683,
+        475
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_outer_corner_bust_original",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        660,
+        433,
+        682,
+        447
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_inner_corner_bust_original",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        571,
+        439,
+        585,
+        451
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_native_upper_skin_continuity__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        579,
+        388,
+        683,
+        431
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_FROM_R_SHARED/EYE_R_upper_inner_join_native__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        575,
+        415,
+        593,
+        439
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/REJECTED_white_matte_EYE_R_upper_skin_native_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/REJECTED_white_matte_EYE_L_upper_skin_native_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_R_upper_skin_native_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_upper_skin_native_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/EYES_original_bust_visible/EYE_L_upper_skin_from_R",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        354,
+        220,
+        734,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/NOSE_original_bust_visible",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        481,
+        455,
+        599,
+        577
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/NOSE_original_bust_visible/NOSE_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        481,
+        455,
+        599,
+        577
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW",
+      "kind": "group",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW/MOUTH_cavity_bust_complete__OPEN_ONLY",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        474,
+        568,
+        614,
+        641
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW/MOUTH_inner_wall_R_bust_anchor__OPEN_ONLY",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        472,
+        579,
+        516,
+        634
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW/MOUTH_inner_wall_L_bust_anchor__OPEN_ONLY",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        579,
+        574,
+        614,
+        629
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW/MOUTH_lower_lining_bust__OPEN_ONLY",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        482,
+        597,
+        606,
+        644
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW/MOUTH_tongue_J_texture_bust_fit__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        502,
+        600,
+        593,
+        631
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_internals_bust__REVIEW/MOUTH_upper_teeth_lower_edge_color__TRIAL",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": false,
+      "bbox": [
+        488,
+        577,
+        605,
+        606
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_original_bust_visible",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        465,
+        567,
+        620,
+        632
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_original_bust_visible/MOUTH_upper_lip_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        471,
+        567,
+        616,
+        599
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_original_bust_visible/MOUTH_lower_lip_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        469,
+        576,
+        617,
+        632
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_original_bust_visible/MOUTH_corner_R_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        465,
+        580,
+        489,
+        599
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/MOUTH_original_bust_visible/MOUTH_corner_L_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        599,
+        571,
+        620,
+        591
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        214,
+        69,
+        837,
+        814
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_fringe_bust_original__MATERIAL",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        339,
+        69,
+        701,
+        542
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_fringe_bust_original__MATERIAL/HAIR_fringe_bust_original_hidden_source_overlap_12px__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        339,
+        69,
+        701,
+        542
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_fringe_bust_original__MATERIAL/HAIR_fringe_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        351,
+        69,
+        689,
+        530
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_R_bust_original__MATERIAL",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        214,
+        113,
+        482,
+        791
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_R_bust_original__MATERIAL/HAIR_side_R_bust_original_hidden_source_overlap_12px__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        214,
+        113,
+        482,
+        736
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_R_bust_original__MATERIAL/HAIR_side_R_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        226,
+        125,
+        470,
+        791
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_L_bust_original__MATERIAL",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        567,
+        86,
+        837,
+        805
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_L_bust_original__MATERIAL/HAIR_side_L_bust_original_hidden_source_overlap_12px__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        567,
+        86,
+        698,
+        734
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_side_L_bust_original__MATERIAL/HAIR_side_L_bust_original",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        579,
+        98,
+        837,
+        805
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_jaw_native_identity_preserved",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        398,
+        600,
+        665,
+        814
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_jaw_native_identity_preserved/HAIR_neck_native_without_head_cutoff__TRIAL",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        398,
+        600,
+        665,
+        814
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_temple_native_boundary__REVIEW",
+      "kind": "group",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        363,
+        373,
+        712,
+        536
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_temple_native_boundary__REVIEW/HAIR_temple_R_native_edge__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        363,
+        379,
+        416,
+        502
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_temple_native_boundary__REVIEW/HAIR_temple_L_native_edge__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        659,
+        373,
+        712,
+        536
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/REJECTED_white_matte_HAIR_fringe_native_skin_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": false,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/PARTS_bust_master__IN_PROGRESS/HAIR_bust_visible_source__IN_PROGRESS/HAIR_fringe_native_skin_unmixed__REVIEW",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": true,
+      "bbox": [
+        340,
+        220,
+        720,
+        425
+      ]
+    },
+    {
+      "path": "/RIBBON_loop_L_SHARED",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        345,
+        806,
+        529,
+        930
+      ]
+    },
+    {
+      "path": "/RIBBON_loop_R_MIRRORED",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        543,
+        806,
+        727,
+        930
+      ]
+    },
+    {
+      "path": "/RIBBON_tail_R_SHARED",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        540,
+        862,
+        680,
+        1172
+      ]
+    },
+    {
+      "path": "/RIBBON_tail_L_MIRRORED",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        392,
+        862,
+        532,
+        1172
+      ]
+    },
+    {
+      "path": "/RIBBON_knot",
+      "kind": "pixel",
+      "effective_visible": true,
+      "mask": false,
+      "bbox": [
+        511,
+        821,
+        561,
+        875
+      ]
+    }
+  ]
+}

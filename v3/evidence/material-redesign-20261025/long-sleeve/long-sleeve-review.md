@@ -24,3 +24,12 @@
 ## 再現
 assemble-import-parts.py -> render-assembly-parts-board.py。元のhibiki-independent-parts-assembled-review.psdは保持。
 新規ラスタ素材には組み込みimagegenを使用。顔は生成対象に含めていない。プロンプトはmaterial-generation-prompts.jsonに保存。
+
+## 取り込み用整理の追加確認
+可視114層・マスク35箇所の編集PSDから、同じ部位の塗りを統合し、マスクを適用した54層の静止取り込み候補を作成。新しい画像生成なし。54層すべてマスクなし。白背景上の合成比較は最大3階調差、10階調超の差0画素。差はレンダラの合成丸めを含み、画素完全一致ではない。
+
+この候補は眼の開口マスクを静止状態で適用している。動く眼球は編集PSD内の完全な虹彩を使用し、Cubism側で白目によるクリッピングを設定する必要がある。マスク0・54層という構造検査を、瞬きや視線移動の成功とは扱わない。
+
+実Editor連携の現状: 5.3.04 FREE起動、22033待受なし。保存済み連携認証フラグはtrue、Unauthorizedはfalse。認証値は出力していない。接続設定の復旧は未了。操作接続再初期化後も画面取得タイムアウト、最大化操作は element 5 has no cached bounds。Editorモデルへ変更なし。
+
+資源管理: 物理空き約532MiB時は新規PSD処理を控え、約1743MiBへ回復後に1件のみ実行。処理はBelowNormal優先度。Docker/Claudeの設定変更、停止、再起動なし。
