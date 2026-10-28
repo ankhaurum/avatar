@@ -1,6 +1,6 @@
 // Motion layer: turns intentions (look here, talk, smile, wave) into rig
-// parameter values. Every output goes through a critically damped spring, so
-// switching state never jumps; secondary motion (hair, fabric) is left to the
+// parameter values. Gesture tracks carry the timing of a movement; every output
+// also goes through a critically damped spring, so switching state never jumps; secondary motion (hair, fabric) is left to the
 // rig physics, which reads the results.
 
 const TAU = Math.PI * 2;
@@ -33,54 +33,81 @@ export const EXPRESSIONS = {
   sad: { EyeSmile: 0, MouthForm: -0.8, BrowY: -0.2, BrowAngle: 1, eye: 0.8 }
 };
 
+// Keyframes [time, value] joined with slow-in / slow-out.
+function keys(t, list) {
+  if (t <= list[0][0]) return list[0][1];
+  for (let i = 1; i < list.length; i++) if (t <= list[i][0]) { const [t0, a] = list[i - 1], [t1, b] = list[i]; return a + (b - a) * ease((t - t0) / (t1 - t0)); }
+  return list[list.length - 1][1];
+}
+// One arm moved like a person's: the shoulder leads, the elbow follows 0.05 s
+// later and the wrist 0.1 s later (drag); each joint list starts with a small
+// counter-move (anticipation), overshoots a little where the motion stops and
+// settles (follow-through). Lists are [time, angle] for Shoulder, Elbow, Wrist.
+function arm(p, side, t, S, E, W) {
+  p['Shoulder' + side] = keys(t, S);
+  p['Elbow' + side] = keys(t - 0.05, E);
+  p['Wrist' + side] = keys(t - 0.1, W);
+}
+// a beat that fades in and out inside [a, b]
+const beat = (t, a, b, hz, phase = 0) => Math.sin((t - a) * TAU * hz - phase) * ease((t - a) / 0.2) * (1 - ease((t - b + 0.25) / 0.25));
+
 // Gesture tracks: time (s) -> partial pose. Arm angles in degrees.
-// Approach (0-0.45 s), lay the pose arms over the everyday arms (0.3-0.48 s),
-// hold, then the reverse. Opacity changes only on the arms drawn on top, so the
-// body never shows through an arm during the switch.
+// Pose arms: the everyday arms move toward the drawn pose; at the moment they
+// cover the same place the pose arms replace them in one frame, and the reverse
+// on the way back.
 function poseTrack(param, approach, extra) {
   return function (t, p) {
     const d = this.duration, out = d - 0.75;
-    const near = ease(t / 0.45) * (1 - ease((t - out - 0.15) / 0.55));
+    const near = keys(t, [[0, 0], [0.12, -0.04], [0.45, 1], [out + 0.15, 1], [out + 0.7, 0]]);
     for (const [k, v] of Object.entries(approach)) p[k] = v * near;
-    const on = clamp((t - 0.33) / 0.12, 0, 1) * (1 - clamp((t - out) / 0.12, 0, 1));
+    const on = t >= 0.36 && t < out + 0.2 ? 1 : 0;
     p[param] = on;
-    p.ArmsDefault = on >= 1 ? 0 : 1;
+    p.ArmsDefault = 1 - on;
     extra(ease(t / 0.5) * (1 - ease((t - out) / 0.6)), p);
   };
 }
 
 export const GESTURES = {
-  // right hand (viewer left) raised beside the face, waving from the wrist
-  wave: { duration: 3.2, hand: 'R', track: (t, p) => {
-    const up = ease(t / 0.6) * (1 - ease((t - 2.6) / 0.6));
-    const sway = Math.sin((t - 0.5) * TAU * 2.2) * ease((t - 0.5) / 0.3) * (1 - ease((t - 2.4) / 0.4));
-    p.ShoulderR = 10 * up; p.ElbowR = 146 * up + 5 * sway; p.WristR = 6 * up + 14 * sway;
-    if (up > 0.45) p.HandR = 2;
+  // right hand (viewer left) raised beside the face, palm forward with the
+  // thumb toward the body; the wave is a small to-and-fro of the forearm with
+  // the wrist trailing it
+  wave: { duration: 3.4, hand: 'R', track: (t, p) => {
+    arm(p, 'R', t, [[0, 0], [0.18, -3], [0.6, 12], [0.75, 10], [2.6, 10], [3.05, -2], [3.35, 0]],
+      [[0, 0], [0.2, -8], [0.66, 152], [0.82, 144], [2.6, 144], [3.1, -5], [3.4, 0]],
+      [[0, 0], [0.22, 6], [0.7, -12], [0.88, 4], [1.0, 0], [2.6, 0], [3.12, 8], [3.4, 0]]);
+    p.ElbowR += 4 * beat(t, 0.85, 2.55, 1.9); p.WristR += 15 * beat(t, 0.85, 2.55, 1.9, 1.0);
+    if (t > 0.42 && t < 3.0) p.HandR = 2;
+    const up = keys(t - 0.1, [[0, 0], [0.7, 1], [2.7, 1], [3.3, 0]]);
     p.BodyAngleZ = -1.5 * up; p.AngleZ = -5 * up; p.AngleX = -4 * up; p.EyeSmileAdd = 0.5 * up;
   } },
-  // left hand opens to the side, presenting, while talking
+  // left hand opens to the side, presenting, with a beat while talking
   explain: { duration: 3.8, hand: 'L', track: (t, p) => {
-    const up = ease(t / 0.6) * (1 - ease((t - 3.1) / 0.7));
-    const beat = Math.sin(t * TAU * 0.9) * up;
-    p.ShoulderL = 22 * up; p.ElbowL = 48 * up + 8 * beat; p.WristL = -15 * up + 6 * beat;
-    if (up > 0.4) p.HandL = 1;
-    p.BodyAngleX = 3 * up; p.AngleX = 5 * up + 2 * beat; p.AngleZ = 3 * up;
+    arm(p, 'L', t, [[0, 0], [0.15, -3], [0.6, 24], [0.75, 22], [3.0, 22], [3.5, -2], [3.8, 0]],
+      [[0, 0], [0.18, -6], [0.66, 52], [0.8, 48], [3.0, 48], [3.55, -4], [3.8, 0]],
+      [[0, 0], [0.2, 5], [0.7, -20], [0.85, -14], [3.0, -15], [3.6, 4], [3.8, 0]]);
+    p.ElbowL += 7 * beat(t, 0.8, 3.0, 0.9); p.WristL += 6 * beat(t, 0.8, 3.0, 0.9, 0.8);
+    if (t > 0.35 && t < 3.4) p.HandL = 1;
+    const up = keys(t - 0.08, [[0, 0], [0.7, 1], [3.1, 1], [3.8, 0]]), b = beat(t, 0.8, 3.0, 0.9, 0.4);
+    p.BodyAngleX = 3 * up; p.AngleX = 5 * up + 2 * b; p.AngleZ = 3 * up;
   } },
   // both hands brought together in front of the waist
   both: { duration: 3.4, hand: 'both', track: (t, p) => {
-    const up = ease(t / 0.6) * (1 - ease((t - 2.8) / 0.6));
-    const beat = Math.sin(t * TAU * 1.1) * up;
-    p.ShoulderR = 30 * up; p.ElbowR = -105 * up + 4 * beat; p.WristR = -10 * up;
-    p.ShoulderL = 30 * up; p.ElbowL = -105 * up + 4 * beat; p.WristL = -10 * up;
-    if (up > 0.4) { p.HandR = 1; p.HandL = 1; }
+    for (const s of ['R', 'L']) arm(p, s, t + (s === 'L' ? -0.04 : 0), [[0, 0], [0.15, -2], [0.6, 32], [0.75, 30], [2.8, 30], [3.2, -2], [3.4, 0]],
+      [[0, 0], [0.2, 6], [0.65, -110], [0.8, -104], [2.8, -105], [3.2, 4], [3.4, 0]],
+      [[0, 0], [0.25, 4], [0.7, -14], [0.85, -9], [2.8, -10], [3.25, 3], [3.4, 0]]);
+    p.ElbowR += 4 * beat(t, 0.8, 2.8, 1.1); p.ElbowL += 4 * beat(t, 0.8, 2.8, 1.1, 0.3);
+    if (t > 0.35 && t < 3.0) { p.HandR = 1; p.HandL = 1; }
+    const up = keys(t - 0.08, [[0, 0], [0.7, 1], [2.9, 1], [3.4, 0]]);
     p.BodyAngleY = 3 * up; p.AngleY = 5 * up;
   } },
   // left arm raised from the shoulder, index finger pointing outward
   point: { duration: 3.0, hand: 'L', track: (t, p) => {
-    const up = ease(t / 0.7) * (1 - ease((t - 2.3) / 0.7));
-    p.ShoulderL = 60 * up; p.ElbowL = 10 * up; p.WristL = -6 * up;
-    if (up > 0.45) p.HandL = 3;
-    p.BodyAngleX = 4 * up; p.AngleX = 12 * up; p.EyeBallXAdd = 0.6 * up;
+    arm(p, 'L', t, [[0, 0], [0.2, -4], [0.7, 64], [0.85, 59], [2.3, 60], [2.8, -3], [3.0, 0]],
+      [[0, 0], [0.22, -8], [0.72, 6], [0.9, 11], [2.3, 10], [2.85, -4], [3.0, 0]],
+      [[0, 0], [0.25, 5], [0.78, -10], [0.95, -5], [2.3, -6], [2.9, 3], [3.0, 0]]);
+    if (t > 0.4 && t < 2.6) p.HandL = 3;
+    const up = keys(t - 0.12, [[0, 0], [0.75, 1], [2.4, 1], [3.0, 0]]);
+    p.BodyAngleX = 4 * up; p.AngleX = 12 * up; p.EyeBallXAdd = 0.6 * keys(t, [[0, 0], [0.3, 1], [2.3, 1], [2.7, 0]]);
   } },
   // pose arms from the drawn poses: the everyday arms move toward the body,
   // the pose arms are laid over them and then the everyday arms are hidden
@@ -89,9 +116,11 @@ export const GESTURES = {
   reach: { pose: true, duration: 3.8, hand: 'both', track: poseTrack('PoseReach', { ShoulderR: 22, ElbowR: -45, ShoulderL: 30, ElbowL: -110 }, (k, p) => { p.EyeSmileAdd = 0.5 * k; p.BodyAngleY = 3 * k; p.AngleY = 2 * k; p.AngleX = -4 * k; }) },
   // right hand loosely closed in front of the waist, head tilted
   think: { duration: 3.6, hand: 'R', track: (t, p) => {
-    const up = ease(t / 0.7) * (1 - ease((t - 2.9) / 0.7));
-    p.ShoulderR = 28 * up; p.ElbowR = -125 * up; p.WristR = 20 * up;
-    if (up > 0.4) p.HandR = 4;
+    arm(p, 'R', t, [[0, 0], [0.18, -2], [0.7, 30], [0.85, 28], [2.9, 28], [3.35, -2], [3.6, 0]],
+      [[0, 0], [0.2, 5], [0.72, -130], [0.88, -124], [2.9, -125], [3.4, 4], [3.6, 0]],
+      [[0, 0], [0.25, -4], [0.78, 24], [0.95, 19], [2.9, 20], [3.45, -3], [3.6, 0]]);
+    if (t > 0.4 && t < 3.2) p.HandR = 4;
+    const up = keys(t - 0.15, [[0, 0], [0.8, 1], [3.0, 1], [3.6, 0]]);
     p.AngleZ = 7 * up; p.AngleY = 4 * up;
   } },
   nod: { duration: 1.4, track: (t, p) => { const k = Math.sin(clamp(t / 1.2, 0, 1) * TAU * 1.5) * (1 - ease(t / 1.3)); p.AngleY = -10 * Math.max(0, k); p.BodyAngleY = -2 * Math.max(0, k); } },
@@ -189,7 +218,7 @@ export class MotionController {
       ShoulderR: pose.ShoulderR || 0, ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
-    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 2.2 : 4));
+    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : 4));
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
     // pose arm switching is set directly; its timing is in the gesture track
     if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach']) m.set(k, pose[k] || 0); }

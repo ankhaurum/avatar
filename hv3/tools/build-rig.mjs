@@ -1,7 +1,9 @@
 // Build hv3/hibiki.rig.json from the R3 body parts (hv3/parts/r3) and the face
-// parts cut from approved art A (hv3/parts). Units: 1024x1536 (R3 px / 4).
+// parts cut from approved art A (hv3/parts). Authored in 1024x1536 units (R3 px / 4)
+// and written in approved art A pixels (see the end).
 // Run: node hv3/tools/build-rig.mjs  (needs the npm packages sharp and cdt2d)
 import fs from 'node:fs';
+import sharp from 'sharp';
 import path from 'node:path';
 import { RigBuilder, smooth } from './rig-builder.mjs';
 import { buildFace } from './face-rig.mjs';
@@ -146,6 +148,15 @@ for (const p of r3m.parts) {
   // the elbow frill wraps the joint, so it stays above a raised forearm
   m = p.id.match(/^sleeve_elbow_frill_(R|L)$/);
   if (m) o.orderSwitch = [{ param: 'Elbow' + m[1], above: 95, add: 30 }];
+  // waving hands: the drawn hand hangs with its thumb toward the body, so raised
+  // past horizontal its thumb would point outward. Mirrored about the wrist, the
+  // raised palm faces forward with the thumb toward the body, as a person waves.
+  if (/_wave$/.test(p.id)) {
+    const file = p.file.replace('.png', '_mirror.png');
+    await sharp(path.join(out, 'parts', p.file)).flop().toFile(path.join(out, 'parts', file));
+    const pv = r3m.rig['hand_' + p.id[5]].pivot;
+    Object.assign(o, { file, offset: [2 * pv[0] - (p.x + p.w), p.y] });
+  }
   await b.part(p.id, o);
 }
 // pose arms: upper (shoulder skin, puff sleeve) under the R3 shoulder frills,
@@ -157,6 +168,8 @@ for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of O
     opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
 // art A head: skin under the face features, side hair over the face edge, fringe over the brows
 const aPart = (id, parent, order, o = {}) => b.part(id, { file: id + '.png', offset: [artA.offset[0] + metaA[id].x * artA.scale, artA.offset[1] + metaA[id].y * artA.scale], texScale: 1 / artA.scale, parent, order, spacing: 8, dilate: 2, ...o });
+// neck: under the R3 collar; the top follows the head, the bottom stays with the torso
+await aPart('neck_skin', 'head', 57.5, { spacing: 8, blend: { parent: 'torso', weight: (x, y) => smooth((y - 222) / 40) } });
 await aPart('head_skin', 'head_turn', 80);
 await aPart('hair_side_R', 'side_sway_R', 83, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_side_L', 'side_sway_L', 83.1, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
@@ -172,4 +185,9 @@ b.physics({ output: 'SkirtSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ',
 b.physics({ output: 'DrapeSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10]], follow: 0.6, frequency: 0.7, damping: 0.2, inertia: 0.12 });
 for (const s of ['R', 'L']) b.physics({ output: 'SleeveSway' + s, inputs: [['Shoulder' + s, 1 / 60], ['Elbow' + s, 1 / 90], ['BodyAngleZ', 0.5 / 10]], follow: 0.4, frequency: 1.5, damping: 0.2, inertia: 0.12 });
 
+// ---- units: approved art A pixels, so the art A head is used at its native size
+// and the R3 body is scaled up to it (old unit x = 223.5 + 0.551 * art A x)
+b.rig.views = { bust: [236, 0, 552, 640], face: [432, 56, 160, 190], full: [120, 0, 784, 1536] };
+b.rig.headCenter = [511, 150];
+b.rescale(1 / artA.scale, artA.offset, [Math.round(1024 / artA.scale), Math.round(1536 / artA.scale)]);
 console.log(b.write('hibiki.rig.json'));

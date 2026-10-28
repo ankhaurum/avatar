@@ -14,17 +14,17 @@
    "layers": {
     "upper": {
      "file": "pose/chest_upper.png",
-     "x": 282,
-     "y": 288,
-     "w": 457,
+     "x": 283,
+     "y": 290,
+     "w": 456,
      "h": 256
     },
     "lower": {
      "file": "pose/chest_lower.png",
-     "x": 346,
-     "y": 314,
-     "w": 330,
-     "h": 219
+     "x": 350,
+     "y": 317,
+     "w": 327,
+     "h": 204
     }
    }
   },
@@ -41,16 +41,16 @@
     "upper": {
      "file": "pose/chin_upper.png",
      "x": 316,
-     "y": 290,
+     "y": 291,
      "w": 395,
      "h": 236
     },
     "lower": {
      "file": "pose/chin_lower.png",
-     "x": 349,
-     "y": 212,
-     "w": 323,
-     "h": 344
+     "x": 348,
+     "y": 210,
+     "w": 338,
+     "h": 345
     }
    }
   },
@@ -66,17 +66,17 @@
    "layers": {
     "upper": {
      "file": "pose/reach_upper.png",
-     "x": 305,
-     "y": 288,
+     "x": 306,
+     "y": 287,
      "w": 425,
-     "h": 245
+     "h": 248
     },
     "lower": {
      "file": "pose/reach_lower.png",
      "x": 311,
-     "y": 287,
-     "w": 407,
-     "h": 316
+     "y": 289,
+     "w": 412,
+     "h": 309
     }
    }
   }

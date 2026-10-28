@@ -64,11 +64,11 @@ export class AvatarRenderer {
     new ResizeObserver(() => this.app.resize()).observe(host);
     return this;
   }
-  setView(name) { this.view = VIEWS[name] || name; this.layout(); }
+  setView(name) { this.view = (this.model.json.views || VIEWS)[name] || name; this.layout(); }
   layout() {
     const [x, y, w, h] = this.view, W = this.app.screen.width, H = this.app.screen.height;
-    // the face (art A, about 1.8 texture px per unit) is never shown above ~2x
-    const s = Math.min(W / w, H / h, 3.6 / this.app.renderer.resolution);
+    // the face (art A, 1 texture px per unit) is never shown above ~2x
+    const s = Math.min(W / w, H / h, (this.model.json.views ? 2 : 3.6) / this.app.renderer.resolution);
     this.root.scale.set(s);
     this.root.position.set((W - w * s) / 2 - x * s, (H - h * s) / 2 - y * s);
   }

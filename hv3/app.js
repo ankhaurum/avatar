@@ -37,7 +37,7 @@ try {
   // looked at; listeners are passive so scrolling and buttons work as usual.
   const faceOnScreen = () => {
     const r = renderer.app.canvas.getBoundingClientRect(), root = renderer.root;
-    return [r.left + root.position.x + 511 * root.scale.x, r.top + root.position.y + 150 * root.scale.y];
+    return [r.left + root.position.x + model.json.headCenter[0] * root.scale.x, r.top + root.position.y + model.json.headCenter[1] * root.scale.y];
   };
   const look = e => {
     if (e.type === 'pointermove' && e.pointerType !== 'mouse') return;
