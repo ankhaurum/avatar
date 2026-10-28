@@ -1,5 +1,7 @@
 # 響 V3 — 独立2Dアバター試作
 
+> **2026-10-28 更新**：トップページは PixiJS による独自2Dリグ版（[hv3/](hv3/README.md)）に替わりました。以下は以前の試作（`legacy.html`・`studies/`・`v3/`）の説明です。以前の動作確認動画は [v47.html](v47.html)。
+
 **動作デモ：[GitHub Pages](https://ankhaurum.github.io/avatar/)**
 
 Aifate独自2Dアバターの品質確認用プロトタイプです。完成・正式採用・Live2D同等品質への到達を示す公開ではありません。承認済み正面画像のIdentityを基準に改善しています。

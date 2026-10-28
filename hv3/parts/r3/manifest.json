@@ -1,0 +1,1842 @@
+{
+ "source": "R3 Hibiki_R3_Mesh_Mask_20261028 + Hand4_Registered_v2",
+ "units": "1024x1536 (R3 px / 4)",
+ "textureScale": 2,
+ "rig": {
+  "root": {
+   "parent": null,
+   "pivot": [
+    512,
+    800
+   ]
+  },
+  "hips": {
+   "parent": "root",
+   "pivot": [
+    512,
+    800
+   ]
+  },
+  "torso": {
+   "parent": "hips",
+   "pivot": [
+    512,
+    570
+   ]
+  },
+  "neck": {
+   "parent": "torso",
+   "pivot": [
+    514,
+    277
+   ]
+  },
+  "head": {
+   "parent": "neck",
+   "pivot": [
+    511,
+    243
+   ]
+  },
+  "arm_R_upper": {
+   "parent": "torso",
+   "pivot": [
+    382,
+    318
+   ]
+  },
+  "arm_R_lower": {
+   "parent": "arm_R_upper",
+   "pivot": [
+    351,
+    535
+   ]
+  },
+  "hand_R": {
+   "parent": "arm_R_lower",
+   "pivot": [
+    282,
+    729
+   ]
+  },
+  "arm_L_upper": {
+   "parent": "torso",
+   "pivot": [
+    641,
+    318
+   ]
+  },
+  "arm_L_lower": {
+   "parent": "arm_L_upper",
+   "pivot": [
+    673,
+    535
+   ]
+  },
+  "hand_L": {
+   "parent": "arm_L_lower",
+   "pivot": [
+    744,
+    730
+   ]
+  },
+  "leg_R_upper": {
+   "parent": "hips",
+   "pivot": [
+    441,
+    795
+   ]
+  },
+  "leg_R_lower": {
+   "parent": "leg_R_upper",
+   "pivot": [
+    465,
+    1004
+   ]
+  },
+  "foot_R": {
+   "parent": "leg_R_lower",
+   "pivot": [
+    439,
+    1260
+   ]
+  },
+  "leg_L_upper": {
+   "parent": "hips",
+   "pivot": [
+    575,
+    795
+   ]
+  },
+  "leg_L_lower": {
+   "parent": "leg_L_upper",
+   "pivot": [
+    555,
+    1006
+   ]
+  },
+  "foot_L": {
+   "parent": "leg_L_lower",
+   "pivot": [
+    537,
+    1290
+   ]
+  },
+  "drape_R_root": {
+   "parent": "hips",
+   "pivot": [
+    356,
+    752
+   ]
+  },
+  "drape_L_root": {
+   "parent": "hips",
+   "pivot": [
+    658,
+    751
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "drape_R",
+   "file": "r3/drape_R.png",
+   "z": 2,
+   "parent": "drape_R_root",
+   "group": "sway",
+   "visible": true,
+   "x": 238,
+   "y": 698,
+   "w": 153,
+   "h": 482,
+   "pivot": [
+    356,
+    752
+   ],
+   "source": {
+    "file": "parts/drape_R.png",
+    "sha256": "e212fed85c035c32c8263339747055ac2834e8e60fec678ec3487350a231ff99"
+   }
+  },
+  {
+   "id": "drape_L",
+   "file": "r3/drape_L.png",
+   "z": 3,
+   "parent": "drape_L_root",
+   "group": "sway",
+   "visible": true,
+   "x": 618,
+   "y": 706,
+   "w": 203,
+   "h": 501,
+   "pivot": [
+    658,
+    751
+   ],
+   "source": {
+    "file": "parts/drape_L.png",
+    "sha256": "0833fc180775546454d803c0276a76e9874101e011ed38904ae21531ca692632"
+   }
+  },
+  {
+   "id": "drape_charm_L",
+   "file": "r3/drape_charm_L.png",
+   "z": 6,
+   "parent": "drape_L_root",
+   "group": "sway",
+   "visible": true,
+   "x": 692,
+   "y": 1076,
+   "w": 37,
+   "h": 79,
+   "pivot": [
+    710,
+    1087
+   ],
+   "source": {
+    "file": "parts/drape_charm_L.png",
+    "sha256": "470d84478ea7e8fc35ce36fe6fbead573cd049e44ff9212865b94168b8e057ce"
+   }
+  },
+  {
+   "id": "drape_charm_R",
+   "file": "r3/drape_charm_R.png",
+   "z": 6,
+   "parent": "drape_R_root",
+   "group": "sway",
+   "visible": true,
+   "x": 227,
+   "y": 1060,
+   "w": 39,
+   "h": 79,
+   "pivot": [
+    247,
+    1069
+   ],
+   "source": {
+    "file": "parts/drape_charm_R.png",
+    "sha256": "6a63ea91f32982490b77ae38d20eb90ebfb747afbdff68b07603349293d955e9"
+   }
+  },
+  {
+   "id": "thigh_L",
+   "file": "r3/thigh_L.png",
+   "z": 10,
+   "parent": "leg_L_upper",
+   "group": "legs",
+   "visible": true,
+   "x": 510,
+   "y": 751,
+   "w": 148,
+   "h": 176,
+   "pivot": [
+    575,
+    795
+   ],
+   "source": {
+    "file": "parts/thigh_L.png",
+    "sha256": "a38cb64899d241a64bc4c78a707a97a08aa026333819ba880420fb128ba119e0"
+   }
+  },
+  {
+   "id": "thigh_R",
+   "file": "r3/thigh_R.png",
+   "z": 10,
+   "parent": "leg_R_upper",
+   "group": "legs",
+   "visible": true,
+   "x": 366,
+   "y": 747,
+   "w": 151,
+   "h": 164,
+   "pivot": [
+    441,
+    795
+   ],
+   "source": {
+    "file": "parts/thigh_R.png",
+    "sha256": "ba3da167d1bb188d41aad27ba3ee936f618de9f3e51a1ce3e9e546f91b773076"
+   }
+  },
+  {
+   "id": "stocking_L_upper",
+   "file": "r3/stocking_L_upper.png",
+   "z": 12,
+   "parent": "leg_L_upper",
+   "group": "legs",
+   "visible": true,
+   "x": 513,
+   "y": 869,
+   "w": 107,
+   "h": 178,
+   "pivot": [
+    575,
+    795
+   ],
+   "source": {
+    "file": "parts/stocking_L_upper.png",
+    "sha256": "3c571eae261ae85d93ccdcd853f02c1ee0d3467c52cf2af2cdf10ff18963ede6"
+   }
+  },
+  {
+   "id": "stocking_R_upper",
+   "file": "r3/stocking_R_upper.png",
+   "z": 12,
+   "parent": "leg_R_upper",
+   "group": "legs",
+   "visible": true,
+   "x": 390,
+   "y": 851,
+   "w": 127,
+   "h": 196,
+   "pivot": [
+    441,
+    795
+   ],
+   "source": {
+    "file": "parts/stocking_R_upper.png",
+    "sha256": "bf15b6b2cc274800de10aa9da0f084a191115069e560dab793bf1eca0d260815"
+   }
+  },
+  {
+   "id": "stocking_L_lower",
+   "file": "r3/stocking_L_lower.png",
+   "z": 13,
+   "parent": "leg_L_lower",
+   "group": "legs",
+   "visible": true,
+   "x": 503,
+   "y": 972,
+   "w": 105,
+   "h": 332,
+   "pivot": [
+    555,
+    1006
+   ],
+   "source": {
+    "file": "parts/stocking_L_lower.png",
+    "sha256": "1e723ec9b088402853ee389735d43345d04c7773fd12f4fc056b0b838ae063fd"
+   }
+  },
+  {
+   "id": "stocking_R_lower",
+   "file": "r3/stocking_R_lower.png",
+   "z": 13,
+   "parent": "leg_R_lower",
+   "group": "legs",
+   "visible": true,
+   "x": 398,
+   "y": 972,
+   "w": 119,
+   "h": 305,
+   "pivot": [
+    465,
+    1004
+   ],
+   "source": {
+    "file": "parts/stocking_R_lower.png",
+    "sha256": "d2dc85238bf783ad4f6ca950d401f4b5b88a694fcd6170bb81ca51cf17b5daaa"
+   }
+  },
+  {
+   "id": "garter_band_L",
+   "file": "r3/garter_band_L.png",
+   "z": 16,
+   "parent": "leg_L_upper",
+   "group": "accessories",
+   "visible": true,
+   "x": 515,
+   "y": 827,
+   "w": 128,
+   "h": 43,
+   "pivot": [
+    582,
+    844
+   ],
+   "source": {
+    "file": "parts/garter_band_L.png",
+    "sha256": "6021c366c5cfe4d3763b36434c547053d14545069b21cf21a4a08220b757f33b"
+   }
+  },
+  {
+   "id": "garter_bow_L",
+   "file": "r3/garter_bow_L.png",
+   "z": 18,
+   "parent": "leg_L_upper",
+   "group": "sway",
+   "visible": true,
+   "x": 585,
+   "y": 836,
+   "w": 54,
+   "h": 62,
+   "pivot": [
+    610,
+    857
+   ],
+   "source": {
+    "file": "parts/garter_bow_L.png",
+    "sha256": "f0f15c82960a3374851c3808a82d4e6e6a17b0424c23f2cfbb63198db3198784"
+   }
+  },
+  {
+   "id": "garter_jewel_L",
+   "file": "r3/garter_jewel_L.png",
+   "z": 19,
+   "parent": "leg_L_upper",
+   "group": "sway",
+   "visible": true,
+   "x": 567,
+   "y": 833,
+   "w": 36,
+   "h": 79,
+   "pivot": [
+    585,
+    842
+   ],
+   "source": {
+    "file": "parts/garter_jewel_L.png",
+    "sha256": "392cfd0cb7d1bb232cb6251df316284fb0f874aba9b983e152829494ba8b82bc"
+   }
+  },
+  {
+   "id": "boot_L",
+   "file": "r3/boot_L.png",
+   "z": 20,
+   "parent": "foot_L",
+   "group": "legs",
+   "visible": true,
+   "x": 473,
+   "y": 1248,
+   "w": 107,
+   "h": 255,
+   "pivot": [
+    537,
+    1290
+   ],
+   "source": {
+    "file": "parts/boot_L.png",
+    "sha256": "2e4197d389b4372a30f44904439d1e39a38484bb7752ecda8894f6c82ec71c93"
+   }
+  },
+  {
+   "id": "boot_R",
+   "file": "r3/boot_R.png",
+   "z": 20,
+   "parent": "foot_R",
+   "group": "legs",
+   "visible": true,
+   "x": 390,
+   "y": 1210,
+   "w": 92,
+   "h": 263,
+   "pivot": [
+    439,
+    1260
+   ],
+   "source": {
+    "file": "parts/boot_R.png",
+    "sha256": "8860b474ddee67d9be0eedd47180a9d3e8fc8d5e317192deaaa84a0335e4636d"
+   }
+  },
+  {
+   "id": "boot_bow_L",
+   "file": "r3/boot_bow_L.png",
+   "z": 23,
+   "parent": "foot_L",
+   "group": "sway",
+   "visible": true,
+   "x": 487,
+   "y": 1285,
+   "w": 90,
+   "h": 84,
+   "pivot": [
+    530,
+    1321
+   ],
+   "source": {
+    "file": "parts/boot_bow_L.png",
+    "sha256": "4681c041dad74c03eee7ba515099b5b7b1b868fe24148a9d65af0a44094d33bb"
+   }
+  },
+  {
+   "id": "boot_bow_R",
+   "file": "r3/boot_bow_R.png",
+   "z": 23,
+   "parent": "foot_R",
+   "group": "sway",
+   "visible": true,
+   "x": 394,
+   "y": 1255,
+   "w": 86,
+   "h": 83,
+   "pivot": [
+    437,
+    1291
+   ],
+   "source": {
+    "file": "parts/boot_bow_R.png",
+    "sha256": "c8c8f2c2467a349f53863caab19cfc58b4e4feb8d63830b7d2e31f1964998450"
+   }
+  },
+  {
+   "id": "boot_jewel_L",
+   "file": "r3/boot_jewel_L.png",
+   "z": 25,
+   "parent": "foot_L",
+   "group": "sway",
+   "visible": true,
+   "x": 510,
+   "y": 1299,
+   "w": 40,
+   "h": 87,
+   "pivot": [
+    530,
+    1310
+   ],
+   "source": {
+    "file": "parts/boot_jewel_L.png",
+    "sha256": "7ca251cfee6459703b3366d7b8b5146f3410cfedf1d933a445026511b46dea83"
+   }
+  },
+  {
+   "id": "boot_jewel_R",
+   "file": "r3/boot_jewel_R.png",
+   "z": 25,
+   "parent": "foot_R",
+   "group": "sway",
+   "visible": true,
+   "x": 418,
+   "y": 1267,
+   "w": 40,
+   "h": 95,
+   "pivot": [
+    438,
+    1277
+   ],
+   "source": {
+    "file": "parts/boot_jewel_R.png",
+    "sha256": "3e4c7ae215283ac5cc513585bdb2ffc5109f8ebd33c92d04f339a42131d3079b"
+   }
+  },
+  {
+   "id": "skirt_lining",
+   "file": "r3/skirt_lining.png",
+   "z": 28,
+   "parent": "hips",
+   "group": "skirt",
+   "visible": true,
+   "x": 297,
+   "y": 529,
+   "w": 423,
+   "h": 296,
+   "pivot": [
+    512,
+    570
+   ],
+   "source": {
+    "file": "parts/skirt_lining.png",
+    "sha256": "de31ae57891a6323e6e82ee671496315f1565bf6042cf567d9f4adbffe691ba1"
+   }
+  },
+  {
+   "id": "skirt_ruffle_lower",
+   "file": "r3/skirt_ruffle_lower.png",
+   "z": 30,
+   "parent": "hips",
+   "group": "skirt",
+   "visible": true,
+   "x": 298,
+   "y": 732,
+   "w": 420,
+   "h": 93,
+   "pivot": [
+    512,
+    734
+   ],
+   "source": {
+    "file": "parts/skirt_ruffle_lower.png",
+    "sha256": "1e8e7d2224d69ad2510777ea86fad5d4d73d0e9c29ded6c59d4ddd1d9db0f378"
+   }
+  },
+  {
+   "id": "skirt_navy_lower",
+   "file": "r3/skirt_navy_lower.png",
+   "z": 31,
+   "parent": "hips",
+   "group": "skirt",
+   "visible": true,
+   "x": 297,
+   "y": 671,
+   "w": 417,
+   "h": 123,
+   "pivot": [
+    512,
+    681
+   ],
+   "source": {
+    "file": "parts/skirt_navy_lower.png",
+    "sha256": "d27e4bb3ee8f7a5551debb4d28a47bea54e4e10b22e18a64153aca4fb905fb73"
+   }
+  },
+  {
+   "id": "skirt_ruffle_middle",
+   "file": "r3/skirt_ruffle_middle.png",
+   "z": 32,
+   "parent": "hips",
+   "group": "skirt",
+   "visible": true,
+   "x": 330,
+   "y": 623,
+   "w": 363,
+   "h": 134,
+   "pivot": [
+    512,
+    631
+   ],
+   "source": {
+    "file": "parts/skirt_ruffle_middle.png",
+    "sha256": "5328890e279f3a6dfc70ac52fcb54c04668cdf9c513430a511875b3b368667ea"
+   }
+  },
+  {
+   "id": "skirt_navy_upper",
+   "file": "r3/skirt_navy_upper.png",
+   "z": 33,
+   "parent": "hips",
+   "group": "skirt",
+   "visible": true,
+   "x": 346,
+   "y": 531,
+   "w": 329,
+   "h": 161,
+   "pivot": [
+    512,
+    563
+   ],
+   "source": {
+    "file": "parts/skirt_navy_upper.png",
+    "sha256": "5f334026f0557e58c6c3ca88ffc09d56be5d5aff7c762f67bb4d8e5fbafeba5e"
+   }
+  },
+  {
+   "id": "skirt_side_L",
+   "file": "r3/skirt_side_L.png",
+   "z": 34,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 573,
+   "y": 546,
+   "w": 130,
+   "h": 156,
+   "pivot": [
+    585,
+    567
+   ],
+   "source": {
+    "file": "parts/skirt_side_L.png",
+    "sha256": "3c852a4de1074e2a9419b4d7938d827f8f08cbfece1e64e0199bf4f274dce802"
+   }
+  },
+  {
+   "id": "skirt_side_R",
+   "file": "r3/skirt_side_R.png",
+   "z": 34,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 319,
+   "y": 543,
+   "w": 125,
+   "h": 154,
+   "pivot": [
+    421,
+    567
+   ],
+   "source": {
+    "file": "parts/skirt_side_R.png",
+    "sha256": "d1156ef4847b4d0e81a0c2e5cff9330ae12b16ee5631f82a843b0925b4e1374d"
+   }
+  },
+  {
+   "id": "upper_arm_L",
+   "file": "r3/upper_arm_L.png",
+   "z": 36,
+   "parent": "arm_L_upper",
+   "group": "arms",
+   "visible": true,
+   "x": 605,
+   "y": 297,
+   "w": 115,
+   "h": 270,
+   "pivot": [
+    641,
+    318
+   ],
+   "source": {
+    "file": "parts/upper_arm_L.png",
+    "sha256": "8a42135719e0d9104f753274290943db589085c96521b8e8570af648fb81b8db"
+   }
+  },
+  {
+   "id": "upper_arm_R",
+   "file": "r3/upper_arm_R.png",
+   "z": 36,
+   "parent": "arm_R_upper",
+   "group": "arms",
+   "visible": true,
+   "x": 297,
+   "y": 297,
+   "w": 119,
+   "h": 270,
+   "pivot": [
+    382,
+    318
+   ],
+   "source": {
+    "file": "parts/upper_arm_R.png",
+    "sha256": "9314389a53a78770b3ba39ce2fd49efb5a960a1b11d27b03f18a096f7e7a09a5"
+   }
+  },
+  {
+   "id": "hand_L",
+   "file": "r3/hand_L.png",
+   "z": 39,
+   "parent": "hand_L",
+   "group": "arms",
+   "visible": true,
+   "x": 719,
+   "y": 701,
+   "w": 65,
+   "h": 135,
+   "pivot": [
+    744,
+    730
+   ],
+   "source": {
+    "file": "parts/hand_L.png",
+    "sha256": "af5e303dcfac4239f17eaec5492c48ae25ee5b834636eedbb24bcaa9692a03ed"
+   }
+  },
+  {
+   "id": "hand_L_open",
+   "file": "r3/hand_L_open.png",
+   "z": 39,
+   "parent": "hand_L",
+   "group": "arms",
+   "visible": false,
+   "x": 707.75,
+   "y": 678.75,
+   "w": 74.75,
+   "h": 148,
+   "pivot": [
+    744,
+    730
+   ],
+   "source": {
+    "file": "parts/hand_L_open.png",
+    "sha256": "37987ccc953aef19a370f04ff35a8f8790e087a6677bbd4dc792150601a9ee79"
+   }
+  },
+  {
+   "id": "hand_L_wave",
+   "file": "r3/hand_L_wave.png",
+   "z": 39,
+   "parent": "hand_L",
+   "group": "arms",
+   "visible": false,
+   "x": 702.75,
+   "y": 678.75,
+   "w": 85.25,
+   "h": 148,
+   "pivot": [
+    744,
+    730
+   ],
+   "source": {
+    "file": "parts/hand_L_wave.png",
+    "sha256": "a93ac284fcbdd4d2c92552a7a6f41a5e1425e4c0f91345ddadc682606d42cc9f"
+   }
+  },
+  {
+   "id": "hand_R",
+   "file": "r3/hand_R.png",
+   "z": 39,
+   "parent": "hand_R",
+   "group": "arms",
+   "visible": true,
+   "x": 240,
+   "y": 705,
+   "w": 68,
+   "h": 133,
+   "pivot": [
+    282,
+    729
+   ],
+   "source": {
+    "file": "parts/hand_R.png",
+    "sha256": "8ce6c297ab905af7cd6e676cb3cff29f2a425cb841b18b0caa406d338804ce88"
+   }
+  },
+  {
+   "id": "hand_R_open",
+   "file": "r3/hand_R_open.png",
+   "z": 39,
+   "parent": "hand_R",
+   "group": "arms",
+   "visible": false,
+   "x": 243.5,
+   "y": 677.75,
+   "w": 74.75,
+   "h": 148,
+   "pivot": [
+    282,
+    729
+   ],
+   "source": {
+    "file": "parts/hand_R_open.png",
+    "sha256": "2300c704aeb8ae5732e62a800d323434f78d11cb3ae0f33bdab7e1f8da2e31fa"
+   }
+  },
+  {
+   "id": "hand_R_wave",
+   "file": "r3/hand_R_wave.png",
+   "z": 39,
+   "parent": "hand_R",
+   "group": "arms",
+   "visible": false,
+   "x": 238,
+   "y": 677.75,
+   "w": 85.25,
+   "h": 148,
+   "pivot": [
+    282,
+    729
+   ],
+   "source": {
+    "file": "parts/hand_R_wave.png",
+    "sha256": "077b3dfcf6652489476b64e19c2903aaa20cd4b7fe4fb8347789cd711b83d4c3"
+   }
+  },
+  {
+   "id": "sleeve_forearm_L",
+   "file": "r3/sleeve_forearm_L.png",
+   "z": 44,
+   "parent": "arm_L_lower",
+   "group": "arms",
+   "visible": true,
+   "x": 646,
+   "y": 531,
+   "w": 111,
+   "h": 187,
+   "pivot": [
+    673,
+    535
+   ],
+   "source": {
+    "file": "parts/sleeve_forearm_L.png",
+    "sha256": "974191dc3f21ba3fca5b4d463d1efa5fad320ba01cd3f57f80396d6b5230921b"
+   }
+  },
+  {
+   "id": "sleeve_forearm_R",
+   "file": "r3/sleeve_forearm_R.png",
+   "z": 44,
+   "parent": "arm_R_lower",
+   "group": "arms",
+   "visible": true,
+   "x": 263,
+   "y": 530,
+   "w": 123,
+   "h": 186,
+   "pivot": [
+    351,
+    535
+   ],
+   "source": {
+    "file": "parts/sleeve_forearm_R.png",
+    "sha256": "da125bc76f5eb8ec9dddd531b81f101e702bf300acaa0cc2a37baa60e069149f"
+   }
+  },
+  {
+   "id": "sleeve_upper_L",
+   "file": "r3/sleeve_upper_L.png",
+   "z": 45,
+   "parent": "arm_L_upper",
+   "group": "arms",
+   "visible": true,
+   "x": 601,
+   "y": 360,
+   "w": 120,
+   "h": 140,
+   "pivot": [
+    641,
+    318
+   ],
+   "source": {
+    "file": "parts/sleeve_upper_L.png",
+    "sha256": "1eb07181ab641b726f2bab52110786a512068e9279f595b0e594643ed6608421"
+   }
+  },
+  {
+   "id": "sleeve_upper_R",
+   "file": "r3/sleeve_upper_R.png",
+   "z": 45,
+   "parent": "arm_R_upper",
+   "group": "arms",
+   "visible": true,
+   "x": 297,
+   "y": 359,
+   "w": 124,
+   "h": 141,
+   "pivot": [
+    382,
+    318
+   ],
+   "source": {
+    "file": "parts/sleeve_upper_R.png",
+    "sha256": "3ca333db3e4694016800c2c97cf059e734c8b484013cfd1465015356f8b5a9fb"
+   }
+  },
+  {
+   "id": "sleeve_elbow_frill_L",
+   "file": "r3/sleeve_elbow_frill_L.png",
+   "z": 48,
+   "parent": "arm_L_upper",
+   "group": "sway",
+   "visible": true,
+   "x": 611,
+   "y": 477,
+   "w": 111,
+   "h": 83,
+   "pivot": [
+    676,
+    491
+   ],
+   "source": {
+    "file": "parts/sleeve_elbow_frill_L.png",
+    "sha256": "9576982d781963c9649e485f3c0841d5f8ecf5ad181900316712dde980da0e6b"
+   }
+  },
+  {
+   "id": "sleeve_elbow_frill_R",
+   "file": "r3/sleeve_elbow_frill_R.png",
+   "z": 48,
+   "parent": "arm_R_upper",
+   "group": "sway",
+   "visible": true,
+   "x": 296,
+   "y": 476,
+   "w": 111,
+   "h": 81,
+   "pivot": [
+    347,
+    491
+   ],
+   "source": {
+    "file": "parts/sleeve_elbow_frill_R.png",
+    "sha256": "02d957a9220adac481225c02b0550b34c712f5dcaff7f662a01daaaf367e6bbd"
+   }
+  },
+  {
+   "id": "sleeve_cuff_L",
+   "file": "r3/sleeve_cuff_L.png",
+   "z": 49,
+   "parent": "arm_L_lower",
+   "group": "sway",
+   "visible": true,
+   "x": 688,
+   "y": 650,
+   "w": 110,
+   "h": 105,
+   "pivot": [
+    743,
+    681
+   ],
+   "source": {
+    "file": "parts/sleeve_cuff_L.png",
+    "sha256": "ad3e8b5f7787ceee9c4c5e77ac5031aee5f8fe44e948abbc26fe96eaa9da612a"
+   }
+  },
+  {
+   "id": "sleeve_cuff_R",
+   "file": "r3/sleeve_cuff_R.png",
+   "z": 49,
+   "parent": "arm_R_lower",
+   "group": "sway",
+   "visible": true,
+   "x": 231,
+   "y": 648,
+   "w": 108,
+   "h": 108,
+   "pivot": [
+    282,
+    681
+   ],
+   "source": {
+    "file": "parts/sleeve_cuff_R.png",
+    "sha256": "72801c8a6cf02938fe1f42e041cd8c68fabf4aea4d8faa97e4f46d296f3c74f8"
+   }
+  },
+  {
+   "id": "sleeve_bow_upper_L",
+   "file": "r3/sleeve_bow_upper_L.png",
+   "z": 52,
+   "parent": "arm_L_upper",
+   "group": "sway",
+   "visible": true,
+   "x": 659,
+   "y": 375,
+   "w": 66,
+   "h": 70,
+   "pivot": [
+    684,
+    394
+   ],
+   "source": {
+    "file": "parts/sleeve_bow_upper_L.png",
+    "sha256": "532f5738f0513feb4b612f46e70f76e9457b3c3f1f6c921a5f183f35afd7757a"
+   }
+  },
+  {
+   "id": "sleeve_bow_upper_R",
+   "file": "r3/sleeve_bow_upper_R.png",
+   "z": 52,
+   "parent": "arm_R_upper",
+   "group": "sway",
+   "visible": true,
+   "x": 293,
+   "y": 375,
+   "w": 70,
+   "h": 71,
+   "pivot": [
+    337,
+    394
+   ],
+   "source": {
+    "file": "parts/sleeve_bow_upper_R.png",
+    "sha256": "51083627549316deade6430de9b0ccb2c79c37999a9e2f78d2fbecc8af0b08be"
+   }
+  },
+  {
+   "id": "sleeve_bow_wrist_L",
+   "file": "r3/sleeve_bow_wrist_L.png",
+   "z": 52,
+   "parent": "arm_L_lower",
+   "group": "sway",
+   "visible": true,
+   "x": 711,
+   "y": 638,
+   "w": 73,
+   "h": 71,
+   "pivot": [
+    745,
+    658
+   ],
+   "source": {
+    "file": "parts/sleeve_bow_wrist_L.png",
+    "sha256": "ec178848d9c6fec637fc6185d4bd2c93c6513ce73e99e1867def83c590ee604c"
+   }
+  },
+  {
+   "id": "sleeve_bow_wrist_R",
+   "file": "r3/sleeve_bow_wrist_R.png",
+   "z": 52,
+   "parent": "arm_R_lower",
+   "group": "sway",
+   "visible": true,
+   "x": 246,
+   "y": 636,
+   "w": 78,
+   "h": 70,
+   "pivot": [
+    283,
+    658
+   ],
+   "source": {
+    "file": "parts/sleeve_bow_wrist_R.png",
+    "sha256": "b11eb69adf8c98ddf3d1e9bbe88b9b7b2f81b85c73ac8412edbd1081bd51d350"
+   }
+  },
+  {
+   "id": "hair_back",
+   "file": "r3/hair_back.png",
+   "z": 54,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 406,
+   "y": 24,
+   "w": 207,
+   "h": 242,
+   "pivot": [
+    511,
+    115
+   ],
+   "source": {
+    "file": "parts/hair_back.png",
+    "sha256": "74b405c2aa6de715da47a0b59099b03f355f28464b2a383af6f38ca80e18f29d"
+   }
+  },
+  {
+   "id": "bodice",
+   "file": "r3/bodice.png",
+   "z": 55,
+   "parent": "torso",
+   "group": "body",
+   "visible": true,
+   "x": 386,
+   "y": 251,
+   "w": 246,
+   "h": 378,
+   "pivot": [
+    512,
+    570
+   ],
+   "source": {
+    "file": "parts/bodice.png",
+    "sha256": "0ba4bbdbc11cb0ee197e62587df05c0b586b8c0c9d622e5184ec7952c9d1d31e"
+   }
+  },
+  {
+   "id": "neck",
+   "file": "r3/neck.png",
+   "z": 57,
+   "parent": "neck",
+   "group": "body",
+   "visible": true,
+   "x": 452,
+   "y": 190,
+   "w": 124,
+   "h": 126,
+   "pivot": [
+    514,
+    277
+   ],
+   "source": {
+    "file": "parts/neck.png",
+    "sha256": "44b09a91798a9cb61d9f5b63d3c478eb8e461352341f57938eb4aeb1fac1ec85"
+   }
+  },
+  {
+   "id": "shoulder_frill_L",
+   "file": "r3/shoulder_frill_L.png",
+   "z": 58,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 593,
+   "y": 267,
+   "w": 78,
+   "h": 106,
+   "pivot": [
+    610,
+    285
+   ],
+   "source": {
+    "file": "parts/shoulder_frill_L.png",
+    "sha256": "edfe2c33776a2edb284b5ac4b11cdbd6d8e3a8ac89b7e96f580f576468fdfa91"
+   }
+  },
+  {
+   "id": "shoulder_frill_R",
+   "file": "r3/shoulder_frill_R.png",
+   "z": 58,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 348,
+   "y": 266,
+   "w": 85,
+   "h": 107,
+   "pivot": [
+    414,
+    285
+   ],
+   "source": {
+    "file": "parts/shoulder_frill_R.png",
+    "sha256": "059316a8040702274c41639e69d5d52473cc428c21edfa00d6091d28ceb95d03"
+   }
+  },
+  {
+   "id": "collar",
+   "file": "r3/collar.png",
+   "z": 60,
+   "parent": "torso",
+   "group": "body",
+   "visible": true,
+   "x": 440,
+   "y": 241,
+   "w": 149,
+   "h": 75,
+   "pivot": [
+    515,
+    289
+   ],
+   "source": {
+    "file": "parts/collar.png",
+    "sha256": "6a6e43ffaa81f74a395271b134d023a8f16119279a77d49df6a509424d2da4d6"
+   }
+  },
+  {
+   "id": "chest_bow_under_L",
+   "file": "r3/chest_bow_under_L.png",
+   "z": 61,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 520,
+   "y": 317,
+   "w": 103,
+   "h": 83,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_under_L.png",
+    "sha256": "4657b17eccce750238c04f05ddfec9f4758eecc183c4e937e86ba35a52ab9672"
+   }
+  },
+  {
+   "id": "chest_bow_under_R",
+   "file": "r3/chest_bow_under_R.png",
+   "z": 61,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 398,
+   "y": 317,
+   "w": 100,
+   "h": 82,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_under_R.png",
+    "sha256": "ec6b5fc46f4ace613cdbacca4d1b2c5171b0f8d6a664389d2e7569d2219205b9"
+   }
+  },
+  {
+   "id": "chest_bow_tail_L",
+   "file": "r3/chest_bow_tail_L.png",
+   "z": 63,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 511,
+   "y": 309,
+   "w": 97,
+   "h": 123,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_tail_L.png",
+    "sha256": "86a56c7b588254bf99ea5bfb7252252c5d437f73efbfbf375933234e0b229e9c"
+   }
+  },
+  {
+   "id": "chest_bow_tail_R",
+   "file": "r3/chest_bow_tail_R.png",
+   "z": 63,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 421,
+   "y": 309,
+   "w": 94,
+   "h": 123,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_tail_R.png",
+    "sha256": "24817d209c27f82a44681aaef0bec2da3f14586a57ff8d0f3196c3066405ccec"
+   }
+  },
+  {
+   "id": "chest_bow_loop_L",
+   "file": "r3/chest_bow_loop_L.png",
+   "z": 64,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 510,
+   "y": 286,
+   "w": 80,
+   "h": 63,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_loop_L.png",
+    "sha256": "64daafc627fcf8de98fb8d2099482ad234f1f4422011b1346c603e710240a056"
+   }
+  },
+  {
+   "id": "chest_bow_loop_R",
+   "file": "r3/chest_bow_loop_R.png",
+   "z": 64,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 435,
+   "y": 285,
+   "w": 84,
+   "h": 65,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_loop_R.png",
+    "sha256": "98eb404ca4c07b037d28af11da5573e4a74e14aa40aa09bacc767e3e65ee2c06"
+   }
+  },
+  {
+   "id": "chest_charm",
+   "file": "r3/chest_charm.png",
+   "z": 65,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 488,
+   "y": 318,
+   "w": 49,
+   "h": 134,
+   "pivot": [
+    514,
+    328
+   ],
+   "source": {
+    "file": "parts/chest_charm.png",
+    "sha256": "e3ee1108d4619ad4319da9cd4b8265a2c7ffc275c7ca983b20e736fa81887863"
+   }
+  },
+  {
+   "id": "chest_bow_knot",
+   "file": "r3/chest_bow_knot.png",
+   "z": 66,
+   "parent": "torso",
+   "group": "sway",
+   "visible": true,
+   "x": 491,
+   "y": 284,
+   "w": 46,
+   "h": 50,
+   "pivot": [
+    514,
+    315
+   ],
+   "source": {
+    "file": "parts/chest_bow_knot.png",
+    "sha256": "a60602019f6633eb14a788bfaa49cb1e59686ed6b9869c2d60dc03448d9039b3"
+   }
+  },
+  {
+   "id": "hip_bow_frill",
+   "file": "r3/hip_bow_frill.png",
+   "z": 68,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 510,
+   "y": 530,
+   "w": 189,
+   "h": 172,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_frill.png",
+    "sha256": "d0e9fbf15f8cb59ad4eb4c31b39fdcc9358b22bc4996fd7c780fc32f830e2de8"
+   }
+  },
+  {
+   "id": "hip_bow_long",
+   "file": "r3/hip_bow_long.png",
+   "z": 69,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 591,
+   "y": 592,
+   "w": 146,
+   "h": 264,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_long.png",
+    "sha256": "8a382338239b5f03db066b3f0abd8f1c2a9a8752d6c95738dcfd2a183e50a4db"
+   }
+  },
+  {
+   "id": "hip_bow_tail_L",
+   "file": "r3/hip_bow_tail_L.png",
+   "z": 70,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 583,
+   "y": 558,
+   "w": 65,
+   "h": 89,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_tail_L.png",
+    "sha256": "bed0e0526b2a8c360f6a65a0e92d7b9b8c9c9a7f1fa7bb6de4e19f6406c9bc2c"
+   }
+  },
+  {
+   "id": "hip_bow_tail_R",
+   "file": "r3/hip_bow_tail_R.png",
+   "z": 70,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 537,
+   "y": 555,
+   "w": 63,
+   "h": 114,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_tail_R.png",
+    "sha256": "527e22f67f359582462f7e40554d78d69cb9b56fc97e07ea1cdf2a192142d4a2"
+   }
+  },
+  {
+   "id": "hip_bow_loop_L",
+   "file": "r3/hip_bow_loop_L.png",
+   "z": 71,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 588,
+   "y": 519,
+   "w": 63,
+   "h": 67,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_loop_L.png",
+    "sha256": "b8d35115bb7585b0ac9033fc0e998acc1b66656c6a5ec575758de05344458997"
+   }
+  },
+  {
+   "id": "hip_bow_loop_R",
+   "file": "r3/hip_bow_loop_R.png",
+   "z": 71,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 509,
+   "y": 527,
+   "w": 80,
+   "h": 65,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_loop_R.png",
+    "sha256": "7a36d08790724a10990528caaadf4e5093985510cb9223c0cb902c4af2f2dff0"
+   }
+  },
+  {
+   "id": "hip_bow_knot",
+   "file": "r3/hip_bow_knot.png",
+   "z": 73,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 571,
+   "y": 525,
+   "w": 37,
+   "h": 52,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_knot.png",
+    "sha256": "94f3d607e25144aecfe825d811783f2d5f7e1c4a069d4e8544ad6641bd1da308"
+   }
+  },
+  {
+   "id": "hip_bow_charm",
+   "file": "r3/hip_bow_charm.png",
+   "z": 74,
+   "parent": "hips",
+   "group": "sway",
+   "visible": true,
+   "x": 576,
+   "y": 551,
+   "w": 49,
+   "h": 183,
+   "pivot": [
+    588,
+    552
+   ],
+   "source": {
+    "file": "parts/hip_bow_charm.png",
+    "sha256": "0dd299c150eed16217e117eb8cbb35b8582b397950b88c52dd9c108a4fa42aef"
+   }
+  },
+  {
+   "id": "ear_L",
+   "file": "r3/ear_L.png",
+   "z": 79,
+   "parent": "head",
+   "group": "face",
+   "visible": true,
+   "x": 554,
+   "y": 143,
+   "w": 23,
+   "h": 43,
+   "pivot": [
+    565,
+    163
+   ],
+   "source": {
+    "file": "parts/ear_L.png",
+    "sha256": "f6e011dbe8d74be5bf80a3e6b73e346e08d7c02adec8712f21716729aad9d99e"
+   }
+  },
+  {
+   "id": "ear_R",
+   "file": "r3/ear_R.png",
+   "z": 79,
+   "parent": "head",
+   "group": "face",
+   "visible": true,
+   "x": 429,
+   "y": 133,
+   "w": 32,
+   "h": 54,
+   "pivot": [
+    448,
+    159
+   ],
+   "source": {
+    "file": "parts/ear_R.png",
+    "sha256": "301dab738b751fd3796efe94af01fcaef1f3071fbf21d30f23ee713b913053a7"
+   }
+  },
+  {
+   "id": "face_base",
+   "file": "r3/face_base.png",
+   "z": 80,
+   "parent": "head",
+   "group": "face",
+   "visible": true,
+   "x": 437,
+   "y": 60,
+   "w": 140,
+   "h": 183,
+   "pivot": [
+    511,
+    205
+   ],
+   "source": {
+    "file": "parts/face_base.png",
+    "sha256": "3a7fdc6ba1bfd527752893c99f92788dcadc1a05bf07a8a8193d6a426f8c67f6"
+   }
+  },
+  {
+   "id": "hair_side_L",
+   "file": "r3/hair_side_L.png",
+   "z": 83,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 507,
+   "y": 24,
+   "w": 117,
+   "h": 242,
+   "pivot": [
+    550,
+    77
+   ],
+   "source": {
+    "file": "parts/hair_side_L.png",
+    "sha256": "f150e8cf580ed0b9aafd7bdaf586ababc8f2fa014a4513cfe3f3b3e40be67118"
+   }
+  },
+  {
+   "id": "hair_side_R",
+   "file": "r3/hair_side_R.png",
+   "z": 83,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 387,
+   "y": 25,
+   "w": 128,
+   "h": 240,
+   "pivot": [
+    470,
+    77
+   ],
+   "source": {
+    "file": "parts/hair_side_R.png",
+    "sha256": "a0155eb97ca0b009ebb011e32af3bf4fd46ff4463bb1a347c0979eeed57f18dd"
+   }
+  },
+  {
+   "id": "mouth_cavity",
+   "file": "r3/mouth_cavity.png",
+   "z": 88,
+   "parent": "head",
+   "group": "mouth",
+   "visible": true,
+   "x": 483,
+   "y": 187,
+   "w": 68,
+   "h": 41,
+   "pivot": [
+    514.5,
+    199
+   ],
+   "source": {
+    "file": "parts/mouth_cavity.png",
+    "sha256": "e9bc8ab9844a499ee4dcf5c4f1d242607b0d9be81f4a981c52a325d63299777e"
+   }
+  },
+  {
+   "id": "mouth_teeth_lower",
+   "file": "r3/mouth_teeth_lower.png",
+   "z": 89,
+   "parent": "head",
+   "group": "mouth",
+   "visible": true,
+   "x": 484.5,
+   "y": 207.75,
+   "w": 60,
+   "h": 17,
+   "pivot": [
+    514.5,
+    199
+   ],
+   "source": {
+    "file": "parts/mouth_teeth_lower.png",
+    "sha256": "d2c9eb726cd5afcaddb2c85f0adaed5673ef059e75bacce067a83df2555c7766"
+   }
+  },
+  {
+   "id": "mouth_teeth_upper",
+   "file": "r3/mouth_teeth_upper.png",
+   "z": 89,
+   "parent": "head",
+   "group": "mouth",
+   "visible": true,
+   "x": 484.5,
+   "y": 194.5,
+   "w": 60,
+   "h": 17,
+   "pivot": [
+    514.5,
+    199
+   ],
+   "source": {
+    "file": "parts/mouth_teeth_upper.png",
+    "sha256": "932892c5d62e8e1305548671915bff45e1c01bcd9325cc6b7b7e2ab10dfd7491"
+   }
+  },
+  {
+   "id": "mouth_tongue",
+   "file": "r3/mouth_tongue.png",
+   "z": 89.2,
+   "parent": "head",
+   "group": "mouth",
+   "visible": true,
+   "x": 487,
+   "y": 209.5,
+   "w": 55,
+   "h": 25,
+   "pivot": [
+    514.5,
+    199
+   ],
+   "source": {
+    "file": "parts/mouth_tongue.png",
+    "sha256": "c0ef3cb9af1cc9cadf7a73bfcb8edcb66dc04f026353f0bc605268fe0c9c50ae"
+   }
+  },
+  {
+   "id": "hair_crown",
+   "file": "r3/hair_crown.png",
+   "z": 93,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 410,
+   "y": 24,
+   "w": 188,
+   "h": 86,
+   "pivot": [
+    511,
+    61
+   ],
+   "source": {
+    "file": "parts/hair_crown.png",
+    "sha256": "a1117f0e022aaaf26bcdac94c14a0d4250dd929d7aabf9763b68e1b5c8aaf24d"
+   }
+  },
+  {
+   "id": "hair_fringe_L",
+   "file": "r3/hair_fringe_L.png",
+   "z": 94,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 530,
+   "y": 65,
+   "w": 57,
+   "h": 128,
+   "pivot": [
+    543,
+    77
+   ],
+   "source": {
+    "file": "parts/hair_fringe_L.png",
+    "sha256": "d0d692217c3ca78ddbd319296bcfd4bb3edacf4c5c1efc5e15d445f3f4d13c05"
+   }
+  },
+  {
+   "id": "hair_fringe_R",
+   "file": "r3/hair_fringe_R.png",
+   "z": 94,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 440,
+   "y": 65,
+   "w": 56,
+   "h": 125,
+   "pivot": [
+    481,
+    76
+   ],
+   "source": {
+    "file": "parts/hair_fringe_R.png",
+    "sha256": "bb7bd9290586b32504cde75bb7a9e20eaa67e49f8f60c640d12be79dfe1f8464"
+   }
+  },
+  {
+   "id": "hair_fringe_center",
+   "file": "r3/hair_fringe_center.png",
+   "z": 95,
+   "parent": "head",
+   "group": "hair",
+   "visible": true,
+   "x": 473,
+   "y": 83,
+   "w": 86,
+   "h": 74,
+   "pivot": [
+    512,
+    79
+   ],
+   "source": {
+    "file": "parts/hair_fringe_center.png",
+    "sha256": "ab1901d09fd89029c6b91df2095df8f55f2ab9b052cbbc136aa3a77f759c77f5"
+   }
+  },
+  {
+   "id": "hand_R_point",
+   "file": "r3/hand_R_point.png",
+   "z": 39,
+   "parent": "hand_R",
+   "group": "arms",
+   "visible": false,
+   "x": 242.5,
+   "y": 678.75,
+   "w": 77.5,
+   "h": 147,
+   "pivot": [
+    282,
+    729
+   ],
+   "source": {
+    "file": "parts/hand_R_point.png",
+    "sha256": "019f9b9c13d56f97cf2b761589022b25724f545214afd2e5deff46140e2aa07d"
+   }
+  },
+  {
+   "id": "hand_L_point",
+   "file": "r3/hand_L_point.png",
+   "z": 39,
+   "parent": "hand_L",
+   "group": "arms",
+   "visible": false,
+   "x": 706.25,
+   "y": 679.75,
+   "w": 77.5,
+   "h": 147,
+   "pivot": [
+    744,
+    730
+   ],
+   "source": {
+    "file": "parts/hand_L_point.png",
+    "sha256": "6d6edefa1cf4ea58d217c90642f292ae9afa196420dbb3c6c86270083c92e4f8"
+   }
+  },
+  {
+   "id": "hand_R_relaxed_fist",
+   "file": "r3/hand_R_relaxed_fist.png",
+   "z": 39,
+   "parent": "hand_R",
+   "group": "arms",
+   "visible": false,
+   "x": 241.75,
+   "y": 671.75,
+   "w": 72.25,
+   "h": 136.5,
+   "pivot": [
+    282,
+    729
+   ],
+   "source": {
+    "file": "parts/hand_R_relaxed_fist.png",
+    "sha256": "736c64289b141e90ea126577d7c9415ecdc6645184ed8f2c40885d47004523f9"
+   }
+  },
+  {
+   "id": "hand_L_relaxed_fist",
+   "file": "r3/hand_L_relaxed_fist.png",
+   "z": 39,
+   "parent": "hand_L",
+   "group": "arms",
+   "visible": false,
+   "x": 712.25,
+   "y": 672.75,
+   "w": 72.25,
+   "h": 136.5,
+   "pivot": [
+    744,
+    730
+   ],
+   "source": {
+    "file": "parts/hand_L_relaxed_fist.png",
+    "sha256": "d81d84934a97aff3b85de2e354078da6ff7bfb74e94e4c0b6db7747232d506a4"
+   }
+  }
+ ]
+}
