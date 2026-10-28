@@ -11,7 +11,7 @@ try {
   const json = await (await fetch('hibiki.rig.json', { cache: 'no-store' })).json();
   const model = new RigModel(json);
   const r = await new AvatarRenderer().init(document.getElementById('stage'), model, location.href);
-  r.setView(q.get('view') || 'face');
+  const v = q.get('view') || 'face'; r.setView(v.includes(',') ? v.split(',').map(Number) : v);
   window.hv3 = { model, r, pose(p) { for (const k of Object.keys(model.values)) model.values[k] = model.parameters.find(x => x.id === k).default ?? 0; for (const [k, v] of Object.entries(p)) model.set(k, v); model.update(0); r.sync(); r.app.render(); }, view(v) { r.setView(v); r.app.render(); } };
   window.hv3.pose(JSON.parse(q.get('p') || '{}'));
   window.hv3ready = true;

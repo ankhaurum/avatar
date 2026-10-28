@@ -35,24 +35,44 @@ export const EXPRESSIONS = {
 
 // Gesture tracks: time (s) -> partial pose. Arm angles in degrees.
 export const GESTURES = {
-  wave: { duration: 3.2, hand: 'L', track: (t, p) => {
-    const up = ease(t / 0.55) * (1 - ease((t - 2.6) / 0.6));
-    const sway = Math.sin((t - 0.45) * TAU * 2.1) * ease((t - 0.45) / 0.35) * (1 - ease((t - 2.4) / 0.4));
-    p.ShoulderL = 18 * up; p.ElbowL = 128 * up; p.WristL = 6 * up + 16 * sway; p.ForearmL = sway * 5;
-    p.HandL = up > 0.35 ? 2 : 0; p.BodyAngleZ = 1.5 * up; p.AngleZ = 4 * up; p.EyeSmileAdd = 0.5 * up;
+  // right hand (viewer left) raised beside the face, waving from the wrist
+  wave: { duration: 3.2, hand: 'R', track: (t, p) => {
+    const up = ease(t / 0.6) * (1 - ease((t - 2.6) / 0.6));
+    const sway = Math.sin((t - 0.5) * TAU * 2.2) * ease((t - 0.5) / 0.3) * (1 - ease((t - 2.4) / 0.4));
+    p.ShoulderR = 10 * up; p.ElbowR = 146 * up + 5 * sway; p.WristR = 6 * up + 14 * sway;
+    if (up > 0.45) p.HandR = 2;
+    p.BodyAngleZ = -1.5 * up; p.AngleZ = -5 * up; p.AngleX = -4 * up; p.EyeSmileAdd = 0.5 * up;
   } },
-  explain: { duration: 3.6, hand: 'R', track: (t, p) => {
-    const up = ease(t / 0.6) * (1 - ease((t - 3.0) / 0.6));
+  // left hand opens to the side, presenting, while talking
+  explain: { duration: 3.8, hand: 'L', track: (t, p) => {
+    const up = ease(t / 0.6) * (1 - ease((t - 3.1) / 0.7));
     const beat = Math.sin(t * TAU * 0.9) * up;
-    p.ShoulderR = -8 * up; p.ElbowR = -62 * up - 6 * beat; p.WristR = -10 * up + 6 * beat;
-    p.HandR = up > 0.3 ? 1 : 0; p.BodyAngleX = -3 * up; p.AngleX = -6 * up + 2 * beat; p.AngleZ = -3 * up;
+    p.ShoulderL = 22 * up; p.ElbowL = 48 * up + 8 * beat; p.WristL = -15 * up + 6 * beat;
+    if (up > 0.4) p.HandL = 1;
+    p.BodyAngleX = 3 * up; p.AngleX = 5 * up + 2 * beat; p.AngleZ = 3 * up;
   } },
+  // both hands brought together in front of the waist
   both: { duration: 3.4, hand: 'both', track: (t, p) => {
     const up = ease(t / 0.6) * (1 - ease((t - 2.8) / 0.6));
     const beat = Math.sin(t * TAU * 1.1) * up;
-    p.ShoulderL = 6 * up; p.ElbowL = 55 * up + 5 * beat; p.WristL = 10 * up;
-    p.ShoulderR = -6 * up; p.ElbowR = -55 * up + 5 * beat; p.WristR = -10 * up;
-    p.HandL = up > 0.3 ? 1 : 0; p.HandR = up > 0.3 ? 1 : 0; p.BodyAngleY = 3 * up; p.AngleY = 5 * up;
+    p.ShoulderR = 30 * up; p.ElbowR = -105 * up + 4 * beat; p.WristR = -10 * up;
+    p.ShoulderL = 30 * up; p.ElbowL = -105 * up + 4 * beat; p.WristL = -10 * up;
+    if (up > 0.4) { p.HandR = 1; p.HandL = 1; }
+    p.BodyAngleY = 3 * up; p.AngleY = 5 * up;
+  } },
+  // left arm raised from the shoulder, index finger pointing outward
+  point: { duration: 3.0, hand: 'L', track: (t, p) => {
+    const up = ease(t / 0.7) * (1 - ease((t - 2.3) / 0.7));
+    p.ShoulderL = 60 * up; p.ElbowL = 10 * up; p.WristL = -6 * up;
+    if (up > 0.45) p.HandL = 3;
+    p.BodyAngleX = 4 * up; p.AngleX = 12 * up; p.EyeBallXAdd = 0.6 * up;
+  } },
+  // right hand loosely closed in front of the waist, head tilted
+  think: { duration: 3.6, hand: 'R', track: (t, p) => {
+    const up = ease(t / 0.7) * (1 - ease((t - 2.9) / 0.7));
+    p.ShoulderR = 28 * up; p.ElbowR = -125 * up; p.WristR = 20 * up;
+    if (up > 0.4) p.HandR = 4;
+    p.AngleZ = 7 * up; p.AngleY = 4 * up;
   } },
   nod: { duration: 1.4, track: (t, p) => { const k = Math.sin(clamp(t / 1.2, 0, 1) * TAU * 1.5) * (1 - ease(t / 1.3)); p.AngleY = -10 * Math.max(0, k); p.BodyAngleY = -2 * Math.max(0, k); } },
   tilt: { duration: 2.2, track: (t, p) => { const k = ease(t / 0.5) * (1 - ease((t - 1.6) / 0.6)); p.AngleZ = 11 * k; p.AngleX = 6 * k; p.BodyAngleZ = 2 * k; } }
@@ -124,7 +144,7 @@ export class MotionController {
       AngleX: headX * 18 + n[0](t * 0.23) * 3 + (pose.AngleX || 0) + talkAmt * n[3](t * 1.3) * 2,
       AngleY: -headY * 14 + n[1](t * 0.19) * 2.5 + (pose.AngleY || 0) + talkAmt * Math.max(0, n[4](t * 1.7)) * -3,
       AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
-      EyeBallX: eyeX, EyeBallY: eyeY,
+      EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: eyeY,
       BodyAngleX: bodyX * 5 + n[5](t * 0.13) * 2 + (pose.BodyAngleX || 0),
       BodyAngleY: n[6](t * 0.11) * 1.5 + (pose.BodyAngleY || 0) - headY * 1.5,
       BodyAngleZ: n[5](t * 0.09 + 3) * 1.5 + (pose.BodyAngleZ || 0),
@@ -139,7 +159,7 @@ export class MotionController {
     for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 2.2 : 4));
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
     m.set('MouthOpen', clamp(this.spring('mouth', Math.max(mouth, ex.mouth ?? 0), dt, 9), 0, 1));
-    // hand shapes switch with a short cross-fade handled by the springs
-    for (const s of ['L', 'R']) if (this.has('Hand' + s)) m.set('Hand' + s, this.spring('hand' + s, pose['Hand' + s] || 0, dt, 6));
+    // hand shapes switch directly (one shape per hand is visible at a time)
+    for (const s of ['L', 'R']) if (this.has('Hand' + s)) m.set('Hand' + s, pose['Hand' + s] || 0);
   }
 }

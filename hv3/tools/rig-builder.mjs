@@ -54,7 +54,10 @@ export class RigBuilder {
     let mesh;
     if (o.mesh) mesh = o.mesh(info.width, info.height);
     else {
-      const detail = (o.detail || []).map(d => ({ x: (d.x - ox) * s, y: (d.y - oy) * s, r: d.r * s, spacing: d.spacing * s }));
+      const zones = [...(o.detail || [])];
+      // hair tips / fabric hems: finer vertices along the lower edge
+      if (o.tips) { const n = 6; for (let i = 0; i <= n; i++) zones.push({ x: ox + (info.width / s) * i / n, y: oy + (info.height / s) * (o.tips.at ?? 0.92), r: o.tips.r ?? (info.width / s) / n, spacing: o.tips.spacing }); }
+      const detail = zones.map(d => ({ x: (d.x - ox) * s, y: (d.y - oy) * s, r: d.r * s, spacing: d.spacing * s }));
       mesh = autoMesh(alpha, info.width, info.height, { spacing: (o.spacing ?? 16) * s, dilate: o.dilate ?? 2, detail, threshold: o.threshold });
     }
     const positions = [], uvs = [];
@@ -65,7 +68,9 @@ export class RigBuilder {
     }
     const p = { id, texture: o.file, parent: o.parent, order: o.order, mesh: { positions, uvs, triangles: mesh.triangles } };
     if (o.mask) p.mask = o.mask;
+    if (o.blend) { p.blend = { parent: o.blend.parent, weights: [] }; for (let i = 0; i < positions.length; i += 2) p.blend.weights.push(round(Math.min(1, Math.max(0, o.blend.weight(positions[i], positions[i + 1]))))); }
     if (o.maskOnly) p.maskOnly = true;
+    if (o.orderSwitch) p.orderSwitch = o.orderSwitch;
     if (o.key) p.keyforms = { params: o.key.params, keys: o.key.keys, forms: this.displacementForms(o.key, positions) };
     if (o.opacity) p.opacityKeys = { params: o.opacity.params, keys: o.opacity.keys, forms: this.forms(o.opacity, 0, vals => ({ o: o.opacity.fn(...vals) })) };
     this.rig.parts.push(p);

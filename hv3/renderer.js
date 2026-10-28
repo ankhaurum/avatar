@@ -12,9 +12,9 @@ const fragment = `in vec2 vUV;uniform sampler2D uTexture;uniform float uAlpha;un
 void main(){vec4 c=texture(uTexture,vUV);if(c.a<uCut)discard;finalColor=c*uAlpha;}`;
 
 export const VIEWS = {
-  bust: [262, 24, 500, 600],
-  face: [400, 170, 260, 260],
-  full: [0, 0, 1024, 1536]
+  bust: [236, 0, 552, 640],
+  face: [432, 56, 160, 190],
+  full: [120, 0, 784, 1536]
 };
 
 export class AvatarRenderer {
@@ -24,6 +24,7 @@ export class AvatarRenderer {
     await this.app.init({ resizeTo: host, backgroundAlpha: 0, antialias: true, autoDensity: true, resolution: Math.min(2, window.devicePixelRatio || 1), preference: 'webgl' });
     host.appendChild(this.app.canvas);
     this.root = new Container();
+    this.root.sortableChildren = true;
     this.app.stage.addChild(this.root);
     const files = [...new Set(model.parts.map(p => p.texture))];
     const textures = new Map();
@@ -46,9 +47,9 @@ export class AvatarRenderer {
       this.items.push(it);
       if (p.mask) {
         let group = maskGroups.get(p.mask);
-        if (!group) { group = new Container(); group.mask = byId.get(p.mask).mesh; maskGroups.set(p.mask, group); this.root.addChild(group); }
+        if (!group) { group = new Container(); group.mask = byId.get(p.mask).mesh; group.zIndex = p.order; maskGroups.set(p.mask, group); this.root.addChild(group); }
         group.addChild(it.mesh);
-      } else this.root.addChild(it.mesh);
+      } else { it.mesh.zIndex = p.order; it.top = true; this.root.addChild(it.mesh); }
     }
     this.setView('bust');
     this.app.renderer.on('resize', () => this.layout());
@@ -57,7 +58,8 @@ export class AvatarRenderer {
   setView(name) { this.view = VIEWS[name] || name; this.layout(); }
   layout() {
     const [x, y, w, h] = this.view, W = this.app.screen.width, H = this.app.screen.height;
-    const s = Math.min(W / w, H / h);
+    // the face (art A, about 1.8 texture px per unit) is never shown above ~2x
+    const s = Math.min(W / w, H / h, 3.6 / this.app.renderer.resolution);
     this.root.scale.set(s);
     this.root.position.set((W - w * s) / 2 - x * s, (H - h * s) / 2 - y * s);
   }
@@ -67,6 +69,7 @@ export class AvatarRenderer {
       it.buffer.update();
       it.uniforms.uniforms.uAlpha = it.part.opacity;
       it.mesh.visible = it.part.opacity > 0.002 || it.part.maskOnly;
+      if (it.top && it.mesh.zIndex !== it.part.drawOrder) it.mesh.zIndex = it.part.drawOrder;
     }
   }
 }

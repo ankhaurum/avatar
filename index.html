@@ -14,12 +14,12 @@ body{display:flex;flex-direction:column;min-height:100dvh}
 header{display:flex;align-items:baseline;gap:12px;padding:12px 16px 4px;flex-wrap:wrap}
 h1{font-size:18px;margin:0;letter-spacing:.04em}
 header p{margin:0;font-size:12px;color:var(--muted)}
-#stage{position:relative;flex:1;min-height:52vh;touch-action:pan-y;background:radial-gradient(ellipse at 50% 35%,#ffffff55,transparent 70%)}
+#stage{position:relative;flex:1;min-height:60vh;touch-action:pan-y;background:radial-gradient(ellipse at 50% 35%,#ffffff55,transparent 70%)}
 #stage canvas{position:absolute;inset:0;width:100%;height:100%}
 #status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;padding:16px;text-align:center}
 nav{background:var(--panel);border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-area-inset-bottom));display:grid;gap:8px}
-.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.row span{font-size:12px;color:var(--muted);min-width:3.5em}
+.row{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.row::-webkit-scrollbar{display:none}.row button{flex:none}
+.row span{font-size:12px;color:var(--muted);min-width:3em;flex:none}
 button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;min-height:36px}
 button[aria-pressed="true"]{background:var(--on);border-color:var(--accent);color:var(--accent)}
 button:focus-visible{outline:3px solid #e9a72a;outline-offset:2px}
@@ -32,7 +32,7 @@ footer a{color:var(--accent)}
 <main id="stage" aria-label="響のアバター"><div id="status">読み込み中…</div></main>
 <nav aria-label="操作">
   <div class="row"><span>表示</span><button data-view="bust" aria-pressed="true">バストアップ</button><button data-view="full" aria-pressed="false">全身</button><button data-view="face" aria-pressed="false">顔</button><button id="demo" aria-pressed="true">自動デモ</button></div>
-  <div class="row"><span>動作</span><button data-gesture="wave" data-talk="2">手を振る</button><button data-gesture="explain" data-talk="3">説明する</button><button data-gesture="both">両手</button><button data-gesture="nod">うなずく</button><button data-gesture="tilt">首をかしげる</button><button id="talk">話す</button></div>
+  <div class="row"><span>動作</span><button data-gesture="wave" data-talk="2">手を振る</button><button data-gesture="explain" data-talk="3">説明する</button><button data-gesture="both">両手</button><button data-gesture="point">指さす</button><button data-gesture="think">考える</button><button data-gesture="nod">うなずく</button><button data-gesture="tilt">首をかしげる</button><button id="talk">話す</button></div>
   <div class="row"><span>表情</span><button data-expression="neutral" aria-pressed="true">ふつう</button><button data-expression="smile" aria-pressed="false">笑顔</button><button data-expression="surprise" aria-pressed="false">驚き</button><button data-expression="think" aria-pressed="false">考える</button><button data-expression="sad" aria-pressed="false">困り</button></div>
 </nav>
 <footer>完成版ではありません（評価用）。音声は使いません（口の動きは疑似発話）。<a href="v47.html">以前の動作確認動画（v47）</a></footer>

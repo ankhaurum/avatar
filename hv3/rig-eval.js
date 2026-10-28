@@ -145,11 +145,14 @@ export class RigModel {
       const part = { ...p, rest: Float32Array.from(p.mesh.positions) };
       part.positions = new Float32Array(part.rest.length);
       part.parentNode = p.parent ? this.nodes.get(p.parent) : null;
+      // optional second parent: per-vertex weights blend the two deformations (joints)
+      if (p.blend) { part.blendNode = this.nodes.get(p.blend.parent); part.blendWeights = Float32Array.from(p.blend.weights); part.blendTmp = new Float32Array(part.rest.length); }
       if (p.keyforms) {
         p.keyforms.forms = p.keyforms.forms.map(f => Float32Array.from(f));
         part.offset = new Float32Array(part.rest.length);
       }
       part.opacity = 1;
+      part.drawOrder = p.order;
       return part;
     });
     this.physics = new Physics(json.physics || []);
@@ -166,8 +169,22 @@ export class RigModel {
         blendArrays(p.keyforms, this.values, p.offset);
         for (let i = 0; i < p.rest.length; i++) p.positions[i] = p.rest[i] + p.offset[i];
       } else p.positions.set(p.rest);
+      if (p.blendNode) {
+        p.blendTmp.set(p.positions);
+        p.blendNode.apply(p.blendTmp, p.blendTmp);
+      }
       if (p.parentNode) p.parentNode.apply(p.positions, p.positions);
+      if (p.blendNode) for (let i = 0, k = 0; k < p.positions.length; i++, k += 2) {
+        const w = p.blendWeights[i];
+        p.positions[k] += (p.blendTmp[k] - p.positions[k]) * w;
+        p.positions[k + 1] += (p.blendTmp[k + 1] - p.positions[k + 1]) * w;
+      }
       p.opacity = p.opacityKeys ? blendScalars(p.opacityKeys, this.values, ['o']).o : 1;
+      // a forearm crossing in front of the body is drawn above it
+      if (p.orderSwitch) {
+        p.drawOrder = p.order;
+        for (const sw of p.orderSwitch) { const v = this.values[sw.param]; if ((sw.below !== undefined && v < sw.below) || (sw.above !== undefined && v > sw.above)) { p.drawOrder = p.order + sw.add; break; } }
+      }
     }
   }
 }
