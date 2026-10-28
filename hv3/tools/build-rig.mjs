@@ -27,7 +27,7 @@ for (const s of ['R', 'L']) {
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
 for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕']]) b.param(id, 0, 1, 0, label);
-for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['HairBack', '後ろ髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ']]) b.param(id, -1.5, 1.5, 0, label);
+for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ']]) b.param(id, -1.5, 1.5, 0, label);
 
 // ---- body
 const hips = joint('hips');
@@ -52,18 +52,20 @@ const turn = (a, bulge) => (ax, ay) => (x, y) => {
   return [ax / 30 * (a + bulge * z), -ay / 30 * (a * 0.5 + bulge * 0.45 * z)];
 };
 b.warp('head_turn', 'head', [H.x, H.y, H.w, H.h], 8, 8, { params: ['AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30]], fn: turn(5, 12) });
-b.warp('hair_back_turn', 'head', [H.x, H.y, H.w, H.h + 10], 4, 4, { params: ['AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30]], fn: (ax, ay) => () => [-ax / 30 * 3, ay / 30 * 2] });
 // hair sway: tips move most, roots stay
 const sway = (y0, h, amp, lift = 0.25) => v => (x, y) => { const t = Math.max(0, Math.min(1, (y - y0) / h)); const k = Math.pow(t, 1.6); return [v * amp * k, Math.abs(v) * amp * lift * k * k]; };
 const box = id => { const p = r3.get(id); return [p.x, p.y, p.w, p.h]; };
 const pad = ([x, y, w, h], m) => [x - m, y - m, w + 2 * m, h + 2 * m];
-const fr = pad([440, 65, 156, 130], 6);
+// head skin and hair come from approved art A (native resolution), placed on the
+// R3 head with the same similarity as the face features
+const artA = { scale: 0.551, offset: [223.5, 6.4] };
+const metaA = JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json')));
+const aBox = n => { const m = metaA[n]; return [artA.offset[0] + m.x * artA.scale, artA.offset[1] + m.y * artA.scale, m.w * artA.scale, m.h * artA.scale]; };
+const fr = pad(aBox('hair_front'), 6);
 b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront'], keys: [[-1.5, 0, 1.5]], fn: sway(fr[1] + 10, fr[3] - 10, 4.5) });
-const sideR = pad(box('hair_side_R'), 4), sideL = pad(box('hair_side_L'), 4);
+const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 b.warp('side_sway_R', 'head_turn', sideR, 4, 6, { params: ['HairSide'], keys: [[-1.5, 0, 1.5]], fn: sway(sideR[1] + 70, sideR[3] - 70, 7) });
 b.warp('side_sway_L', 'head_turn', sideL, 4, 6, { params: ['HairSide'], keys: [[-1.5, 0, 1.5]], fn: sway(sideL[1] + 70, sideL[3] - 70, 7) });
-const back = pad(box('hair_back'), 4);
-b.warp('back_sway', 'hair_back_turn', back, 4, 6, { params: ['HairBack'], keys: [[-1.5, 0, 1.5]], fn: sway(back[1] + 90, back[3] - 90, 6) });
 
 // ---- arms (R = character's right = viewer left). Outward raise turns the
 // right arm clockwise on screen and the left arm counter-clockwise.
@@ -100,10 +102,8 @@ const parentOf = p => {
   if (/^chest_charm/.test(id)) return 'chest_charm_swing';
   if (/^chest_bow/.test(id)) return 'chest_bow_sway';
   if (/^(bodice|collar|neck|shoulder_frill)/.test(id)) return 'torso';
-  if (id === 'hair_back') return 'back_sway';
-  if (/^hair_side_/.test(id)) return 'side_sway_' + id.slice(-1);
-  if (/^hair_fringe/.test(id)) return 'fringe_sway';
-  if (/^(hair_crown|face_base|ear_)/.test(id)) return 'head_turn';
+  // R3 head skin, ears and hair are replaced by art A (see below)
+  if (/^(hair_|face_base|ear_)/.test(id)) return 'skip';
   if (/^mouth_/.test(id)) return 'skip';
   // the bare forearm is fully covered by the glove sleeve; at large elbow angles
   // its rounded ends would show past the elbow frill
@@ -155,13 +155,18 @@ const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach' };
 for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of Object.entries(pz.layers))
   await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: 'torso', order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
     opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
+// art A head: skin under the face features, side hair over the face edge, fringe over the brows
+const aPart = (id, parent, order, o = {}) => b.part(id, { file: id + '.png', offset: [artA.offset[0] + metaA[id].x * artA.scale, artA.offset[1] + metaA[id].y * artA.scale], texScale: 1 / artA.scale, parent, order, spacing: 8, dilate: 2, ...o });
+await aPart('head_skin', 'head_turn', 80);
+await aPart('hair_side_R', 'side_sway_R', 83, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
+await aPart('hair_side_L', 'side_sway_L', 83.1, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
+await aPart('hair_front', 'fringe_sway', 94, { spacing: 7, tips: { spacing: 3, at: 0.9 } });
 // face: art A features placed on the R3 head (similarity: eye and mouth centres)
 await buildFace(b, { parent: 'head_turn', z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 
 // ---- physics (inputs are normalised parameter values)
 b.physics({ output: 'HairFront', inputs: [['AngleX', 1 / 30], ['AngleZ', 1 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.5 / 10]], follow: 0.6, frequency: 1.6, damping: 0.22, inertia: 0.08 });
 b.physics({ output: 'HairSide', inputs: [['AngleX', 1 / 30], ['AngleZ', 1.2 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.6 / 10]], follow: 0.7, frequency: 1.2, damping: 0.2, inertia: 0.1 });
-b.physics({ output: 'HairBack', inputs: [['AngleX', 0.8 / 30], ['AngleZ', 1 / 30], ['BodyAngleX', 1 / 10]], follow: 0.6, frequency: 1.0, damping: 0.2, inertia: 0.1 });
 b.physics({ output: 'BowSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10], ['Breath', 0.15]], follow: 0.6, frequency: 1.4, damping: 0.18, inertia: 0.1 });
 b.physics({ output: 'SkirtSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1.2 / 10]], follow: 0.5, frequency: 1.1, damping: 0.25, inertia: 0.12 });
 b.physics({ output: 'DrapeSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10]], follow: 0.6, frequency: 0.7, damping: 0.2, inertia: 0.12 });

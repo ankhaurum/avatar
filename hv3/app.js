@@ -9,8 +9,8 @@ const status = $('#status');
 try {
   const json = await (await fetch(new URL('hibiki.rig.json', base), { cache: 'no-cache' })).json();
   const model = new RigModel(json);
-  const stage = $('#stage');
-  const renderer = await new AvatarRenderer().init(stage, model, base.href);
+  const stage = $('#stage'), box = $('#avatar');
+  const renderer = await new AvatarRenderer().init(box, model, base.href);
   const motion = new MotionController(model);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let demo = !reduce, demoT = 0, demoStep = 0;
@@ -33,14 +33,28 @@ try {
   for (const el of document.querySelectorAll('[data-expression]')) el.addEventListener('click', () => { setDemo(false); motion.setExpression(el.dataset.expression); for (const b of document.querySelectorAll('[data-expression]')) b.setAttribute('aria-pressed', String(b === el)); });
   $('#talk').addEventListener('click', () => { setDemo(false); motion.talk(3); });
   for (const el of document.querySelectorAll('[data-view]')) el.addEventListener('click', () => { renderer.setView(el.dataset.view); for (const b of document.querySelectorAll('[data-view]')) b.setAttribute('aria-pressed', String(b === el)); });
-  // look toward the pointer (relative to the face)
-  const look = e => {
-    const r = stage.getBoundingClientRect();
-    const fx = r.left + r.width / 2, fy = r.top + r.height * 0.32;
-    motion.lookAt((e.clientX - fx) / (r.width * 0.5), (e.clientY - fy) / (r.height * 0.5), 2);
+  // Gaze: the pointer anywhere on the page (mouse) or a tap anywhere (touch) is
+  // looked at; listeners are passive so scrolling and buttons work as usual.
+  const faceOnScreen = () => {
+    const r = renderer.app.canvas.getBoundingClientRect(), root = renderer.root;
+    return [r.left + root.position.x + 511 * root.scale.x, r.top + root.position.y + 150 * root.scale.y];
   };
-  stage.addEventListener('pointermove', look);
-  stage.addEventListener('pointerdown', look);
+  const look = e => {
+    if (e.type === 'pointermove' && e.pointerType !== 'mouse') return;
+    const [fx, fy] = faceOnScreen();
+    const sx = Math.max(240, innerWidth * 0.4), sy = Math.max(240, innerHeight * 0.4);
+    motion.lookAt((e.clientX - fx) / sx, (e.clientY - fy) / sy, 3);
+  };
+  addEventListener('pointermove', look, { passive: true });
+  addEventListener('pointerdown', look, { passive: true });
+  // placement on the page decides the base orientation (re-read every frame, so
+  // moving or resizing the avatar takes effect immediately)
+  const facing = () => { const r = box.getBoundingClientRect(); return ((r.left + r.width / 2) - innerWidth / 2) / (innerWidth / 2); };
+  for (const el of document.querySelectorAll('[data-place]')) el.addEventListener('click', () => {
+    stage.dataset.place = el.dataset.place;
+    for (const b of document.querySelectorAll('[data-place]')) b.setAttribute('aria-pressed', String(b === el));
+    renderer.app.resize();
+  });
   let last = performance.now();
   renderer.app.ticker.add(() => {
     const now = performance.now(), dt = Math.min(0.05, (now - last) / 1000); last = now;
@@ -48,6 +62,7 @@ try {
       demoT += dt;
       while (demoStep < DEMO.length && demoT >= DEMO[demoStep][0]) { const f = DEMO[demoStep][1]; if (f) f(); else { demoT = 0; demoStep = -1; } demoStep++; }
     }
+    motion.setFacing(facing());
     motion.update(reduce ? dt * 0.4 : dt);
     model.update(dt);
     renderer.sync();

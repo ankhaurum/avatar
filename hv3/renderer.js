@@ -28,7 +28,14 @@ export class AvatarRenderer {
     this.app.stage.addChild(this.root);
     const files = [...new Set(model.parts.map(p => p.texture))];
     const textures = new Map();
-    await Promise.all(files.map(async f => textures.set(f, await Assets.load(new URL('parts/' + f, baseURL).href))));
+    // mipmaps with trilinear filtering keep edges smooth when parts are shown smaller than their texture
+    await Promise.all(files.map(async f => {
+      const tex = await Assets.load({ src: new URL('parts/' + f, baseURL).href, data: { autoGenerateMipmaps: true } });
+      tex.source.style.mipmapFilter = 'linear';
+      tex.source.style.maxAnisotropy = 4;
+      tex.source.updateMipmaps();
+      textures.set(f, tex);
+    }));
     this.items = [];
     const byId = new Map(), maskGroups = new Map();
     const make = (p, cut) => {
@@ -53,6 +60,8 @@ export class AvatarRenderer {
     }
     this.setView('bust');
     this.app.renderer.on('resize', () => this.layout());
+    // the host box can change size without a window resize (placement on the page)
+    new ResizeObserver(() => this.app.resize()).observe(host);
     return this;
   }
   setView(name) { this.view = VIEWS[name] || name; this.layout(); }
