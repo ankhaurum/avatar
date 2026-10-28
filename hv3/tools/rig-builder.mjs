@@ -39,7 +39,7 @@ export class RigBuilder {
     return d;
   }
   rotation(id, parent, pivot, block) {
-    const d = { id, type: 'rotation', parent, pivot };
+    const d = { id, type: 'rotation', parent, pivot: [...pivot] };
     if (block) d.keyforms = { params: block.params, keys: block.keys, forms: this.forms(block, 0, vals => block.fn(...vals)) };
     this.rig.deformers.push(d);
     return d;
@@ -78,6 +78,21 @@ export class RigBuilder {
     return p;
   }
   physics(group) { this.rig.physics.push(group); }
+  // Re-express the whole rig in another unit system: X = (x - origin) * k.
+  // Used to make approved art A pixels the rig unit, so the head is native.
+  rescale(k, origin, size) {
+    const P = (a) => { for (let i = 0; i < a.length; i += 2) { a[i] = round((a[i] - origin[0]) * k); a[i + 1] = round((a[i + 1] - origin[1]) * k); } };
+    const D = (a) => { for (let i = 0; i < a.length; i++) a[i] = round(a[i] * k); };
+    const r = this.rig;
+    r.canvas = { width: size[0], height: size[1] };
+    for (const d of r.deformers) {
+      if (d.type === 'warp') { P(d.rest); d.rect = [(d.rect[0] - origin[0]) * k, (d.rect[1] - origin[1]) * k, d.rect[2] * k, d.rect[3] * k].map(round); d.keyforms?.forms.forEach(D); }
+      else { P(d.pivot); d.keyforms?.forms.forEach(f => { if (f.dx) f.dx = round(f.dx * k); if (f.dy) f.dy = round(f.dy * k); }); }
+    }
+    for (const p of r.parts) { P(p.mesh.positions); p.keyforms?.forms.forEach(D); }
+    if (r.views) for (const v of Object.values(r.views)) { v[0] = round((v[0] - origin[0]) * k); v[1] = round((v[1] - origin[1]) * k); v[2] = round(v[2] * k); v[3] = round(v[3] * k); }
+    if (r.headCenter) r.headCenter = [round((r.headCenter[0] - origin[0]) * k), round((r.headCenter[1] - origin[1]) * k)];
+  }
   write(name) {
     fs.writeFileSync(path.join(this.outDir, name), JSON.stringify(this.rig));
     const v = this.rig.parts.reduce((a, p) => a + p.mesh.positions.length / 2, 0);

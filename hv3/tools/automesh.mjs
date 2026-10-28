@@ -139,6 +139,15 @@ export function autoMesh(alpha, w, h, opts = {}) {
   for (let i = 0; i < w * h; i++) mask[i] = alpha[i] > (opts.threshold ?? 4) ? 1 : 0;
   // pad by one pixel so the outline never touches the texture border
   mask = dilate(mask, w, h, opts.dilate ?? 2);
+  // fill holes: a triangle spanning a transparent hole (an ear seen through the
+  // hair) would otherwise be dropped together with the opaque pixels around it
+  if (opts.fillHoles ?? true) {
+    const out = new Uint8Array(w * h), q = [];
+    for (let x = 0; x < w; x++) for (const y of [0, h - 1]) { const i = y * w + x; if (!mask[i] && !out[i]) { out[i] = 1; q.push(i); } }
+    for (let y = 0; y < h; y++) for (const x of [0, w - 1]) { const i = y * w + x; if (!mask[i] && !out[i]) { out[i] = 1; q.push(i); } }
+    while (q.length) { const i = q.pop(), x = i % w; for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, i - w, i + w]) if (j >= 0 && j < w * h && !mask[j] && !out[j]) { out[j] = 1; q.push(j); } }
+    for (let i = 0; i < w * h; i++) mask[i] = out[i] ? 0 : 1;
+  }
   let loops = traceLoops(mask, w, h)
     .map(l => simplify(l, p => Math.max(0.7, spacingOf(p) / 10)))
     .filter(l => { let a = 0; for (let i = 0; i < l.length; i++) { const p = l[i], q = l[(i + 1) % l.length]; a += p[0] * q[1] - q[0] * p[1]; } return Math.abs(a) / 2 > spacingOf(l[0]) * spacingOf(l[0]) * 0.15; })

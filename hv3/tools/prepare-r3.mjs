@@ -14,8 +14,9 @@ const out = path.resolve(path.dirname(new URL(import.meta.url).pathname).replace
 fs.mkdirSync(out, { recursive: true });
 const manifest = JSON.parse(fs.readFileSync(path.join(r3, 'manifest.json')));
 const diff = JSON.parse(fs.readFileSync(path.join(hand4, 'manifest_hand4.diff.json')));
-// face features come from art A; the bare forearm is fully covered by the glove sleeve
-const skip = /^(eye_|eyelid_|eyelash_|brow_|lip_|forearm_)/;
+// face features, head skin and hair come from art A; the bare forearm is fully
+// covered by the glove sleeve
+const skip = /^(eye_|eyelid_|eyelash_|brow_|lip_|forearm_|hair_|face_base|ear_)/;
 const parts = [...manifest.parts.filter(p => !skip.test(p.id)), ...diff.parts_upsert_by_id.map(p => ({ ...p, src: hand4 }))];
 const list = [];
 for (const p of parts) {

@@ -15,7 +15,9 @@ header{display:flex;align-items:baseline;gap:12px;padding:12px 16px 4px;flex-wra
 h1{font-size:18px;margin:0;letter-spacing:.04em}
 header p{margin:0;font-size:12px;color:var(--muted)}
 #stage{position:relative;flex:1;min-height:60vh;touch-action:pan-y;background:radial-gradient(ellipse at 50% 35%,#ffffff55,transparent 70%)}
-#stage canvas{position:absolute;inset:0;width:100%;height:100%}
+#avatar{position:absolute;top:0;bottom:0;left:0;right:0;transition:left .5s ease,right .5s ease}
+#stage[data-place="left"] #avatar{right:42%}#stage[data-place="right"] #avatar{left:42%}
+#avatar canvas{position:absolute;inset:0;width:100%;height:100%}
 #status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;padding:16px;text-align:center}
 nav{background:var(--panel);border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-area-inset-bottom));display:grid;gap:8px}
 .row{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.row::-webkit-scrollbar{display:none}.row button{flex:none}
@@ -28,10 +30,11 @@ footer a{color:var(--accent)}
 </style>
 </head>
 <body>
-<header><h1>響 V3</h1><p>制作中の試作です（PixiJSによる独自2Dリグ）。画面に触れると視線が追います。</p></header>
-<main id="stage" aria-label="響のアバター"><div id="status">読み込み中…</div></main>
+<header><h1>響 V3</h1><p>制作中の試作です（PixiJSによる独自2Dリグ）。画面のどこに触れても（PCではマウスの位置を）目で追います。</p></header>
+<main id="stage" data-place="center"><div id="avatar" aria-label="響のアバター"></div><div id="status">読み込み中…</div></main>
 <nav aria-label="操作">
   <div class="row"><span>表示</span><button data-view="bust" aria-pressed="true">バストアップ</button><button data-view="full" aria-pressed="false">全身</button><button data-view="face" aria-pressed="false">顔</button><button id="demo" aria-pressed="true">自動デモ</button></div>
+  <div class="row"><span>配置</span><button data-place="left" aria-pressed="false">左</button><button data-place="center" aria-pressed="true">中央</button><button data-place="right" aria-pressed="false">右</button></div>
   <div class="row"><span>動作</span><button data-gesture="wave" data-talk="2">手を振る</button><button data-gesture="explain" data-talk="3">説明する</button><button data-gesture="both">両手</button><button data-gesture="point">指さす</button><button data-gesture="chest">胸に手を当てる</button><button data-gesture="chin">顎に手を添える</button><button data-gesture="reach" data-talk="2">手を差し出す</button><button data-gesture="nod">うなずく</button><button data-gesture="tilt">首をかしげる</button><button id="talk">話す</button></div>
   <div class="row"><span>表情</span><button data-expression="neutral" aria-pressed="true">ふつう</button><button data-expression="smile" aria-pressed="false">笑顔</button><button data-expression="surprise" aria-pressed="false">驚き</button><button data-expression="think" aria-pressed="false">考える</button><button data-expression="sad" aria-pressed="false">困り</button></div>
 </nav>

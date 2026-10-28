@@ -28,7 +28,14 @@ export class AvatarRenderer {
     this.app.stage.addChild(this.root);
     const files = [...new Set(model.parts.map(p => p.texture))];
     const textures = new Map();
-    await Promise.all(files.map(async f => textures.set(f, await Assets.load(new URL('parts/' + f, baseURL).href))));
+    // mipmaps with trilinear filtering keep edges smooth when parts are shown smaller than their texture
+    await Promise.all(files.map(async f => {
+      const tex = await Assets.load({ src: new URL('parts/' + f, baseURL).href, data: { autoGenerateMipmaps: true } });
+      tex.source.style.mipmapFilter = 'linear';
+      tex.source.style.maxAnisotropy = 4;
+      tex.source.updateMipmaps();
+      textures.set(f, tex);
+    }));
     this.items = [];
     const byId = new Map(), maskGroups = new Map();
     const make = (p, cut) => {
@@ -53,13 +60,15 @@ export class AvatarRenderer {
     }
     this.setView('bust');
     this.app.renderer.on('resize', () => this.layout());
+    // the host box can change size without a window resize (placement on the page)
+    new ResizeObserver(() => this.app.resize()).observe(host);
     return this;
   }
-  setView(name) { this.view = VIEWS[name] || name; this.layout(); }
+  setView(name) { this.view = (this.model.json.views || VIEWS)[name] || name; this.layout(); }
   layout() {
     const [x, y, w, h] = this.view, W = this.app.screen.width, H = this.app.screen.height;
-    // the face (art A, about 1.8 texture px per unit) is never shown above ~2x
-    const s = Math.min(W / w, H / h, 3.6 / this.app.renderer.resolution);
+    // the face (art A, 1 texture px per unit) is never shown above ~2x
+    const s = Math.min(W / w, H / h, (this.model.json.views ? 2 : 3.6) / this.app.renderer.resolution);
     this.root.scale.set(s);
     this.root.position.set((W - w * s) / 2 - x * s, (H - h * s) / 2 - y * s);
   }
