@@ -24,6 +24,9 @@ for (const s of ['R', 'L']) {
   b.param('Wrist' + s, -40, 40, 0, ja + '手首');
   b.param('Hand' + s, 0, 4, 0, ja + '手の形');
 }
+// pose arm sets drawn from ChatGPT's pose images replace both everyday arms
+b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
+for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕']]) b.param(id, 0, 1, 0, label);
 for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['HairBack', '後ろ髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ']]) b.param(id, -1.5, 1.5, 0, label);
 
 // ---- body
@@ -122,8 +125,9 @@ for (const p of r3m.parts) {
   if (/^hand_/.test(p.id)) {
     const s = p.id[5], k = handShapes.indexOf(p.id.slice(6));
     o.spacing = 6;
-    o.opacity = { params: ['Hand' + s], keys: [[0, 1, 2, 3, 4]], fn: v => (v === k ? 1 : 0) };
+    o.opacity = { params: ['Hand' + s, 'ArmsDefault'], keys: [[0, 1, 2, 3, 4], [0, 1]], fn: (v, d) => (v === k ? d : 0) };
   }
+  if (/^(upper_arm|sleeve)_/.test(p.id)) o.opacity = { params: ['ArmsDefault'], keys: [[0, 1]], fn: d => d };
   // shoulder: the top of the upper arm stays with the torso so the joint bends
   let m = p.id.match(/^(upper_arm|sleeve_upper)_(R|L)$/);
   if (m) {
@@ -144,6 +148,13 @@ for (const p of r3m.parts) {
   if (m) o.orderSwitch = [{ param: 'Elbow' + m[1], above: 95, add: 30 }];
   await b.part(p.id, o);
 }
+// pose arms: upper (shoulder skin, puff sleeve) under the R3 shoulder frills,
+// lower (forearm sleeve, cuff, hands) in front of the chest ribbons and the face
+const poseM = JSON.parse(fs.readFileSync(path.join(out, 'parts/pose/manifest.json')));
+const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach' };
+for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of Object.entries(pz.layers))
+  await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: 'torso', order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
+    opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
 // face: art A features placed on the R3 head (similarity: eye and mouth centres)
 await buildFace(b, { parent: 'head_turn', z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 

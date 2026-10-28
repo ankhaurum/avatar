@@ -18,11 +18,13 @@ try {
     [0, () => { motion.setExpression('smile'); motion.gesture('wave'); motion.talk(2.4); }],
     [3.6, () => { motion.setExpression('neutral'); motion.talk(3.2); motion.gesture('explain'); }],
     [7.6, () => { motion.gesture('nod'); }],
-    [9.4, () => { motion.setExpression('think'); }],
-    [11.6, () => { motion.setExpression('surprise'); motion.gesture('both'); }],
-    [13.4, () => { motion.setExpression('smile'); motion.gesture('tilt'); motion.talk(1.6); }],
-    [16.5, () => { motion.setExpression('neutral'); }],
-    [19, null]
+    [8.4, () => { motion.setExpression('think'); motion.gesture('chin'); }],
+    [13, () => { motion.setExpression('surprise'); motion.gesture('both'); }],
+    [16.8, () => { motion.setExpression('smile'); motion.gesture('chest'); motion.talk(1.6); }],
+    [21, () => { motion.setExpression('neutral'); motion.gesture('reach'); motion.talk(2.2); }],
+    [25.2, () => { motion.gesture('tilt'); }],
+    [27.6, () => { motion.setExpression('neutral'); }],
+    [30, null]
   ];
   const setDemo = on => { demo = on; demoT = 0; demoStep = 0; $('#demo').setAttribute('aria-pressed', String(on)); if (!on) motion.setExpression('neutral'); };
   setDemo(demo);

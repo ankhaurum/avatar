@@ -1,0 +1,84 @@
+{
+ "units": "1024x1536 rig units",
+ "textureScale": 2,
+ "poses": {
+  "chest": {
+   "source": "Hibiki_V3_01_Chest_Native.png",
+   "sha256": "37f2a82b531f4c17f848381837621a3d576234dd0eaab7081ca2b937ac062c13",
+   "transform": {
+    "a": 1.0580148000965808,
+    "b": -0.0385210780312977,
+    "tx": -43.010780510650875,
+    "ty": 18.426045845142312
+   },
+   "layers": {
+    "upper": {
+     "file": "pose/chest_upper.png",
+     "x": 282,
+     "y": 288,
+     "w": 457,
+     "h": 256
+    },
+    "lower": {
+     "file": "pose/chest_lower.png",
+     "x": 346,
+     "y": 314,
+     "w": 330,
+     "h": 219
+    }
+   }
+  },
+  "chin": {
+   "source": "Hibiki_V3_02_Chin_Native_REVIEW.png",
+   "sha256": "735f9f97fc0b2475d2b44f437f2fb459943f2ece3b7b375a0b8e836474d20a5f",
+   "transform": {
+    "a": 1.0611723815408118,
+    "b": -0.02335655267752977,
+    "tx": -43.18467145310399,
+    "ty": 5.819829620553662
+   },
+   "layers": {
+    "upper": {
+     "file": "pose/chin_upper.png",
+     "x": 316,
+     "y": 290,
+     "w": 395,
+     "h": 236
+    },
+    "lower": {
+     "file": "pose/chin_lower.png",
+     "x": 349,
+     "y": 212,
+     "w": 323,
+     "h": 344
+    }
+   }
+  },
+  "reach": {
+   "source": "Hibiki_V3_03_Reach_Native.png",
+   "sha256": "9c551806b689f12d3bead4f46251535fca41a8a347fb5f4c8c18b49c74b022fd",
+   "transform": {
+    "a": 1.0530867244649367,
+    "b": -0.030589678474230598,
+    "tx": -45.27598666370375,
+    "ty": 11.365479033298982
+   },
+   "layers": {
+    "upper": {
+     "file": "pose/reach_upper.png",
+     "x": 305,
+     "y": 288,
+     "w": 425,
+     "h": 245
+    },
+    "lower": {
+     "file": "pose/reach_lower.png",
+     "x": 311,
+     "y": 287,
+     "w": 407,
+     "h": 316
+    }
+   }
+  }
+ }
+}
