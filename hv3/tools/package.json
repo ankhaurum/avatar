@@ -1,0 +1,10 @@
+{
+  "name": "hibiki-v3-rig-tools",
+  "private": true,
+  "type": "module",
+  "description": "Authoring tools for the Hibiki V3 rig (not shipped to the browser)",
+  "dependencies": {
+    "cdt2d": "1.0.0",
+    "sharp": "0.33.5"
+  }
+}

@@ -1,35 +1,41 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>響 V3 — 動作確認動画</title>
-  <style>
-    :root{font-family:system-ui,"Yu Gothic",sans-serif;color:#16233a;background:#eef3fa;color-scheme:light}
-    *{box-sizing:border-box}body{margin:0}main{max-width:1000px;margin:auto;padding:36px 20px 48px}
-    .eyebrow{font-size:13px;letter-spacing:.12em;color:#416197;margin:0 0 8px}h1{font-size:clamp(25px,4vw,36px);margin:0 0 12px}
-    p{line-height:1.8;margin:8px 0 18px}.muted{color:#51617a;font-size:14px}.player{background:#fff;border:1px solid #dce5f2;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px #172f5910}
-    video{display:block;width:100%;max-height:76vh;background:#f8faff}.links{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}a{color:#1854a5}.button{display:inline-block;padding:12px 18px;border:1px solid #becfe8;border-radius:9px;background:#fff;text-decoration:none;font-weight:600}.button.primary{color:#fff;background:#245ec1;border-color:#245ec1}
-    a:focus-visible{outline:3px solid #e9a72a;outline-offset:3px}footer{margin-top:30px;border-top:1px solid #d6e0ee;padding-top:16px}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>響 V3</title>
+<style>
+:root{--bg:#eef2f8;--panel:#ffffffd9;--ink:#16233a;--muted:#5a6880;--line:#d3dceb;--accent:#2457c5;--on:#e5edfc;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11161f;--panel:#1a2230e6;--ink:#e6ecf5;--muted:#9aa7bb;--line:#2c374a;--accent:#7aa2ff;--on:#22304a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11161f;--panel:#1a2230e6;--ink:#e6ecf5;--muted:#9aa7bb;--line:#2c374a;--accent:#7aa2ff;--on:#22304a;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,"Yu Gothic UI","Hiragino Sans",sans-serif}
+body{display:flex;flex-direction:column;min-height:100dvh}
+header{display:flex;align-items:baseline;gap:12px;padding:12px 16px 4px;flex-wrap:wrap}
+h1{font-size:18px;margin:0;letter-spacing:.04em}
+header p{margin:0;font-size:12px;color:var(--muted)}
+#stage{position:relative;flex:1;min-height:52vh;touch-action:pan-y;background:radial-gradient(ellipse at 50% 35%,#ffffff55,transparent 70%)}
+#stage canvas{position:absolute;inset:0;width:100%;height:100%}
+#status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;padding:16px;text-align:center}
+nav{background:var(--panel);border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-area-inset-bottom));display:grid;gap:8px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.row span{font-size:12px;color:var(--muted);min-width:3.5em}
+button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;min-height:36px}
+button[aria-pressed="true"]{background:var(--on);border-color:var(--accent);color:var(--accent)}
+button:focus-visible{outline:3px solid #e9a72a;outline-offset:2px}
+footer{font-size:11px;color:var(--muted);padding:6px 16px 12px;background:var(--panel)}
+footer a{color:var(--accent)}
+</style>
 </head>
 <body>
-<main>
-  <p class="eyebrow">HIBIKI V3 · WORK IN PROGRESS</p>
-  <h1>響 V3 動作確認動画</h1>
-  <p>制作中のモデル v47。左右の目の開閉・中間形状と、既存の体・髪の動きを確認する動画です。</p>
-  <div class="player">
-    <video controls playsinline preload="metadata" poster="media/hibiki-v47-motion-20261027.jpg" aria-label="制作中の響V3、左右の瞬きと体・髪の動作確認">
-      <source src="media/hibiki-v47-motion-20261027.mp4" type="video/mp4">
-      <p><a href="media/hibiki-v47-motion-20261027.mp4">MP4動画を開く</a></p>
-    </video>
-  </div>
-  <div class="links">
-    <a class="button primary" href="media/hibiki-v47-motion-20261027.mp4" download>MP4を保存</a>
-    <a class="button" href="studies/continuity/?v=eyecompose-20261023">従来の操作プレビュー</a>
-  </div>
-  <p class="muted">2026年10月27日更新。Cubismのモデルを用いた動作確認用の映像です。モデル全体の完成・正式採用を示すものではありません。従来の操作プレビューは、この動画のモデルとは別の版です。</p>
-  <footer class="muted">音声なし。再生・一時停止・全画面表示は動画のコントロールから操作できます。</footer>
-</main>
+<header><h1>響 V3</h1><p>制作中の試作です（PixiJSによる独自2Dリグ）。画面に触れると視線が追います。</p></header>
+<main id="stage" aria-label="響のアバター"><div id="status">読み込み中…</div></main>
+<nav aria-label="操作">
+  <div class="row"><span>表示</span><button data-view="bust" aria-pressed="true">バストアップ</button><button data-view="full" aria-pressed="false">全身</button><button data-view="face" aria-pressed="false">顔</button><button id="demo" aria-pressed="true">自動デモ</button></div>
+  <div class="row"><span>動作</span><button data-gesture="wave" data-talk="2">手を振る</button><button data-gesture="explain" data-talk="3">説明する</button><button data-gesture="both">両手</button><button data-gesture="nod">うなずく</button><button data-gesture="tilt">首をかしげる</button><button id="talk">話す</button></div>
+  <div class="row"><span>表情</span><button data-expression="neutral" aria-pressed="true">ふつう</button><button data-expression="smile" aria-pressed="false">笑顔</button><button data-expression="surprise" aria-pressed="false">驚き</button><button data-expression="think" aria-pressed="false">考える</button><button data-expression="sad" aria-pressed="false">困り</button></div>
+</nav>
+<footer>完成版ではありません（評価用）。音声は使いません（口の動きは疑似発話）。<a href="v47.html">以前の動作確認動画（v47）</a></footer>
+<script type="module" src="hv3/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+// PixiJS renderer for the Hibiki rig. Every part is a textured Mesh whose
+// vertex buffer is rewritten each frame from RigModel. Following the earlier V3
+// WebGL2 renderer, textures are premultiplied and stencil masks are drawn with
+// a discard threshold so a clip follows the mask's opaque pixels rather than
+// its triangles.
+import { Application, Container, Mesh, MeshGeometry, Shader, UniformGroup, Assets } from './vendor/pixi.min.mjs';
+
+const vertex = `in vec2 aPosition;in vec2 aUV;out vec2 vUV;
+uniform mat3 uProjectionMatrix;uniform mat3 uWorldTransformMatrix;uniform mat3 uTransformMatrix;
+void main(){mat3 m=uProjectionMatrix*uWorldTransformMatrix*uTransformMatrix;gl_Position=vec4((m*vec3(aPosition,1.0)).xy,0.0,1.0);vUV=aUV;}`;
+const fragment = `in vec2 vUV;uniform sampler2D uTexture;uniform float uAlpha;uniform float uCut;out vec4 finalColor;
+void main(){vec4 c=texture(uTexture,vUV);if(c.a<uCut)discard;finalColor=c*uAlpha;}`;
+
+export const VIEWS = {
+  bust: [262, 24, 500, 600],
+  face: [400, 170, 260, 260],
+  full: [0, 0, 1024, 1536]
+};
+
+export class AvatarRenderer {
+  async init(host, model, baseURL) {
+    this.model = model;
+    this.app = new Application();
+    await this.app.init({ resizeTo: host, backgroundAlpha: 0, antialias: true, autoDensity: true, resolution: Math.min(2, window.devicePixelRatio || 1), preference: 'webgl' });
+    host.appendChild(this.app.canvas);
+    this.root = new Container();
+    this.app.stage.addChild(this.root);
+    const files = [...new Set(model.parts.map(p => p.texture))];
+    const textures = new Map();
+    await Promise.all(files.map(async f => textures.set(f, await Assets.load(new URL('parts/' + f, baseURL).href))));
+    this.items = [];
+    const byId = new Map(), maskGroups = new Map();
+    const make = (p, cut) => {
+      const geometry = new MeshGeometry({ positions: Float32Array.from(p.rest), uvs: Float32Array.from(p.mesh.uvs), indices: new Uint32Array(p.mesh.triangles) });
+      const uniforms = new UniformGroup({ uAlpha: { value: 1, type: 'f32' }, uCut: { value: cut, type: 'f32' } });
+      const shader = Shader.from({ gl: { vertex, fragment }, resources: { uTexture: textures.get(p.texture).source, u: uniforms } });
+      const mesh = new Mesh({ geometry, shader });
+      return { part: p, mesh, uniforms, buffer: geometry.getBuffer('aPosition') };
+    };
+    const ordered = [...model.parts].sort((a, b) => a.order - b.order);
+    for (const p of ordered) if (p.maskOnly) { const it = make(p, 0.5); byId.set(p.id, it); this.items.push(it); this.root.addChild(it.mesh); }
+    for (const p of ordered) {
+      if (p.maskOnly) continue;
+      const it = make(p, 0.004);
+      byId.set(p.id, it);
+      this.items.push(it);
+      if (p.mask) {
+        let group = maskGroups.get(p.mask);
+        if (!group) { group = new Container(); group.mask = byId.get(p.mask).mesh; maskGroups.set(p.mask, group); this.root.addChild(group); }
+        group.addChild(it.mesh);
+      } else this.root.addChild(it.mesh);
+    }
+    this.setView('bust');
+    this.app.renderer.on('resize', () => this.layout());
+    return this;
+  }
+  setView(name) { this.view = VIEWS[name] || name; this.layout(); }
+  layout() {
+    const [x, y, w, h] = this.view, W = this.app.screen.width, H = this.app.screen.height;
+    const s = Math.min(W / w, H / h);
+    this.root.scale.set(s);
+    this.root.position.set((W - w * s) / 2 - x * s, (H - h * s) / 2 - y * s);
+  }
+  sync() {
+    for (const it of this.items) {
+      it.buffer.data.set(it.part.positions);
+      it.buffer.update();
+      it.uniforms.uniforms.uAlpha = it.part.opacity;
+      it.mesh.visible = it.part.opacity > 0.002 || it.part.maskOnly;
+    }
+  }
+}
