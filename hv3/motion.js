@@ -34,6 +34,21 @@ export const EXPRESSIONS = {
 };
 
 // Gesture tracks: time (s) -> partial pose. Arm angles in degrees.
+// Approach (0-0.45 s), lay the pose arms over the everyday arms (0.3-0.48 s),
+// hold, then the reverse. Opacity changes only on the arms drawn on top, so the
+// body never shows through an arm during the switch.
+function poseTrack(param, approach, extra) {
+  return function (t, p) {
+    const d = this.duration, out = d - 0.75;
+    const near = ease(t / 0.45) * (1 - ease((t - out - 0.15) / 0.55));
+    for (const [k, v] of Object.entries(approach)) p[k] = v * near;
+    const on = clamp((t - 0.33) / 0.12, 0, 1) * (1 - clamp((t - out) / 0.12, 0, 1));
+    p[param] = on;
+    p.ArmsDefault = on >= 1 ? 0 : 1;
+    extra(ease(t / 0.5) * (1 - ease((t - out) / 0.6)), p);
+  };
+}
+
 export const GESTURES = {
   // right hand (viewer left) raised beside the face, waving from the wrist
   wave: { duration: 3.2, hand: 'R', track: (t, p) => {
@@ -67,6 +82,11 @@ export const GESTURES = {
     if (up > 0.45) p.HandL = 3;
     p.BodyAngleX = 4 * up; p.AngleX = 12 * up; p.EyeBallXAdd = 0.6 * up;
   } },
+  // pose arms from the drawn poses: the everyday arms move toward the body,
+  // the pose arms are laid over them and then the everyday arms are hidden
+  chest: { pose: true, duration: 3.8, hand: 'both', track: poseTrack('PoseChest', { ShoulderR: 30, ElbowR: -105, ShoulderL: 30, ElbowL: -105 }, (k, p) => { p.EyeSmileAdd = 0.6 * k; p.AngleY = -4 * k; p.BodyAngleY = -2 * k; }) },
+  chin: { pose: true, duration: 4.2, hand: 'both', track: poseTrack('PoseChin', { ShoulderR: 28, ElbowR: -125, ShoulderL: 30, ElbowL: -105 }, (k, p) => { p.AngleZ = 4 * k; p.AngleY = 3 * k; p.HeadHold = k; p.LookX = -0.45 * k; p.LookY = 0.5 * k; }) },
+  reach: { pose: true, duration: 3.8, hand: 'both', track: poseTrack('PoseReach', { ShoulderR: 22, ElbowR: -45, ShoulderL: 30, ElbowL: -110 }, (k, p) => { p.EyeSmileAdd = 0.5 * k; p.BodyAngleY = 3 * k; p.AngleY = 2 * k; p.AngleX = -4 * k; }) },
   // right hand loosely closed in front of the waist, head tilted
   think: { duration: 3.6, hand: 'R', track: (t, p) => {
     const up = ease(t / 0.7) * (1 - ease((t - 2.9) / 0.7));
@@ -98,15 +118,19 @@ export class MotionController {
   talk(seconds) { this.talkUntil = Math.max(this.talkUntil, this.t + seconds); }
   gesture(name) {
     const g = GESTURES[name]; if (!g) return;
-    // a new gesture for the same hand replaces the old one smoothly (the springs blend it)
-    this.gestures = this.gestures.filter(x => !(g.hand && x.g.hand && (x.g.hand === g.hand || g.hand === 'both' || x.g.hand === 'both')));
-    this.gestures.push({ g, start: this.t });
+    const clash = x => g.hand && x.g.hand && (x.g.hand === g.hand || g.hand === 'both' || x.g.hand === 'both');
+    // a running pose-arm gesture finishes first (its arms must switch back);
+    // other gestures for the same hand are replaced and the springs blend the change
+    const pose = this.gestures.filter(x => clash(x) && x.g.pose);
+    const start = pose.length ? Math.max(...pose.map(x => x.start + x.g.duration)) : this.t;
+    this.gestures = this.gestures.filter(x => !clash(x) || x.g.pose);
+    this.gestures.push({ g, start });
   }
   spring(id, target, dt, hz) { if (!this.springs[id]) this.springs[id] = new Spring(target, hz); return this.springs[id].step(target, dt, hz); }
   update(dt) {
     const t = (this.t += dt), m = this.model, n = this.n, ex = EXPRESSIONS[this.expression];
     const pose = {};
-    for (const x of this.gestures) x.g.track(t - x.start, pose);
+    for (const x of this.gestures) if (t >= x.start) x.g.track.call(x.g, t - x.start, pose);
     this.gestures = this.gestures.filter(x => t - x.start < x.g.duration);
     // gaze target: pointer if recent, otherwise idle glances
     if (t > this.auto.next) {
@@ -114,9 +138,10 @@ export class MotionController {
       this.auto.x = r < 0.45 ? 0 : (Math.random() * 2 - 1) * 0.7; this.auto.y = r < 0.45 ? 0 : (Math.random() * 2 - 1) * 0.35;
       this.auto.next = t + 1.2 + Math.random() * 2.8;
     }
-    const pointer = t < this.look.until;
+    const pointer = t < this.look.until && !pose.LookX;
     let lx = pointer ? this.look.x : this.auto.x, ly = pointer ? this.look.y : this.auto.y;
     if (ex.lookX !== undefined && !pointer) { lx = ex.lookX; ly = ex.lookY; }
+    if (pose.LookX) { lx = pose.LookX; ly = pose.LookY || 0; }
     const eyeX = this.spring('eyeX', lx, dt, 7), eyeY = this.spring('eyeY', ly, dt, 7);
     const headX = this.spring('headX', lx, dt, 1.6), headY = this.spring('headY', ly, dt, 1.6);
     const bodyX = this.spring('bodyX', lx, dt, 0.7);
@@ -141,8 +166,8 @@ export class MotionController {
     const smile = this.spring('eyeSmile', clamp((ex.EyeSmile ?? 0) + (pose.EyeSmileAdd || 0), 0, 1), dt, 2.5);
     const breath = (Math.sin(t * TAU / 3.6) + 1) / 2;
     const out = {
-      AngleX: headX * 18 + n[0](t * 0.23) * 3 + (pose.AngleX || 0) + talkAmt * n[3](t * 1.3) * 2,
-      AngleY: -headY * 14 + n[1](t * 0.19) * 2.5 + (pose.AngleY || 0) + talkAmt * Math.max(0, n[4](t * 1.7)) * -3,
+      AngleX: (headX * 18 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0),
+      AngleY: (-headY * 14 + n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0),
       AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: eyeY,
       BodyAngleX: bodyX * 5 + n[5](t * 0.13) * 2 + (pose.BodyAngleX || 0),
@@ -158,6 +183,8 @@ export class MotionController {
     const fast = { EyeBallX: 0, EyeBallY: 0 };
     for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 2.2 : 4));
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
+    // pose arm switching is set directly; its timing is in the gesture track
+    if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach']) m.set(k, pose[k] || 0); }
     m.set('MouthOpen', clamp(this.spring('mouth', Math.max(mouth, ex.mouth ?? 0), dt, 9), 0, 1));
     // hand shapes switch directly (one shape per hand is visible at a time)
     for (const s of ['L', 'R']) if (this.has('Hand' + s)) m.set('Hand' + s, pose['Hand' + s] || 0);

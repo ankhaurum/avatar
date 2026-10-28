@@ -168,6 +168,10 @@ export function autoMesh(alpha, w, h, opts = {}) {
   lattice(spacing, spacing / 2, spacing / 2, w, h, (x, y) => spacingOf([x, y]) > spacing * 0.75);
   for (const d of detail) lattice(d.spacing, d.x - d.r, d.y - d.r, d.x + d.r, d.y + d.r, (x, y) => spacingOf([x, y]) <= spacing * 0.75 && Math.hypot(x - d.x, y - d.y) < d.r);
   for (const p of opts.extraPoints ?? []) if (inside(loops, p[0], p[1])) points.push(p);
-  const tris = cdt2d(points, edges, { exterior: false });
+  // triangulate everything, then keep triangles whose centre lies on the (dilated)
+  // opaque region; parity-based removal fails when an outline touches itself
+  const all = cdt2d(points, edges, { exterior: true });
+  const onMask = (x, y) => { const xi = Math.floor(x), yi = Math.floor(y); return xi >= 0 && yi >= 0 && xi < w && yi < h && mask[yi * w + xi]; };
+  const tris = all.filter(([a, b, c]) => { const [p, q, r] = [points[a], points[b], points[c]]; return onMask((p[0] + q[0] + r[0]) / 3, (p[1] + q[1] + r[1]) / 3); });
   return { positions: points.flat(), triangles: tris.flat(), loops: loops.length };
 }
