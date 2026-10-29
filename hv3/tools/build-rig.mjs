@@ -253,7 +253,10 @@ b.warp('face_expr', 'head_turn', [fr0[0], fr0[1], fr1[0] - fr0[0], fr1[1] - fr0[
 } });
 // skin and contour: the depth of the head as a rounded field (nose highest);
 // looking down the chin also tucks up
-const zSkin = (x, y) => { const nx = (x - A_(524, 0)[0]) / (H.w / 2), ny = (y - A_(0, 290)[1]) / (H.h / 2), r = Math.min(1, nx * nx + ny * ny * 0.8); const nose = Math.exp(-(((x - A_(524, 0)[0]) / (26 * 0.551)) ** 2 + ((y - A_(0, 305)[1]) / (34 * 0.551)) ** 2)); return 30 * Math.sqrt(1 - r) + 14 * nose; };
+// the depth falls to 0 at the face contour itself (art A: about 130 px to each
+// side of the nose, 140 px down to the chin), so the cheeks and jaw move with
+// the side hair beside them and no hidden skin opens up between them
+const zSkin = (x, y) => { const nx = (x - A_(524, 0)[0]) / (130 * 0.551), ny = (y - A_(0, 290)[1]) / (140 * 0.551), r = Math.min(1, nx * nx + ny * ny); const nose = Math.exp(-(((x - A_(524, 0)[0]) / (26 * 0.551)) ** 2 + ((y - A_(0, 305)[1]) / (34 * 0.551)) ** 2)); return 30 * (1 - r) ** 0.7 + 14 * nose; };
 b.warp('skin_turn', 'face_expr', [H.x, H.y, H.w, H.h], 12, 12, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => (x, y) => {
   const p = depthShift(zSkin(x, y), ax, ay), ny = (y - hc[1]) / (H.h / 2), chin = Math.max(0, ny) ** 1.5;
   return [p[0], p[1] + Math.max(0, -ay) / 30 * 9 * chin];
