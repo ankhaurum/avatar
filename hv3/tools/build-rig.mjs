@@ -370,21 +370,26 @@ await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_wide', eyeL: '
 // ribbons swing fast and settle quickly, the skirt and long drapes slower and
 // longer, small charms dangle at the end of them. BodySwayX/Z: the upper body
 // follows the head a little later (negative follow = same direction).
-const phys = (o, inputs, follow, frequency, damping, inertia) => b.physics({ output: o, inputs, follow, frequency, damping, inertia });
-// hair: the swing after a head motion is what shows, so the velocity kick
-// (inertia) is large and the damping light; the steady lean stays small
-phys('HairFront', [['AngleX', 3 / 30], ['AngleZ', 3 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 1.5 / 10]], 0.3, 1.7, 0.12, 0.6);
-phys('HairSide', [['AngleX', 3.6 / 30], ['AngleZ', 4 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 2 / 10], ['BodyAngleZ', 2 / 10], ['BodySwayX', 0.8]], 0.3, 1.15, 0.1, 0.8);
-phys('HairBack', [['AngleX', 3 / 30], ['AngleZ', 3.6 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 2.4 / 10], ['HairSide', 0.4]], 0.3, 0.85, 0.1, 0.9);
-phys('FrillSway', [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10], ['BodySwayX', 0.5], ['Breath', 0.2]], 0.7, 1.6, 0.14, 0.14);
-phys('BowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1 / 10], ['BodyAngleY', 0.5 / 10], ['BodySwayX', 0.6], ['Breath', 0.2]], 0.8, 1.4, 0.14, 0.16);
-phys('HipBowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['BodySwayX', 0.4]], 0.8, 1.0, 0.13, 0.18);
-phys('SkirtSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.4 / 10], ['BodySwayX', 0.4]], 0.7, 1.0, 0.16, 0.16);
-phys('SkirtSway2', [['SkirtSway', 0.8], ['BodyAngleZ', 0.8 / 10]], 0.8, 0.85, 0.14, 0.18);
-phys('DrapeSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['SkirtSway', 0.3]], 0.8, 0.6, 0.12, 0.18);
-phys('CharmSway', [['DrapeSway', 1.2], ['BodyAngleZ', 1 / 10]], 1.0, 1.3, 0.1, 0.25);
-phys('LegSway', [['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10], ['SkirtSway', 0.8]], 1.0, 1.5, 0.12, 0.2);
-for (const s of ['R', 'L']) phys('SleeveSway' + s, [['Shoulder' + s, 1 / 50], ['Elbow' + s, 1 / 70], ['Wrist' + s, 1 / 40], ['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10], ['AngleX', 0.6 / 30]], 1.0, 1.5, 0.14, 0.22);
+// "inputs" give the resting lean (a tilt lets the part hang against it), "kick"
+// the motions whose speed throws it. Hair and ribbons are light: they swing
+// fast and settle over 2-3 periods; the skirt and the long drapes are heavier
+// and slower, the small charms dangle at the end of them.
+const phys = (o, inputs, follow, frequency, damping, inertia, kick) => b.physics({ output: o, inputs, follow, frequency, damping, inertia, ...(kick ? { kick } : {}) });
+// hair: a turn of the head (AngleX) or a nod does not lean the hair, it only
+// throws it; a tilt (AngleZ, BodyAngleZ) leans it a little as well
+phys('HairFront', [['AngleZ', 3 / 30], ['BodyAngleZ', 1 / 10]], 0.4, 1.5, 0.12, 4.5, [['AngleX', 3 / 30], ['AngleZ', 3 / 30], ['AngleY', 2.5 / 30], ['BodyAngleX', 1.5 / 10]]);
+phys('HairSide', [['AngleZ', 4 / 30], ['BodyAngleZ', 2 / 10], ['BodyAngleX', 0.8 / 10]], 0.4, 1.1, 0.12, 5.0, [['AngleX', 3.6 / 30], ['AngleZ', 4 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 2 / 10], ['BodySwayX', 0.8]]);
+phys('HairBack', [['AngleZ', 3.6 / 30], ['BodyAngleZ', 2 / 10], ['BodyAngleX', 1 / 10], ['HairSide', 0.4]], 0.4, 0.85, 0.1, 5.0, [['AngleX', 3 / 30], ['AngleZ', 3.6 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 2.4 / 10], ['HairSide', 0.5]]);
+phys('FrillSway', [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10], ['BodySwayX', 0.5], ['Breath', 0.2]], 0.7, 1.6, 0.14, 0.6);
+phys('BowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1 / 10], ['BodyAngleY', 0.5 / 10], ['BodySwayX', 0.6], ['Breath', 0.2]], 0.8, 1.4, 0.13, 0.8);
+phys('HipBowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['BodySwayX', 0.4]], 0.8, 1.0, 0.13, 0.8);
+phys('SkirtSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.4 / 10], ['BodySwayX', 0.4]], 0.7, 0.95, 0.15, 0.8, [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.4 / 10], ['BodySwayX', 0.4], ['LowerAngleX', 0.6 / 10]]);
+phys('SkirtSway2', [['SkirtSway', 0.8], ['BodyAngleZ', 0.8 / 10]], 0.8, 0.8, 0.13, 0.9);
+phys('DrapeSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['SkirtSway', 0.3]], 0.8, 0.6, 0.12, 0.9);
+phys('CharmSway', [['DrapeSway', 1.2], ['BodyAngleZ', 1 / 10]], 1.0, 1.3, 0.1, 1.2);
+phys('LegSway', [['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10], ['SkirtSway', 0.8]], 1.0, 1.5, 0.12, 0.8);
+// sleeve ribbons, cuffs and frills: thrown by the arm's own motion (the stop of a gesture leaves them swinging)
+for (const s of ['R', 'L']) phys('SleeveSway' + s, [['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10]], 1.0, 1.5, 0.12, 1.0, [['Shoulder' + s, 1 / 50], ['Elbow' + s, 1 / 70], ['Wrist' + s, 1 / 40], ['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10], ['AngleX', 0.6 / 30]]);
 phys('BodySwayX', [['AngleX', 1 / 30]], -0.9, 0.9, 0.4, 0.05);
 phys('BodySwayZ', [['AngleZ', 1 / 30], ['AngleX', 0.6 / 30]], -0.9, 0.9, 0.4, 0.05);
 

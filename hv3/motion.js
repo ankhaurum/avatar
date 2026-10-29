@@ -144,10 +144,17 @@ export class MotionController {
     this.look = { x: 0, y: 0, until: 0 };
     this.facing = 0;
     this.auto = { x: 0, y: 0, next: 1 };
-    this.blink = { next: 2, phase: -1, double: false };
+    this.blink = { next: 2, phase: -1, double: false, due: -1 };
     this.expression = 'neutral';
     this.talking = 0; this.talkUntil = 0;
     this.syll = { t: 0, len: 0.15, peak: 0, form: 0 };
+    // speech runs in phrases with short pauses; a small nod marks the ends of phrases
+    this.phrase = { t: 0, len: 0, pause: false, nodAt: -9, nodKind: 0, wasTalking: false };
+    // breathing: a slow, slightly uneven cycle (the inhale shorter than the exhale)
+    this.breath = { phase: 0, period: 3.6 };
+    // idle: now and then the weight shifts to the other side (body roll, hips, the head stays level)
+    this.shift = { next: 5, t0: -9, from: [0, 0], to: [0, 0] };
+    this.lastLook = [0, 0];
     this.gestures = [];
     this.n = [1, 2, 3, 4, 5, 6, 7].map(noise1);
     this.has = id => model.parameters.some(p => p.id === id);
@@ -215,33 +222,72 @@ export class MotionController {
     if (pose.LookX) { lx = pose.LookX; ly = pose.LookY || 0; }
     // never past the front toward the outside of the page
     const keepSide = v => place < -0.05 ? Math.min(v, 0.1) : place > 0.05 ? Math.max(v, -0.1) : v;
+    // a new look target: the eyes go first, the head follows about 0.1 s later
+    // and the body after that (each target is passed down through a slower
+    // spring); a large jump of the gaze brings a blink with it
+    const jump = Math.hypot(lx - this.lastLook[0], ly - this.lastLook[1]);
+    if (jump > 0.45 && this.blink.phase < 0 && this.blink.due < 0 && Math.random() < 0.7) this.blink.due = t + 0.05 + Math.random() * 0.1;
+    this.lastLook = [lx, ly];
+    const lxH = this.spring('lxHead', lx, dt, 5), lyH = this.spring('lyHead', ly, dt, 5);
+    const lxB = this.spring('lxBody', lxH, dt, 2.5), lyB = this.spring('lyBody', lyH, dt, 2.5);
     // head: the placement turn plus part of the way to the target (slower);
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
-    const headX = this.spring('headX', keepSide(place * placeHead + (lx - place * 0.3) * follow), dt, 1.6 * snap), headY = this.spring('headY', ly * 0.45, dt, 1.6 * snap);
-    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lx - place * 0.3) * lerp(0.1, 0.35, g) * (1 - 0.6 * Math.abs(place))), dt, 0.6 * snap), bodyY = this.spring('bodyY', ly * lerp(0.45, 0.9, g), dt, 0.6 * snap);
+    const headX = this.spring('headX', keepSide(place * placeHead + (lxH - place * 0.3) * follow), dt, 2.4 * snap), headY = this.spring('headY', lyH * 0.45, dt, 2.4 * snap);
+    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lxB - place * 0.3) * lerp(0.1, 0.35, g) * (1 - 0.6 * Math.abs(place))), dt, 0.8 * snap), bodyY = this.spring('bodyY', lyB * lerp(0.45, 0.9, g), dt, 0.8 * snap);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
-    // speech: syllables with varied length, height and lip shape
-    const talking = t < this.talkUntil;
+    // speech: phrases of 1.2-2.8 s with pauses of 0.25-0.5 s between them (the
+    // lips together); inside a phrase, syllables with varied length, height and
+    // lip shape. The end of a phrase, and the end of the speech, get a small nod.
+    const talking = t < this.talkUntil, ph = this.phrase;
     let mouth = 0, formAdd = 0;
     if (talking) {
-      const s = this.syll; s.t += dt;
-      if (s.t > s.len) { s.t = 0; s.len = 0.09 + Math.random() * 0.16; s.peak = Math.random() < 0.15 ? 0.05 : 0.3 + Math.random() * 0.6; s.form = (Math.random() * 2 - 1) * 0.35; }
-      // each syllable opens and shuts; the last 20 % of it the lips stay together
-      mouth = s.peak * Math.sin(Math.PI * clamp(s.t / (s.len * 0.8), 0, 1)); formAdd = s.form * 0.5;
-    }
+      if (!ph.wasTalking) { ph.t = 0; ph.len = 0.8 + Math.random() * 1.2; ph.pause = false; ph.nodKind = 1; ph.nodAt = t; }
+      ph.t += dt;
+      if (ph.t > ph.len) {
+        ph.t = 0;
+        if (ph.pause) { ph.pause = false; ph.len = 1.2 + Math.random() * 1.6; }
+        else { ph.pause = true; ph.len = 0.25 + Math.random() * 0.25; ph.nodAt = t; ph.nodKind = Math.random() < 0.6 ? 1 : 2; if (this.blink.phase < 0 && this.blink.due < 0 && Math.random() < 0.5) this.blink.due = t + 0.1; }
+      }
+      if (!ph.pause) {
+        const s = this.syll; s.t += dt;
+        if (s.t > s.len) { s.t = 0; s.len = 0.09 + Math.random() * 0.16; s.peak = Math.random() < 0.15 ? 0.05 : 0.3 + Math.random() * 0.6; s.form = (Math.random() * 2 - 1) * 0.35; }
+        // each syllable opens and shuts; the last 20 % of it the lips stay together
+        mouth = s.peak * Math.sin(Math.PI * clamp(s.t / (s.len * 0.8), 0, 1)); formAdd = s.form * 0.5;
+      }
+    } else if (ph.wasTalking) { ph.nodAt = t; ph.nodKind = 2; if (this.blink.phase < 0 && this.blink.due < 0) this.blink.due = t + 0.15 + Math.random() * 0.2; }
+    ph.wasTalking = talking;
+    // the phrase nod: a quick dip (kind 1, 0.4 s) or a slower, slightly deeper one with a settle (kind 2, 0.6 s)
+    const nt = t - ph.nodAt, talkNod = ph.nodKind === 1 ? keys(nt, [[0, 0], [0.08, 0.12], [0.22, -1], [0.4, 0]]) : keys(nt, [[0, 0], [0.1, 0.1], [0.3, -1], [0.48, 0.15], [0.62, 0]]);
     const talkAmt = this.spring('talkAmt', talking ? 1 : 0, dt, 2);
-    // blinking: quick close, short hold, slower open; sometimes twice
+    // blinking: quick close, short hold, slower open; sometimes twice. The
+    // intervals vary (2.5-7 s, shorter while thinking, with a slow drift of the
+    // rate); a blink is also brought forward by a large gaze jump, the end of a
+    // phrase or of the speech, and a change of state (set as "due").
     const b = this.blink; let lid = 1;
-    if (b.phase < 0 && t > b.next) b.phase = 0;
+    if (pf && pf.state !== this.lastState) { if (b.phase < 0 && b.due < 0 && ['attention', 'notify', 'thinking', 'wake', 'happy'].includes(pf.state)) b.due = t + 0.12 + Math.random() * 0.1; this.lastState = pf.state; }
+    if (b.phase < 0 && ((b.due >= 0 && t >= b.due) || t > b.next)) { b.phase = 0; b.due = -1; }
     if (b.phase >= 0) {
       b.phase += dt; const p = b.phase;
       lid = p < 0.07 ? 1 - ease(p / 0.07) : p < 0.11 ? 0 : 1 - ease(1 - (p - 0.11) / 0.13);
-      if (p > 0.24) { b.phase = -1; b.double = !b.double && Math.random() < 0.18; b.next = t + (b.double ? 0.18 : 2.2 + Math.random() * 3.8); }
+      if (p > 0.24) {
+        b.phase = -1; b.double = !b.double && Math.random() < 0.18;
+        const rate = (pf && pf.state === 'thinking') ? 0.7 : (talking ? 0.85 : 1);
+        b.next = t + (b.double ? 0.18 : (2.5 + Math.random() * 2.5 + Math.random() * 2) * rate * (1 + 0.25 * n[6](t * 0.05)));
+      }
     }
     const eyeOpen = this.spring('eyeOpen', ex.eye ?? 1, dt, 3) * lid;
     const smile = this.spring('eyeSmile', clamp((ex.EyeSmile ?? 0) + (pose.EyeSmileAdd || 0), 0, 1), dt, 2.5);
-    const breath = (Math.sin(t * TAU / 3.6) + 1) / 2 * (pf ? pf.breath : 1);
+    // breathing: an uneven cycle (the inhale takes 42 %, the exhale 58 %), its
+    // period drifting 3.2-4.2 s; faster and shallower when thinking (pf.breath)
+    const br = this.breath; br.phase += dt / br.period;
+    if (br.phase >= 1) { br.phase -= 1; br.period = 3.2 + Math.random() * 1.0; }
+    const bp = br.phase, breath = (bp < 0.42 ? ease(bp / 0.42) : 1 - ease((bp - 0.42) / 0.58)) * (pf ? pf.breath : 1);
+    // weight shift: every 5-12 s the body rolls a little to one side and turns
+    // a touch (1.2 s, eased); the head counters it to stay level
+    const sh = this.shift;
+    if (t > sh.next && !this.gestures.length) { sh.from = sh.to; sh.to = [(Math.random() * 2 - 1) * 1.6, (Math.random() * 2 - 1) * 1.4]; sh.t0 = t; sh.next = t + 5 + Math.random() * 7; }
+    const shK = ease((t - sh.t0) / 1.2), shiftZ = lerp(sh.from[0], sh.to[0], shK) * bodyIdle, shiftX = lerp(sh.from[1], sh.to[1], shK) * bodyIdle;
     // emotional posture: carried by the body and shoulders (larger when shown
     // small), the head only tilts and nods a little
     const em = pf || {}, emBody = lerp(1, 1.8, g), bounce = em.bounce ? Math.max(0, Math.sin(t * TAU * 1.6)) * em.bounce : 0;
@@ -250,12 +296,13 @@ export class MotionController {
     const eShrug = this.spring('eShrug', clamp((em.shrug || 0) * lerp(1, 1.3, g), 0, 1), dt, 6);
     const out = {
       AngleX: clamp((headX * 30 + (n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0) * accent, -24, 24),
-      AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent + ePitch, -24, 24),
-      AngleZ: clamp(n[2](t * 0.17) * 3 * idle + (pose.AngleZ || 0) * accent - headX * 2 + eTilt, -20, 20),
-      EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
-      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * bodyIdle + (pose.BodyAngleX || 0) * bodyAccent, -10, 10),
-      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12 + eLean, -10, 10),
-      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5 + eRoll, -10, 10),
+      // the breath lifts the head a touch at the top of the inhale; the phrase nod dips it
+      AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -2) * idle + breath * 0.7) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent + ePitch + talkNod * lerp(4.5, 6.5, g) * (1 - 0.8 * (pose.HeadHold || 0)), -24, 24),
+      AngleZ: clamp(n[2](t * 0.17) * 3 * idle + (pose.AngleZ || 0) * accent - headX * 2 + eTilt - shiftZ * 0.5, -20, 20),
+      EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0) + talkNod * 0.12, -1, 1),
+      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * bodyIdle + shiftX + (pose.BodyAngleX || 0) * bodyAccent, -10, 10),
+      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12 + eLean + talkNod * 1.2, -10, 10),
+      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + shiftZ + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5 + eRoll, -10, 10),
       Breath: breath,
       ShoulderUp: eShrug,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
