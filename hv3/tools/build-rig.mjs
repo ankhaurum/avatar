@@ -8,6 +8,7 @@ import path from 'node:path';
 import { RigBuilder, smooth } from './rig-builder.mjs';
 import { buildFace } from './face-rig.mjs';
 import { skinRef, handStats, toneHand } from './hand-tone.mjs';
+import { planPose } from './pose-enter.mjs';
 
 const dir = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
 const out = path.resolve(dir, '..');
@@ -24,15 +25,16 @@ b.param('ShoulderUp', 0, 1, 0, '肩をすくめる');
 for (const s of ['R', 'L']) {
   const ja = s === 'R' ? '右' : '左';
   b.param('Shoulder' + s, -20, 100, 0, ja + '肩（外へ上げる）');
-  b.param('Elbow' + s, -120, 160, 0, ja + '肘（外へ＋／体の前へ−）');
+  b.param('Elbow' + s, -160, 160, 0, ja + '肘（外へ＋／体の前へ−）');
   b.param('Wrist' + s, -40, 40, 0, ja + '手首');
   b.param('Hand' + s, 0, 4, 0, ja + '手の形');
 }
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
 for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕'], ['PoseHands', '両手を体の前で重ねる腕']]) b.param(id, 0, 1, 0, label);
-// the pose arms slide the last bit into place while they fade in (0 = a little
-// below and smaller, 1 = in place); the hand shapes cross-fade (0 = the resting hand, 1 = the chosen shape)
+// the pose arms are deformed onto the everyday arms' approach pose (0) and
+// unfold from there into the drawn pose (1), see tools/pose-enter.mjs; the
+// hand shapes cross-fade (0 = the resting hand, 1 = the chosen shape)
 b.param('PoseEnter', 0, 1, 1, 'ポーズの腕の到着');
 for (const s of ['R', 'L']) b.param('HandFade' + s, 0, 1, 1, (s === 'R' ? '右' : '左') + '手の形の切り替わり');
 for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ'],
@@ -57,57 +59,80 @@ const T = { x: 230, y: 200, w: 564, h: 640 }, tc = [512, 360];
 // its place, used by both warps, so the waist seam is continuous at rest.
 const upOf = y => Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
 // Shape of the turn, keyed the way a modeller sets the ends (BodyAngleX +-10:
-// the body clearly turned, about 35 deg). At each height the body section has a
-// half-width a (table below). The front centre line (ribbon, button row) moves
-// 0.42 a toward the turn. The near half (the side the body turns away from; it
-// comes toward the viewer) widens a little and is seen larger and a little
-// lower (the viewer looks slightly down on it); the far half narrows strongly
-// and recedes (smaller, higher): the far edge of the body moves 0.30 a inward,
-// so the far arm and shoulder, drawn behind the bodice, go partly behind it,
-// and beyond the far edge (shoulder, arm, hand) things move inward further
-// still. The neck and collar (y < 268) move as one piece with the centre line.
+// the body clearly turned, about 40 deg). The body section at each height is
+// taken as a flattened ellipse (half-width a from the table below, half-depth
+// 0.6 a) turned about its own axis, so the body reads as a solid turned round,
+// not a sheet sheared sideways: the front centre line (ribbon, button row)
+// moves 0.40 a toward the turn; the near half (the side the body turns away
+// from) is seen wider, stretched most beside the centre line and
+// foreshortened again toward its edge, which keeps its place (0.02 a in); the
+// far half narrows to 0.38 a, compressed most toward its edge, which moves
+// 0.22 a inward, and never folds over. Beyond the body's edges (shoulders,
+// arms, hands) nothing is squeezed: the far arm moves inward with the far edge
+// and keeps its drawn width (6 % narrower at most), the near arm keeps its
+// drawn place, shape and size. There is no vertical shear: only a small
+// perspective (2 %) above the chest, so the near shoulder sits a touch lower.
+// The neck and collar (y < 268) move as one piece with the centre line.
 const table = (tab, y) => { if (y <= tab[0][0]) return tab[0][1]; for (let i = 1; i < tab.length; i++) if (y <= tab[i][0]) { const [y0, a0] = tab[i - 1], [y1, a1] = tab[i]; return a0 + (a1 - a0) * (y - y0) / (y1 - y0); } return tab[tab.length - 1][1]; };
 // half-width of the body by height (neck, collar, chest, waist, skirt), measured on the R3 parts
 const halfW = y => table([[220, 40], [262, 44], [296, 66], [322, 108], [450, 110], [505, 86], [566, 97], [620, 118], [700, 158], [1040, 200]], y);
 // the chest turns fully, the hips about half
 const turnShare = y => 0.5 + 0.5 * Math.max(0, Math.min(1, (800 - y) / 350));
-const EYE_Y = 240, DEPTH = 0.045;
+const EYE_Y = 240, DEPTH = 0.02, TURN_DEG = 40, BD = 0.6;
+// screen x (in units of a) of the ellipse surface point at angle phi (0 = the
+// front centre) when the section is turned by th
+const ellipseX = (phi, th) => Math.sin(phi) * Math.cos(th) + BD * Math.cos(phi) * Math.sin(th);
 const turnXY = (ax, x, y) => {
   const s = ax / 10 * turnShare(y); if (!s) return [0, 0];
   const a = halfW(y), rx = x - tc[0], sg = Math.sign(s), m = Math.abs(s);
-  const xc = 0.42 * a * s;                                                 // front centre line
-  const near = -sg * a * (1 + 0.05 * m), far = sg * a * (1 - 0.28 * m);  // the two edges
+  const xc = 0.40 * a * s;                                                 // front centre line
+  const near = -sg * a * (1 - 0.02 * m), far = sg * a * (1 - 0.22 * m);  // the two edges
+  // the drawn body is the projection of the section at rest (texture u = sin
+  // phi); turned, the visible front runs from the centre to the silhouette at
+  // phiE on the far side and to the silhouette at phiE - pi on the near side
+  const th = TURN_DEG * Math.PI / 180 * m, phiE = Math.atan2(Math.cos(th), BD * Math.sin(th));
+  const x0 = ellipseX(0, th), xF = ellipseX(phiE, th), xN = ellipseX(phiE - Math.PI, th);
   let X, z;                                                                // z: +1 toward the viewer
-  if (rx * sg >= 0) { // far half: the surface is compressed toward the edge, more near it, never folding
-    const u = Math.min(1, rx * sg / a), k = 0.28 * m, q = u * (1 - k * u) / (1 - k);
-    X = xc + (far - xc) * q; z = -Math.pow(u, 0.8);
-    if (rx * sg > a) { X += (rx * sg - a) * (1 - 0.28 * m) * sg; z = -1; }
-  } else { // near half: the surface is stretched a little toward the centre
-    const u = Math.min(1, -rx * sg / a), k = 0.25 * m, r = u + k * u * (1 - u);
-    X = xc + (near - xc) * r; z = Math.pow(u, 0.8);
-    if (-rx * sg > a) { X += (-rx * sg - a) * (1 + 0.04 * m) * -sg; z = 1; }
+  if (rx * sg >= 0) { // far half: compressed toward the edge, most near it, never folding
+    const u = Math.min(1, rx * sg / a), q = (ellipseX(Math.asin(u) * phiE / (Math.PI / 2), th) - x0) / (xF - x0);
+    X = xc + (far - xc) * q; z = -u;
+    if (rx * sg > a) { X += (rx * sg - a) * (1 - 0.06 * m) * sg; z = -1; }
+  } else { // near half: stretched beside the centre line, foreshortened again at the edge
+    const u = Math.min(1, -rx * sg / a), r = (ellipseX(-Math.asin(u) * (Math.PI - phiE) / (Math.PI / 2), th) - x0) / (xN - x0);
+    X = xc + (near - xc) * r; z = u;
+    if (-rx * sg > a) { X += (-rx * sg - a) * -sg; z = 1; }
   }
-  const rigid = 1 - smooth((y - 268) / 40);
-  // the near / far size difference (perspective about the eye level): full on
-  // the upper body, fading toward the hem so the skirt tilts only a little
-  const depth = DEPTH * Math.max(0.3, 1 - Math.max(0, (y - 560) / 480));
+  // the neck and the middle of the collar move as one piece with the centre
+  // line; the shoulders beside them (from 60 units out) turn with the body
+  const rigid = (1 - smooth((y - 268) / 40)) * (1 - smooth((Math.abs(rx) - 60) / 40));
+  // a small perspective about the eye level on the upper body only (the near
+  // shoulder a touch lower), none from the chest down: no shear of the body
+  const depth = DEPTH * (1 - smooth((y - 380) / 180));
   return [(X - rx) * (1 - rigid) + xc * rigid, (y - EYE_Y) * depth * m * z * (1 - rigid)];
 };
 const turnX = (ax, x, y) => turnXY(ax, x, y)[0];
-// the far arm and its shoulder frill go behind the body and get smaller, the near arm comes forward and gets larger
-const armTurn = (ax, px) => { const side = px - tc[0] >= 0 ? 1 : -1, far = Math.max(0, side * ax / 10), near = Math.max(0, -side * ax / 10); return { dx: -side * 28 * far + side * 6 * near, scale: 0.06 * near - 0.07 * far }; };
+// the far arm hangs a little behind the body: it swings 4 deg toward the body
+// about its shoulder (its top stays with the shoulder, so nothing pokes out of
+// the frill) and is seen 4 % smaller; the near arm keeps its drawn size and
+// place and only follows the body's edge. The shoulder frills move with the
+// shoulder under them (the torso warp alone).
+const armFar = (ax, px) => { const side = px - tc[0] >= 0 ? 1 : -1; return Math.max(0, side * ax / 10); };
 // the shoulders (the band beside the neck, from the collar down to the top of
 // the chest) rise with each breath a little and with a shrug (ShoulderUp)
 const shoulderBand = (x, y) => { const nx = Math.abs(x - tc[0]) / (T.w / 2); return smooth((nx - 0.12) / 0.25) * smooth((y - 236) / 30) * (1 - smooth((y - 340) / 70)); };
-b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
-  params: ['BodyAngleX', 'BodyAngleY', 'Breath', 'ShoulderUp'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1], [0, 1]], fn: (ax, ay, br, sh) => (x, y) => {
-    const nx = (x - tc[0]) / (T.w / 2), up = upOf(y), rx = x - tc[0];
-    const [turn, turnY] = turnXY(ax, x, y);
-    const chest = Math.max(0, 1 - Math.abs(y - 330) / 150), band = shoulderBand(x, y);
-    const lean = -ay / 10, k = 0.05 * lean * up;
-    return [turn + rx * k + br * nx * 1.6 * chest - sh * nx * 3 * band, turnY + lean * 16 * up * up + (y - tc[1]) * k * 0.5 - Math.abs(nx) * lean * 3 * up - br * 2.2 * chest * (0.6 + 0.4 * up) - br * 1.4 * band - sh * 12 * band];
-  }
-});
+// the upper body's displacement field (turn, lean, breath, shrug); the torso
+// warp samples it on its lattice, the arms take it at their sockets
+const torsoD = (ax, ay, br, sh) => (x, y) => {
+  const nx = (x - tc[0]) / (T.w / 2), up = upOf(y), rx = x - tc[0];
+  const [turn, turnY] = turnXY(ax, x, y);
+  const chest = Math.max(0, 1 - Math.abs(y - 330) / 150), band = shoulderBand(x, y);
+  const lean = -ay / 10, k = 0.05 * lean * up;
+  return [turn + rx * k + br * nx * 1.6 * chest - sh * nx * 3 * band, turnY + lean * 16 * up * up + (y - tc[1]) * k * 0.5 - Math.abs(nx) * lean * 3 * up - br * 2.2 * chest * (0.6 + 0.4 * up) - br * 1.4 * band - sh * 12 * band];
+};
+const torsoKeys = { params: ['BodyAngleX', 'BodyAngleY', 'Breath', 'ShoulderUp'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1], [0, 1]] };
+// a fine lattice (about 24 units), so the edge of the body, where the turn's
+// compression ends, falls within one cell and the shoulders beside it keep their width
+b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 24, 14, { ...torsoKeys, fn: torsoD });
 // lower body: the skirt, hip ribbon and drapes turn the same way as the waist
 // above them, less toward the hem
 const LB = [180, 480, 680, 560];
@@ -117,7 +142,7 @@ b.warp('lower_turn', 'body', LB, 8, 6, { params: ['LowerAngleX'], keys: [[-10, -
 // legs (not under the body rotation): a small shift the same way, fading toward the feet
 b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['LowerAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [turnX(ax, 512 + (x - 512) * 0.4, 800) * f, 0]; } });
 // shoulder frills swing about their seams
-for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => { const t = armTurn(ax, r3.get('shoulder_frill_' + s).pivot[0]); return { angle: v * 7 * (s === 'R' ? 1 : -1), dx: t.dx * 0.6, scale: t.scale * 1.2 }; } });
+for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 * (s === 'R' ? 1 : -1) }) });
 // ---- head and neck
 const headPivot = joint('head');
 // the whole head turns about the base of the neck: tilting rotates it, turning
@@ -181,8 +206,13 @@ b.warp('side_sway_L', 'head_turn', sideL, 12, 22, { params: ['HairSide', 'HairBa
 // right arm clockwise on screen and the left arm counter-clockwise.
 for (const s of ['R', 'L']) {
   const dirn = s === 'R' ? 1 : -1;
-  b.rotation('arm_' + s + '_upper', 'torso', joint('arm_' + s + '_upper'), { params: ['Shoulder' + s, 'BodyAngleX'], keys: [[-20, 0, 100], [-10, -5, 0, 5, 10]], fn: (v, ax) => ({ angle: v * dirn, ...armTurn(ax, joint('arm_' + s + '_upper')[0]) }) });
-  b.rotation('arm_' + s + '_lower', 'arm_' + s + '_upper', joint('arm_' + s + '_lower'), { params: ['Elbow' + s], keys: [[-120, 0, 160]], fn: v => ({ angle: v * dirn }) });
+  // the arm hangs from its socket, which moves with the upper body (the
+  // torso's field at the socket: turn, lean, breath, shrug); the arm itself is
+  // not run through the torso warp, so the turn never squeezes it (its top is
+  // blended onto the torso below, so the shoulder joint stays whole)
+  const sock = joint('arm_' + s + '_upper');
+  b.rotation('arm_' + s + '_upper', 'body', sock, { params: ['Shoulder' + s, ...torsoKeys.params], keys: [[-20, 0, 100], ...torsoKeys.keys], fn: (v, ax, ay, br, sh) => { const far = armFar(ax, sock[0]), [dx, dy] = torsoD(ax, ay, br, sh)(sock[0], sock[1]); return { angle: (v - 4 * far) * dirn, scale: -0.04 * far, dx, dy }; } });
+  b.rotation('arm_' + s + '_lower', 'arm_' + s + '_upper', joint('arm_' + s + '_lower'), { params: ['Elbow' + s], keys: [[-160, 0, 160]], fn: v => ({ angle: v * dirn }) });
   b.rotation('hand_' + s, 'arm_' + s + '_lower', joint('hand_' + s), { params: ['Wrist' + s], keys: [[-40, 0, 40]], fn: v => ({ angle: v * dirn }) });
   // sleeve decorations swing a little around their own knots
   for (const id of ['sleeve_bow_upper_', 'sleeve_elbow_frill_']) b.rotation(id + s + '_swing', 'arm_' + s + '_upper', r3.get(id + s).pivot, { params: ['SleeveSway' + s], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 6 }) });
@@ -292,11 +322,20 @@ for (const p of r3m.parts) {
 // lower (forearm sleeve, cuff, hands) in front of the chest ribbons and the face
 const poseM = JSON.parse(fs.readFileSync(path.join(out, 'parts/pose/manifest.json')));
 const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach', hands: 'PoseHands' };
-// arriving: from a little lower and smaller (as if still coming up) into place
-b.rotation('pose_enter', 'torso', [512, 430], { params: ['PoseEnter'], keys: [[0, 1]], fn: v => ({ dy: 28 * (1 - v), scale: -0.03 * (1 - v) }) });
-for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of Object.entries(pz.layers))
-  await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: 'pose_enter', order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
-    opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
+// arriving: at PoseEnter 0 each layer is laid on the everyday arms' approach
+// pose segment by segment (one warp lattice per layer, see pose-enter.mjs);
+// the approach angles are written into the rig (poseApproach) for the motion
+b.rig.poseApproach = {};
+for (const [name, pz] of Object.entries(poseM.poses)) {
+  const plan = planPose(name); b.rig.poseApproach[name] = plan.approach;
+  console.log('pose', name, JSON.stringify(plan.approach), Object.entries(plan.fits).map(([s, f]) => s + ' elbow/wrist/tip off by ' + Object.values(f.err).map(v => v.toFixed(0)).join('/')).join('; '));
+  for (const [layer, L] of Object.entries(pz.layers)) {
+    const m = 12, rect = [L.x - m, L.y - m, L.w + 2 * m, L.h + 2 * m], f = plan.fields[layer];
+    b.warp(`pose_${name}_${layer}_enter`, 'torso', rect, Math.max(4, Math.round(rect[2] / 14)), Math.max(4, Math.round(rect[3] / 14)), { params: ['PoseEnter'], keys: [[0, 1]], fn: v => (x, y) => { if (v >= 1) return [0, 0]; const d = f(x, y); return [d[0] * (1 - v), d[1] * (1 - v)]; } });
+    await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: `pose_${name}_${layer}_enter`, order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
+      opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
+  }
+}
 // art A head: skin under the face features, side hair over the face edge, fringe over the brows
 const aPart = (id, parent, order, o = {}) => b.part(id, { file: id + '.png', offset: [artA.offset[0] + metaA[id].x * artA.scale, artA.offset[1] + metaA[id].y * artA.scale], texScale: 1 / artA.scale, parent, order, spacing: 8, dilate: 2, ...o });
 // neck: under the R3 collar; the top follows the head, the bottom stays with the torso

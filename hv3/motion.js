@@ -28,7 +28,7 @@ class Spring {
 
 export const EXPRESSIONS = {
   // default: a natural smile, lips parted a little so the upper teeth show
-  neutral: { EyeSmile: 0.8, MouthForm: 1, BrowY: 0.1, BrowAngle: 0, eye: 0.94, mouth: 0.6 },
+  neutral: { EyeSmile: 0.55, MouthForm: 1, BrowY: 0.1, BrowAngle: 0, eye: 1, mouth: 0.6 },
   smile: { EyeSmile: 0.75, MouthForm: 1, BrowY: 0.25, BrowAngle: 0.1, eye: 0.92, mouth: 0.55 },
   surprise: { EyeSmile: 0, MouthForm: 0, BrowY: 1, BrowAngle: 0.3, eye: 1, mouth: 0.45 },
   think: { EyeSmile: 0, MouthForm: -0.2, BrowY: 0.2, BrowAngle: -0.8, eye: 0.85, lookY: 0.6, lookX: -0.5 },
@@ -54,26 +54,32 @@ function arm(p, side, t, S, E, W) {
 const beat = (t, a, b, hz, phase = 0) => Math.sin((t - a) * TAU * hz - phase) * ease((t - a) / 0.2) * (1 - ease((t - b + 0.25) / 0.25));
 
 // Gesture tracks: time (s) -> partial pose. Arm angles in degrees.
-// Pose arms: the everyday arms move toward the drawn pose (0.45 s); while they
-// are still moving the pose arms fade in over 0.15 s and slide the last bit
-// into place (PoseEnter), so the motion carries through the change instead of
-// cutting; on the way back the pose arms fade out while sliding down and the
-// everyday arms come back from the same place.
-function poseTrack(param, approach, extra) {
+// Pose arms: no cross-fade. The everyday arms move (0.42 s) to the approach
+// pose, the nearest their joints come to the drawn pose (the angles are fitted
+// by tools/pose-enter.mjs and written into the rig as poseApproach). At 0.5 s
+// they are replaced in one frame by the pose arms, deformed onto the same
+// shoulders, elbows, wrists and hand directions (PoseEnter 0), which then
+// unfold into the drawn pose over 0.3 s. On the way back the pose arms fold
+// back onto the approach (0.3 s), the everyday arms take over in one frame and
+// return to rest.
+const SWITCH = 0.5, UNFOLD = 0.3;
+function poseTrack(param, extra) {
   return function (t, p) {
-    const d = this.duration, out = d - 0.75;
-    const near = keys(t, [[0, 0], [0.12, -0.04], [0.45, 1], [out + 0.25, 1], [out + 0.75, 0]]);
-    for (const [k, v] of Object.entries(approach)) p[k] = v * near;
-    const on = ease((t - 0.34) / 0.15) * (1 - ease((t - out - 0.1) / 0.15));
+    const d = this.duration, out = d - 0.75, back = out + UNFOLD;
+    const near = keys(t, [[0, 0], [0.12, -0.04], [0.42, 1], [back, 1], [back + 0.45, 0]]);
+    for (const [k, v] of Object.entries(this.approach || {})) p[k] = v * near;
+    const on = t >= SWITCH && t < back ? 1 : 0;
     p[param] = on;
     p.ArmsDefault = 1 - on;
-    p.PoseEnter = ease((t - 0.3) / 0.25) * (1 - ease((t - out - 0.05) / 0.25));
+    p.PoseEnter = on ? ease((t - SWITCH) / UNFOLD) * (1 - ease((t - out) / UNFOLD)) : 0;
     extra(ease(t / 0.5) * (1 - ease((t - out) / 0.6)), p);
   };
 }
-// a hand shape held from a to b, cross-faded in and out over f seconds
-function handShape(p, side, shape, t, a, b, f = 0.12) {
-  if (t > a - f && t < b + f) { p['Hand' + side] = shape; p['HandFade' + side] = ease((t - (a - f)) / f) * (1 - ease((t - b) / f)); }
+// a hand shape held from a to b: the drawn hand is swapped in one frame (no
+// cross-fade, no half-transparent overlap), at a point of the motion where
+// the hand is moving
+function handShape(p, side, shape, t, a, b) {
+  if (t >= a && t < b) { p['Hand' + side] = shape; p['HandFade' + side] = 1; }
 }
 
 export const GESTURES = {
@@ -104,7 +110,7 @@ export const GESTURES = {
   // hands to the front (pose arms from the drawn pose: the hand shapes needed
   // cannot be made by turning or mirroring the hand images)
   // the everyday hands reach the drawn place here (within a few px), so the change is nearly a morph
-  both: { pose: true, duration: 3.6, hand: 'both', track: poseTrack('PoseHands', { ShoulderR: 20, ElbowR: -92, WristR: 20, ShoulderL: 20, ElbowL: -84, WristL: -20 }, (k, p) => { p.EyeSmileAdd = 0.4 * k; p.AngleY = -3 * k; p.AngleZ = 2 * k; }) },
+  both: { pose: 'hands', duration: 3.6, hand: 'both', track: poseTrack('PoseHands', (k, p) => { p.EyeSmileAdd = 0.4 * k; p.AngleY = -3 * k; p.AngleZ = 2 * k; }) },
   // left arm raised from the shoulder, index finger pointing outward
   point: { duration: 3.0, hand: 'L', track: (t, p) => {
     arm(p, 'L', t, [[0, 0], [0.2, -4], [0.7, 64], [0.85, 59], [2.3, 60], [2.8, -3], [3.0, 0]],
@@ -116,9 +122,9 @@ export const GESTURES = {
   } },
   // pose arms from the drawn poses: the everyday arms move toward the body,
   // the pose arms are laid over them and then the everyday arms are hidden
-  chest: { pose: true, duration: 3.8, hand: 'both', track: poseTrack('PoseChest', { ShoulderR: 30, ElbowR: -105, ShoulderL: 30, ElbowL: -105 }, (k, p) => { p.EyeSmileAdd = 0.6 * k; p.AngleY = -4 * k; p.BodyAngleY = -2 * k; }) },
-  chin: { pose: true, duration: 4.2, hand: 'both', track: poseTrack('PoseChin', { ShoulderR: 28, ElbowR: -125, ShoulderL: 30, ElbowL: -105 }, (k, p) => { p.AngleZ = 4 * k; p.AngleY = 3 * k; p.HeadHold = k; p.LookX = -0.45 * k; p.LookY = 0.5 * k; }) },
-  reach: { pose: true, duration: 3.8, hand: 'both', track: poseTrack('PoseReach', { ShoulderR: 22, ElbowR: -45, ShoulderL: 30, ElbowL: -110 }, (k, p) => { p.EyeSmileAdd = 0.5 * k; p.BodyAngleY = 3 * k; p.AngleY = 2 * k; p.AngleX = -4 * k; }) },
+  chest: { pose: 'chest', duration: 3.8, hand: 'both', track: poseTrack('PoseChest', (k, p) => { p.EyeSmileAdd = 0.6 * k; p.AngleY = -4 * k; p.BodyAngleY = -2 * k; }) },
+  chin: { pose: 'chin', duration: 4.2, hand: 'both', track: poseTrack('PoseChin', (k, p) => { p.AngleZ = 4 * k; p.AngleY = 3 * k; p.HeadHold = k; p.LookX = -0.45 * k; p.LookY = 0.5 * k; }) },
+  reach: { pose: 'reach', duration: 3.8, hand: 'both', track: poseTrack('PoseReach', (k, p) => { p.EyeSmileAdd = 0.5 * k; p.BodyAngleY = 3 * k; p.AngleY = 2 * k; p.AngleX = -4 * k; }) },
   // right hand loosely closed in front of the waist, head tilted
   think: { duration: 3.6, hand: 'R', track: (t, p) => {
     arm(p, 'R', t, [[0, 0], [0.18, -2], [0.7, 30], [0.85, 28], [2.9, 28], [3.35, -2], [3.6, 0]],
@@ -181,6 +187,8 @@ export class MotionController {
     const pose = this.gestures.filter(x => clash(x) && x.g.pose);
     const start = pose.length ? Math.max(...pose.map(x => x.start + x.g.duration)) : this.t;
     this.gestures = this.gestures.filter(x => !clash(x) || x.g.pose);
+    // the pose gestures take their approach angles from the rig
+    if (g.pose && this.model.json?.poseApproach) g.approach = this.model.json.poseApproach[g.pose];
     this.gestures.push({ g, start });
   }
   spring(id, target, dt, hz) { if (!this.springs[id]) this.springs[id] = new Spring(target, hz); return this.springs[id].step(target, dt, hz); }
@@ -233,7 +241,10 @@ export class MotionController {
     // head: the placement turn plus part of the way to the target (slower);
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
-    const headX = this.spring('headX', keepSide(place * placeHead + (lxH - place * 0.3) * follow), dt, 2.4 * snap), headY = this.spring('headY', lyH * 0.45, dt, 2.4 * snap);
+    // looking down (a pointer below the face) the head takes a smaller share
+    // than looking up, so the face is not left hanging and the eyes keep their
+    // opening: at most about 6 deg down, 11 up
+    const headX = this.spring('headX', keepSide(place * placeHead + (lxH - place * 0.3) * follow), dt, 2.4 * snap), headY = this.spring('headY', lyH * (lyH > 0 ? 0.25 : 0.45), dt, 2.4 * snap);
     const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lxB - place * 0.3) * lerp(0.1, 0.35, g) * (1 - 0.6 * Math.abs(place))), dt, 0.8 * snap), bodyY = this.spring('bodyY', lyB * lerp(0.45, 0.9, g), dt, 0.8 * snap);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: phrases of 1.2-2.8 s with pauses of 0.25-0.5 s between them (the
@@ -315,7 +326,9 @@ export class MotionController {
       ShoulderR: (pose.ShoulderR || 0) + (pose.ShoulderR === undefined ? eArms : 0), ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
-    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : (k === 'AngleY' || k === 'EyeWide' ? 9 : 4) * snap));
+    // the arms settle quickly (10 Hz) while a pose gesture runs, so they are at the approach when the pose arms take over
+    const armHz = this.gestures.some(x => x.g.pose) ? 10 : 6;
+    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? armHz : (k === 'AngleY' || k === 'EyeWide' ? 9 : 4) * snap));
     // the hips and skirt come round a little after the chest
     if (this.has('LowerAngleX')) m.set('LowerAngleX', this.spring('lowerX', m.values.BodyAngleX, dt, 2.2 * snap));
     // swaying parts: larger swings when shown small, calmer with reduced motion

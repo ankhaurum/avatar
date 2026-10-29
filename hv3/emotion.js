@@ -18,7 +18,9 @@ export const STATES = Object.freeze(['idle', 'attention', 'thinking', 'speaking'
 export const EMOTIONS = Object.freeze({
   neutral: { smile: 0.2, form: 0.45, mouth: 0, browY: 0, browAngle: 0, eye: 1 },
   gentle: { smile: 0.45, form: 0.8, mouth: 0.2, wide: 0.35, browY: 0.05, browAngle: 0, eye: 1, lean: 0.5 },
-  smile: { smile: 0.8, form: 1, mouth: 0.6, browY: 0.1, browAngle: 0, eye: 0.94, lean: 1 },
+  // the eyes stay open in the resting smile (the lower lids rise a little; the
+  // upper lids are not lowered), as in the reference smile
+  smile: { smile: 0.55, form: 1, mouth: 0.6, browY: 0.1, browAngle: 0, eye: 1, lean: 1 },
   joy: { smile: 1, form: 1, mouth: 0.9, browY: 0.3, browAngle: 0.1, eye: 0.9, lean: 2.5, roll: 1.5, tilt: 3, arms: 4, bounce: 1 },
   // surprise: the fringe hides the brows, so it is carried by the eyes opened
   // wide (white above the iris), the mouth dropped into a small round "o" with

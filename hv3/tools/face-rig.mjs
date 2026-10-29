@@ -116,30 +116,39 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // with the mouth closed the same lips meet on one seam (each lip keeps its
   // shape and is moved to the seam), so the smile still closes fully. Each
   // lip vertex keeps its relative place between its outer edge and the seam.
+  // The corners are set only a little above art A's own (about 1.2 px): the
+  // reference's corner points lie at the far ends of its corner creases, and
+  // lifting art A's crease that far bends it into a hook. The upper lip is
+  // drawn 1.5 px fuller in the middle than the reference contour (art A's
+  // upper lip is darker than the reference's, and compressed to the
+  // reference's height it reads as a thin dark line).
   const REF_OPEN = 0.6;
-  const ref = { cL: [485.2, 344.9], cR: [569.9, 336.8],
+  const ref = { cL: [485.9, 346.6], cR: [568.1, 339.3],
     utop: [[497.9, 341.7], [513.1, 337.5], [521.2, 336.4], [529.3, 337.3], [538.4, 335.1], [551.6, 336], [563.8, 336.9]],
     uin: [[492.8, 345.9], [503, 346.2], [518.2, 345.6], [529.4, 344.9], [543.6, 343.2], [558.8, 341]],
     lin: [[492.9, 349.4], [508.2, 354.3], [518.4, 355.7], [529.5, 355.6], [543.7, 352.4], [558.9, 347.1]],
     lbot: [[498.1, 360], [513.4, 368], [528.7, 369.3], [543.9, 366.6], [559, 357.3]] };
   const curveOf = pts => { const q = [ref.cL, ...pts, ref.cR].map(P); return x => curveY(q, x); };
-  const R = { utop: curveOf(ref.utop), uin: curveOf(ref.uin), lin: curveOf(ref.lin), lbot: curveOf(ref.lbot) };
+  const utopR = curveOf(ref.utop);
+  const R = { utop: x => utopR(x) - 1.5 * s * Math.max(0, 1 - sOf(x) ** 2), uin: curveOf(ref.uin), lin: curveOf(ref.lin), lbot: curveOf(ref.lbot) };
   const rcL = P(ref.cL), rcR = P(ref.cR);
   const lu = def.lipU.poly.map(P), ll = def.lipL.poly.map(P);
   const Utop0 = x => curveY(lu.slice(0, 11), x), Lbot0 = x => curveY([...ll.slice(10), ll[0]], x);
   const seamC = x => (R.uin(x) + R.lin(x)) / 2;
   const smileD = (open, lip) => (x, y) => {
-    const u = Math.min(1, Math.max(0, (x - mx0) / (mx1 - mx0))), X = rcL[0] + u * (rcR[0] - rcL[0]);
-    // near the corners the lips stay together (the opening tapers to nothing
-    // a quarter of the mouth width inside each corner), so a corner ends in lip and
-    // skin only, with no dark wedge
-    const k = open / REF_OPEN * smooth(Math.min(u, 1 - u) / 0.24), sm = seamC(X);
+    // beyond the corners the lip texture (the end of the crease) moves as one
+    // piece with its corner, so the corner is not pulled into a hook
+    const xx = Math.min(mx1, Math.max(mx0, x));
+    const u = (xx - mx0) / (mx1 - mx0), X = rcL[0] + u * (rcR[0] - rcL[0]);
+    // the opening reaches almost to the corners, as in the reference (the
+    // lips meet again over the last tenth of the mouth width)
+    const k = open / REF_OPEN * smooth(Math.min(u, 1 - u) / 0.14), sm = seamC(X);
     let outer0, outerR, innerR;
-    if (lip === 'u') { outer0 = Utop0(x); innerR = R.uin(X); outerR = R.utop(X); }
-    else { outer0 = Lbot0(x); innerR = R.lin(X); outerR = R.lbot(X); }
+    if (lip === 'u') { outer0 = Utop0(xx); innerR = R.uin(X); outerR = R.utop(X); }
+    else { outer0 = Lbot0(xx); innerR = R.lin(X); outerR = R.lbot(X); }
     const inner = sm + (innerR - sm) * k, outer = outerR + (sm - innerR) * (1 - k);
-    const den = M(x) - outer0, v = Math.abs(den) < 0.8 * s ? (lip === 'u' ? (y < M(x) ? 0 : 1) : (y > M(x) ? 0 : 1)) : Math.max(-1.5, Math.min(2, (y - outer0) / den));
-    return [X - x, outer + v * (inner - outer) - y];
+    const den = M(xx) - outer0, v = Math.abs(den) < 0.8 * s ? (lip === 'u' ? (y < M(xx) ? 0 : 1) : (y > M(xx) ? 0 : 1)) : Math.max(-1.5, Math.min(2, (y - outer0) / den));
+    return [X - xx, outer + v * (inner - outer) - y];
   };
   const mix = (a, b, w) => [a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w];
   const upperD = (open, form) => (x, y) => form > 0 ? mix(upperN(open, 0)(x, y), smileD(open, 'u')(x, y), form) : upperN(open, form)(x, y);
@@ -166,7 +175,7 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     const t = sOf(x), mid = Math.max(0, 1 - t * t * t * t);
     // edges 1 px under each lip (the lips' soft inner edges cover them), only
     // where the lips are apart (none in the closed quarter at each corner)
-    const apart = Math.min(1, open * 4) * smooth((1 - Math.abs(t)) / 0.48);
+    const apart = Math.min(1, open * 4) * smooth((1 - Math.abs(t)) / 0.28);
     let top = M(x) + up[1] - 1 * s * apart, bottom = M(x) + lo[1] + 1 * s * apart;
     // the dark opening closes a little before the lip corners (the corners keep
     // art A's own lip line and no cavity shows beyond it)
@@ -198,7 +207,8 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // the dark of the mouth shows under it
   const teethKey = { params: ['MouthOpen', 'MouthForm', 'MouthPucker'], keys: [[0, 1], [-1, 0, 1], [0, 1]], fn: (open, form, pk) => {
     const xs = [mx0 + 0.15 * (mx1 - mx0), mxc, mx1 - 0.15 * (mx1 - mx0)];
-    const ys = xs.map(x => M(x) + upperD(open, form)(x, M(x) - 0.05)[1] - 2.6 * s);
+    // the gum line sits 4.5 px up under the lip, so no dark seam shows between the lip and the teeth
+    const ys = xs.map(x => M(x) + upperD(open, form)(x, M(x) - 0.05)[1] - 4.5 * s);
     // quadratic through the three points
     const q = x => { const [a, b2, c] = xs; return ys[0] * (x - b2) * (x - c) / ((a - b2) * (a - c)) + ys[1] * (x - a) * (x - c) / ((b2 - a) * (b2 - c)) + ys[2] * (x - a) * (x - b2) / ((c - a) * (c - b2)); };
     const dx = upperD(open, form)(mxc, M(mxc) - 0.05)[0];
