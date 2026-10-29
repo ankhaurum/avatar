@@ -27,8 +27,8 @@ class Spring {
 
 export const EXPRESSIONS = {
   // default: a natural smile, lips parted a little so the upper teeth show
-  neutral: { EyeSmile: 0.35, MouthForm: 0.85, BrowY: 0.1, BrowAngle: 0, eye: 1, mouth: 0.3 },
-  smile: { EyeSmile: 0.75, MouthForm: 1, BrowY: 0.25, BrowAngle: 0.1, eye: 0.92, mouth: 0.4 },
+  neutral: { EyeSmile: 0.35, MouthForm: 0.85, BrowY: 0.1, BrowAngle: 0, eye: 1, mouth: 0.5 },
+  smile: { EyeSmile: 0.75, MouthForm: 1, BrowY: 0.25, BrowAngle: 0.1, eye: 0.92, mouth: 0.55 },
   surprise: { EyeSmile: 0, MouthForm: 0, BrowY: 1, BrowAngle: 0.3, eye: 1, mouth: 0.45 },
   think: { EyeSmile: 0, MouthForm: -0.2, BrowY: 0.2, BrowAngle: -0.8, eye: 0.85, lookY: 0.6, lookX: -0.5 },
   sad: { EyeSmile: 0, MouthForm: -0.8, BrowY: -0.2, BrowAngle: 1, eye: 0.8 }
