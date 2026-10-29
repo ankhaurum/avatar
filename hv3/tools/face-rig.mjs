@@ -138,7 +138,7 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   const upperD = (open, form) => (x, y) => form > 0 ? mix(upperN(open, 0)(x, y), smileD(open, 'u')(x, y), form) : upperN(open, form)(x, y);
   const lowerD = (open, form) => (x, y) => form > 0 ? mix(lowerN(open, 0)(x, y), smileD(open, 'l')(x, y), form) : lowerN(open, form)(x, y);
   // cavity: a strip between the lips' inner edges, zero height when closed
-  const cols = 24, rows = 4, cav0 = P([478, 330]);
+  const cols = 96, rows = 4, cav0 = P([478, 330]);
   const cavityMesh = (tw, th) => {
     const positions = [], triangles = [], uvPositions = [];
     for (let j = 0; j <= rows; j++) for (let i = 0; i <= cols; i++) {
@@ -157,7 +157,10 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
     // nothing dark shows outside them. Only in the middle it reaches 1 px under
     // the lower lip's inner edge (the lip covers that strip).
     const t = sOf(x), mid = Math.max(0, 1 - t * t * t * t);
-    let top = M(x) + up[1], bottom = M(x) + lo[1] + 1 * s * Math.min(1, open * 4) * mid;
+    // edges 1 px under each lip (the lips' soft inner edges cover them), only
+    // where the lips are apart (none in the closed quarter at each corner)
+    const apart = Math.min(1, open * 4) * smooth((1 - Math.abs(t)) / 0.48);
+    let top = M(x) + up[1] - 1 * s * apart, bottom = M(x) + lo[1] + 1 * s * apart;
     // the dark opening closes a little before the lip corners (the corners keep
     // art A's own lip line and no cavity shows beyond it)
     const taper = 1, c = (top + bottom) / 2;
@@ -194,7 +197,9 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   } };
   await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: teethKey });
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });
+  // fine vertices all along the mouth line, so the seam and the inner edges bend smoothly
   const lipDetail = [{ x: mx0, y: M(mx0), r: 9 * s, spacing: 1.5 * s }, { x: mx1, y: M(mx1), r: 9 * s, spacing: 1.5 * s }];
+  for (let x = mx0 + 4 * s; x < mx1; x += 4 * s) lipDetail.push({ x, y: M(x), r: 5 * s, spacing: 1.4 * s });
   await b.part('lip_lower', { file: 'lip_lower.png', offset: off('lip_lower'), texScale: tex, parent, order: z + 91, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: lowerD } });
   await b.part('lip_upper', { file: 'lip_upper.png', offset: off('lip_upper'), texScale: tex, parent, order: z + 91.1, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: upperD } });
   return { M, mx0, mx1, mxc, openLower, s };

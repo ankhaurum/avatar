@@ -60,16 +60,18 @@
   "h": 14
  },
  "lip_lower": {
-  "x": 483,
-  "y": 339,
-  "w": 91,
-  "h": 33
+  "x": 481,
+  "y": 333,
+  "w": 93,
+  "h": 39,
+  "feathered": true
  },
  "lip_upper": {
   "x": 481,
   "y": 333,
   "w": 93,
-  "h": 21
+  "h": 39,
+  "feathered": true
  },
  "head_skin": {
   "x": 370,
