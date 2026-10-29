@@ -196,7 +196,7 @@ const A_ = (x, y) => [artA.offset[0] + x * artA.scale, artA.offset[1] + y * artA
 const fr0 = A_(380, 230), fr1 = A_(670, 440);
 const gauss = (x, y, c, r) => Math.exp(-(((x - c[0]) ** 2 + (y - c[1]) ** 2) / (r * r)));
 b.warp('face_expr', 'head_turn', [fr0[0], fr0[1], fr1[0] - fr0[0], fr1[1] - fr0[1]], 10, 10, { params: ['MouthForm', 'MouthOpen'], keys: [[-1, 0, 1], [0, 1]], fn: (form, open) => (x, y) => {
-  const k = artA.scale, cheek = Math.max(0, form) * 2.2 * k * (gauss(x, y, A_(478, 305), 34 * k) + gauss(x, y, A_(574, 298), 34 * k));
+  const k = artA.scale, cheek = Math.max(0, form) * 7 * k * (gauss(x, y, A_(476, 308), 38 * k) + gauss(x, y, A_(578, 300), 38 * k));
   const [mx, my] = A_(527, 349), jaw = open * 6 * k * Math.max(0, 1 - Math.abs(x - mx) / (70 * k)) * smooth((y - my) / (25 * k)) * (1 - smooth((y - A_(0, 412)[1]) / (16 * k)));
   return [0, -cheek + jaw];
 } });
