@@ -20,6 +20,7 @@ const b = new RigBuilder(out, 1024, 1536);
 for (const [id, lo, hi, label] of [['AngleX', -30, 30, '顔 左右'], ['AngleY', -30, 30, '顔 上下'], ['AngleZ', -30, 30, '顔 傾き'],
   ['BodyAngleX', -10, 10, '体 左右'], ['LowerAngleX', -10, 10, '腰から下 左右（体に遅れて）'], ['BodyAngleY', -10, 10, '体 前後'], ['BodyAngleZ', -10, 10, '体 傾き']]) b.param(id, lo, hi, 0, label);
 b.param('Breath', 0, 1, 0, '呼吸');
+b.param('ShoulderUp', 0, 1, 0, '肩をすくめる');
 for (const s of ['R', 'L']) {
   const ja = s === 'R' ? '右' : '左';
   b.param('Shoulder' + s, -20, 100, 0, ja + '肩（外へ上げる）');
@@ -51,48 +52,56 @@ const T = { x: 230, y: 200, w: 564, h: 640 }, tc = [512, 360];
 // (lower_turn: LowerAngleX) -> parts. The turn of a point is one function of
 // its place, used by both warps, so the waist seam is continuous at rest.
 const upOf = y => Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-// Shape of the turn. Each horizontal section of the body is an ellipse
-// (half-width a from the drawn bodice / skirt, depth c = 0.78 a) turned about
-// the spine by up to 35 deg at BodyAngleX 10 and seen with a little perspective:
-// the front centre line (ribbon, buttons) moves well toward the turn, the near
-// half widens and comes forward (larger), the far half narrows and recedes. The
-// edges follow the turned silhouette (the far edge is formed by the side of the
-// body, so it stays out while the far arm, at the side, goes behind it).
-const BODY_TURN = 35 * Math.PI / 180, PERSP = 600;
+// Shape of the turn, keyed the way a modeller sets the ends (BodyAngleX +-10:
+// the body clearly turned, about 35 deg). At each height the body section has a
+// half-width a (table below). The front centre line (ribbon, button row) moves
+// 0.42 a toward the turn. The near half (the side the body turns away from; it
+// comes toward the viewer) widens a little and is seen larger and a little
+// lower (the viewer looks slightly down on it); the far half narrows strongly
+// and recedes (smaller, higher): the far edge of the body moves 0.30 a inward,
+// so the far arm and shoulder, drawn behind the bodice, go partly behind it,
+// and beyond the far edge (shoulder, arm, hand) things move inward further
+// still. The neck and collar (y < 268) move as one piece with the centre line.
 const table = (tab, y) => { if (y <= tab[0][0]) return tab[0][1]; for (let i = 1; i < tab.length; i++) if (y <= tab[i][0]) { const [y0, a0] = tab[i - 1], [y1, a1] = tab[i]; return a0 + (a1 - a0) * (y - y0) / (y1 - y0); } return tab[tab.length - 1][1]; };
 // half-width of the body by height (neck, collar, chest, waist, skirt), measured on the R3 parts
 const halfW = y => table([[220, 40], [262, 44], [296, 66], [322, 108], [450, 110], [505, 86], [566, 97], [620, 118], [700, 158], [1040, 200]], y);
 // the chest turns fully, the hips about half
 const turnShare = y => 0.5 + 0.5 * Math.max(0, Math.min(1, (800 - y) / 350));
-const turnX = (ax, x, y) => {
-  const th = BODY_TURN * ax / 10 * turnShare(y); if (!th) return 0;
-  const a = halfW(y), c = 0.78 * a, rx = x - tc[0], cs = Math.cos(th), sn = Math.sin(th);
-  // turned and seen in perspective, relative to the point's place at rest
-  const proj = (px, pz) => { const X = px * cs + pz * sn, Z = -px * sn + pz * cs; return X * (PERSP - pz) / (PERSP - Z); };
-  let hi = -1e9, lo = 1e9;
-  for (let i = 0; i < 96; i++) { const p = i / 96 * 2 * Math.PI, v = proj(a * Math.sin(p), c * Math.cos(p)); hi = Math.max(hi, v); lo = Math.min(lo, v); }
-  const side = rx >= 0 ? 1 : -1, edge = side > 0 ? hi : lo, u = Math.min(1, Math.abs(rx) / a);
-  // the front surface from the centre out to this point, kept in order (no fold)
-  let m = proj(0, c);
-  const at = uu => proj(side * a * uu, c * Math.sqrt(Math.max(0, 1 - uu * uu)));
-  for (let k = 1; k <= 24; k++) { const v = at(u * k / 24); m = side > 0 ? Math.max(m, v) : Math.min(m, v); }
-  let m1 = m; for (let k = 1; k <= 24; k++) { const v = at(u + (1 - u) * k / 24); m1 = side > 0 ? Math.max(m1, v) : Math.min(m1, v); }
-  // ends on the silhouette; beyond the body (shoulders, arms) as the edge
-  const d = Math.abs(rx) >= a ? edge - side * a : m + (edge - m1) * u ** 3 - rx;
-  // the neck and collar (under the head) move as one piece with the front
-  // centre, so their sides stay under the hair
+const EYE_Y = 240, DEPTH = 0.045;
+const turnXY = (ax, x, y) => {
+  const s = ax / 10 * turnShare(y); if (!s) return [0, 0];
+  const a = halfW(y), rx = x - tc[0], sg = Math.sign(s), m = Math.abs(s);
+  const xc = 0.42 * a * s;                                                 // front centre line
+  const near = -sg * a * (1 + 0.05 * m), far = sg * a * (1 - 0.28 * m);  // the two edges
+  let X, z;                                                                // z: +1 toward the viewer
+  if (rx * sg >= 0) { // far half: the surface is compressed toward the edge, more near it, never folding
+    const u = Math.min(1, rx * sg / a), k = 0.28 * m, q = u * (1 - k * u) / (1 - k);
+    X = xc + (far - xc) * q; z = -Math.pow(u, 0.8);
+    if (rx * sg > a) { X += (rx * sg - a) * (1 - 0.28 * m) * sg; z = -1; }
+  } else { // near half: the surface is stretched a little toward the centre
+    const u = Math.min(1, -rx * sg / a), k = 0.25 * m, r = u + k * u * (1 - u);
+    X = xc + (near - xc) * r; z = Math.pow(u, 0.8);
+    if (-rx * sg > a) { X += (-rx * sg - a) * (1 + 0.04 * m) * -sg; z = 1; }
+  }
   const rigid = 1 - smooth((y - 268) / 40);
-  return d + (proj(0, c) - d) * rigid;
+  // the near / far size difference (perspective about the eye level): full on
+  // the upper body, fading toward the hem so the skirt tilts only a little
+  const depth = DEPTH * Math.max(0.3, 1 - Math.max(0, (y - 560) / 480));
+  return [(X - rx) * (1 - rigid) + xc * rigid, (y - EYE_Y) * depth * m * z * (1 - rigid)];
 };
-// the far arm and its shoulder frill go behind the body, the near arm comes forward
-const armTurn = (ax, px) => { const side = px - tc[0] >= 0 ? 1 : -1, far = Math.max(0, side * ax / 10), near = Math.max(0, -side * ax / 10); return { dx: -side * 20 * far, scale: 0.05 * near - 0.03 * far }; };
+const turnX = (ax, x, y) => turnXY(ax, x, y)[0];
+// the far arm and its shoulder frill go behind the body and get smaller, the near arm comes forward and gets larger
+const armTurn = (ax, px) => { const side = px - tc[0] >= 0 ? 1 : -1, far = Math.max(0, side * ax / 10), near = Math.max(0, -side * ax / 10); return { dx: -side * 28 * far + side * 6 * near, scale: 0.06 * near - 0.07 * far }; };
+// the shoulders (the band beside the neck, from the collar down to the top of
+// the chest) rise with each breath a little and with a shrug (ShoulderUp)
+const shoulderBand = (x, y) => { const nx = Math.abs(x - tc[0]) / (T.w / 2); return smooth((nx - 0.12) / 0.25) * smooth((y - 236) / 30) * (1 - smooth((y - 340) / 70)); };
 b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
-  params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
+  params: ['BodyAngleX', 'BodyAngleY', 'Breath', 'ShoulderUp'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1], [0, 1]], fn: (ax, ay, br, sh) => (x, y) => {
     const nx = (x - tc[0]) / (T.w / 2), up = upOf(y), rx = x - tc[0];
-    const turn = turnX(ax, x, y);
-    const chest = Math.max(0, 1 - Math.abs(y - 330) / 150);
+    const [turn, turnY] = turnXY(ax, x, y);
+    const chest = Math.max(0, 1 - Math.abs(y - 330) / 150), band = shoulderBand(x, y);
     const lean = -ay / 10, k = 0.05 * lean * up;
-    return [turn + rx * k + br * nx * 1.6 * chest, lean * 16 * up * up + (y - tc[1]) * k * 0.5 - Math.abs(nx) * lean * 3 * up - br * 2.2 * chest * (0.6 + 0.4 * up)];
+    return [turn + rx * k + br * nx * 1.6 * chest - sh * nx * 3 * band, turnY + lean * 16 * up * up + (y - tc[1]) * k * 0.5 - Math.abs(nx) * lean * 3 * up - br * 2.2 * chest * (0.6 + 0.4 * up) - br * 1.4 * band - sh * 12 * band];
   }
 });
 // lower body: the skirt, hip ribbon and drapes turn the same way as the waist
@@ -100,11 +109,11 @@ b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
 const LB = [180, 480, 680, 560];
 // LowerAngleX follows BodyAngleX a little later (set by the motion), so the
 // hips and skirt come round after the chest
-b.warp('lower_turn', 'body', LB, 8, 6, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => [turnX(ax, x, y), 0] });
+b.warp('lower_turn', 'body', LB, 8, 6, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => turnXY(ax, x, y) });
 // legs (not under the body rotation): a small shift the same way, fading toward the feet
 b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['LowerAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [turnX(ax, 512 + (x - 512) * 0.4, 800) * f, 0]; } });
 // shoulder frills swing about their seams
-for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 7 * (s === 'R' ? 1 : -1), dx: armTurn(ax, r3.get('shoulder_frill_' + s).pivot[0]).dx * 0.6 }) });
+for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => { const t = armTurn(ax, r3.get('shoulder_frill_' + s).pivot[0]); return { angle: v * 7 * (s === 'R' ? 1 : -1), dx: t.dx * 0.6, scale: t.scale * 1.2 }; } });
 // ---- head and neck
 const headPivot = joint('head');
 // the whole head turns about the base of the neck: tilting rotates it, turning
@@ -322,17 +331,22 @@ rigid('mouth_turn', A_(527, 350));
 // moves the whole feature, so the lids, lashes, lips and the closed seam keep
 // their fit.
 b.param('EyeWide', 0, 1, 0, '目の見開き'); b.param('MouthPucker', 0, 1, 0, '口のすぼめ'); b.param('MouthShift', -1, 1, 0, '口の片寄せ');
+// wide open (surprise): the upper lid rises most, the lower lid drops a little,
+// so white shows above the iris; the iris itself is not stretched (it is a child
+// of the turn, not of this warp, and is clipped by the widened white)
 for (const [id, c] of [['R', [475, 258]], ['L', [572, 252]]]) {
   const p0 = A_(c[0] - 62, c[1] - 48), p1 = A_(c[0] + 62, c[1] + 44), cy = A_(0, c[1] + 2)[1];
-  b.warp('eye_' + id + '_wide', 'eye_' + id + '_turn', [p0[0], p0[1], p1[0] - p0[0], p1[1] - p0[1]], 4, 4, { params: ['EyeWide'], keys: [[0, 1]], fn: w => (x, y) => [0, (y - cy) * 0.26 * w] });
+  b.warp('eye_' + id + '_wide', 'eye_' + id + '_turn', [p0[0], p0[1], p1[0] - p0[0], p1[1] - p0[1]], 4, 6, { params: ['EyeWide'], keys: [[0, 1]], fn: w => (x, y) => [0, (y - cy) * (0.32 + 0.18 * Math.tanh((cy - y) / (4 * artA.scale))) * w] });
 }
 {
   const p0 = A_(452, 312), p1 = A_(602, 410), [mx, my] = A_(527, 350), hw = 50 * artA.scale;
   b.warp('mouth_shape', 'mouth_turn', [p0[0], p0[1], p1[0] - p0[0], p1[1] - p0[1]], 6, 4, { params: ['MouthPucker', 'MouthShift'], keys: [[0, 1], [-1, 0, 1]], fn: (p, h) => (x, y) => {
     const k = artA.scale, t = Math.max(-1.3, Math.min(1.3, (x - mx) / hw)), tt = Math.min(1, t * t);
     // pursing draws the corners in more than the middle (with MouthOpen a round
-    // "o"); the shift pulls the mouth to one side with that corner a little up
-    return [-(x - mx) * p * (0.16 + 0.24 * tt) + h * 9 * k * (1 - 0.3 * t * Math.sign(h)), (y - my) * 0.2 * p - h * 4.5 * k * t];
+    // "o"): the upper lip comes down a little over the teeth, the lower lip
+    // drops and rounds; the shift pulls the mouth to one side with that corner a little up
+    const above = y < my ? 1 : 0;
+    return [-(x - mx) * p * (0.2 + 0.3 * tt) + h * 9 * k * (1 - 0.3 * t * Math.sign(h)), (y - my) * (above ? 0.1 : 0.4) * p + 1.6 * k * p * above - h * 4.5 * k * t];
   } });
 }
 // the side hair is in front of the face in art A (its layer is the difference
@@ -341,7 +355,7 @@ await aPart('hair_side_R', 'side_sway_R', 92.5, { spacing: 9, tips: { spacing: 3
 await aPart('hair_side_L', 'side_sway_L', 92.6, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_front', 'fringe_sway', 94, { spacing: 7, tips: { spacing: 3, at: 0.9 } });
 // face: art A features placed on the R3 head (similarity: eye and mouth centres)
-await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_wide', eyeL: 'eye_L_wide', browR: 'skin_turn', browL: 'skin_turn', mouth: 'mouth_shape' }, z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
+await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_wide', eyeL: 'eye_L_wide', irisR: 'eye_R_turn', irisL: 'eye_L_turn', browR: 'skin_turn', browL: 'skin_turn', mouth: 'mouth_shape' }, z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 
 // ---- physics (inputs are normalised parameter values)
 // Each group: inputs are the head and body angles (and arms), "follow" is how

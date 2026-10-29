@@ -20,7 +20,11 @@ export const EMOTIONS = Object.freeze({
   gentle: { smile: 0.45, form: 0.8, mouth: 0.2, wide: 0.35, browY: 0.05, browAngle: 0, eye: 1, lean: 0.5 },
   smile: { smile: 0.8, form: 1, mouth: 0.6, browY: 0.1, browAngle: 0, eye: 0.94, lean: 1 },
   joy: { smile: 1, form: 1, mouth: 0.9, browY: 0.3, browAngle: 0.1, eye: 0.9, lean: 2.5, roll: 1.5, tilt: 3, arms: 4, bounce: 1 },
-  surprise: { smile: 0, form: 0, mouth: 0.5, pucker: 1, wide: 1, browY: 1, browAngle: 0.3, eye: 1, lean: 3.5, pitch: 4, arms: 6, once: true },
+  // surprise: the fringe hides the brows, so it is carried by the eyes opened
+  // wide (white above the iris), the mouth dropped into a small round "o" with
+  // the corners flattened, and the first beat: the head snaps up and back and
+  // the shoulders shrug, then it settles (once)
+  surprise: { smile: 0, form: -0.5, mouth: 0.65, pucker: 1, wide: 1, browY: 1, browAngle: 0.3, eye: 1, lean: 3, pitch: 5, shrug: 1, once: true },
   concern: { smile: 0, form: -1, mouth: 0, browY: -0.05, browAngle: 0.9, eye: 0.8, lean: -2.5, roll: -3, tilt: -9, arms: -4 },
   sadness: { smile: 0, form: -0.9, mouth: 0, browY: -0.2, browAngle: 1, eye: 0.62, lean: -4, pitch: -10, arms: -8, look: [0, 0.6] },
   thinking: { smile: 0, form: -0.3, mouth: 0, pucker: 0.6, shift: 0.8, browY: 0.2, browAngle: -0.8, eye: 0.85, lean: 1.5, tilt: 7, look: [0.6, -0.5] },
@@ -76,11 +80,17 @@ export class Performance {
     const name = this.emotion || STATE_EMOTION[this.state], e = EMOTIONS[name], a = this.emotion ? this.intensity : 1;
     const age = (this.now() - this.started) / 1000, pulse = Math.sin(Math.min(age / 1.05, 1) * Math.PI);
     const o = { name, state: this.state, phase: this.phase, speaking: this.state === 'speaking', wide: (e.wide || 0) * a, pucker: (e.pucker || 0) * a, shift: (e.shift || 0) * a, smile: e.smile * a, form: e.form * a, mouth: e.mouth * a, browY: e.browY * a, browAngle: e.browAngle * a, eye: 1 + (e.eye - 1) * a,
-      lean: (e.lean || 0) * a, roll: (e.roll || 0) * a, tilt: (e.tilt || 0) * a, pitch: (e.pitch || 0) * a, arms: (e.arms || 0) * a, look: e.look || null, bounce: e.bounce ? a : 0, breath: 1 };
-    // a surprise is a one-shot recognition that settles, not a held startle
-    if (e.once) { const s = Math.max(0.35, 1 - Math.max(0, age - 0.4) / 1.6); for (const k of ['browY', 'mouth', 'lean', 'pitch', 'arms', 'wide', 'pucker']) o[k] *= s; }
+      lean: (e.lean || 0) * a, roll: (e.roll || 0) * a, tilt: (e.tilt || 0) * a, pitch: (e.pitch || 0) * a, arms: (e.arms || 0) * a, shrug: (e.shrug || 0) * a, look: e.look || null, bounce: e.bounce ? a : 0, once: !!e.once, breath: 1 };
+    // a surprise is a one-shot recognition that settles, not a held startle:
+    // the face holds for half a second and eases to 0.4; the head and shoulders
+    // start within a tenth of a second and come back over about a second
+    if (e.once) {
+      const s = Math.max(0.4, 1 - Math.max(0, age - 0.5) / 1.4), beat = age < 0.1 ? age / 0.1 : Math.max(0, 1 - (age - 0.1) / 1.0);
+      for (const k of ['browY', 'mouth', 'wide', 'pucker']) o[k] *= s;
+      for (const k of ['lean', 'pitch', 'arms', 'shrug']) o[k] *= beat;
+      o.form *= Math.max(0.5, s);
+    }
     if (this.state === 'attention') { o.lean -= pulse * 3; o.pitch += pulse * 2; o.look = [0, 0]; }
-    if (this.state === 'notify') { o.arms += pulse * 4; o.lean += pulse * 2; }
     if (this.state === 'thinking') o.breath = 0.6;
     if (this.state === 'sleep') { o.eye = 0; o.mouth = 0; o.wide = 0; o.pitch = -8; o.lean = -2; o.arms = -3; o.breath = 0.5; o.look = null; }
     if (this.state === 'wake') o.eye *= clamp(age / 0.76);
