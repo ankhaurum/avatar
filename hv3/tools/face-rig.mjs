@@ -52,8 +52,9 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     const n = side => side + '_' + e.a;
     await b.part('eye_white_' + e.id, { file: n('eye_white') + '.png', offset: off(n('eye_white')), texScale: tex, parent, order: z + zOf.white, spacing: 3 * s, dilate: 1, detail: corners, key: { ...key, fn: whiteFn } });
     await b.part('eye_white_mask_' + e.id, { file: n('eye_white') + '.png', offset: off(n('eye_white')), texScale: tex, parent, order: z + zOf.white, maskOnly: true, spacing: 3 * s, dilate: 1, detail: corners, key: { ...key, fn: whiteFn } });
+    // the iris keeps its round shape when the eye opens wide (it is clipped by the widened white)
     await b.part('eye_iris_' + e.id, {
-      file: n('eye_iris') + '.png', offset: off(n('eye_iris')), texScale: tex, parent, order: z + zOf.iris, spacing: 4 * s, dilate: 1, mask: 'eye_white_mask_' + e.id,
+      file: n('eye_iris') + '.png', offset: off(n('eye_iris')), texScale: tex, parent: parents['iris' + e.id] || parent, order: z + zOf.iris, spacing: 4 * s, dilate: 1, mask: 'eye_white_mask_' + e.id,
       key: { params: ['EyeBallX', 'EyeBallY'], keys: [[-1, 0, 1], [-1, 0, 1]], fn: (gx, gy) => () => [gx * 5.5 * s, gy * 2.6 * s] }
     });
     await b.part('eyelash_lower_' + e.id, {
@@ -201,7 +202,9 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     // quadratic through the three points
     const q = x => { const [a, b2, c] = xs; return ys[0] * (x - b2) * (x - c) / ((a - b2) * (a - c)) + ys[1] * (x - a) * (x - c) / ((b2 - a) * (b2 - c)) + ys[2] * (x - a) * (x - b2) / ((c - a) * (c - b2)); };
     const dx = upperD(open, form)(mxc, M(mxc) - 0.05)[0];
-    return (x, y) => [dx, q(x) - teethTop + (y - teethTop) * (0.35 - 0.5 * pk) - 1.5 * s * pk];
+    // pursed: the row is drawn much shorter and tucked up under the lip, so only
+    // a strip of the teeth shows and the dark of the mouth opens under it
+    return (x, y) => [dx, q(x) - teethTop + (y - teethTop) * (0.35 - 1.0 * pk) - 1.5 * s * pk];
   } };
   await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: teethKey });
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });

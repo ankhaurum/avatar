@@ -238,7 +238,8 @@ export class MotionController {
     // small), the head only tilts and nods a little
     const em = pf || {}, emBody = lerp(1, 1.8, g), bounce = em.bounce ? Math.max(0, Math.sin(t * TAU * 1.6)) * em.bounce : 0;
     const eLean = this.spring('eLean', ((em.lean || 0) + bounce * 2) * emBody, dt, 2.2 * snap), eRoll = this.spring('eRoll', (em.roll || 0) * emBody, dt, 1.8 * snap);
-    const eTilt = this.spring('eTilt', em.tilt || 0, dt, 1.8), ePitch = this.spring('ePitch', em.pitch || 0, dt, 2), eArms = this.spring('eArms', (em.arms || 0) * emBody, dt, 2.2 * snap);
+    const eTilt = this.spring('eTilt', em.tilt || 0, dt, 1.8), ePitch = this.spring('ePitch', em.pitch || 0, dt, em.once ? 6 : 2), eArms = this.spring('eArms', (em.arms || 0) * emBody, dt, 2.2 * snap);
+    const eShrug = this.spring('eShrug', clamp((em.shrug || 0) * lerp(1, 1.3, g), 0, 1), dt, 6);
     const out = {
       AngleX: clamp((headX * 30 + (n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0) * accent, -24, 24),
       AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent + ePitch, -24, 24),
@@ -248,6 +249,7 @@ export class MotionController {
       BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12 + eLean, -10, 10),
       BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5 + eRoll, -10, 10),
       Breath: breath,
+      ShoulderUp: eShrug,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
       BrowAngle: ex.BrowAngle ?? 0,
       MouthForm: clamp((ex.MouthForm ?? 0) + formAdd, -1, 1),
@@ -258,7 +260,7 @@ export class MotionController {
       ShoulderR: (pose.ShoulderR || 0) + (pose.ShoulderR === undefined ? eArms : 0), ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
-    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : (k === 'AngleY' ? 9 : 4) * snap));
+    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : (k === 'AngleY' || k === 'EyeWide' ? 9 : 4) * snap));
     // the hips and skirt come round a little after the chest
     if (this.has('LowerAngleX')) m.set('LowerAngleX', this.spring('lowerX', m.values.BodyAngleX, dt, 2.2 * snap));
     // swaying parts: larger swings when shown small, calmer with reduced motion
