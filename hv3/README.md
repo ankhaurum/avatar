@@ -57,7 +57,7 @@ const avatar = await mountHibikiAvatar(document.querySelector('#avatar'), {
   facing: 'auto',               // 向き：'auto'（ページ上の位置から）／-1（左に置いた）〜1（右に置いた）
   autoplay: true                // false：step(dt) を呼ぶまで止めておく（試験や録画用）
 });
-avatar.motion.gesture('wave'); avatar.motion.setExpression('smile'); avatar.motion.talk(2);
+avatar.motion.gesture('wave'); avatar.setState('happy'); avatar.motion.talk(2);
 avatar.setView('full'); avatar.setScrollFade({ enabled: false }); avatar.setViewToggle(false); avatar.destroy();
 ```
 
@@ -76,3 +76,60 @@ avatar.setView('full'); avatar.setScrollFade({ enabled: false }); avatar.setView
 | `--hv3-toggle-radius` ／ `--hv3-toggle-font-size` ／ `--hv3-toggle-inset` | ボタンの角丸・文字の大きさ・右下からの位置 | `999px` ／ `13px` ／ `8px` |
 
 ボタンには `hv3-view-toggle`、スクロール中のホストには `hv3-scrolling` のクラスが付くので、細かな見た目はこれらのクラスでも上書きできる（パッケージのCSSは `:where()` で詳細度0）。
+
+## V2の感情表現の入力（`hv3/emotion.js`）
+Twinow のコンパニオン（V2）と同じ入口・同じ形で状態と感情を受け取り、響V3のパラメータ（目・眉・口・笑顔・頭・体・肩・視線）のメッシュ変形で表す。画像の差し替えはしない。HUB と Twinow で分岐させない。Twinow 本体・HUB 本体のコードは変更しておらず、組み込みもしていない。
+
+```js
+avatar.setState('thinking', { duration: 0 });          // 本体の setState(state, options) と同じ
+dispatchEvent(new CustomEvent('aifate:companion-state', { detail: { state: 'happy', options: {} } }));
+dispatchEvent(new CustomEvent('aifate:companion-chat-lifecycle', { detail: { phase: 'complete', anchor: null, emotion: 'happy' } }));
+avatar.chatLifecycle({ phase: 'complete', emotion: 'concern' }); // 同じ処理を関数で
+avatar.setEmotion('sadness');  // 確認用：状態の感情を上書き（'auto' で状態に合わせる）
+avatar.getSnapshot();          // { state, phase, emotion, history, speaking, … }
+avatar.states;                 // 10状態
+```
+
+`listen: false` を渡すと window の合図を受け取らない（同じページに本体のコンパニオンがいるときなど）。未知の状態・値は無視して `false` を返し、表示は変えない。
+
+### 入口一覧（本体のどのコードに合わせたか）
+照合した本体：Twinow `19f0db4`（`wordpress/themes/twinow-original/assets/`）。
+
+| 入口 | 本体のコード | このパッケージ |
+|---|---|---|
+| 10状態 | `aifate-companion.js:39` `STATES = idle, attention, thinking, speaking, happy, notify, concern, error, sleep, wake` | `emotion.js` `STATES`（同じ並び） |
+| `setState(state, options)` | `aifate-companion.js:123` `MotionEngine.setState`：未知の状態は `false`。`options.duration` 未指定時の長さ attention 920 / happy 1100 / notify 1500 / error 2300 / wake 760 ms、`options.next`（既定 idle）、`options.phase`。speaking は 1.8 秒で落ち着き（calm）、さらに 3.2 秒で happy（`options.calm === false` で無し） | `Performance.setState`（同じ規則）、`avatar.setState` |
+| `aifate:companion-state` | `aifate-companion.js:267` `detail.state` / `detail.options` を setState へ。送る側 `conversation.js:17` | `hibiki-avatar.js` が window で受ける |
+| `aifate:companion-chat-lifecycle` | `aifate-companion.js:256`（受信）、`:242–253` `chatLifecycle`：thinking / speaking はその状態（duration 0）、complete は emotion が happy / concern / notify ならその状態、ほかは speaking を 80 ms 後に、最初に置いてから最低 2 秒（完了から最低 0.8 秒）の余韻のあと idle。dismiss は idle。送る側 `conversation.js:16`、送信時 `:28` thinking、返事 `:32` speaking（`r.emotion` 無しは speaking）、完了 `:40` complete | `avatar.chatLifecycle`（close / dismiss は idle） |
+| 押したとき | `aifate-companion.js:256` ボタンの click で attention 920 ms | アバターを押すと attention 920 ms（表示切り替えボタンは除く） |
+| マウスを重ねたとき | `aifate-companion.js:144` 細かいポインターの pointerenter で attention 920 ms | 同じ |
+| 考え中の視線 | `aifate-companion.js:100` thinking で視線を右上へ | thinking の視線を右上へ |
+
+時間は描画のフレームで進む1本の時計で数える（実表示では実時間と同じ。`step(dt)` で録画すると同じ流れが再現される）。
+
+### HUB の感情値
+照合した HUB：`ankhaurum/Aifate-HUB` `e84ae6b`（読むだけ）。
+
+| 出どころ | 値 | 扱い |
+|---|---|---|
+| 公開の会話API `src/Application/ConversationService.php:47` `publicAnswer` | 返す項目に emotion が無い（status, conversationId, reply, intent, suggestedReplies, candidateRefs, handoff, limitations） | Twinow は `r.emotion || 'speaking'` なので speaking として扱う |
+| HUB 管理画面 `public/admin/assets/companion.js:310` `emotionFor` | `concern` / `happy` / `notify` / `speaking` | 完了時：happy・concern・notify はその状態、speaking は speaking |
+| HUB 設計文書 `hub/docs/architecture/hibiki-companion-hybrid-v3-neo-line.md:39` | `NEUTRAL, HAPPY, CONCERN, THINKING, NOTIFY, SPEAKING`（未知は SPEAKING） | 状態として来たものは同名の状態へ。感情として `setEmotion` に渡すと neutral / joy / concern / thinking / surprise / 状態に合わせる |
+| 上記以外の値 | — | 無視（完了時は speaking、`setEmotion` は `false`） |
+
+### 状態ごとの表し方
+感情の表は Codex の `studies/continuity/emotion.js`・`affect.js` と README の V2 の節を土台に、響V3のパラメータで作り直した。顔は正面寄りのまま（首の傾きは最大 ±6°）、気持ちは体の前後・左右の傾き、肩、揺れもので出す。小さい表示ほど体と肩の動きを大きくする（最大 1.8 倍）。
+
+| 状態 | 感情 | 顔 | 体 |
+|---|---|---|---|
+| idle | smile（これまでの既定の顔と同じ値） | 笑顔、上の歯が少し見える | 待機の揺らぎ |
+| attention | gentle | 穏やかな笑み、視線を正面へ | 一瞬前に乗り出してうなずくように顔を上げる |
+| thinking | thinking | 笑みを消し、眉を寄せ、視線を右上へ | 少し引き、首をかしげる。呼吸を浅く |
+| speaking | smile | 笑顔で口の開け閉め（どの感情でも唇が閉じ切る） | — |
+| happy | joy | 満面の笑み | 体を反らせ弾むように揺れ、肩が開く |
+| notify | surprise | 眉を上げ目を開く（一度驚いて落ち着く） | 体を起こし、肩を一度上げる |
+| concern / error | concern | 笑みを消し、眉尻を下げる | 少し前かがみに傾け、肩をすぼめる |
+| sleep | neutral | 目を閉じ口を閉じる | うつむき、肩を落とし、呼吸をゆっくり |
+| wake | gentle | 0.76 秒で目を開く | — |
+
+確認ページの「状態」「感情」の行で各状態・感情を、「会話」の行でチャットの流れ（送信 → 考え中 → 話す → 完了の感情 → 待機）を、本体の conversation.js と同じ合図を送って再生できる。
