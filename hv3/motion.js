@@ -172,19 +172,23 @@ export class MotionController {
       this.auto.next = t + 1.2 + Math.random() * 2.8;
     }
     const pointer = t < this.look.until && !pose.LookX;
-    // base orientation from the placement; idle glances happen around it
-    const face = this.spring('facing', -this.facing, dt, 0.8);
-    let lx = pointer ? this.look.x : face * 0.45 + this.auto.x * 0.8, ly = pointer ? this.look.y : this.auto.y;
-    if (ex.lookX !== undefined && !pointer) { lx = ex.lookX; ly = ex.lookY; }
+    // Placement: the body and head turn toward the screen centre and keep that
+    // orientation (a placement at the side of the page, about 0.42 from the
+    // centre, gives the full turn: head about 22 of 30, body about 7.5 of 10).
+    // The idle glances happen around it. Look targets are in screen terms
+    // (-1 left .. 1 right, 0 = straight at the viewer).
+    const place = this.spring('facing', clamp(-this.facing / 0.42, -1, 1), dt, 0.8);
+    let lx = pointer ? this.look.x : this.auto.x * 0.35, ly = pointer ? this.look.y : this.auto.y * 0.8;
+    if (ex.lookX !== undefined && !pointer) { lx = place * 0.5 + ex.lookX * 0.6; ly = ex.lookY; }
     if (pose.LookX) { lx = pose.LookX; ly = pose.LookY || 0; }
-    // eyes go all the way to the target, the head part of the way from the base
-    // orientation, the body mostly keeps the base orientation
-    const eyeX = this.spring('eyeX', lx, dt, 7), eyeY = this.spring('eyeY', ly, dt, 7);
-    // the eyes are fastest and go furthest, the head follows a little later and
-    // less, the upper body later still and least (still visibly); the
-    // placement orientation is the base of all three
-    const headX = this.spring('headX', face * 0.8 + (lx - face * 0.45) * 0.5, dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
-    const bodyX = this.spring('bodyX', face * 0.75 + (lx - face * 0.45) * 0.4, dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
+    // never past the front toward the outside of the page
+    const keepSide = v => place < -0.05 ? Math.min(v, 0.1) : place > 0.05 ? Math.max(v, -0.1) : v;
+    // head: the placement turn plus part of the way to the target (slower);
+    // body: most of the placement turn plus a little of the target (slowest);
+    // eyes: whatever is left, so they look at the viewer or the pointer
+    const headX = this.spring('headX', keepSide(place * 0.74 + (lx - place * 0.3) * 0.35), dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
+    const bodyX = this.spring('bodyX', keepSide(place * 0.75 + (lx - place * 0.3) * 0.15), dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
+    const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
     let mouth = 0, formAdd = 0;
@@ -207,11 +211,11 @@ export class MotionController {
     const smile = this.spring('eyeSmile', clamp((ex.EyeSmile ?? 0) + (pose.EyeSmileAdd || 0), 0, 1), dt, 2.5);
     const breath = (Math.sin(t * TAU / 3.6) + 1) / 2;
     const out = {
-      AngleX: (headX * 20 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0),
+      AngleX: (headX * 30 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0),
       AngleY: (-headY * 24 + n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0),
       AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
-      BodyAngleX: bodyX * 13 + n[5](t * 0.13) * 2 + (pose.BodyAngleX || 0),
+      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 + (pose.BodyAngleX || 0), -10, 10),
       BodyAngleY: n[6](t * 0.11) * 1.5 + (pose.BodyAngleY || 0) - bodyY * 12,
       BodyAngleZ: n[5](t * 0.09 + 3) * 1.5 + (pose.BodyAngleZ || 0) - bodyX * 2.5,
       Breath: breath,
