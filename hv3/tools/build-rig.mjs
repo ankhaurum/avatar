@@ -30,11 +30,15 @@ for (const s of ['R', 'L']) {
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
 for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕']]) b.param(id, 0, 1, 0, label);
-for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ']]) b.param(id, -1.5, 1.5, 0, label);
+for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ'],
+  ['HairBack', '後ろ髪・毛先の揺れ'], ['FrillSway', '肩のフリルの揺れ'], ['HipBowSway', '腰のリボンの揺れ'], ['SkirtSway2', 'スカート下段の揺れ'],
+  ['CharmSway', '垂れ布の先の飾りの揺れ'], ['LegSway', '脚の飾り・ブーツのリボンの揺れ'], ['BodySwayX', '上半身の遅れ（左右）'], ['BodySwayZ', '上半身の遅れ（傾き）']]) b.param(id, -1.5, 1.5, 0, label);
 
 // ---- body
 const hips = joint('hips');
-b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX'], keys: [[-10, 0, 10], [-10, 0, 10]], fn: (z, x) => ({ angle: z * 0.45, dx: x * 0.6 }) });
+// the whole body leans about the hips; BodySwayX/Z come from physics (the upper
+// body follows the head a little later)
+b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: x * 1.5 + sx * 4 }) });
 // torso: turning (BodyAngleX) rotates the upper body about a vertical axis
 // through the hips. Each point has a depth: the chest front (ribbon, buttons,
 // front ornaments) is nearest, the shoulders and arms sit behind it. Rotated by
@@ -42,16 +46,23 @@ b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX'], keys: [[-
 // far side narrows, the near side widens and the shoulders shift the other way
 // by less. The turn grows from the hips upward. Breathing lifts the chest.
 const T = { x: 230, y: 200, w: 564, h: 640 }, tc = [512, 360];
-const depth = (x, y) => { const nx = (x - tc[0]) / 140, chest = Math.max(0, 1 - Math.abs(y - 330) / 220); return (95 * Math.max(0, 1 - nx * nx) - 30) * (0.55 + 0.45 * chest); };
-b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 10, 8, {
-  params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, 0, 10], [-10, 0, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
+// depth across the body: a smooth round profile (no crease), the chest front nearest
+const depth = (x, y) => { const nx = Math.min(1, Math.abs(x - tc[0]) / 280), chest = Math.max(0, 1 - Math.abs(y - 330) / 220); return (190 * Math.cos(nx * Math.PI / 2) ** 1.5 - 60) * (0.6 + 0.4 * chest); };
+// BodyAngleY < 0 leans forward: the chest comes down and toward the viewer
+// (slightly larger), > 0 leans back. Keys at the ends and the middle of each
+// direction, so large turns keep their shape.
+b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
+  params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
     const nx = (x - tc[0]) / (T.w / 2), up = Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-    const th = ax / 10 * 16 * Math.PI / 180 * (0.35 + 0.65 * up), rx = x - tc[0];
+    const th = ax / 10 * 30 * Math.PI / 180 * (0.4 + 0.6 * up), rx = x - tc[0];
     const turn = rx * (Math.cos(th) - 1) + depth(x, y) * Math.sin(th);
     const chest = Math.max(0, 1 - Math.abs(y - 330) / 150);
-    return [turn + br * nx * 1.6 * chest, -ay / 10 * 7 * up * up + ay / 10 * 2 * Math.abs(nx) * up - br * 2.2 * chest * (0.6 + 0.4 * up)];
+    const lean = -ay / 10, k = 0.05 * lean * up;
+    return [turn + rx * k + br * nx * 1.6 * chest, lean * 16 * up * up + (y - tc[1]) * k * 0.5 - Math.abs(nx) * lean * 3 * up - br * 2.2 * chest * (0.6 + 0.4 * up)];
   }
 });
+// shoulder frills swing about their seams
+for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 * (s === 'R' ? 1 : -1) }) });
 // ---- head and neck
 const headPivot = joint('head');
 // the whole head turns about the base of the neck: tilting rotates it, turning
@@ -76,10 +87,15 @@ const artA = { scale: 0.551, offset: [223.5, 6.4] };
 const metaA = JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json')));
 const aBox = n => { const m = metaA[n]; return [artA.offset[0] + m.x * artA.scale, artA.offset[1] + m.y * artA.scale, m.w * artA.scale, m.h * artA.scale]; };
 const fr = pad(aBox('hair_front'), 6);
-b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront'], keys: [[-1.5, 0, 1.5]], fn: sway(fr[1] + 10, fr[3] - 10, 4.5) });
+// parallax: the fringe is in front of the face, so it moves more with the head turn
+b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront', 'AngleX'], keys: [[-1.5, 0, 1.5], [-30, 0, 30]], fn: (v, ax) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y); return [d[0] + ax / 30 * 4, d[1]]; }; } });
 const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
-b.warp('side_sway_R', 'head_turn', sideR, 4, 6, { params: ['HairSide'], keys: [[-1.5, 0, 1.5]], fn: sway(sideR[1] + 70, sideR[3] - 70, 7) });
-b.warp('side_sway_L', 'head_turn', sideL, 4, 6, { params: ['HairSide'], keys: [[-1.5, 0, 1.5]], fn: sway(sideL[1] + 70, sideL[3] - 70, 7) });
+// side hair (the back hair is drawn in the same layers): the whole length sways
+// with HairSide, the tips trail more with HairBack; it lies behind the face, so
+// it moves less than the face with the head turn (parallax)
+const sideFn = r => (v, vb, ax) => { const f = sway(r[1] + 70, r[3] - 70, 10)(v), g = sway(r[1] + r[3] * 0.55, r[3] * 0.45, 8, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y); return [a[0] + c[0] - ax / 30 * 3, a[1] + c[1]]; }; };
+b.warp('side_sway_R', 'head_turn', sideR, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30]], fn: sideFn(sideR) });
+b.warp('side_sway_L', 'head_turn', sideL, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30]], fn: sideFn(sideL) });
 
 // ---- arms (R = character's right = viewer left). Outward raise turns the
 // right arm clockwise on screen and the left arm counter-clockwise.
@@ -94,23 +110,35 @@ for (const s of ['R', 'L']) {
 }
 // ---- chest and hip ornaments, skirt, drapes
 const bow = pad([395, 280, 230, 160], 6);
-b.warp('chest_bow_sway', 'torso', bow, 4, 4, { params: ['BowSway'], keys: [[-1.5, 0, 1.5]], fn: sway(bow[1] + 40, bow[3] - 40, 4, 0.1) });
-b.rotation('chest_charm_swing', 'torso', r3.get('chest_charm').pivot, { params: ['BowSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 }) });
+// the chest ribbon and charm stand in front of the chest: they move further with the turn (parallax)
+b.warp('chest_bow_sway', 'torso', bow, 4, 4, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => { const f = sway(bow[1] + 40, bow[3] - 40, 7, 0.15)(v); return (x, y) => { const d = f(x, y); return [d[0] + ax / 10 * 4.5, d[1]]; }; } });
+b.rotation('chest_charm_swing', 'torso', r3.get('chest_charm').pivot, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 12, dx: ax / 10 * 5 }) });
 const hipBow = pad([505, 515, 240, 345], 6);
-b.warp('hip_bow_sway', 'body', hipBow, 4, 6, { params: ['BowSway'], keys: [[-1.5, 0, 1.5]], fn: sway(hipBow[1] + 40, hipBow[3] - 40, 6, 0.1) });
+b.warp('hip_bow_sway', 'body', hipBow, 4, 6, { params: ['HipBowSway'], keys: [[-1.5, 0, 1.5]], fn: sway(hipBow[1] + 40, hipBow[3] - 40, 10, 0.15) });
 const skirt = pad([295, 527, 425, 300], 8);
 b.warp('skirt_sway', 'body', skirt, 6, 4, { params: ['SkirtSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => (x, y) => {
   const t = Math.max(0, Math.min(1, (y - skirt[1] - 20) / (skirt[3] - 20))), k = t * t;
   const nx = (x - 512) / (skirt[2] / 2);
-  return [v * 7 * k - ax / 10 * 3 * k, Math.abs(v) * 1.5 * k * (nx * Math.sign(v) > 0 ? 1 : -0.4)];
+  return [v * 11 * k - ax / 10 * 4 * k, Math.abs(v) * 2.5 * k * (nx * Math.sign(v) > 0 ? 1 : -0.4)];
 } });
-for (const s of ['R', 'L']) b.rotation('drape_' + s + '_swing', 'body', joint('drape_' + s + '_root'), { params: ['DrapeSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 4 - ax * 0.25 }) });
+// the lower tiers swing again on top of the upper skirt, later and further
+b.warp('skirt_sway2', 'skirt_sway', skirt, 6, 4, { params: ['SkirtSway2'], keys: [[-1.5, 0, 1.5]], fn: v => (x, y) => { const t = Math.max(0, Math.min(1, (y - skirt[1] - skirt[3] * 0.45) / (skirt[3] * 0.55))); return [v * 8 * t * t, Math.abs(v) * 1.5 * t * t]; } });
+for (const s of ['R', 'L']) {
+  b.rotation('drape_' + s + '_swing', 'body', joint('drape_' + s + '_root'), { params: ['DrapeSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 7 - ax * 0.4 }) });
+  b.rotation('drape_charm_' + s + '_swing', 'drape_' + s + '_swing', r3.get('drape_charm_' + s).pivot, { params: ['CharmSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 16 }) });
+}
+// leg ornaments (full view): the garter bow and jewel, the boot ribbons
+for (const id of ['garter_bow_L', 'garter_jewel_L', 'boot_bow_L', 'boot_bow_R']) b.rotation(id + '_swing', null, r3.get(id).pivot, { params: ['LegSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * (id.startsWith('boot') ? 7 : 12) }) });
 
 // ---- parts
 const parentOf = p => {
   const id = p.id;
+  if (/^(garter_bow_L|garter_jewel_L|boot_bow_L|boot_bow_R)$/.test(id)) return id + '_swing';
   if (/^(thigh|stocking|garter|boot)/.test(id)) return null;
+  if (/^drape_charm_/.test(id)) return 'drape_charm_' + id.slice(-1) + '_swing';
   if (/^drape_/.test(id)) return 'drape_' + id.slice(-1) + '_swing';
+  if (/^(skirt_ruffle_lower|skirt_navy_lower|skirt_lining)$/.test(id)) return 'skirt_sway2';
+  if (/^shoulder_frill_/.test(id)) return 'shoulder_frill_' + id.slice(-1) + '_swing';
   if (/^skirt_/.test(id)) return 'skirt_sway';
   if (/^hip_bow/.test(id)) return 'hip_bow_sway';
   if (/^chest_charm/.test(id)) return 'chest_charm_swing';
@@ -208,12 +236,26 @@ await aPart('hair_front', 'fringe_sway', 94, { spacing: 7, tips: { spacing: 3, a
 await buildFace(b, { parent: 'face_expr', z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 
 // ---- physics (inputs are normalised parameter values)
-b.physics({ output: 'HairFront', inputs: [['AngleX', 1 / 30], ['AngleZ', 1 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.5 / 10]], follow: 0.6, frequency: 1.6, damping: 0.22, inertia: 0.08 });
-b.physics({ output: 'HairSide', inputs: [['AngleX', 1 / 30], ['AngleZ', 1.2 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.6 / 10]], follow: 0.7, frequency: 1.2, damping: 0.2, inertia: 0.1 });
-b.physics({ output: 'BowSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10], ['Breath', 0.15]], follow: 0.6, frequency: 1.4, damping: 0.18, inertia: 0.1 });
-b.physics({ output: 'SkirtSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1.2 / 10]], follow: 0.5, frequency: 1.1, damping: 0.25, inertia: 0.12 });
-b.physics({ output: 'DrapeSway', inputs: [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10]], follow: 0.6, frequency: 0.7, damping: 0.2, inertia: 0.12 });
-for (const s of ['R', 'L']) b.physics({ output: 'SleeveSway' + s, inputs: [['Shoulder' + s, 1 / 60], ['Elbow' + s, 1 / 90], ['BodyAngleZ', 0.5 / 10]], follow: 0.4, frequency: 1.5, damping: 0.2, inertia: 0.12 });
+// Each group: inputs are the head and body angles (and arms), "follow" is how
+// far it hangs back, frequency and damping set its weight: light hair and
+// ribbons swing fast and settle quickly, the skirt and long drapes slower and
+// longer, small charms dangle at the end of them. BodySwayX/Z: the upper body
+// follows the head a little later (negative follow = same direction).
+const phys = (o, inputs, follow, frequency, damping, inertia) => b.physics({ output: o, inputs, follow, frequency, damping, inertia });
+phys('HairFront', [['AngleX', 1 / 30], ['AngleZ', 1 / 30], ['AngleY', 0.5 / 30], ['BodyAngleX', 1 / 10]], 0.8, 1.8, 0.16, 0.12);
+phys('HairSide', [['AngleX', 1.2 / 30], ['AngleZ', 1.4 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.8 / 10], ['BodySwayX', 0.3]], 0.9, 1.2, 0.14, 0.16);
+phys('HairBack', [['AngleX', 1 / 30], ['AngleZ', 1.2 / 30], ['BodyAngleX', 1.2 / 10], ['HairSide', 0.6]], 0.8, 0.8, 0.12, 0.2);
+phys('FrillSway', [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10], ['BodySwayX', 0.5], ['Breath', 0.2]], 0.7, 1.6, 0.14, 0.14);
+phys('BowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1 / 10], ['BodyAngleY', 0.5 / 10], ['BodySwayX', 0.6], ['Breath', 0.2]], 0.8, 1.4, 0.14, 0.16);
+phys('HipBowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['BodySwayX', 0.4]], 0.8, 1.0, 0.13, 0.18);
+phys('SkirtSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.4 / 10], ['BodySwayX', 0.4]], 0.7, 1.0, 0.16, 0.16);
+phys('SkirtSway2', [['SkirtSway', 0.8], ['BodyAngleZ', 0.8 / 10]], 0.8, 0.85, 0.14, 0.18);
+phys('DrapeSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['SkirtSway', 0.3]], 0.8, 0.6, 0.12, 0.18);
+phys('CharmSway', [['DrapeSway', 1.2], ['BodyAngleZ', 1 / 10]], 1.0, 1.3, 0.1, 0.25);
+phys('LegSway', [['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10], ['SkirtSway', 0.8]], 1.0, 1.5, 0.12, 0.2);
+for (const s of ['R', 'L']) phys('SleeveSway' + s, [['Shoulder' + s, 1 / 50], ['Elbow' + s, 1 / 70], ['Wrist' + s, 1 / 40], ['BodyAngleX', 1.5 / 10], ['BodyAngleZ', 1.5 / 10], ['AngleX', 0.6 / 30]], 1.0, 1.5, 0.14, 0.22);
+phys('BodySwayX', [['AngleX', 1 / 30]], -0.9, 0.9, 0.4, 0.05);
+phys('BodySwayZ', [['AngleZ', 1 / 30], ['AngleX', 0.6 / 30]], -0.9, 0.9, 0.4, 0.05);
 
 // ---- units: approved art A pixels, so the art A head is used at its native size
 // and the R3 body is scaled up to it (old unit x = 223.5 + 0.551 * art A x)
