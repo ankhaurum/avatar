@@ -31,7 +31,11 @@ for (let x = x0; x < x1; x++) {
     // inside the opening (soft 1 px edges), tooth-bright pixels only
     const inside = smooth((y - (t0 - 1)) / 1.2) * (1 - smooth((y - b0) / 1.2));
     // (not the pink gloss of the lower lip)
-    const a = inside * smooth((lum - 95) / 60) * (1 - smooth((col[0] - col[2] - 35) / 15));
+    // the row is one opaque piece: the narrow gaps between the teeth keep the
+    // light colour they have in the reference smile (only the lower lip's pink
+    // gloss below the teeth is left out); toward the corners the dark mouth shows
+    const end = smooth((Math.abs(x + 0.5 - 104) - 62) / 14);
+    const a = inside * (1 - end * (1 - smooth((lum - 95) / 60))) * (1 - smooth((col[0] - col[2] - 35) / 15) * smooth((y - (b0 - 5)) / 2));
     const k = (v * W + (x - x0)) * 4; for (let c = 0; c < 3; c++) o[k + c] = Math.round(col[c]); o[k + 3] = Math.round(255 * a);
   }
 }

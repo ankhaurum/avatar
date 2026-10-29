@@ -149,9 +149,16 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   const cavityKey = { ...mouthKey, fn: (open, form) => (x, y) => {
     const v = (y - (M(x) - 0.2)) / 0.4;
     const up = upperD(open, form)(x, M(x) - 0.05), lo = lowerD(open, form)(x, M(x) + 0.05);
-    // zero height when closed (also when smiling); when open it reaches 3 px under
-    // the lower lip, so the teeth are hidden by the lip, not cut by the mask
-    const top = M(x) + up[1] - 0.5 * s * open, bottom = M(x) + lo[1] + 3 * s * Math.min(1, open * 4) * open / Math.max(open, 1e-6) * Math.min(open, 0.25) * 4;
+    // the opening between the lips' inner edges: zero height when closed (also
+    // when smiling), and at the corners it ends exactly where the lips meet, so
+    // nothing dark shows outside them. Only in the middle it reaches 1 px under
+    // the lower lip's inner edge (the lip covers that strip).
+    const t = sOf(x), mid = Math.max(0, 1 - t * t * t * t);
+    let top = M(x) + up[1], bottom = M(x) + lo[1] + 1 * s * Math.min(1, open * 4) * mid;
+    // the dark opening closes a little before the lip corners (the corners keep
+    // art A's own lip line and no cavity shows beyond it)
+    const taper = 1 - smooth((Math.abs(t) - 0.82) / 0.16), c = (top + bottom) / 2;
+    top = c + (top - c) * taper; bottom = c + (bottom - c) * taper;
     return [up[0] * (1 - v) + lo[0] * v, top + (bottom - top) * v - y];
   } };
   // mouth interior: Codex's rebuilt oral materials (studies/continuity, see
@@ -168,7 +175,21 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   // the row follows a smooth (quadratic) fit of the mouth line, so it does not step at its kinks
   const Ms = (() => { const n = ml.length; let A = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], v = [0, 0, 0]; for (const [x, y] of ml) { const t = (x - mxc) / mhw, r = [1, t, t * t]; for (let i = 0; i < 3; i++) { v[i] += r[i] * y; for (let j = 0; j < 3; j++) A[i][j] += r[i] * r[j]; } } const det = m => m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]); const D = det(A), c = [0, 1, 2].map(k => det(A.map((row, i) => row.map((e, j) => j === k ? v[i] : e))) / D); return x => { const t = (x - mxc) / mhw; return c[0] + c[1] * t + c[2] * t * t; }; })();
   const follow = (fnOf, k, top, rel) => ({ ...mouthKey, fn: (open, form) => (x) => { const d = fnOf(open, form)(Math.min(mx1, Math.max(mx0, x)), M(x)); return [d[0], d[1] * k + Ms(x) + rel * s - P([0, top])[1]]; } });
-  await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(upperD, 1, 340, -1.2) });
+  // The upper tooth row moves as one piece: it is not stretched tooth by tooth.
+  // Its top (its gum line, 2.6 px up, under the lip) follows a smooth (quadratic) curve through the upper lip's inner
+  // edge at the left, the middle and the right; it shifts sideways as the
+  // middle of the lip does. It is drawn 35 % taller than its texture so its
+  // lower edge lies on the lower lip's inner edge (no dark band under it).
+  const teethTop = P([0, 340])[1], teethH = 30 / teethK * s;
+  const teethKey = { ...mouthKey, fn: (open, form) => {
+    const xs = [mx0 + 0.15 * (mx1 - mx0), mxc, mx1 - 0.15 * (mx1 - mx0)];
+    const ys = xs.map(x => M(x) + upperD(open, form)(x, M(x) - 0.05)[1] - 2.6 * s);
+    // quadratic through the three points
+    const q = x => { const [a, b2, c] = xs; return ys[0] * (x - b2) * (x - c) / ((a - b2) * (a - c)) + ys[1] * (x - a) * (x - c) / ((b2 - a) * (b2 - c)) + ys[2] * (x - a) * (x - b2) / ((c - a) * (c - b2)); };
+    const dx = upperD(open, form)(mxc, M(mxc) - 0.05)[0];
+    return (x, y) => [dx, q(x) - teethTop + (y - teethTop) * 0.35];
+  } };
+  await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: teethKey });
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });
   const lipDetail = [{ x: mx0, y: M(mx0), r: 9 * s, spacing: 1.5 * s }, { x: mx1, y: M(mx1), r: 9 * s, spacing: 1.5 * s }];
   await b.part('lip_lower', { file: 'lip_lower.png', offset: off('lip_lower'), texScale: tex, parent, order: z + 91, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: lowerD } });
