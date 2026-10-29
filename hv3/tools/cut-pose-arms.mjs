@@ -90,6 +90,13 @@ for (const [name, d] of Object.entries(defs)) {
     const { data: mask } = await sharp(Buffer.from(svg)).blur(0.9).greyscale().raw().toBuffer({ resolveWithObject: true });
     const out = Buffer.alloc(W * H * 4);
     for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = img[i * 3 + c]; out[i * 4 + 3] = Math.round(255 * Math.min(1, Math.max(0, (mask[i] / 255 - 0.4) / 0.55))); }
+    // navy cloth seen between the fingers or beside a sleeve (skirt, bodice):
+    // inside the listed boxes, navy pixels are taken out with a soft edge
+    for (const [x0, y0, x1, y1] of (d.navyOut || {})[layer] || []) {
+      const nv = new Float32Array(W * H);
+      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = y * W + x, r = img[i * 3], g = img[i * 3 + 1], b = img[i * 3 + 2]; const lum = (r + g + b) / 3; nv[i] = Math.max(Math.min(1, Math.max(0, (b - r - 15) / 25)) * Math.min(1, Math.max(0, (135 - lum) / 30)), Math.min(1, Math.max(0, (85 - lum) / 25))); /* navy, or the near-black shadow of the skirt between the fingers */ }
+      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = y * W + x; let m = nv[i]; for (const j of [i - 1, i + 1, i - W, i + W]) m = Math.max(m, nv[j] * 0.6); out[i * 4 + 3] = Math.round(out[i * 4 + 3] * (1 - m)); }
+    }
     await sharp(out, { raw: { width: W, height: H, channels: 4 } }).png().toFile(path.join(outDir, `${name}_${layer}_cut.png`));
   }
   console.log('cut', name);
