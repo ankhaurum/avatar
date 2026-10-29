@@ -48,7 +48,7 @@ import { mountHibikiAvatar } from './hv3/hibiki-avatar.js';
 const avatar = await mountHibikiAvatar(document.querySelector('#avatar'), {
   view: 'bust',                 // 最初の表示：'bust'（バストアップ）／'full'（全身）／'face'（顔）
   chat: false,                  // true：チャットの中。バストアップに固定し、切り替えボタンを出さない
-  viewToggle: true,             // 待機中のアバターの右下に「全身／バストアップ」のボタンを出す
+  viewToggle: true,             // 待機中のアバターの角（体・顔・手に重ならない角を自動で選ぶ）に「全身／バストアップ」のボタンを出す
   rememberView: 'hibiki-view',  // 選んだ表示を覚える localStorage のキー（false：覚えない）
   scrollFade: { enabled: true, opacity: 0.35, restoreMs: 600 }, // スクロール中の半透明：オン・オフ、透明度、止まってから戻るまでの時間（ミリ秒）
   motionSize: 'auto',           // 動きの量：'auto'（表示の大きさから自動）／0（大きい表示向け）〜1（小さい表示向け）
@@ -59,7 +59,7 @@ avatar.motion.gesture('wave'); avatar.motion.setExpression('smile'); avatar.moti
 avatar.setView('full'); avatar.setScrollFade({ enabled: false }); avatar.setViewToggle(false); avatar.destroy();
 ```
 
-- 表示の大きさと動き：アバターが描かれている高さ（表示中のバストアップや全身の高さ）が200 px以下で最も大きく、520 px以上でLive2Dの標準に近い量になる。小さいほど、うなずき・身振りに伴う頭と体の動き・待機中の揺らぎ・目配り・揺れもの（髪・リボン・スカート・垂れ布・袖）が大きくなり、動きの緩急もはっきりする。配置による体の向きは小さい表示で範囲いっぱい（BodyAngleX ±10）、大きい表示で約±7.5。頭の角度は常に±24まで、体は±10までに収め、顔や髪が崩れない範囲を守る。
+- 表示の大きさと動き：アバターが描かれている高さが200 px以下で最も大きく、520 px以上でLive2Dの標準に近い量になる。方針「体で向けて、顔は正面寄り、目でこちらを見る」に合わせ、頭の動き（追従・待機中の揺らぎ・身振りに伴う頭の動き）は大きさで変えず、小さい表示では体の向き（範囲いっぱいの±10まで）・体の揺らぎ・身振りに伴う体の動き・揺れもの（揺れる幅）を大きくして伝える。頭の角度は髪の崩れが無いと確かめた±24の範囲に収める。
 - 動きを減らす設定（prefers-reduced-motion）：自動デモを止め、待機中の揺らぎを半分、揺れものを控えめにする。
 - スクロール中の半透明：ページ（またはスクロールする親要素）がスクロールしている間だけ半透明にし、止まって `restoreMs` 後に戻る。
 - 全身／バストアップのボタン：選んだ表示を覚え、次に開いたときもその表示になる。保存できない環境（プライベートブラウズ等）では、その場の切り替えだけ行い、表示は壊れない。切り替えても、視線の追従と配置による向きはそのまま続く。

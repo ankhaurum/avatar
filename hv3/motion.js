@@ -169,9 +169,13 @@ export class MotionController {
   update(dt) {
     const t = (this.t += dt), m = this.model, n = this.n, ex = EXPRESSIONS[this.expression];
     // amounts by display size (g); reduced motion halves the idle motion
-    const g = this.calm ? 0 : this.size, idle = lerp(0.8, 1.6, g) * (this.calm ? 0.5 : 1), accent = lerp(0.85, 1.5, g), snap = lerp(1, 1.3, g);
+    // The face stays near the front at every size: the head's share does not grow
+    // with g (follow, idle head drift, gesture head motion stay as on a large
+    // display); the body turn, the body's idle sway, the gestures' body motion
+    // and the swaying parts carry the extra motion of a small display.
+    const g = this.calm ? 0 : this.size, calm = this.calm ? 0.5 : 1, idle = 0.9 * calm, bodyIdle = lerp(0.9, 2.2, g) * calm, accent = 1, bodyAccent = lerp(1, 1.8, g), snap = lerp(1, 1.3, g);
     // placement: the body carries the turn (to the full range when small), the head adds a little
-    const placeBody = lerp(0.75, 1, g), placeHead = lerp(0.2, 0.3, g), follow = lerp(0.3, 0.45, g);
+    const placeBody = lerp(0.75, 1, g), placeHead = 0.2, follow = 0.33;
     const pose = {};
     for (const x of this.gestures) if (t >= x.start) x.g.track.call(x.g, t - x.start, pose);
     this.gestures = this.gestures.filter(x => t - x.start < x.g.duration);
@@ -199,8 +203,8 @@ export class MotionController {
     // head: the placement turn plus part of the way to the target (slower);
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
-    const headX = this.spring('headX', keepSide(place * placeHead + (lx - place * 0.3) * follow), dt, 1.6 * snap), headY = this.spring('headY', ly * lerp(0.4, 0.6, g), dt, 1.6 * snap);
-    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lx - place * 0.3) * follow * 0.3), dt, 0.6 * snap), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6 * snap);
+    const headX = this.spring('headX', keepSide(place * placeHead + (lx - place * 0.3) * follow), dt, 1.6 * snap), headY = this.spring('headY', ly * 0.45, dt, 1.6 * snap);
+    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lx - place * 0.3) * lerp(0.1, 0.35, g)), dt, 0.6 * snap), bodyY = this.spring('bodyY', ly * lerp(0.45, 0.9, g), dt, 0.6 * snap);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
@@ -228,9 +232,9 @@ export class MotionController {
       AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent, -24, 24),
       AngleZ: clamp(n[2](t * 0.17) * 3 * idle + (pose.AngleZ || 0) * accent - headX * 2, -20, 20),
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
-      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * idle + (pose.BodyAngleX || 0) * accent, -10, 10),
-      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * idle + (pose.BodyAngleY || 0) * accent - bodyY * 12, -10, 10),
-      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * idle + (pose.BodyAngleZ || 0) * accent - bodyX * 2.5, -10, 10),
+      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * bodyIdle + (pose.BodyAngleX || 0) * bodyAccent, -10, 10),
+      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12, -10, 10),
+      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5, -10, 10),
       Breath: breath,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
       BrowAngle: ex.BrowAngle ?? 0,

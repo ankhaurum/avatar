@@ -283,17 +283,20 @@ await aPart('head_under', 'head_turn', 79, { spacing: 10 });
 await aPart('head_skin', 'skin_turn', 80);
 // eyes, brows and mouth: moved as wholes by their depth (no stretching); the
 // eye on the far side gets a little smaller, the near one a little larger
-const rigid = (id, c, z) => b.rotation(id, 'face_expr', c, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => { const p = depthShift(z, ax, ay); return { dx: p[0], dy: p[1], scale: -ax / 30 * TURN * ((c[0] - A_(524, 0)[0]) / (H.w / 2)) * 0.12 }; } });
-rigid('eye_R_turn', A_(475, 258), 28); rigid('eye_L_turn', A_(572, 252), 28);
-rigid('brow_R_turn', A_(472, 230), 30); rigid('brow_L_turn', A_(587, 227), 30);
-rigid('mouth_turn', A_(527, 350), 34);
+const rigid = (id, c, z) => b.rotation(id, 'face_expr', c, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => { const p = depthShift(z ?? zFace(c[0], c[1]), ax, ay); return { dx: p[0], dy: p[1], scale: -ax / 30 * TURN * ((c[0] - A_(524, 0)[0]) / (H.w / 2)) * 0.12 }; } });
+// each feature at the depth of the face surface under its centre, so the skin
+// around it (brow ends, eye corners) keeps its place against it
+rigid('eye_R_turn', A_(475, 258)); rigid('eye_L_turn', A_(572, 252));
+// the brows lie on the skin surface (they follow the skin warp, so the skin
+// around them never shifts against them)
+rigid('mouth_turn', A_(527, 350));
 // the side hair is in front of the face in art A (its layer is the difference
 // against the skin with the features on it), so it is drawn above them
 await aPart('hair_side_R', 'side_sway_R', 92.5, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_side_L', 'side_sway_L', 92.6, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_front', 'fringe_sway', 94, { spacing: 7, tips: { spacing: 3, at: 0.9 } });
 // face: art A features placed on the R3 head (similarity: eye and mouth centres)
-await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_turn', eyeL: 'eye_L_turn', browR: 'brow_R_turn', browL: 'brow_L_turn', mouth: 'mouth_turn' }, z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
+await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_turn', eyeL: 'eye_L_turn', browR: 'skin_turn', browL: 'skin_turn', mouth: 'mouth_turn' }, z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 
 // ---- physics (inputs are normalised parameter values)
 // Each group: inputs are the head and body angles (and arms), "follow" is how
