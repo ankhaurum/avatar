@@ -154,6 +154,9 @@ export class MotionController {
   setFacing(f) { this.facing = clamp(f, -1, 1); }
   lookAt(x, y, hold = 1.5) { this.look.x = clamp(x, -1, 1); this.look.y = clamp(y, -1, 1); this.look.until = this.t + hold; }
   setExpression(name) { if (EXPRESSIONS[name]) this.expression = name; }
+  // V2 states and emotions (emotion.js Performance). When set, it decides the
+  // face, the body's emotional posture and the speaking flag.
+  setPerformance(perf) { this.perf = perf || null; }
   talk(seconds) { this.talkUntil = Math.max(this.talkUntil, this.t + seconds); }
   gesture(name) {
     const g = GESTURES[name]; if (!g) return;
@@ -167,7 +170,11 @@ export class MotionController {
   }
   spring(id, target, dt, hz) { if (!this.springs[id]) this.springs[id] = new Spring(target, hz); return this.springs[id].step(target, dt, hz); }
   update(dt) {
-    const t = (this.t += dt), m = this.model, n = this.n, ex = EXPRESSIONS[this.expression];
+    const t = (this.t += dt), m = this.model, n = this.n;
+    // face and posture targets: the V2 performance when there is one, else the page's expression
+    const pf = this.perf ? this.perf.sample() : null;
+    const ex = pf ? { EyeSmile: pf.smile, MouthForm: pf.form, BrowY: pf.browY, BrowAngle: pf.browAngle, eye: pf.eye, mouth: pf.mouth, ...(pf.look ? { lookX: pf.look[0], lookY: pf.look[1] } : {}) } : EXPRESSIONS[this.expression];
+    if (pf) { if (pf.speaking && !this.perfTalk) this.talkUntil = Infinity; if (!pf.speaking && this.perfTalk) this.talkUntil = t; this.perfTalk = pf.speaking; }
     // amounts by display size (g); reduced motion halves the idle motion
     // The face stays near the front at every size: the head's share does not grow
     // with g (follow, idle head drift, gesture head motion stay as on a large
@@ -226,21 +233,26 @@ export class MotionController {
     }
     const eyeOpen = this.spring('eyeOpen', ex.eye ?? 1, dt, 3) * lid;
     const smile = this.spring('eyeSmile', clamp((ex.EyeSmile ?? 0) + (pose.EyeSmileAdd || 0), 0, 1), dt, 2.5);
-    const breath = (Math.sin(t * TAU / 3.6) + 1) / 2;
+    const breath = (Math.sin(t * TAU / 3.6) + 1) / 2 * (pf ? pf.breath : 1);
+    // emotional posture: carried by the body and shoulders (larger when shown
+    // small), the head only tilts and nods a little
+    const em = pf || {}, emBody = lerp(1, 1.8, g), bounce = em.bounce ? Math.max(0, Math.sin(t * TAU * 1.6)) * em.bounce : 0;
+    const eLean = this.spring('eLean', ((em.lean || 0) + bounce * 2) * emBody, dt, 2.2 * snap), eRoll = this.spring('eRoll', (em.roll || 0) * emBody, dt, 1.8 * snap);
+    const eTilt = this.spring('eTilt', em.tilt || 0, dt, 1.8), ePitch = this.spring('ePitch', em.pitch || 0, dt, 2), eArms = this.spring('eArms', (em.arms || 0) * emBody, dt, 2.2 * snap);
     const out = {
       AngleX: clamp((headX * 30 + (n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0) * accent, -24, 24),
-      AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent, -24, 24),
-      AngleZ: clamp(n[2](t * 0.17) * 3 * idle + (pose.AngleZ || 0) * accent - headX * 2, -20, 20),
+      AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent + ePitch, -24, 24),
+      AngleZ: clamp(n[2](t * 0.17) * 3 * idle + (pose.AngleZ || 0) * accent - headX * 2 + eTilt, -20, 20),
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
       BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * bodyIdle + (pose.BodyAngleX || 0) * bodyAccent, -10, 10),
-      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12, -10, 10),
-      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5, -10, 10),
+      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12 + eLean, -10, 10),
+      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5 + eRoll, -10, 10),
       Breath: breath,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
       BrowAngle: ex.BrowAngle ?? 0,
       MouthForm: clamp((ex.MouthForm ?? 0) + formAdd, -1, 1),
-      ShoulderL: pose.ShoulderL || 0, ElbowL: pose.ElbowL || 0, WristL: pose.WristL || 0, ForearmL: pose.ForearmL || 0,
-      ShoulderR: pose.ShoulderR || 0, ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
+      ShoulderL: (pose.ShoulderL || 0) + (pose.ShoulderL === undefined ? eArms : 0), ElbowL: pose.ElbowL || 0, WristL: pose.WristL || 0, ForearmL: pose.ForearmL || 0,
+      ShoulderR: (pose.ShoulderR || 0) + (pose.ShoulderR === undefined ? eArms : 0), ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
     for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : (k === 'AngleY' ? 9 : 4) * snap));

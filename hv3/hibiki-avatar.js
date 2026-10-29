@@ -12,6 +12,7 @@
 //     scrollFade: { enabled: true, opacity: 0.35, restoreMs: 600 },
 //     motionSize: 'auto',           // 'auto' (from the shown size) or 0 (large) .. 1 (small)
 //     autoplay: true,               // false: nothing moves until step(dt) is called
+//     listen: true,                 // V2 events on window: aifate:companion-state, aifate:companion-chat-lifecycle
 //     facing: 'auto'                // 'auto' (from the place on the page) or -1 (left) .. 1 (right)
 //   });
 //   avatar.motion.gesture('wave'); avatar.setView('full'); avatar.destroy();
@@ -25,6 +26,7 @@
 import { RigModel } from './rig-eval.js';
 import { AvatarRenderer } from './renderer.js';
 import { MotionController } from './motion.js';
+import { Performance, STATES } from './emotion.js';
 
 const STYLE_ID = 'hv3-avatar-style';
 const CSS = `
@@ -46,7 +48,7 @@ const storage = {
 };
 
 export async function mountHibikiAvatar(host, options = {}) {
-  const o = { view: 'bust', chat: false, viewToggle: true, rememberView: 'hibiki-view', motionSize: 'auto', facing: 'auto', baseURL: new URL('./', import.meta.url).href, ...options };
+  const o = { view: 'bust', chat: false, viewToggle: true, rememberView: 'hibiki-view', motionSize: 'auto', facing: 'auto', listen: true, baseURL: new URL('./', import.meta.url).href, ...options };
   o.scrollFade = { enabled: false, opacity: 0.35, restoreMs: 600, ...(options.scrollFade || {}) };
   if (!document.getElementById(STYLE_ID)) { const st = document.createElement('style'); st.id = STYLE_ID; st.textContent = CSS; document.head.prepend(st); }
   host.classList.add('hv3-avatar');
@@ -60,6 +62,10 @@ export async function mountHibikiAvatar(host, options = {}) {
   const model = new RigModel(json);
   const renderer = await new AvatarRenderer().init(host, model, o.baseURL);
   const motion = new MotionController(model);
+  // one clock for the states and the chat timing, advanced by the frames (so
+  // step(dt) recordings follow the same timing as the live page)
+  let clock = 0;
+  const perf = new Performance(() => clock); motion.setPerformance(perf);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
   // view: chat is always bust-up; otherwise the remembered or the first view
@@ -102,6 +108,37 @@ export async function mountHibikiAvatar(host, options = {}) {
   };
   addEventListener('scroll', onScroll, { passive: true, capture: true });
 
+  // V2 input, the same entry points as Twinow's companion (aifate-companion.js):
+  // setState(state, options) and the window events aifate:companion-state
+  // ({state, options}) and aifate:companion-chat-lifecycle ({phase, anchor,
+  // emotion}). Unknown states and values are ignored.
+  let timers = [], activeSince = 0;
+  const clearTimers = () => { timers = []; };
+  const later = (ms, fn) => timers.push({ at: clock + ms, fn });
+  const runTimers = () => { for (const t of timers.filter(t => clock >= t.at)) { timers.splice(timers.indexOf(t), 1); t.fn(); } };
+  const setState = (state, options) => perf.setState(state, options || {});
+  const chatLifecycle = ({ phase, emotion = 'speaking' } = {}) => {
+    if (phase === 'close' || phase === 'dismiss') { clearTimers(); activeSince = 0; setState('idle', { duration: 0 }); return; }
+    if (phase === 'thinking' || phase === 'speaking') { clearTimers(); if (!activeSince) activeSince = clock; setState(phase, { duration: 0 }); return; }
+    if (phase === 'complete') {
+      if (!activeSince) activeSince = clock;
+      // happy / concern / notify are shown, anything else stays speaking; at
+      // least 2 s of presence from the first placement, then idle
+      const finalState = ['happy', 'concern', 'notify'].includes(emotion) ? emotion : 'speaking';
+      const settle = Math.max(800, 2000 - (clock - activeSince));
+      clearTimers();
+      later(80, () => setState(finalState, { duration: 0 }));
+      later(settle, () => { activeSince = 0; setState('idle', { duration: 0 }); });
+    }
+  };
+  const onStateEvent = e => setState(e.detail?.state, e.detail?.options);
+  const onChatEvent = e => chatLifecycle(e.detail || {});
+  if (o.listen) { addEventListener('aifate:companion-state', onStateEvent); addEventListener('aifate:companion-chat-lifecycle', onChatEvent); }
+  // pressing the avatar, or a mouse coming over it: attention for about 0.9 s
+  const onPress = e => { if (!e.target.closest('.hv3-view-toggle')) setState('attention', { duration: 920 }); };
+  const onHover = () => { if (matchMedia('(hover: hover) and (pointer: fine)').matches) setState('attention', { duration: 920 }); };
+  host.addEventListener('click', onPress); host.addEventListener('pointerenter', onHover);
+
   // placement orientation: where the avatar sits on the page, re-read every frame
   const facing = () => { const r = host.getBoundingClientRect(); return ((r.left + r.width / 2) - innerWidth / 2) / (innerWidth / 2); };
   // display size -> motion size: how tall the avatar is drawn on the page (the
@@ -136,6 +173,7 @@ export async function mountHibikiAvatar(host, options = {}) {
   };
   const tick = fixed => {
     const now = performance.now(), dt = typeof fixed === 'number' ? fixed : Math.min(0.05, (now - last) / 1000); last = now;
+    clock += dt * 1000; runTimers();
     motion.setFacing(o.facing === 'auto' ? facing() : +o.facing);
     motion.setMotionSize(o.motionSize === 'auto' ? autoSize() : +o.motionSize, reduce.matches);
     motion.update(reduce.matches ? dt * 0.6 : dt);
@@ -149,13 +187,18 @@ export async function mountHibikiAvatar(host, options = {}) {
     model, motion, renderer,
     get view() { return view; },
     setView,
+    states: [...STATES],
+    setState,
+    setEmotion: (name, intensity) => perf.setEmotion(name, intensity),
+    chatLifecycle,
+    getSnapshot: () => perf.snapshot(),
     // advance by a fixed time and draw (with autoplay: false, for tests and recordings)
     step(dt) { tick(dt); renderer.app.render(); },
     setScrollFade(cfg) { Object.assign(o.scrollFade, cfg); local.textContent = `:where([data-hv3="${id}"]){--hv3-scroll-opacity:${+o.scrollFade.opacity}}`; if (!o.scrollFade.enabled) host.classList.remove('hv3-scrolling'); },
     setViewToggle(show) { if (button) { button.hidden = !show; cornerKey = ''; } },
     destroy() {
       removeEventListener('pointermove', look); removeEventListener('pointerdown', look); removeEventListener('scroll', onScroll, { capture: true });
-      clearTimeout(fadeTimer); renderer.app.ticker.remove(tick); renderer.app.destroy(true); button?.remove(); local.remove();
+      clearTimeout(fadeTimer); clearTimers(); removeEventListener('aifate:companion-state', onStateEvent); removeEventListener('aifate:companion-chat-lifecycle', onChatEvent); host.removeEventListener('click', onPress); host.removeEventListener('pointerenter', onHover); renderer.app.ticker.remove(tick); renderer.app.destroy(true); button?.remove(); local.remove();
       host.classList.remove('hv3-avatar', 'hv3-scrolling'); delete host.dataset.hv3;
     }
   };
