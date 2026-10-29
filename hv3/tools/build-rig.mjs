@@ -38,7 +38,7 @@ for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横�
 const hips = joint('hips');
 // the whole body leans about the hips; BodySwayX/Z come from physics (the upper
 // body follows the head a little later)
-b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: x * 1.5 + sx * 4 }) });
+b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: x * 0.8 + sx * 4 }) });
 // torso: turning (BodyAngleX) rotates the upper body about a vertical axis
 // through the hips. Each point has a depth: the chest front (ribbon, buttons,
 // front ornaments) is nearest, the shoulders and arms sit behind it. Rotated by
@@ -51,16 +51,29 @@ const depth = (x, y) => { const nx = Math.min(1, Math.abs(x - tc[0]) / 280), che
 // BodyAngleY < 0 leans forward: the chest comes down and toward the viewer
 // (slightly larger), > 0 leans back. Keys at the ends and the middle of each
 // direction, so large turns keep their shape.
+// Body hierarchy (as in Live2D): body rotation (BodyAngleZ, about the hips)
+// -> upper body warp (torso: BodyAngleX/Y, breath) and lower body warp
+// (lower_turn: BodyAngleX) -> parts. The turn of a point is one function of
+// its place, used by both warps, so the waist seam is continuous; it grows from
+// the hips upward. BodyAngleX 10 turns the chest about 12 deg: the torso moves
+// about 13 % of its width (reference samples: 11-13 %).
+const upOf = y => Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
+const turnAt = (ax, x, y) => { const th = ax / 10 * 12 * Math.PI / 180 * (0.35 + 0.65 * upOf(y)), rx = x - tc[0]; return rx * (Math.cos(th) - 1) + depth(x, y) * Math.sin(th); };
 b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
   params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
-    const nx = (x - tc[0]) / (T.w / 2), up = Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-    const th = ax / 10 * 30 * Math.PI / 180 * (0.4 + 0.6 * up), rx = x - tc[0];
-    const turn = rx * (Math.cos(th) - 1) + depth(x, y) * Math.sin(th);
+    const nx = (x - tc[0]) / (T.w / 2), up = upOf(y), rx = x - tc[0];
+    const turn = turnAt(ax, x, y);
     const chest = Math.max(0, 1 - Math.abs(y - 330) / 150);
     const lean = -ay / 10, k = 0.05 * lean * up;
     return [turn + rx * k + br * nx * 1.6 * chest, lean * 16 * up * up + (y - tc[1]) * k * 0.5 - Math.abs(nx) * lean * 3 * up - br * 2.2 * chest * (0.6 + 0.4 * up)];
   }
 });
+// lower body: the skirt, hip ribbon and drapes turn the same way as the waist
+// above them, less toward the hem
+const LB = [180, 480, 680, 560];
+b.warp('lower_turn', 'body', LB, 8, 6, { params: ['BodyAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => [turnAt(ax, x, y), 0] });
+// legs (not under the body rotation): a small shift the same way, fading toward the feet
+b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['BodyAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [(turnAt(ax, x, 800) + ax * 0.8) * f, 0]; } });
 // shoulder frills swing about their seams
 for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 * (s === 'R' ? 1 : -1) }) });
 // ---- head and neck
@@ -68,15 +81,22 @@ const headPivot = joint('head');
 // the whole head turns about the base of the neck: tilting rotates it, turning
 // moves it a little sideways, nodding down lowers it and brings it forward
 b.rotation('head', 'torso', headPivot, { params: ['AngleZ', 'AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30], [-30, 0, 30]], fn: (zz, xx, yy) => ({ angle: zz * 0.4 - xx * 0.06, dx: xx / 30 * 5, dy: -yy / 30 * (yy < 0 ? 9 : 4), scale: yy < 0 ? -yy / 30 * 0.015 : 0 }) });
+// Face hierarchy (as in Live2D): head rotation (AngleZ, about the base of the
+// neck) -> face XY warp (head_turn) -> one deformer per part: the skin and
+// contour, each eye, each brow, the mouth, the fringe, the side and back hair.
+// AngleX/AngleY move each part by its depth in the head (nose, mouth and fringe
+// in front, contour and ears in the middle, back hair behind) without
+// stretching the features: eyes, brows and mouth are moved rigidly (a shift and
+// a small near/far scale), only the skin is warped (the contour narrows on the
+// far side and widens on the near side). At 30 deg the nose moves about 12 %
+// of the face width sideways and 7 % up or down (reference samples).
 const H = { x: 372, y: 14, w: 280, h: 262 }, hc = [511, 152];
-const turn = (a, bulge) => (ax, ay) => (x, y) => {
-  const nx = (x - hc[0]) / (H.w / 2), ny = (y - hc[1]) / (H.h / 2);
-  const z = Math.sqrt(Math.max(0, 1 - Math.min(1, nx * nx + ny * ny)));
-  // looking down: features slide down over the skull (more forehead shows) and the chin tucks up
-  const chin = Math.max(0, ny) ** 1.5;
-  return [ax / 30 * (a + bulge * z), -ay / 30 * (a * 0.5 + bulge * 0.45 * z) + ay / 30 * 9 * chin];
-};
-b.warp('head_turn', 'head', [H.x, H.y, H.w, H.h], 8, 8, { params: ['AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30]], fn: turn(5, 12) });
+const TURN = 0.25, PITCH = 0.15; // sin of the effective head turn / pitch at 30
+// z: depth in front of the contour plane (rig units; nose 44, mouth 34, brows
+// 30, eyes 28, fringe tips 40, contour 0, back hair -6)
+const depthShift = (z, ax, ay) => [ax / 30 * z * TURN, -ay / 30 * z * PITCH];
+// face XY: a small common shift of the whole face plane
+b.warp('head_turn', 'head', [H.x, H.y, H.w, H.h], 4, 4, { params: ['AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30]], fn: (ax, ay) => () => depthShift(0, ax, ay) });
 // hair sway: tips move most, roots stay
 const sway = (y0, h, amp, lift = 0.25) => v => (x, y) => { const t = Math.max(0, Math.min(1, (y - y0) / h)); const k = Math.pow(t, 1.6); return [v * amp * k, Math.abs(v) * amp * lift * k * k]; };
 const box = id => { const p = r3.get(id); return [p.x, p.y, p.w, p.h]; };
@@ -88,14 +108,17 @@ const metaA = JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json')));
 const aBox = n => { const m = metaA[n]; return [artA.offset[0] + m.x * artA.scale, artA.offset[1] + m.y * artA.scale, m.w * artA.scale, m.h * artA.scale]; };
 const fr = pad(aBox('hair_front'), 6);
 // parallax: the fringe is in front of the face, so it moves more with the head turn
-b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront', 'AngleX'], keys: [[-1.5, 0, 1.5], [-30, 0, 30]], fn: (v, ax) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y); return [d[0] + ax / 30 * 4, d[1]]; }; } });
+b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: (v, ax, ay) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), p = depthShift(4 + 36 * t, ax, ay); return [d[0] + p[0], d[1] + p[1]]; }; } });
 const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 // side hair (the back hair is drawn in the same layers): the whole length sways
 // with HairSide, the tips trail more with HairBack; it lies behind the face, so
 // it moves less than the face with the head turn (parallax)
-const sideFn = r => (v, vb, ax) => { const f = sway(r[1] + 70, r[3] - 70, 10)(v), g = sway(r[1] + r[3] * 0.55, r[3] * 0.45, 8, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y); return [a[0] + c[0] - ax / 30 * 3, a[1] + c[1]]; }; };
-b.warp('side_sway_R', 'head_turn', sideR, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30]], fn: sideFn(sideR) });
-b.warp('side_sway_L', 'head_turn', sideL, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30]], fn: sideFn(sideL) });
+// the side layers hold the hair beside the face (contour depth) and the back
+// hair behind it: the upper part moves with the contour, the lower part (back)
+// a little the other way
+const sideFn = r => (v, vb, ax, ay) => { const f = sway(r[1] + 70, r[3] - 70, 10)(v), g = sway(r[1] + r[3] * 0.55, r[3] * 0.45, 8, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y), t = Math.max(0, Math.min(1, (y - r[1] - r[3] * 0.4) / (r[3] * 0.5))), p = depthShift(-6 * t, ax, ay); return [a[0] + c[0] + p[0], a[1] + c[1] + p[1]]; }; };
+b.warp('side_sway_R', 'head_turn', sideR, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: sideFn(sideR) });
+b.warp('side_sway_L', 'head_turn', sideL, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: sideFn(sideL) });
 
 // ---- arms (R = character's right = viewer left). Outward raise turns the
 // right arm clockwise on screen and the left arm counter-clockwise.
@@ -114,27 +137,27 @@ const bow = pad([395, 280, 230, 160], 6);
 b.warp('chest_bow_sway', 'torso', bow, 4, 4, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => { const f = sway(bow[1] + 40, bow[3] - 40, 7, 0.15)(v); return (x, y) => { const d = f(x, y); return [d[0] + ax / 10 * 4.5, d[1]]; }; } });
 b.rotation('chest_charm_swing', 'torso', r3.get('chest_charm').pivot, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 12, dx: ax / 10 * 5 }) });
 const hipBow = pad([505, 515, 240, 345], 6);
-b.warp('hip_bow_sway', 'body', hipBow, 4, 6, { params: ['HipBowSway'], keys: [[-1.5, 0, 1.5]], fn: sway(hipBow[1] + 40, hipBow[3] - 40, 10, 0.15) });
+b.warp('hip_bow_sway', 'lower_turn', hipBow, 4, 6, { params: ['HipBowSway'], keys: [[-1.5, 0, 1.5]], fn: sway(hipBow[1] + 40, hipBow[3] - 40, 10, 0.15) });
 const skirt = pad([295, 527, 425, 300], 8);
-b.warp('skirt_sway', 'body', skirt, 6, 4, { params: ['SkirtSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => (x, y) => {
+b.warp('skirt_sway', 'lower_turn', skirt, 6, 4, { params: ['SkirtSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => (x, y) => {
   const t = Math.max(0, Math.min(1, (y - skirt[1] - 20) / (skirt[3] - 20))), k = t * t;
   const nx = (x - 512) / (skirt[2] / 2);
-  return [v * 11 * k - ax / 10 * 4 * k, Math.abs(v) * 2.5 * k * (nx * Math.sign(v) > 0 ? 1 : -0.4)];
+  return [v * 11 * k - ax / 10 * 2 * k, Math.abs(v) * 2.5 * k * (nx * Math.sign(v) > 0 ? 1 : -0.4)];
 } });
 // the lower tiers swing again on top of the upper skirt, later and further
 b.warp('skirt_sway2', 'skirt_sway', skirt, 6, 4, { params: ['SkirtSway2'], keys: [[-1.5, 0, 1.5]], fn: v => (x, y) => { const t = Math.max(0, Math.min(1, (y - skirt[1] - skirt[3] * 0.45) / (skirt[3] * 0.55))); return [v * 8 * t * t, Math.abs(v) * 1.5 * t * t]; } });
 for (const s of ['R', 'L']) {
-  b.rotation('drape_' + s + '_swing', 'body', joint('drape_' + s + '_root'), { params: ['DrapeSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 7 - ax * 0.4 }) });
+  b.rotation('drape_' + s + '_swing', 'lower_turn', joint('drape_' + s + '_root'), { params: ['DrapeSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 7 - ax * 0.4 }) });
   b.rotation('drape_charm_' + s + '_swing', 'drape_' + s + '_swing', r3.get('drape_charm_' + s).pivot, { params: ['CharmSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 16 }) });
 }
 // leg ornaments (full view): the garter bow and jewel, the boot ribbons
-for (const id of ['garter_bow_L', 'garter_jewel_L', 'boot_bow_L', 'boot_bow_R']) b.rotation(id + '_swing', null, r3.get(id).pivot, { params: ['LegSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * (id.startsWith('boot') ? 7 : 12) }) });
+for (const id of ['garter_bow_L', 'garter_jewel_L', 'boot_bow_L', 'boot_bow_R']) b.rotation(id + '_swing', 'legs_turn', r3.get(id).pivot, { params: ['LegSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * (id.startsWith('boot') ? 7 : 12) }) });
 
 // ---- parts
 const parentOf = p => {
   const id = p.id;
   if (/^(garter_bow_L|garter_jewel_L|boot_bow_L|boot_bow_R)$/.test(id)) return id + '_swing';
-  if (/^(thigh|stocking|garter|boot)/.test(id)) return null;
+  if (/^(thigh|stocking|garter|boot)/.test(id)) return 'legs_turn';
   if (/^drape_charm_/.test(id)) return 'drape_charm_' + id.slice(-1) + '_swing';
   if (/^drape_/.test(id)) return 'drape_' + id.slice(-1) + '_swing';
   if (/^(skirt_ruffle_lower|skirt_navy_lower|skirt_lining)$/.test(id)) return 'skirt_sway2';
@@ -228,12 +251,27 @@ b.warp('face_expr', 'head_turn', [fr0[0], fr0[1], fr1[0] - fr0[0], fr1[1] - fr0[
   const [mx, my] = A_(527, 349), jaw = open * 6 * k * Math.max(0, 1 - Math.abs(x - mx) / (70 * k)) * smooth((y - my) / (25 * k)) * (1 - smooth((y - A_(0, 412)[1]) / (16 * k)));
   return [0, -cheek + jaw];
 } });
-await aPart('head_skin', 'face_expr', 80);
-await aPart('hair_side_R', 'side_sway_R', 83, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
-await aPart('hair_side_L', 'side_sway_L', 83.1, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
+// skin and contour: the depth of the head as a rounded field (nose highest);
+// looking down the chin also tucks up
+const zSkin = (x, y) => { const nx = (x - A_(524, 0)[0]) / (H.w / 2), ny = (y - A_(0, 290)[1]) / (H.h / 2), r = Math.min(1, nx * nx + ny * ny * 0.8); const nose = Math.exp(-(((x - A_(524, 0)[0]) / (26 * 0.551)) ** 2 + ((y - A_(0, 305)[1]) / (34 * 0.551)) ** 2)); return 30 * Math.sqrt(1 - r) + 14 * nose; };
+b.warp('skin_turn', 'face_expr', [H.x, H.y, H.w, H.h], 12, 12, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => (x, y) => {
+  const p = depthShift(zSkin(x, y), ax, ay), ny = (y - hc[1]) / (H.h / 2), chin = Math.max(0, ny) ** 1.5;
+  return [p[0], p[1] + Math.max(0, -ay) / 30 * 9 * chin];
+} });
+await aPart('head_skin', 'skin_turn', 80);
+// eyes, brows and mouth: moved as wholes by their depth (no stretching); the
+// eye on the far side gets a little smaller, the near one a little larger
+const rigid = (id, c, z) => b.rotation(id, 'face_expr', c, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => { const p = depthShift(z, ax, ay); return { dx: p[0], dy: p[1], scale: -ax / 30 * TURN * ((c[0] - A_(524, 0)[0]) / (H.w / 2)) * 0.12 }; } });
+rigid('eye_R_turn', A_(475, 258), 28); rigid('eye_L_turn', A_(572, 252), 28);
+rigid('brow_R_turn', A_(472, 230), 30); rigid('brow_L_turn', A_(587, 227), 30);
+rigid('mouth_turn', A_(527, 350), 34);
+// the side hair is in front of the face in art A (its layer is the difference
+// against the skin with the features on it), so it is drawn above them
+await aPart('hair_side_R', 'side_sway_R', 92.5, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
+await aPart('hair_side_L', 'side_sway_L', 92.6, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_front', 'fringe_sway', 94, { spacing: 7, tips: { spacing: 3, at: 0.9 } });
 // face: art A features placed on the R3 head (similarity: eye and mouth centres)
-await buildFace(b, { parent: 'face_expr', z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
+await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_turn', eyeL: 'eye_L_turn', browR: 'brow_R_turn', browL: 'brow_L_turn', mouth: 'mouth_turn' }, z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 
 // ---- physics (inputs are normalised parameter values)
 // Each group: inputs are the head and body angles (and arms), "follow" is how

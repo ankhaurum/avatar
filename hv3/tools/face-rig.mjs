@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import { curveY, smooth } from './rig-builder.mjs';
 
-export async function buildFace(b, { parent, z, dir, tf, r3 }) {
+export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 }) {
   const def = JSON.parse(fs.readFileSync(dir + '/face-def.json'));
   const meta = JSON.parse(fs.readFileSync(dir + '/../parts/meta.json'));
   const s = tf.scale, P = ([x, y]) => [tf.offset[0] + x * s, tf.offset[1] + y * s];
@@ -29,6 +29,7 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   const sides = [{ a: 'L', id: 'R', def: def.eyeL, param: 'EyeROpen' }, { a: 'R', id: 'L', def: def.eyeR, param: 'EyeLOpen' }];
   const zOf = { white: 85, iris: 86, lower: 87, upper: 87.2, brow: 88 };
   for (const e of sides) {
+    let parent = parents['eye' + e.id] || base;
     const open = e.def.open.map(P);
     const upper = open.slice(0, 12), lower = [open[11], ...open.slice(12), open[0]];
     const U = x => curveY(upper, x), L0 = x => curveY(lower, x);
@@ -80,6 +81,7 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
         return [0, travelS(x, tt, smile) + d * (0.25 * tt - 0.25)];
       } }
     });
+    parent = parents['brow' + e.id] || base;
     const poly = def['brow' + e.a].poly.map(P), cx = poly.reduce((a, p) => a + p[0], 0) / poly.length;
     const inner = e.id === 'R' ? 1 : -1; // inner end of the brow faces the nose
     await b.part('brow_' + e.id, {
@@ -88,6 +90,7 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
     });
   }
   // mouth
+  const parent = parents.mouth || base;
   const ml = def.mouthLine.map(P), mx0 = ml[0][0], mx1 = ml[ml.length - 1][0], mxc = (mx0 + mx1) / 2, mhw = (mx1 - mx0) / 2;
   const M = x => curveY(ml, x);
   const sOf = x => Math.max(-1, Math.min(1, (x - mxc) / mhw));
