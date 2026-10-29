@@ -92,15 +92,10 @@ export const GESTURES = {
     p.BodyAngleX = 3 * up; p.AngleX = 5 * up + 2 * b; p.AngleZ = 3 * up;
   } },
   // both hands brought together in front of the waist
-  both: { duration: 3.4, hand: 'both', track: (t, p) => {
-    for (const s of ['R', 'L']) arm(p, s, t + (s === 'L' ? -0.04 : 0), [[0, 0], [0.15, -2], [0.6, 32], [0.75, 30], [2.8, 30], [3.2, -2], [3.4, 0]],
-      [[0, 0], [0.2, 6], [0.65, -110], [0.8, -104], [2.8, -105], [3.2, 4], [3.4, 0]],
-      [[0, 0], [0.25, 4], [0.7, -14], [0.85, -9], [2.8, -10], [3.25, 3], [3.4, 0]]);
-    p.ElbowR += 4 * beat(t, 0.8, 2.8, 1.1); p.ElbowL += 4 * beat(t, 0.8, 2.8, 1.1, 0.3);
-    if (t > 0.35 && t < 3.0) { p.HandR = 1; p.HandL = 1; }
-    const up = keys(t - 0.08, [[0, 0], [0.7, 1], [2.9, 1], [3.4, 0]]);
-    p.BodyAngleY = 3 * up; p.AngleY = 5 * up;
-  } },
+  // both hands laid one over the other in front of the skirt, backs of the
+  // hands to the front (pose arms from the drawn pose: the hand shapes needed
+  // cannot be made by turning or mirroring the hand images)
+  both: { pose: true, duration: 3.6, hand: 'both', track: poseTrack('PoseHands', { ShoulderR: 6, ElbowR: -28, ShoulderL: 6, ElbowL: -28 }, (k, p) => { p.EyeSmileAdd = 0.4 * k; p.AngleY = -3 * k; p.AngleZ = 2 * k; }) },
   // left arm raised from the shoulder, index finger pointing outward
   point: { duration: 3.0, hand: 'L', track: (t, p) => {
     arm(p, 'L', t, [[0, 0], [0.2, -4], [0.7, 64], [0.85, 59], [2.3, 60], [2.8, -3], [3.0, 0]],
@@ -230,7 +225,7 @@ export class MotionController {
     for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : k === 'AngleY' ? 9 : 4));
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
     // pose arm switching is set directly; its timing is in the gesture track
-    if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach']) m.set(k, pose[k] || 0); }
+    if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach', 'PoseHands']) if (this.has(k)) m.set(k, pose[k] || 0); }
     // while talking the syllables open and close the mouth from fully closed;
     // otherwise it rests at the expression's opening
     m.set('MouthOpen', clamp(this.spring('mouth', talking ? mouth : ex.mouth ?? 0, dt, talking ? 14 : 5), 0, 1));

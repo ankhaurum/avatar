@@ -79,6 +79,32 @@
      "h": 306
     }
    }
+  },
+  "hands": {
+   "source": "Hibiki_V3_04_Hands_Low_Center_Native.png",
+   "sha256": "157ccfae8f333e3eef6c7b112b0618ca0145e74ac2f3740b0c50155d874d17b9",
+   "transform": {
+    "a": 0.9954080226427141,
+    "b": -0.02401462333418195,
+    "tx": -7.317823326631583,
+    "ty": 13.56891663037419
+   },
+   "layers": {
+    "upper": {
+     "file": "pose/hands_upper.png",
+     "x": 310,
+     "y": 264,
+     "w": 400,
+     "h": 227
+    },
+    "lower": {
+     "file": "pose/hands_lower.png",
+     "x": 326,
+     "y": 466,
+     "w": 370,
+     "h": 300
+    }
+   }
   }
  }
 }
