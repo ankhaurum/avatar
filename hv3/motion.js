@@ -67,7 +67,8 @@ function poseTrack(param, extra) {
   return function (t, p) {
     const d = this.duration, out = d - 0.75, back = out + UNFOLD;
     const near = keys(t, [[0, 0], [0.12, -0.04], [0.42, 1], [back, 1], [back + 0.45, 0]]);
-    for (const [k, v] of Object.entries(this.approach || {})) p[k] = v * near;
+    // angles start from 0, the foreshortening (UpperShort / ForeShort) from 1
+    for (const [k, v] of Object.entries(this.approach || {})) p[k] = /Short/.test(k) ? 1 + (v - 1) * near : v * near;
     const on = t >= SWITCH && t < back ? 1 : 0;
     p[param] = on;
     p.ArmsDefault = 1 - on;
@@ -323,12 +324,13 @@ export class MotionController {
       // pursing eases while speaking
       EyeWide: ex.wide || 0, MouthPucker: (ex.pucker || 0) * (1 - 0.6 * talkAmt), MouthShift: ex.shift || 0,
       ShoulderL: (pose.ShoulderL || 0) + (pose.ShoulderL === undefined ? eArms : 0), ElbowL: pose.ElbowL || 0, WristL: pose.WristL || 0, ForearmL: pose.ForearmL || 0,
-      ShoulderR: (pose.ShoulderR || 0) + (pose.ShoulderR === undefined ? eArms : 0), ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
+      ShoulderR: (pose.ShoulderR || 0) + (pose.ShoulderR === undefined ? eArms : 0), ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0,
+      UpperShortL: pose.UpperShortL ?? 1, ForeShortL: pose.ForeShortL ?? 1, UpperShortR: pose.UpperShortR ?? 1, ForeShortR: pose.ForeShortR ?? 1
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
     // the arms settle quickly (10 Hz) while a pose gesture runs, so they are at the approach when the pose arms take over
     const armHz = this.gestures.some(x => x.g.pose) ? 10 : 6;
-    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? armHz : (k === 'AngleY' || k === 'EyeWide' ? 9 : 4) * snap));
+    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') || k.endsWith('ShortL') || k.endsWith('ShortR') ? armHz : (k === 'AngleY' || k === 'EyeWide' ? 9 : 4) * snap));
     // the hips and skirt come round a little after the chest
     if (this.has('LowerAngleX')) m.set('LowerAngleX', this.spring('lowerX', m.values.BodyAngleX, dt, 2.2 * snap));
     // swaying parts: larger swings when shown small, calmer with reduced motion

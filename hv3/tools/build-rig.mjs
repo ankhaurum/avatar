@@ -28,7 +28,13 @@ for (const s of ['R', 'L']) {
   b.param('Elbow' + s, -160, 160, 0, ja + '肘（外へ＋／体の前へ−）');
   b.param('Wrist' + s, -40, 40, 0, ja + '手首');
   b.param('Hand' + s, 0, 4, 0, ja + '手の形');
+  // foreshortening: an arm turning toward the viewer is seen shorter; the
+  // upper arm shortens about the shoulder, the forearm about the elbow (the
+  // hand and the cuff keep their size). Used on the way into the drawn poses.
+  b.param('UpperShort' + s, 0.3, 1, 1, ja + '上腕の短縮（手前へ向く）');
+  b.param('ForeShort' + s, 0.3, 1, 1, ja + '前腕の短縮（手前へ向く）');
 }
+const SHORT_KEYS = [0.3, 0.4, 0.5, 0.6, 0.7, 0.85, 1];
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
 for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕'], ['PoseHands', '両手を体の前で重ねる腕']]) b.param(id, 0, 1, 0, label);
@@ -211,12 +217,13 @@ for (const s of ['R', 'L']) {
   // not run through the torso warp, so the turn never squeezes it (its top is
   // blended onto the torso below, so the shoulder joint stays whole)
   const sock = joint('arm_' + s + '_upper');
-  b.rotation('arm_' + s + '_upper', 'body', sock, { params: ['Shoulder' + s, ...torsoKeys.params], keys: [[-20, 0, 100], ...torsoKeys.keys], fn: (v, ax, ay, br, sh) => { const far = armFar(ax, sock[0]), [dx, dy] = torsoD(ax, ay, br, sh)(sock[0], sock[1]); return { angle: (v - 4 * far) * dirn, scale: -0.04 * far, dx, dy }; } });
-  b.rotation('arm_' + s + '_lower', 'arm_' + s + '_upper', joint('arm_' + s + '_lower'), { params: ['Elbow' + s], keys: [[-160, 0, 160]], fn: v => ({ angle: v * dirn }) });
-  b.rotation('hand_' + s, 'arm_' + s + '_lower', joint('hand_' + s), { params: ['Wrist' + s], keys: [[-40, 0, 40]], fn: v => ({ angle: v * dirn }) });
-  // sleeve decorations swing a little around their own knots
+  b.rotation('arm_' + s + '_upper', 'body', sock, { params: ['Shoulder' + s, ...torsoKeys.params, 'UpperShort' + s], keys: [[-20, 0, 100], ...torsoKeys.keys, SHORT_KEYS], fn: (v, ax, ay, br, sh, su) => { const far = armFar(ax, sock[0]), [dx, dy] = torsoD(ax, ay, br, sh)(sock[0], sock[1]); return { angle: (v - 4 * far) * dirn, scale: (1 - 0.04 * far) * su - 1, dx, dy }; } });
+  b.rotation('arm_' + s + '_lower', 'arm_' + s + '_upper', joint('arm_' + s + '_lower'), { params: ['Elbow' + s, 'ForeShort' + s], keys: [[-160, 0, 160], SHORT_KEYS], fn: (v, sf) => ({ angle: v * dirn, scale: sf - 1 }) });
+  // the hand keeps its size when the forearm is foreshortened
+  b.rotation('hand_' + s, 'arm_' + s + '_lower', joint('hand_' + s), { params: ['Wrist' + s, 'ForeShort' + s], keys: [[-40, 0, 40], SHORT_KEYS], fn: (v, sf) => ({ angle: v * dirn, scale: 1 / sf - 1 }) });
+  // sleeve decorations swing a little around their own knots (the cuff and its bow keep their size, like the hand)
   for (const id of ['sleeve_bow_upper_', 'sleeve_elbow_frill_']) b.rotation(id + s + '_swing', 'arm_' + s + '_upper', r3.get(id + s).pivot, { params: ['SleeveSway' + s], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 6 }) });
-  for (const id of ['sleeve_bow_wrist_', 'sleeve_cuff_']) b.rotation(id + s + '_swing', 'arm_' + s + '_lower', r3.get(id + s).pivot, { params: ['SleeveSway' + s], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 5 }) });
+  for (const id of ['sleeve_bow_wrist_', 'sleeve_cuff_']) b.rotation(id + s + '_swing', 'arm_' + s + '_lower', r3.get(id + s).pivot, { params: ['SleeveSway' + s, 'ForeShort' + s], keys: [[-1.5, 0, 1.5], SHORT_KEYS], fn: (v, sf) => ({ angle: v * 5, scale: 1 / sf - 1 }) });
 }
 // ---- chest and hip ornaments, skirt, drapes
 const bow = pad([395, 280, 230, 160], 6);
