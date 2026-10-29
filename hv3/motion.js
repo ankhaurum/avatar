@@ -185,8 +185,11 @@ export class MotionController {
     // eyes go all the way to the target, the head part of the way from the base
     // orientation, the body mostly keeps the base orientation
     const eyeX = this.spring('eyeX', lx, dt, 7), eyeY = this.spring('eyeY', ly, dt, 7);
-    const headX = this.spring('headX', face * 0.8 + (lx - face * 0.45) * 0.4, dt, 1.6), headY = this.spring('headY', ly * 0.45, dt, 1.6);
-    const bodyX = this.spring('bodyX', face + (lx - face * 0.45) * 0.12, dt, 0.7);
+    // the eyes are fastest and go furthest, the head follows a little later and
+    // less, the upper body later still and least (still visibly); the
+    // placement orientation is the base of all three
+    const headX = this.spring('headX', face * 0.8 + (lx - face * 0.45) * 0.5, dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
+    const bodyX = this.spring('bodyX', face * 0.75 + (lx - face * 0.45) * 0.4, dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
     let mouth = 0, formAdd = 0;
@@ -214,8 +217,8 @@ export class MotionController {
       AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
       BodyAngleX: bodyX * 13 + n[5](t * 0.13) * 2 + (pose.BodyAngleX || 0),
-      BodyAngleY: n[6](t * 0.11) * 1.5 + (pose.BodyAngleY || 0) - headY * 1.5,
-      BodyAngleZ: n[5](t * 0.09 + 3) * 1.5 + (pose.BodyAngleZ || 0),
+      BodyAngleY: n[6](t * 0.11) * 1.5 + (pose.BodyAngleY || 0) - bodyY * 12,
+      BodyAngleZ: n[5](t * 0.09 + 3) * 1.5 + (pose.BodyAngleZ || 0) - bodyX * 2.5,
       Breath: breath,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
       BrowAngle: ex.BrowAngle ?? 0,
