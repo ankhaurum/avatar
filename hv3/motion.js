@@ -174,8 +174,10 @@ export class MotionController {
     const pointer = t < this.look.until && !pose.LookX;
     // Placement: the body and head turn toward the screen centre and keep that
     // orientation (a placement at the side of the page, about 0.42 from the
-    // centre, gives the full turn: head about 22 of 30, body about 9.5 of 10,
-// which reads on the samples as standing turned toward the centre).
+    // centre, gives the full turn). As a Live2D modeller would, the body carries
+// the orientation (BodyAngleX 10, the full range), the head only follows a
+// little the same way (about 8 of 30, the face stays near the front) and the
+// eyes look at the viewer.
     // The idle glances happen around it. Look targets are in screen terms
     // (-1 left .. 1 right, 0 = straight at the viewer).
     const place = this.spring('facing', clamp(-this.facing / 0.42, -1, 1), dt, 0.8);
@@ -187,8 +189,8 @@ export class MotionController {
     // head: the placement turn plus part of the way to the target (slower);
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
-    const headX = this.spring('headX', keepSide(place * 0.74 + (lx - place * 0.3) * 0.35), dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
-    const bodyX = this.spring('bodyX', keepSide(place * 0.95 + (lx - place * 0.3) * 0.1), dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
+    const headX = this.spring('headX', keepSide(place * 0.27 + (lx - place * 0.3) * 0.35), dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
+    const bodyX = this.spring('bodyX', keepSide(place * 1.0 + (lx - place * 0.3) * 0.1), dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
@@ -212,7 +214,7 @@ export class MotionController {
     const smile = this.spring('eyeSmile', clamp((ex.EyeSmile ?? 0) + (pose.EyeSmileAdd || 0), 0, 1), dt, 2.5);
     const breath = (Math.sin(t * TAU / 3.6) + 1) / 2;
     const out = {
-      AngleX: (headX * 30 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0),
+      AngleX: clamp((headX * 30 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0), -24, 24),
       AngleY: (-headY * 24 + n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0),
       AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
