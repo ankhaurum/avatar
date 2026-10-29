@@ -1,0 +1,34 @@
+{
+ "chest_lower.png": {
+  "source": "4a997e331b7dfafd5d3435174f51cbbe8a3ad4156215d6d2dbb1260949c58fff",
+  "cleaned": "49e68fdd0d978a1f840f08b370580ca1265cca705522a6ca6aaece66281a7b50"
+ },
+ "chest_upper.png": {
+  "source": "0a36c34f624db1a217782cc0b88272682389e160f51531c567fac8d2b6da0666",
+  "cleaned": "d461dd9aa90e0722311fefe7b597ef44fa7a1db1b443a0af5c59c9feeb837044"
+ },
+ "chin_lower.png": {
+  "source": "322849d83361a9dcaa45a11f98c91284d42915759f51c4abdee82b3d1216d39f",
+  "cleaned": "30328b09ba5a68ece166bc43833b31c74549a0509b089773a029a5af2a1f84da"
+ },
+ "chin_upper.png": {
+  "source": "9021697709fbc03a09e55ab16bdf0db0d25df0cc8ba63b5e99edc0a88aa6aa05",
+  "cleaned": "1bed264e6fe7fef670ffcc1e99dacce9dd8c1d67009e913f46422920d4f61237"
+ },
+ "hands_lower.png": {
+  "source": "93d62609ae878bbd50cf94f1dc18044a68ecba884b52233e292b1f1850ab9f66",
+  "cleaned": "8c893271fd5763c2e67d22e2a7022f82666fa6cdb600f80ba656b16d4b999a30"
+ },
+ "hands_upper.png": {
+  "source": "cda67bad2a02d08e4b841b9ffbe6be80bb25de5d41adee42ef346a58f66dd5ea",
+  "cleaned": "4659c560329c7a9ad8d3c076e72f79928be67dabfe538c6e022dcf5b96e9e212"
+ },
+ "reach_lower.png": {
+  "source": "e57b8a48a9aa32ba4b76134d42941f24c873c212b35d098faa2f94e96a175def",
+  "cleaned": "257c11a03c3e44fccc270549e261df11c37aac3ec4ac6bab090355d76699f480"
+ },
+ "reach_upper.png": {
+  "source": "a4de8f6f6fff72a0af55dbc5874165993b96f8b6849853732f8b09192f493046",
+  "cleaned": "0b2498fc341fce20de942e8c21dcec9955631471125c209bb0b6ae8c3b2b5ebf"
+ }
+}

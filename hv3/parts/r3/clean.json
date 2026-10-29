@@ -1,0 +1,286 @@
+{
+ "bodice.png": {
+  "source": "e9b2099e03836708492f1223cd17d1fb828217e791b9abcba67b7bcaf2d6f803",
+  "cleaned": "36dbb24ae8c46a0434577b8cc88613394e26ff376817540d47f6bbb4009c4701"
+ },
+ "boot_L.png": {
+  "source": "077a1dde790b308f670a3dea6c171378073e11106a664c8f9c741e1176ac49f2",
+  "cleaned": "78383c469752637296d055a99ed7b512b122332ac94807e645ca7060e20db1f9"
+ },
+ "boot_R.png": {
+  "source": "d7e04dec2a32c0381dc1e18b1bd81b718c6a39a6c9adef0c116005aefe5dddbc",
+  "cleaned": "c2d2ef6eb44fee93147aa5277c8bb93a30436b5841b06cd465608875cef0146a"
+ },
+ "boot_bow_L.png": {
+  "source": "dce4ae41e6bb45b10f0735250b478828ca8d717ff0c0dd9597869317718b493f",
+  "cleaned": "bc0dc993ca7b9b83dc7932a976867f1a514aca593e8d0235a2b1fe688fdf7794"
+ },
+ "boot_bow_R.png": {
+  "source": "5c0ac3ff6b744468639b47a340b4e8b3a3578447e584accfaf203220bcb58da2",
+  "cleaned": "2ca2d9c19891b3dc7351051ca9770e66246224dc48bba9accb1c9921c54ca91c"
+ },
+ "boot_jewel_L.png": {
+  "source": "38890727b3bb882fc164e03711aa85b4259b01cd7e00e812bf90ef5ba836fc4e",
+  "cleaned": "d7a393bd95f2f826b093c742591bdb3ec1c242acc5587ead1a776eff96f6bcd3"
+ },
+ "boot_jewel_R.png": {
+  "source": "55c1a56eb38b62bafb4ae446eb2a10b230dde2d4280f78842e8906c62c12e303",
+  "cleaned": "2b2c78c8c52eda0e940b901936b1e083f5b9b43abc9c16dfbb82f7da65d8b912"
+ },
+ "chest_bow_knot.png": {
+  "source": "3039e45f8b587d76634088561581f67f99538b52b18d7f2c33926982e36c060b",
+  "cleaned": "23ee3cbd34fca18d47421be673d3cb91b5c479d1fc5d556fdbd9f3fffbaf88e8"
+ },
+ "chest_bow_loop_L.png": {
+  "source": "3a805dd2ffb46a443bd13c2fd14b20987b1cbf13731152eddff260f50133de74",
+  "cleaned": "6313f587ae0e37dd37ec70194b3db608ee7a2aa215dd0d1b3cfb25970bcb1d06"
+ },
+ "chest_bow_loop_R.png": {
+  "source": "c2c9b8f6882d1233aa7ecf03161b96d686ad2b6ec8f236c9fd67e77690750e45",
+  "cleaned": "6796a41837240b5f29725a6d95fd536e85ed5fe3a71df74eb654437d5a90ce75"
+ },
+ "chest_bow_tail_L.png": {
+  "source": "3e52c60beab0945602ebd0cd4701400c0644ed6b2ee1863bc1b9e6c02be54d12",
+  "cleaned": "1c4001c04ec9639209cc280f8e72b1b7fa79af17f14e41c4fbdc148c2934ec76"
+ },
+ "chest_bow_tail_R.png": {
+  "source": "eb5bf8768ae6f56ba6f5c96c4659cbedb4c64e1e87b74058fe0857eacaaaa81c",
+  "cleaned": "7821447a9e89f0b1ddf0d8fe35d154f7f34d6528a723ef8915bd8bac905889fc"
+ },
+ "chest_bow_under_L.png": {
+  "source": "1b2bc674719510cb69fd3eb317f561a641250747eafabae37430ecb88e882e15",
+  "cleaned": "4a68ad24baaba3df5be653a2da873aeeb804ba9402da188131380e5d37447bd1"
+ },
+ "chest_bow_under_R.png": {
+  "source": "d67b20e03b20da397a770ec589a288fb4dbcb61ba98a1173a9bea69eb8ab44f0",
+  "cleaned": "a550e55ead434ea4a2d08e3947ef126b90e4a603c8672636834d6525fbbc915c"
+ },
+ "chest_charm.png": {
+  "source": "cb5e6c77e09aa7cf45c4f908798f9cc578e3a4ff1b8f5737c38de1302da8df6c",
+  "cleaned": "2ae17e9cd8bc1a0148c3ea6300cabe0f66ebae33ae435caeea3452007f613e0a"
+ },
+ "collar.png": {
+  "source": "7ece6b94982300d288b205574640062037a467573b2b3bb7cb189b6e31a02848",
+  "cleaned": "9b7be7d9e10682c7891a9618ea639b749b3095a8de619e6afe474cd5d2a61f4a"
+ },
+ "drape_L.png": {
+  "source": "8ac74d56ade4a84a414b96dc67cb0bc98943a7ed28647e19d0bf30a947314cf2",
+  "cleaned": "6305d5001724f4d3e3645e1931b2eabf5374aa8df541a7397be8b8edf86637a7"
+ },
+ "drape_R.png": {
+  "source": "99185dd3c074e69557ba44e1edc76090d1c841a154a1f0fd8ef1827431d5c754",
+  "cleaned": "dcd0d5d944b718e74dbe728cc0c8f9ff151b135084c07ea33715b4224e2f4598"
+ },
+ "drape_charm_L.png": {
+  "source": "d6f064acc845f555951504b3dff4e7288bf24ebdd40d6911205e1a5424095009",
+  "cleaned": "1dff3b6a96b3fb498a9d373fbebf21ef33f3e27f896a44823d41a932f1bba787"
+ },
+ "drape_charm_R.png": {
+  "source": "9de3df28ace9b45ba3e0936c893a3efba5e233e33375f8e181a06c507e902010",
+  "cleaned": "8873a25e479999e9705a91c54541e689275c8e5c5394e87a393488db517fb06f"
+ },
+ "garter_band_L.png": {
+  "source": "ec412791fd1d1170704dd3a54d31833323b315f36fefcbeca55b6c585adb1095",
+  "cleaned": "34ba4138c9346cf915607cb87fa500a7a3fad31c9f78c5b1d0b581fd6d478474"
+ },
+ "garter_bow_L.png": {
+  "source": "9dda023680802a17bb073b88d1b28ed3cd3ab6dfced916e5df137f72d153c964",
+  "cleaned": "906b23c641bc38267521a1698acdc27eed255955afc8264503733697154ff791"
+ },
+ "garter_jewel_L.png": {
+  "source": "d1a443053c6d09dba5d39dfacb3fa388661d999d2d0ef143485ae87e65c85431",
+  "cleaned": "3106f3bee3445de9b3060c47599dd39523bfa8c4c0795f7833fedeb2e703dc9e"
+ },
+ "hand_L_open.png": {
+  "source": "7c9e8c3ea584895afead9b5b348cc6c672cb5bd51d90127e7269874ccc193fe1",
+  "cleaned": "4ad56ce78e35c10bb158bab9214ae43f69a9db7e79336ddaa7ca12bb18a01c2d"
+ },
+ "hand_L_point.png": {
+  "source": "d9ef53125e655bc90b36063bb2c71649cfa493f55c30f46b846dae73b812ddbe",
+  "cleaned": "feb6f6cec4709d969fa620694e2244a961c80ed3c55c54f9231d44b1b8dbaa2d"
+ },
+ "hand_L_relaxed_fist.png": {
+  "source": "b4608b27d7170556aedcb2533d4d22114dc60c5a7f8a44cd666d25acceb1f12d",
+  "cleaned": "747c92a0a914a43adf89e3e83fc4cc196f2267a35f85e4d3697258d19470a275"
+ },
+ "hand_L_wave.png": {
+  "source": "13522a879e73be6579059520eb88cb705fa63670b4edf5fbb6e807d64e1ce585",
+  "cleaned": "5845290f4159a5b50a17cbc1c0e4a1a9d21b1223bbc22d900d59e050a6022ca2"
+ },
+ "hand_R_open.png": {
+  "source": "8f0f3373b8cd1104aaa4058ab1a203f7b1625116410086a6c0d943f4fe995cb9",
+  "cleaned": "0d8ee0996c2dd1a1ea3475caa0dfa9249de56b0885ca6110ebf133480267c3c4"
+ },
+ "hand_R_point.png": {
+  "source": "cbb09c5a384685b364994b630231e8ec6f2dd1da3cd5c59cbce1710202feecde",
+  "cleaned": "7a14252d16a1dce42013bdcadbd9cfc17c8663fbd61a2d2f4c99255feaaad37f"
+ },
+ "hand_R_relaxed_fist.png": {
+  "source": "acf2de53c235c64b5ce3c5bfd192fe52362fc9816fd70a2d8e789277300099c6",
+  "cleaned": "3dcc28cb1aec5c7abfdd906dfb4ed7a2f57385bfc68ba83153eaa395e4bf4415"
+ },
+ "hand_R_wave.png": {
+  "source": "b08625debacc2df62bf5a7df197db137f1ca435f9a0cb1acc53618d9fb3c02ae",
+  "cleaned": "77466323b9e363425a2542827c0d8ce1647cfe06e1cb92d38cddd8509f9e900c"
+ },
+ "hip_bow_charm.png": {
+  "source": "27245b10326b42d160eed8108f37bcf035045c087d1202414819b58f3a2af13a",
+  "cleaned": "6a970bbde6bb1a5090ec68b552c7a78af3b7fa4522df69aaf0c9be6a6d4faae5"
+ },
+ "hip_bow_frill.png": {
+  "source": "573e2f3a39014b49139ad0c1bb5a5f04010eab89d29e4b0cc08b63d036ba8766",
+  "cleaned": "ce6da49978310489c6b5b4a7bf19747c08229db47de92fff3e592dadfbc6607f"
+ },
+ "hip_bow_knot.png": {
+  "source": "1ea0ad8befa6a2def6a0390978ed30ceb9481c20f3b2e4d13cb040eeb4a49d85",
+  "cleaned": "1904392e84654ebf65e064f12cee14fdb638209bab05c63b1f1e408a02d07504"
+ },
+ "hip_bow_long.png": {
+  "source": "9fcf04db2ed854728a74496b401695b952b705a82f7c6296795e069e5aacd5c7",
+  "cleaned": "1f6afba063a840e88b600b108dbd0711f11d6866da4cd894f04bcad330037e76"
+ },
+ "hip_bow_loop_L.png": {
+  "source": "e60fb598e48ba20f81d5de809a6ce5c59fa5c94148fb231cc6ccf757426b5f12",
+  "cleaned": "bfcfa41d8819b05065a603d407a6a07739b2b1fc51ff1cb0885e21ffa4410b6a"
+ },
+ "hip_bow_loop_R.png": {
+  "source": "f93c7c641eafba05037616cd54ed9f3bd7f8b77fd9b6cbabe851af6c5e935344",
+  "cleaned": "a68d5d0909d2b475c4906d652fd40704e63be1a9929bad4710de851e57ad69c7"
+ },
+ "hip_bow_tail_L.png": {
+  "source": "49c81ada39bc4b3a3b7a87e0ea0aa144d64bd3ec462d41a8976e95f3986a0bab",
+  "cleaned": "f9de32bd153bf494ac6e93ca19297524580aea9a6515e2b8cadb6e776c8158d5"
+ },
+ "hip_bow_tail_R.png": {
+  "source": "12b0f3a94c8bce192cad2927934db3c1013612704f56943aed12f8d7fd86e268",
+  "cleaned": "6bac5b6259d505660e1ab8c4c502957b0c8c90923fda5bf0b5599c68c96ae31f"
+ },
+ "neck.png": {
+  "source": "4da8299b11a5293d1e8b45afa4ed71145e94984ea4ce1aa60b15844f761b927d",
+  "cleaned": "0afff1d082bef66dfb52b704df04802b29d0ffdc8152a6e7df5c7ba75d32e6f3"
+ },
+ "shoulder_frill_L.png": {
+  "source": "26e5c90fc0641e3fa7481687cfbd3faf48cec4a5ad192968f073b4b9c51a316a",
+  "cleaned": "5a2b90fe18d830927db31c27631c4103e24a83cddb1e7f69e69c1d4c3f03dd2a"
+ },
+ "shoulder_frill_R.png": {
+  "source": "22bdb10baf25329f6a280a1413e275e11471befd1ba76d3c1a07c3751d9c6412",
+  "cleaned": "a2266886b0a11ad1239c096ea5a4898e563707f1eefce6e8af0e1b3bf105c243"
+ },
+ "skirt_lining.png": {
+  "source": "bb0a62bbefe38fb619879254bd49c617e0ce1b903df170878ef6ad57b7fcdfad",
+  "cleaned": "23387bd5effadbaf67f5d348251b74e885d78e56ac92b97d8051a025e9e790fe"
+ },
+ "skirt_navy_lower.png": {
+  "source": "191ee9f6c44c57d021af0b674a1a176ababdfaa74ffacb39a1e36c3cba6cfd7c",
+  "cleaned": "6799f27fd1012c7bc82434dc6c5aca39bde726fe13ccab193ba98e0b114a4c2b"
+ },
+ "skirt_navy_upper.png": {
+  "source": "1a262d9b1d5a93495b0ecff7908159444c0193bb6d6815a8f9662bf214ef2eaa",
+  "cleaned": "eac5d3245a5ab79135e091a8706b86b33b357ce13ac01825dcda4c809636ff6c"
+ },
+ "skirt_ruffle_lower.png": {
+  "source": "bf185a39704b3e2e6adc515030882b808189af959acd58b10350786b597751d6",
+  "cleaned": "cf33f1c5a11a2b0e5548e49c7400dee744a12f7b820cf7b099666b359cae6001"
+ },
+ "skirt_ruffle_middle.png": {
+  "source": "417b6e7fa0d508cdb94fd8913a8f4583af7af9e7056079a5cc378ca3fd6f27f0",
+  "cleaned": "a6af9900577359928579c33860c148538a0ec9820e5b6a1d676a033a37e7fc33"
+ },
+ "skirt_side_L.png": {
+  "source": "94d89f506c0f2d1dce6d7eb2e34b41e0759e5bc15914dff5d1f90c477bfceb55",
+  "cleaned": "bb751e140d950ca145e1ee8be88acac0225988b5259b4f669745352ba1a4cc3d"
+ },
+ "skirt_side_R.png": {
+  "source": "948134967c1a93b40a1d10e277ebbb6b7db4246cc61b598baf80b36656e5ea59",
+  "cleaned": "82c80a20db5057cdd9abd60aab35f22231ed6418f40b8373dcf2af5468782470"
+ },
+ "sleeve_bow_upper_L.png": {
+  "source": "8cad71548aa47eebf34084453b7ea9784cb5dcd1dad2f975139a5de84b17a305",
+  "cleaned": "23ced83fa9ce21a3dbf1112c444089600d958863c49b18d87f080dd6f7bce760"
+ },
+ "sleeve_bow_upper_R.png": {
+  "source": "039f77a996ae1692b2d3387db265ce3c566238cb2badf63d41081204250de95b",
+  "cleaned": "bcb7a29c80fc6f1a4756c64fffaea10713bc92a618a638ccadb6aa299e22e4c0"
+ },
+ "sleeve_bow_wrist_L.png": {
+  "source": "dcbb7b7ca13d826fa3e7df8394de70c0ef57abe1895f76f938a190f8264be871",
+  "cleaned": "0c82a9345018abf9851a261f379741aba22f6dd6f4fb79bb41e2a8deb3963a8e"
+ },
+ "sleeve_bow_wrist_R.png": {
+  "source": "dfff8f333599bc2b7db1b7e7bf2af8c1019548936e66d8910a420acba8870fe8",
+  "cleaned": "5aa8048b10fb6c6aafe952396094f415b179476a899cf998d2dea92d96565564"
+ },
+ "sleeve_cuff_L.png": {
+  "source": "018834c3cd408ac4a8d2f54d3a9c86410031a05de4bb5182600af80e65e3c21a",
+  "cleaned": "6d09db1e7ade4107f7d7fd0752c60f6b448549523972c39e74b5e541617f7019"
+ },
+ "sleeve_cuff_R.png": {
+  "source": "1ca87234f0a14e7e73c196dc318c4a9fb191e393e4406d9e09716f648ca4436c",
+  "cleaned": "e219cd4afedbee50730c48a7ca9d37c3fc71d2d24e9a41d03679fc837309a901"
+ },
+ "sleeve_elbow_frill_L.png": {
+  "source": "08896bfc9b43e279f290865dc86ca7b99d8552e1cfb2bf9b35da9e84b2eacfb7",
+  "cleaned": "7d8df5d2787ce1e9cf466d5f9a6f73543a18043a8be6f3019872dc37ce1757e5"
+ },
+ "sleeve_elbow_frill_R.png": {
+  "source": "3eaa045c200cfa9f262c9e28e871002ee106cf3945370f4ba4570c406a5e843e",
+  "cleaned": "fd99590688c86a6c75634ab5804088ec972360dc174a21e09ca0772927d87fd8"
+ },
+ "sleeve_forearm_L.png": {
+  "source": "c13c5c35999182c2b56686ba6cf7b37e7a4e16b9ed50a50c76d41fce3cd4d0fa",
+  "cleaned": "25407c88adc086533eeac6b9fa312b3c91dab46275579047fb183a9280538c42"
+ },
+ "sleeve_forearm_R.png": {
+  "source": "5c64abb2f73d92787b87596bfeeae028145316c2a64c22b7fb69c237323b5f4d",
+  "cleaned": "0b28a6a718215e5befcb79e3e2dda1cf4fbc3136a6dd4b122434eb32dadc4708"
+ },
+ "sleeve_upper_L.png": {
+  "source": "64b1e1d15fff7f98a57fed12bcb2d1ad72cc1bedde26b5e29f83cfe230ce7cda",
+  "cleaned": "cb017cbdeb9f9ec6e19784bb070e2e314275fa55edbe9db3aa34bc14309b7208"
+ },
+ "sleeve_upper_R.png": {
+  "source": "c04436038e084c215c24fa1281a13a21172db3424415576469dbac8cd6124cfc",
+  "cleaned": "d39f6ef0ce8642754da9f4870244d4cc275f2a67bf4d44d8591d3d78eb82560a"
+ },
+ "stocking_L_lower.png": {
+  "source": "2daeb8ee9a338710a08ea40a174dcd895aada97a59399c42a1abf602b9a64289",
+  "cleaned": "b8bdcd78741d2f9bd175223044157410c2bc0a5a67797ca0ea2023bb7bf24f9e"
+ },
+ "stocking_L_upper.png": {
+  "source": "565fd8b7b336c6778ec7ba20362fa54567f938d2705f488a05ec8c851dce039d",
+  "cleaned": "08085e3bada93516cf624b5afda6de31c3fb2c9c601c26581a378b951de77387"
+ },
+ "stocking_R_lower.png": {
+  "source": "3a944e0914fe3f297281dc7638b91187a1ce13ea17e70d166935a4ab498baddc",
+  "cleaned": "5c4b22097a71a0c15147b8caacf275775a5bdf9de786f1159108166d518637ca"
+ },
+ "stocking_R_upper.png": {
+  "source": "6d7aea71523f90da895d379f68048267174ee94994d3b19021f500ce88a18278",
+  "cleaned": "536a7cab886665aa977345be615dcea5890a9b8b8542760ccd8d86d6e9b5e586"
+ },
+ "thigh_L.png": {
+  "source": "2280a5b9986159154aa8b49f017ec2d27742d5a5c63a70ffb3e75fee99fc3bcc",
+  "cleaned": "6436eba6ffa69e9bc7c5b352d29b1dd42e683adf3dfbb3052b52753c255f5af2"
+ },
+ "thigh_R.png": {
+  "source": "a796022c16ad4050999d1bde3df6459e19ccf089abd84515cdbd3577dc2f2ddc",
+  "cleaned": "74f9c0524ef47b820e25def705e21150d62874a480bacf489380e85c9da7ba79"
+ },
+ "upper_arm_L.png": {
+  "source": "eed74add02bf4fee68d1f437c0ff7b3147a8d3a7be76149cc70695a3a20e25e7",
+  "cleaned": "b1aec4c785674ae61d46bf6b01ed1d3019e39b0415af606a7934d2928855a777"
+ },
+ "upper_arm_R.png": {
+  "source": "6bbba2b5be0614dfb013c547c606242007e5493c0077a5aed14dc13836fe2735",
+  "cleaned": "88c2a27f4ec456ee9dbd7ed82e98511cd819829206e1f8b0d24b965416f792ab"
+ },
+ "hand_L.png": {
+  "source": "69849f8e733cf19a4500b7c4f50d621f3130d9f55d80caf300cead8fa8244f30",
+  "cleaned": "45435eaff371a3d257de97300660a3eaf7ea43892bd890721d54e938f0094609"
+ },
+ "hand_R.png": {
+  "source": "5ece2448c2a35ea472d9f1ecec810bcd5d061946f0bcece81510dc543b4a15cf",
+  "cleaned": "586253b87477c55f4d2f1b60886d91060727015a62e02cc34bfafc05018a1d70"
+ }
+}
