@@ -30,5 +30,13 @@
  "reach_upper.png": {
   "source": "a4de8f6f6fff72a0af55dbc5874165993b96f8b6849853732f8b09192f493046",
   "cleaned": "0b2498fc341fce20de942e8c21dcec9955631471125c209bb0b6ae8c3b2b5ebf"
+ },
+ "reach_mid_lower.png": {
+  "source": "3f4c53bc68349f9d84952f40ba77bd2cc10c41b2353569d0184d8aae2e00648c",
+  "cleaned": "80ef239ee86a04a0099e860a0577a88048bc0daaf14bc968b66587c5b077c0c6"
+ },
+ "reach_mid_upper.png": {
+  "source": "b12017d6fd16c06c2eb1a4fe2b81e9b632ed7ce2df752b8b429b2a3b416e473e",
+  "cleaned": "426761fe4bb927495112d3efe2586b68248252e7d32ac3a415403cd0b6e95411"
  }
 }

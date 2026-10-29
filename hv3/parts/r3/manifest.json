@@ -714,8 +714,9 @@
     730
    ],
    "source": {
-    "file": "parts/hand_L.png",
-    "sha256": "af5e303dcfac4239f17eaec5492c48ae25ee5b834636eedbb24bcaa9692a03ed"
+    "file": "Hibiki_V3_hand_L_rest_finger_complete_R3_4096x6144.png",
+    "sha256": "2c01d7d7ff4b3ff794b1a2d16b6d59180dc4c980db3fd81ccd52acc11a076a48",
+    "note": "ChatGPT: resting left hand drawn complete to the outside of the index finger (R3 box and wrist pivot); skin matched to the R3 hand it replaces"
    }
   },
   {
