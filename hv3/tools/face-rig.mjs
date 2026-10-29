@@ -95,13 +95,16 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   const M = x => curveY(ml, x);
   const sOf = x => Math.max(-1, Math.min(1, (x - mxc) / mhw));
   // Four keyforms over MouthOpen x MouthForm, built from art A's closed mouth:
-  // closed / open, neutral / smile (and a slight frown at form -1). The smile
+  // closed / open, neutral / smile (and at form -1 a troubled mouth: the
+  // corners pulled down and a little out). The smile
   // pulls the corners out and up along a curve, so the closed smile is still a
   // closed line (both lips get the same offset on the mouth line).
-  const formD = (x, form) => { const t = sOf(x), c = t * t, c4 = c * c; return form >= 0 ? [t * (3.5 + 5 * c) * s * form, (-4.5 * c - 3 * c4) * s * form] : [Math.sign(t) * 0.6 * s * form * c, -2.6 * s * form * c]; };
+  const formD = (x, form) => { const t = sOf(x), c = t * t, c4 = c * c; return form >= 0 ? [t * (3.5 + 5 * c) * s * form, (-4.5 * c - 3 * c4) * s * form] : [-Math.sign(t) * 3.5 * s * form * c, -9.5 * s * form * c]; };
   // opening: the upper lip rises a little (more in the middle when smiling), the jaw takes the lower lip down
-  const openUpper = (x, open, form = 0) => { const t = sOf(x); return -(1.3 + 8 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.55); };
-  const openLower = (x, open, form = 0) => { const t = sOf(x); return (14 - 2 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.8); };
+  // near the corners the lips stay together (as in the smile), so no dark wedge shows at a corner
+  const cornerShut = t => smooth((1 - Math.abs(t)) / 0.3);
+  const openUpper = (x, open, form = 0) => { const t = sOf(x); return -(1.3 + 8 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.55) * cornerShut(t); };
+  const openLower = (x, open, form = 0) => { const t = sOf(x); return (14 - 2 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.8) * cornerShut(t); };
   const mouthKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 1], [-1, 0, 1]] };
   const upperN = (open, form) => (x, y) => { const f = formD(x, form), up = Math.max(0, Math.min(1, (M(x) - y) / (9 * s))); return [f[0], f[1] * (y > M(x) - 3 * s ? 1 : 0.6) + openUpper(x, open, form) * (1 - 0.7 * up * Math.max(0, form))]; };
   const lowerN = (open, form) => (x, y) => { const f = formD(x, form); const below = Math.max(0, Math.min(1, (y - M(x)) / (14 * s))); return [f[0] * (1 - below * 0.5), f[1] * (1 - below * 0.6) + openLower(x, open, form) * (1 - below * 0.15)]; };
@@ -190,13 +193,15 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // middle of the lip does. It is drawn 35 % taller than its texture so its
   // lower edge lies on the lower lip's inner edge (no dark band under it).
   const teethTop = P([0, 340])[1], teethH = 30 / teethK * s;
-  const teethKey = { ...mouthKey, fn: (open, form) => {
+  // pursed into an "o" (MouthPucker) the row shows less: it is drawn shorter, so
+  // the dark of the mouth shows under it
+  const teethKey = { params: ['MouthOpen', 'MouthForm', 'MouthPucker'], keys: [[0, 1], [-1, 0, 1], [0, 1]], fn: (open, form, pk) => {
     const xs = [mx0 + 0.15 * (mx1 - mx0), mxc, mx1 - 0.15 * (mx1 - mx0)];
     const ys = xs.map(x => M(x) + upperD(open, form)(x, M(x) - 0.05)[1] - 2.6 * s);
     // quadratic through the three points
     const q = x => { const [a, b2, c] = xs; return ys[0] * (x - b2) * (x - c) / ((a - b2) * (a - c)) + ys[1] * (x - a) * (x - c) / ((b2 - a) * (b2 - c)) + ys[2] * (x - a) * (x - b2) / ((c - a) * (c - b2)); };
     const dx = upperD(open, form)(mxc, M(mxc) - 0.05)[0];
-    return (x, y) => [dx, q(x) - teethTop + (y - teethTop) * 0.35];
+    return (x, y) => [dx, q(x) - teethTop + (y - teethTop) * (0.35 - 0.5 * pk) - 1.5 * s * pk];
   } };
   await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: teethKey });
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });

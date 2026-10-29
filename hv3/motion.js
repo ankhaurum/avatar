@@ -173,7 +173,7 @@ export class MotionController {
     const t = (this.t += dt), m = this.model, n = this.n;
     // face and posture targets: the V2 performance when there is one, else the page's expression
     const pf = this.perf ? this.perf.sample() : null;
-    const ex = pf ? { EyeSmile: pf.smile, MouthForm: pf.form, BrowY: pf.browY, BrowAngle: pf.browAngle, eye: pf.eye, mouth: pf.mouth, ...(pf.look ? { lookX: pf.look[0], lookY: pf.look[1] } : {}) } : EXPRESSIONS[this.expression];
+    const ex = pf ? { EyeSmile: pf.smile, MouthForm: pf.form, BrowY: pf.browY, BrowAngle: pf.browAngle, eye: pf.eye, mouth: pf.mouth, wide: pf.wide, pucker: pf.pucker, shift: pf.shift, ...(pf.look ? { lookX: pf.look[0], lookY: pf.look[1] } : {}) } : EXPRESSIONS[this.expression];
     if (pf) { if (pf.speaking && !this.perfTalk) this.talkUntil = Infinity; if (!pf.speaking && this.perfTalk) this.talkUntil = t; this.perfTalk = pf.speaking; }
     // amounts by display size (g); reduced motion halves the idle motion
     // The face stays near the front at every size: the head's share does not grow
@@ -182,7 +182,7 @@ export class MotionController {
     // and the swaying parts carry the extra motion of a small display.
     const g = this.calm ? 0 : this.size, calm = this.calm ? 0.5 : 1, idle = 0.9 * calm, bodyIdle = lerp(0.9, 2.2, g) * calm, accent = 1, bodyAccent = lerp(1, 1.8, g), snap = lerp(1, 1.3, g);
     // placement: the body carries the turn (to the full range when small), the head adds a little
-    const placeBody = lerp(0.75, 1, g), placeHead = 0.2, follow = 0.33;
+    const placeBody = lerp(0.92, 1, g), placeHead = 0.2, follow = 0.33;
     const pose = {};
     for (const x of this.gestures) if (t >= x.start) x.g.track.call(x.g, t - x.start, pose);
     this.gestures = this.gestures.filter(x => t - x.start < x.g.duration);
@@ -211,7 +211,7 @@ export class MotionController {
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
     const headX = this.spring('headX', keepSide(place * placeHead + (lx - place * 0.3) * follow), dt, 1.6 * snap), headY = this.spring('headY', ly * 0.45, dt, 1.6 * snap);
-    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lx - place * 0.3) * lerp(0.1, 0.35, g)), dt, 0.6 * snap), bodyY = this.spring('bodyY', ly * lerp(0.45, 0.9, g), dt, 0.6 * snap);
+    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lx - place * 0.3) * lerp(0.1, 0.35, g) * (1 - 0.6 * Math.abs(place))), dt, 0.6 * snap), bodyY = this.spring('bodyY', ly * lerp(0.45, 0.9, g), dt, 0.6 * snap);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
@@ -251,11 +251,16 @@ export class MotionController {
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
       BrowAngle: ex.BrowAngle ?? 0,
       MouthForm: clamp((ex.MouthForm ?? 0) + formAdd, -1, 1),
+      // the eyes and mouth carry what the brows cannot (the fringe hides them);
+      // pursing eases while speaking
+      EyeWide: ex.wide || 0, MouthPucker: (ex.pucker || 0) * (1 - 0.6 * talkAmt), MouthShift: ex.shift || 0,
       ShoulderL: (pose.ShoulderL || 0) + (pose.ShoulderL === undefined ? eArms : 0), ElbowL: pose.ElbowL || 0, WristL: pose.WristL || 0, ForearmL: pose.ForearmL || 0,
       ShoulderR: (pose.ShoulderR || 0) + (pose.ShoulderR === undefined ? eArms : 0), ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
     for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : (k === 'AngleY' ? 9 : 4) * snap));
+    // the hips and skirt come round a little after the chest
+    if (this.has('LowerAngleX')) m.set('LowerAngleX', this.spring('lowerX', m.values.BodyAngleX, dt, 2.2 * snap));
     // swaying parts: larger swings when shown small, calmer with reduced motion
     if (m.physics) m.physics.gain = lerp(0.9, 1.7, g) * (this.calm ? 0.6 : 1);
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);

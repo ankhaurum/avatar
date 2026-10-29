@@ -64,11 +64,14 @@ export class AvatarRenderer {
     new ResizeObserver(() => this.app.resize()).observe(host);
     return this;
   }
-  setView(name) { this.view = (this.model.json.views || VIEWS)[name] || name; this.layout(); }
+  setView(name) { this.viewName = typeof name === 'string' ? name : ''; this.view = (this.model.json.views || VIEWS)[name] || name; this.layout(); }
   layout() {
     const [x, y, w, h] = this.view, W = this.app.screen.width, H = this.app.screen.height;
     // the face (art A, 1 texture px per unit) is never shown above ~2x
-    const s = Math.min(W / w, H / h, (this.model.json.views ? 2 : 3.6) / this.app.renderer.resolution);
+    // bust-up keeps its framing (head to below the chest) in a narrow box: the
+    // sides (the outer arms) may be cut, down to the head and shoulders
+    const core = this.viewName === 'bust' ? 0.64 : 1;
+    const s = Math.min(W / (w * core), H / h, (this.model.json.views ? 2 : 3.6) / this.app.renderer.resolution);
     this.root.scale.set(s);
     this.root.position.set((W - w * s) / 2 - x * s, (H - h * s) / 2 - y * s);
   }

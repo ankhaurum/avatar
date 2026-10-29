@@ -11,22 +11,25 @@ export const STATES = Object.freeze(['idle', 'attention', 'thinking', 'speaking'
 //   opening 0..1), browY / browAngle (-1..1, +angle = inner ends up), eye (open
 //   0..1), lean (BodyAngleY: + back, - forward), roll (BodyAngleZ), tilt
 //   (AngleZ), pitch (AngleY: + up), arms (shoulders in(-) / out(+), degrees),
-//   look ([x, y] gaze cue or null)
+//   look ([x, y] gaze cue or null), wide (eyes opened wide 0..1), pucker (mouth
+//   pursed, with an opening a round "o" 0..1), shift (mouth pulled to a side
+//   -1..1). The brows are mostly under the fringe, so the eyes, the mouth, the
+//   head's tilt and the body carry the difference.
 export const EMOTIONS = Object.freeze({
   neutral: { smile: 0.2, form: 0.45, mouth: 0, browY: 0, browAngle: 0, eye: 1 },
-  gentle: { smile: 0.45, form: 0.8, mouth: 0.2, browY: 0.05, browAngle: 0, eye: 0.97, lean: 0.5 },
+  gentle: { smile: 0.45, form: 0.8, mouth: 0.2, wide: 0.35, browY: 0.05, browAngle: 0, eye: 1, lean: 0.5 },
   smile: { smile: 0.8, form: 1, mouth: 0.6, browY: 0.1, browAngle: 0, eye: 0.94, lean: 1 },
-  joy: { smile: 1, form: 1, mouth: 0.75, browY: 0.3, browAngle: 0.1, eye: 0.9, lean: 2.5, roll: 1.5, tilt: 3, arms: 4, bounce: 1 },
-  surprise: { smile: 0, form: 0, mouth: 0.45, browY: 1, browAngle: 0.3, eye: 1, lean: 3, pitch: 4, arms: 5, once: true },
-  concern: { smile: 0, form: -0.45, mouth: 0, browY: -0.05, browAngle: 0.9, eye: 0.9, lean: -1.5, roll: -1.5, tilt: -5, arms: -3 },
-  sadness: { smile: 0, form: -0.8, mouth: 0, browY: -0.2, browAngle: 1, eye: 0.8, lean: -3, pitch: -6, arms: -5, look: [0, 0.3] },
-  thinking: { smile: 0, form: -0.2, mouth: 0, browY: 0.2, browAngle: -0.8, eye: 0.85, lean: -1, tilt: 6, look: [0.5, -0.4] },
-  shy: { smile: 0.5, form: 0.7, mouth: 0.1, browY: 0.1, browAngle: 0.4, eye: 0.85, lean: -1, tilt: -4, pitch: -3, arms: -3, look: [-0.25, 0.25] },
-  anger: { smile: 0, form: -0.3, mouth: 0, browY: -0.6, browAngle: -1, eye: 0.88, lean: -1, arms: 2 }
+  joy: { smile: 1, form: 1, mouth: 0.9, browY: 0.3, browAngle: 0.1, eye: 0.9, lean: 2.5, roll: 1.5, tilt: 3, arms: 4, bounce: 1 },
+  surprise: { smile: 0, form: 0, mouth: 0.5, pucker: 1, wide: 1, browY: 1, browAngle: 0.3, eye: 1, lean: 3.5, pitch: 4, arms: 6, once: true },
+  concern: { smile: 0, form: -1, mouth: 0, browY: -0.05, browAngle: 0.9, eye: 0.8, lean: -2.5, roll: -3, tilt: -9, arms: -4 },
+  sadness: { smile: 0, form: -0.9, mouth: 0, browY: -0.2, browAngle: 1, eye: 0.62, lean: -4, pitch: -10, arms: -8, look: [0, 0.6] },
+  thinking: { smile: 0, form: -0.3, mouth: 0, pucker: 0.6, shift: 0.8, browY: 0.2, browAngle: -0.8, eye: 0.85, lean: 1.5, tilt: 7, look: [0.6, -0.5] },
+  shy: { smile: 0.5, form: 0.7, mouth: 0.1, pucker: 0.25, browY: 0.1, browAngle: 0.4, eye: 0.85, lean: -1, tilt: -4, pitch: -3, arms: -3, look: [-0.25, 0.25] },
+  anger: { smile: 0, form: -0.6, mouth: 0, pucker: 0.3, browY: -0.6, browAngle: -1, eye: 0.75, lean: -1, arms: 2 }
 });
 // names used elsewhere (HUB runtime states, Codex aliases)
-const ALIASES = { happy: 'joy', confusion: 'concern', sad: 'sadness', blushing: 'shy', notify: 'surprise', error: 'concern', speaking: null };
-const STATE_EMOTION = { idle: 'smile', attention: 'gentle', thinking: 'thinking', speaking: 'smile', happy: 'joy', notify: 'surprise', concern: 'concern', error: 'concern', sleep: 'neutral', wake: 'gentle' };
+const ALIASES = { happy: 'joy', confusion: 'concern', sad: 'sadness', blushing: 'shy', notify: 'surprise', error: 'sadness', speaking: null };
+const STATE_EMOTION = { idle: 'smile', attention: 'gentle', thinking: 'thinking', speaking: 'smile', happy: 'joy', notify: 'surprise', concern: 'concern', error: 'sadness', sleep: 'neutral', wake: 'gentle' };
 // Twinow MotionEngine.setState defaults (ms)
 const DURATIONS = { attention: 920, happy: 1100, notify: 1500, error: 2300, wake: 760 };
 const finite = v => typeof v === 'number' && Number.isFinite(v);
@@ -72,14 +75,14 @@ export class Performance {
     this.tick();
     const name = this.emotion || STATE_EMOTION[this.state], e = EMOTIONS[name], a = this.emotion ? this.intensity : 1;
     const age = (this.now() - this.started) / 1000, pulse = Math.sin(Math.min(age / 1.05, 1) * Math.PI);
-    const o = { name, state: this.state, phase: this.phase, speaking: this.state === 'speaking', smile: e.smile * a, form: e.form * a, mouth: e.mouth * a, browY: e.browY * a, browAngle: e.browAngle * a, eye: 1 + (e.eye - 1) * a,
+    const o = { name, state: this.state, phase: this.phase, speaking: this.state === 'speaking', wide: (e.wide || 0) * a, pucker: (e.pucker || 0) * a, shift: (e.shift || 0) * a, smile: e.smile * a, form: e.form * a, mouth: e.mouth * a, browY: e.browY * a, browAngle: e.browAngle * a, eye: 1 + (e.eye - 1) * a,
       lean: (e.lean || 0) * a, roll: (e.roll || 0) * a, tilt: (e.tilt || 0) * a, pitch: (e.pitch || 0) * a, arms: (e.arms || 0) * a, look: e.look || null, bounce: e.bounce ? a : 0, breath: 1 };
     // a surprise is a one-shot recognition that settles, not a held startle
-    if (e.once) { const s = Math.max(0.35, 1 - Math.max(0, age - 0.4) / 1.6); for (const k of ['browY', 'mouth', 'lean', 'pitch', 'arms']) o[k] *= s; }
+    if (e.once) { const s = Math.max(0.35, 1 - Math.max(0, age - 0.4) / 1.6); for (const k of ['browY', 'mouth', 'lean', 'pitch', 'arms', 'wide', 'pucker']) o[k] *= s; }
     if (this.state === 'attention') { o.lean -= pulse * 3; o.pitch += pulse * 2; o.look = [0, 0]; }
     if (this.state === 'notify') { o.arms += pulse * 4; o.lean += pulse * 2; }
     if (this.state === 'thinking') o.breath = 0.6;
-    if (this.state === 'sleep') { o.eye = 0; o.mouth = 0; o.pitch = -8; o.lean = -2; o.arms = -3; o.breath = 0.5; o.look = null; }
+    if (this.state === 'sleep') { o.eye = 0; o.mouth = 0; o.wide = 0; o.pitch = -8; o.lean = -2; o.arms = -3; o.breath = 0.5; o.look = null; }
     if (this.state === 'wake') o.eye *= clamp(age / 0.76);
     return o;
   }
