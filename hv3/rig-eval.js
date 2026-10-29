@@ -108,17 +108,21 @@ class RotationDeformer {
 export class Physics {
   // Damped springs driven by weighted parameter inputs. Each output follows a
   // lagged, inverted copy of its input so hair and fabric trail the motion.
+  // "inputs" set the resting lean (gravity against a tilt), "kick" (when given,
+  // else the same inputs) the speed that swings the part: a quick move throws
+  // it, and it swings back and settles over a few periods.
   constructor(groups) {
-    this.groups = groups.map(g => ({ ...g, x: 0, v: 0, prevInput: 0 }));
+    this.groups = groups.map(g => ({ ...g, x: 0, v: 0, prevInput: 0, prevKick: 0 }));
     this.gain = 1;
   }
   step(values, dt) {
     const h = Math.min(dt, 1 / 30);
     for (const g of this.groups) {
-      let input = 0;
+      let input = 0, kick = 0;
       for (const [id, w] of g.inputs) input += (values[id] ?? 0) * w;
-      const vel = (input - g.prevInput) / Math.max(h, 1e-3);
-      g.prevInput = input;
+      if (g.kick) for (const [id, w] of g.kick) kick += (values[id] ?? 0) * w; else kick = input;
+      const vel = (kick - g.prevKick) / Math.max(h, 1e-3);
+      g.prevInput = input; g.prevKick = kick;
       const target = -input * g.follow;
       const w0 = 2 * Math.PI * g.frequency;
       const acc = -w0 * w0 * (g.x - target) - 2 * g.damping * w0 * g.v - vel * g.inertia;
