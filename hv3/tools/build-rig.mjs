@@ -29,7 +29,7 @@ for (const s of ['R', 'L']) {
 }
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
-for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕']]) b.param(id, 0, 1, 0, label);
+for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕'], ['PoseHands', '両手を体の前で重ねる腕']]) b.param(id, 0, 1, 0, label);
 for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ'],
   ['HairBack', '後ろ髪・毛先の揺れ'], ['FrillSway', '肩のフリルの揺れ'], ['HipBowSway', '腰のリボンの揺れ'], ['SkirtSway2', 'スカート下段の揺れ'],
   ['CharmSway', '垂れ布の先の飾りの揺れ'], ['LegSway', '脚の飾り・ブーツのリボンの揺れ'], ['BodySwayX', '上半身の遅れ（左右）'], ['BodySwayZ', '上半身の遅れ（傾き）']]) b.param(id, -1.5, 1.5, 0, label);
@@ -233,7 +233,7 @@ for (const p of r3m.parts) {
 // pose arms: upper (shoulder skin, puff sleeve) under the R3 shoulder frills,
 // lower (forearm sleeve, cuff, hands) in front of the chest ribbons and the face
 const poseM = JSON.parse(fs.readFileSync(path.join(out, 'parts/pose/manifest.json')));
-const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach' };
+const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach', hands: 'PoseHands' };
 for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of Object.entries(pz.layers))
   await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: 'torso', order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
     opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
