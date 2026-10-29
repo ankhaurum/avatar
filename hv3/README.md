@@ -39,3 +39,38 @@
 - 顔の表示は原画Aの約2倍までに抑えている。
 - 髪を大きく揺らすと、髪の下を補間で埋めた肌が見える（描き直しはしていない）。
 - 音声との同期は無い（口の動きは疑似発話）。
+
+## パッケージの使い方（`hv3/hibiki-avatar.js`）
+HUB・Twinow・オウンドメディアで共通に使う部品として、表示・視線・向き・動きの量・スクロール中の半透明・全身／バストアップの切り替えを1つの関数にまとめた。各サイトは設定を渡すだけで、見た目はCSSで上書きできる。
+
+```js
+import { mountHibikiAvatar } from './hv3/hibiki-avatar.js';
+const avatar = await mountHibikiAvatar(document.querySelector('#avatar'), {
+  view: 'bust',                 // 最初の表示：'bust'（バストアップ）／'full'（全身）／'face'（顔）
+  chat: false,                  // true：チャットの中。バストアップに固定し、切り替えボタンを出さない
+  viewToggle: true,             // 待機中のアバターの右下に「全身／バストアップ」のボタンを出す
+  rememberView: 'hibiki-view',  // 選んだ表示を覚える localStorage のキー（false：覚えない）
+  scrollFade: { enabled: true, opacity: 0.35, restoreMs: 600 }, // スクロール中の半透明：オン・オフ、透明度、止まってから戻るまでの時間（ミリ秒）
+  motionSize: 'auto',           // 動きの量：'auto'（表示の大きさから自動）／0（大きい表示向け）〜1（小さい表示向け）
+  facing: 'auto',               // 向き：'auto'（ページ上の位置から）／-1（左に置いた）〜1（右に置いた）
+  autoplay: true                // false：step(dt) を呼ぶまで止めておく（試験や録画用）
+});
+avatar.motion.gesture('wave'); avatar.motion.setExpression('smile'); avatar.motion.talk(2);
+avatar.setView('full'); avatar.setScrollFade({ enabled: false }); avatar.setViewToggle(false); avatar.destroy();
+```
+
+- 表示の大きさと動き：アバターが描かれている高さ（表示中のバストアップや全身の高さ）が200 px以下で最も大きく、520 px以上でLive2Dの標準に近い量になる。小さいほど、うなずき・身振りに伴う頭と体の動き・待機中の揺らぎ・目配り・揺れもの（髪・リボン・スカート・垂れ布・袖）が大きくなり、動きの緩急もはっきりする。配置による体の向きは小さい表示で範囲いっぱい（BodyAngleX ±10）、大きい表示で約±7.5。頭の角度は常に±24まで、体は±10までに収め、顔や髪が崩れない範囲を守る。
+- 動きを減らす設定（prefers-reduced-motion）：自動デモを止め、待機中の揺らぎを半分、揺れものを控えめにする。
+- スクロール中の半透明：ページ（またはスクロールする親要素）がスクロールしている間だけ半透明にし、止まって `restoreMs` 後に戻る。
+- 全身／バストアップのボタン：選んだ表示を覚え、次に開いたときもその表示になる。保存できない環境（プライベートブラウズ等）では、その場の切り替えだけ行い、表示は壊れない。切り替えても、視線の追従と配置による向きはそのまま続く。
+- CSSで上書きできる値（ホスト要素か、その親に指定する）：
+
+| 変数 | 内容 | 既定 |
+|---|---|---|
+| `--hv3-scroll-opacity` | スクロール中の不透明度 | 設定の `scrollFade.opacity` |
+| `--hv3-fade-out` | 半透明になるまでの時間 | `0.18s` |
+| `--hv3-fade-in` | 元に戻るまでの時間 | `0.35s` |
+| `--hv3-toggle-bg` ／ `--hv3-toggle-fg` ／ `--hv3-toggle-border` | ボタンの背景・文字・枠の色 | 白・紺・淡い灰 |
+| `--hv3-toggle-radius` ／ `--hv3-toggle-font-size` ／ `--hv3-toggle-inset` | ボタンの角丸・文字の大きさ・右下からの位置 | `999px` ／ `13px` ／ `8px` |
+
+ボタンには `hv3-view-toggle`、スクロール中のホストには `hv3-scrolling` のクラスが付くので、細かな見た目はこれらのクラスでも上書きできる（パッケージのCSSは `:where()` で詳細度0）。
