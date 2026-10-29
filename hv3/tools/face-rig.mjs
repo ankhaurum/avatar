@@ -123,7 +123,10 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   const seamC = x => (R.uin(x) + R.lin(x)) / 2;
   const smileD = (open, lip) => (x, y) => {
     const u = Math.min(1, Math.max(0, (x - mx0) / (mx1 - mx0))), X = rcL[0] + u * (rcR[0] - rcL[0]);
-    const k = open / REF_OPEN, sm = seamC(X);
+    // near the corners the lips stay together (the opening tapers to nothing
+    // a quarter of the mouth width inside each corner), so a corner ends in lip and
+    // skin only, with no dark wedge
+    const k = open / REF_OPEN * smooth(Math.min(u, 1 - u) / 0.24), sm = seamC(X);
     let outer0, outerR, innerR;
     if (lip === 'u') { outer0 = Utop0(x); innerR = R.uin(X); outerR = R.utop(X); }
     else { outer0 = Lbot0(x); innerR = R.lin(X); outerR = R.lbot(X); }
@@ -157,7 +160,7 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
     let top = M(x) + up[1], bottom = M(x) + lo[1] + 1 * s * Math.min(1, open * 4) * mid;
     // the dark opening closes a little before the lip corners (the corners keep
     // art A's own lip line and no cavity shows beyond it)
-    const taper = 1 - smooth((Math.abs(t) - 0.82) / 0.16), c = (top + bottom) / 2;
+    const taper = 1, c = (top + bottom) / 2;
     top = c + (top - c) * taper; bottom = c + (bottom - c) * taper;
     return [up[0] * (1 - v) + lo[0] * v, top + (bottom - top) * v - y];
   } };
