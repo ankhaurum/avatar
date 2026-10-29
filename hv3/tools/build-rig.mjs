@@ -122,7 +122,7 @@ const fr = pad(aBox('hair_front'), 6);
 // parallax: the fringe is in front of the face, so it moves more with the head turn
 // the fringe moves at least as far as the face under it, its tips (in front of
 // the forehead) further; toward its ends it meets the side hair on the face field
-b.warp('fringe_sway', 'head_turn', fr, 18, 9, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], HK, HK], fn: (v, ax, ay) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), e = 1 - smooth((Math.abs(x - (fr[0] + fr[2] / 2)) - (fr[2] / 2 - 50)) / 40), p = faceShift(x, y, ax, ay, Math.max(0, (4 + 36 * t) * e - zFace(x, y))); return [d[0] + p[0], d[1] + p[1]]; }; } });
+b.warp('fringe_sway', 'head_turn', fr, 18, 9, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], HK, HK], fn: (v, ax, ay) => { const f = sway(fr[1] + 25, fr[3] - 25, 9)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), e = 1 - smooth((Math.abs(x - (fr[0] + fr[2] / 2)) - (fr[2] / 2 - 50)) / 40), p = faceShift(x, y, ax, ay, Math.max(0, (4 + 36 * t) * e - zFace(x, y))); return [d[0] + p[0], d[1] + p[1]]; }; } });
 const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 // side hair (the back hair is drawn in the same layers): the whole length sways
 // with HairSide, the tips trail more with HairBack; it lies behind the face, so
@@ -134,7 +134,8 @@ const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 // head turns toward (the far side) moves a little further, over the cheek;
 // the lower part (the back hair) lags a little behind
 const CX = AA(524, 0)[0];
-const sideFn = r => (v, vb, ax, ay) => { const f = sway(r[1] + 70, r[3] - 70, 10)(v), g = sway(r[1] + r[3] * 0.55, r[3] * 0.45, 8, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y), t = Math.max(0, Math.min(1, (y - r[1] - r[3] * 0.4) / (r[3] * 0.5))), far = Math.sign(x - CX) === Math.sign(ax) ? 1 : 0, p = faceShift(x, y, ax, ay, far * 5 * (1 - t) - 6 * t); return [a[0] + c[0] + p[0], a[1] + c[1] + p[1]]; }; };
+const sideFn = r => (v, vb, ax, ay) => { // the swing is in the ends below the jaw (over the clothes), the hair beside the cheeks stays on them
+  const f = sway(r[1] + r[3] * 0.5, r[3] * 0.5, 9)(v), g = sway(r[1] + r[3] * 0.62, r[3] * 0.38, 10, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y), t = Math.max(0, Math.min(1, (y - r[1] - r[3] * 0.4) / (r[3] * 0.5))), far = Math.sign(x - CX) === Math.sign(ax) ? 1 : 0, p = faceShift(x, y, ax, ay, far * 5 * (1 - t) - 6 * t); return [a[0] + c[0] + p[0], a[1] + c[1] + p[1]]; }; };
 b.warp('side_sway_R', 'head_turn', sideR, 12, 22, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], HK, HK], fn: sideFn(sideR) });
 b.warp('side_sway_L', 'head_turn', sideL, 12, 22, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], HK, HK], fn: sideFn(sideL) });
 
@@ -305,9 +306,11 @@ await buildFace(b, { parent: 'face_expr', parents: { eyeR: 'eye_R_turn', eyeL: '
 // longer, small charms dangle at the end of them. BodySwayX/Z: the upper body
 // follows the head a little later (negative follow = same direction).
 const phys = (o, inputs, follow, frequency, damping, inertia) => b.physics({ output: o, inputs, follow, frequency, damping, inertia });
-phys('HairFront', [['AngleX', 1 / 30], ['AngleZ', 1 / 30], ['AngleY', 0.5 / 30], ['BodyAngleX', 1 / 10]], 0.8, 1.8, 0.16, 0.12);
-phys('HairSide', [['AngleX', 1.2 / 30], ['AngleZ', 1.4 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.8 / 10], ['BodySwayX', 0.3]], 0.9, 1.2, 0.14, 0.16);
-phys('HairBack', [['AngleX', 1 / 30], ['AngleZ', 1.2 / 30], ['BodyAngleX', 1.2 / 10], ['HairSide', 0.6]], 0.8, 0.8, 0.12, 0.2);
+// hair: the swing after a head motion is what shows, so the velocity kick
+// (inertia) is large and the damping light; the steady lean stays small
+phys('HairFront', [['AngleX', 3 / 30], ['AngleZ', 3 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 1.5 / 10]], 0.3, 1.7, 0.12, 0.6);
+phys('HairSide', [['AngleX', 3.6 / 30], ['AngleZ', 4 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 2 / 10], ['BodyAngleZ', 2 / 10], ['BodySwayX', 0.8]], 0.3, 1.15, 0.1, 0.8);
+phys('HairBack', [['AngleX', 3 / 30], ['AngleZ', 3.6 / 30], ['AngleY', 2 / 30], ['BodyAngleX', 2.4 / 10], ['HairSide', 0.4]], 0.3, 0.85, 0.1, 0.9);
 phys('FrillSway', [['BodyAngleX', 1 / 10], ['BodyAngleZ', 1 / 10], ['BodySwayX', 0.5], ['Breath', 0.2]], 0.7, 1.6, 0.14, 0.14);
 phys('BowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1 / 10], ['BodyAngleY', 0.5 / 10], ['BodySwayX', 0.6], ['Breath', 0.2]], 0.8, 1.4, 0.14, 0.16);
 phys('HipBowSway', [['BodyAngleX', 1.2 / 10], ['BodyAngleZ', 1.2 / 10], ['BodySwayX', 0.4]], 0.8, 1.0, 0.13, 0.18);
@@ -322,7 +325,8 @@ phys('BodySwayZ', [['AngleZ', 1 / 30], ['AngleX', 0.6 / 30]], -0.9, 0.9, 0.4, 0.
 
 // ---- units: approved art A pixels, so the art A head is used at its native size
 // and the R3 body is scaled up to it (old unit x = 223.5 + 0.551 * art A x)
-b.rig.views = { bust: [236, 0, 552, 640], face: [432, 56, 160, 190], full: [120, 0, 784, 1536] };
+// bust-up: from the top of the head to below the chest (as the Live2D samples frame it)
+b.rig.views = { bust: [244, 4, 536, 520], face: [432, 56, 160, 190], full: [120, 0, 784, 1536] };
 b.rig.headCenter = [511, 150];
 b.rescale(1 / artA.scale, artA.offset, [Math.round(1024 / artA.scale), Math.round(1536 / artA.scale)]);
 console.log(b.write('hibiki.rig.json'));
