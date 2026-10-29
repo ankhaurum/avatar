@@ -38,7 +38,7 @@ for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横�
 const hips = joint('hips');
 // the whole body leans about the hips; BodySwayX/Z come from physics (the upper
 // body follows the head a little later)
-b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: x * 0.8 + sx * 4 }) });
+b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: sx * 4 }) });
 // torso: turning (BodyAngleX) rotates the upper body about a vertical axis
 // through the hips. Each point has a depth: the chest front (ribbon, buttons,
 // front ornaments) is nearest, the shoulders and arms sit behind it. Rotated by
@@ -58,7 +58,11 @@ const depth = (x, y) => { const nx = Math.min(1, Math.abs(x - tc[0]) / 280), che
 // the hips upward. BodyAngleX 10 turns the chest about 12 deg: the torso moves
 // about 13 % of its width (reference samples: 11-13 %).
 const upOf = y => Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-const turnAt = (ax, x, y) => { const th = ax / 10 * 12 * Math.PI / 180 * (0.35 + 0.65 * upOf(y)), rx = x - tc[0]; return rx * (Math.cos(th) - 1) + depth(x, y) * Math.sin(th); };
+// Shape of the turn, as measured on the official samples at BodyAngleX 10: the
+// centre line moves about 15 % of the torso half-width, the outer edges hardly
+// move (the near half widens, the far half narrows); it is a turn, not a slide.
+const HW = 175; // torso half-width at the chest (authored units)
+const turnAt = (ax, x, y) => { const nx = (x - tc[0]) / HW, a = ax / 10 * (0.45 + 0.55 * upOf(y)); const c = Math.abs(nx) < 1 ? Math.cos(nx * Math.PI / 2) ** 1.3 : 0; return a * (0.155 * HW * c + 0.02 * HW * Math.max(-1, Math.min(1, -nx)) * (1 - c)); };
 b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
   params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
     const nx = (x - tc[0]) / (T.w / 2), up = upOf(y), rx = x - tc[0];
@@ -73,7 +77,7 @@ b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
 const LB = [180, 480, 680, 560];
 b.warp('lower_turn', 'body', LB, 8, 6, { params: ['BodyAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => [turnAt(ax, x, y), 0] });
 // legs (not under the body rotation): a small shift the same way, fading toward the feet
-b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['BodyAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [(turnAt(ax, x, 800) + ax * 0.8) * f, 0]; } });
+b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['BodyAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [turnAt(ax, x, 800) * f, 0]; } });
 // shoulder frills swing about their seams
 for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 * (s === 'R' ? 1 : -1) }) });
 // ---- head and neck
@@ -106,9 +110,19 @@ const pad = ([x, y, w, h], m) => [x - m, y - m, w + 2 * m, h + 2 * m];
 const artA = { scale: 0.551, offset: [223.5, 6.4] };
 const metaA = JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json')));
 const aBox = n => { const m = metaA[n]; return [artA.offset[0] + m.x * artA.scale, artA.offset[1] + m.y * artA.scale, m.w * artA.scale, m.h * artA.scale]; };
+// The face surface: depth of the skin (nose highest, 0 on the face contour)
+// and its shift for a head turn / nod. The skin and the hair lying on it use
+// the same field, so hair never slides over or off the cheeks (as in Live2D:
+// the near side hair stays on the cheek's outer contour).
+const AA = (x, y) => [artA.offset[0] + x * artA.scale, artA.offset[1] + y * artA.scale];
+const zFace = (x, y) => { const nx = (x - AA(524, 0)[0]) / (130 * 0.551), ny = (y - AA(0, 290)[1]) / (140 * 0.551), r = Math.min(1, nx * nx + ny * ny); const nose = Math.exp(-(((x - AA(524, 0)[0]) / (26 * 0.551)) ** 2 + ((y - AA(0, 305)[1]) / (34 * 0.551)) ** 2)); return 34 * (1 - r) ** 1.4 + 14 * nose; }; // falls smoothly to 0 at the contour
+const faceShift = (x, y, ax, ay, extra = 0) => { const p = depthShift(zFace(x, y) + extra, ax, ay), ny = (y - hc[1]) / (H.h / 2), chin = Math.max(0, ny) ** 1.5; return [p[0], p[1] + Math.max(0, -ay) / 30 * 9 * chin]; };
+const HK = [-30, -15, 0, 15, 30];
 const fr = pad(aBox('hair_front'), 6);
 // parallax: the fringe is in front of the face, so it moves more with the head turn
-b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: (v, ax, ay) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), e = 1 - smooth((Math.abs(x - (fr[0] + fr[2] / 2)) - (fr[2] / 2 - 50)) / 40), p = depthShift((4 + 36 * t) * e, ax, ay); /* toward its left and right ends the fringe meets the side hair at the same depth */ return [d[0] + p[0], d[1] + p[1]]; }; } });
+// the fringe moves at least as far as the face under it, its tips (in front of
+// the forehead) further; toward its ends it meets the side hair on the face field
+b.warp('fringe_sway', 'head_turn', fr, 18, 9, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], HK, HK], fn: (v, ax, ay) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), e = 1 - smooth((Math.abs(x - (fr[0] + fr[2] / 2)) - (fr[2] / 2 - 50)) / 40), p = faceShift(x, y, ax, ay, Math.max(0, (4 + 36 * t) * e - zFace(x, y))); return [d[0] + p[0], d[1] + p[1]]; }; } });
 const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 // side hair (the back hair is drawn in the same layers): the whole length sways
 // with HairSide, the tips trail more with HairBack; it lies behind the face, so
@@ -116,9 +130,13 @@ const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 // the side layers hold the hair beside the face (contour depth) and the back
 // hair behind it: the upper part moves with the contour, the lower part (back)
 // a little the other way
-const sideFn = r => (v, vb, ax, ay) => { const f = sway(r[1] + 70, r[3] - 70, 10)(v), g = sway(r[1] + r[3] * 0.55, r[3] * 0.45, 8, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y), t = Math.max(0, Math.min(1, (y - r[1] - r[3] * 0.4) / (r[3] * 0.5))), p = depthShift(-6 * t, ax, ay); return [a[0] + c[0] + p[0], a[1] + c[1] + p[1]]; }; };
-b.warp('side_sway_R', 'head_turn', sideR, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: sideFn(sideR) });
-b.warp('side_sway_L', 'head_turn', sideL, 4, 8, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: sideFn(sideL) });
+// side hair: on the face it moves with the face field; the hair on the side the
+// head turns toward (the far side) moves a little further, over the cheek;
+// the lower part (the back hair) lags a little behind
+const CX = AA(524, 0)[0];
+const sideFn = r => (v, vb, ax, ay) => { const f = sway(r[1] + 70, r[3] - 70, 10)(v), g = sway(r[1] + r[3] * 0.55, r[3] * 0.45, 8, 0.4)(vb); return (x, y) => { const a = f(x, y), c = g(x, y), t = Math.max(0, Math.min(1, (y - r[1] - r[3] * 0.4) / (r[3] * 0.5))), far = Math.sign(x - CX) === Math.sign(ax) ? 1 : 0, p = faceShift(x, y, ax, ay, far * 5 * (1 - t) - 6 * t); return [a[0] + c[0] + p[0], a[1] + c[1] + p[1]]; }; };
+b.warp('side_sway_R', 'head_turn', sideR, 12, 22, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], HK, HK], fn: sideFn(sideR) });
+b.warp('side_sway_L', 'head_turn', sideL, 12, 22, { params: ['HairSide', 'HairBack', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-1.5, 0, 1.5], HK, HK], fn: sideFn(sideL) });
 
 // ---- arms (R = character's right = viewer left). Outward raise turns the
 // right arm clockwise on screen and the left arm counter-clockwise.
@@ -257,9 +275,8 @@ b.warp('face_expr', 'head_turn', [fr0[0], fr0[1], fr1[0] - fr0[0], fr1[1] - fr0[
 // side of the nose, 140 px down to the chin), so the cheeks and jaw move with
 // the side hair beside them and no hidden skin opens up between them
 const zSkin = (x, y) => { const nx = (x - A_(524, 0)[0]) / (130 * 0.551), ny = (y - A_(0, 290)[1]) / (140 * 0.551), r = Math.min(1, nx * nx + ny * ny); const nose = Math.exp(-(((x - A_(524, 0)[0]) / (26 * 0.551)) ** 2 + ((y - A_(0, 305)[1]) / (34 * 0.551)) ** 2)); return 30 * (1 - r) ** 0.7 + 14 * nose; };
-b.warp('skin_turn', 'face_expr', [H.x, H.y, H.w, H.h], 12, 12, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => (x, y) => {
-  const p = depthShift(zSkin(x, y), ax, ay), ny = (y - hc[1]) / (H.h / 2), chin = Math.max(0, ny) ** 1.5;
-  return [p[0], p[1] + Math.max(0, -ay) / 30 * 9 * chin];
+b.warp('skin_turn', 'face_expr', [H.x, H.y, H.w, H.h], 22, 22, { params: ['AngleX', 'AngleY'], keys: [[-30, -15, 0, 15, 30], [-30, -15, 0, 15, 30]], fn: (ax, ay) => (x, y) => {
+  return faceShift(x, y, ax, ay);
 } });
 // underlay under the whole head (contour depth): no background between moved parts
 await aPart('head_under', 'head_turn', 79, { spacing: 10 });
