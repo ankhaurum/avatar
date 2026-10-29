@@ -93,8 +93,8 @@ const ellipseX = (phi, th) => Math.sin(phi) * Math.cos(th) + BD * Math.cos(phi) 
 const turnXY = (ax, x, y) => {
   const s = ax / 10 * turnShare(y); if (!s) return [0, 0];
   const a = halfW(y), rx = x - tc[0], sg = Math.sign(s), m = Math.abs(s);
-  const xc = 0.40 * a * s;                                                 // front centre line
-  const near = -sg * a * (1 - 0.02 * m), far = sg * a * (1 - 0.22 * m);  // the two edges
+  const xc = 0.33 * a * s;                                                 // front centre line
+  const near = -sg * a * (1 - 0.05 * m), far = sg * a * (1 - 0.22 * m);  // the two edges
   // the drawn body is the projection of the section at rest (texture u = sin
   // phi); turned, the visible front runs from the centre to the silhouette at
   // phiE on the far side and to the silhouette at phiE - pi on the near side
@@ -105,9 +105,11 @@ const turnXY = (ax, x, y) => {
     const u = Math.min(1, rx * sg / a), q = (ellipseX(Math.asin(u) * phiE / (Math.PI / 2), th) - x0) / (xF - x0);
     X = xc + (far - xc) * q; z = -u;
     if (rx * sg > a) { X += (rx * sg - a) * (1 - 0.06 * m) * sg; z = -1; }
-  } else { // near half: stretched beside the centre line, foreshortened again at the edge
-    const u = Math.min(1, -rx * sg / a), r = (ellipseX(-Math.asin(u) * (Math.PI - phiE) / (Math.PI / 2), th) - x0) / (xN - x0);
-    X = xc + (near - xc) * r; z = u;
+  } else { // near half: stretched evenly from the centre line to its edge (no
+    // foreshortening at the edge, so the shoulder beside it keeps its width and
+    // the contour does not bulge)
+    const u = Math.min(1, -rx * sg / a);
+    X = xc + (near - xc) * u; z = u;
     if (-rx * sg > a) { X += (-rx * sg - a) * -sg; z = 1; }
   }
   // the neck and the middle of the collar move as one piece with the centre

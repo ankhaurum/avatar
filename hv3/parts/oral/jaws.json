@@ -1,0 +1,44 @@
+{
+ "units": "art A px",
+ "texturePxPerArtPx": 4,
+ "jaws": {
+  "upper": {
+   "source": "Hibiki_V3_Upper_Teeth_Gums_Independent_REVIEW.png",
+   "sha256": "4c6c8b68b664673f0f6a12757cd2ea5712d4cc88f84aa598d26957eba95ae882",
+   "file": "oral/jaw-upper.png",
+   "srcBox": [
+    44,
+    44,
+    1613,
+    347
+   ],
+   "scale": 0.05324074074074074,
+   "width": 344,
+   "height": 74,
+   "centreX": 172,
+   "crownTop": 20,
+   "crownBottom": 72,
+   "crownHeightArt": 13,
+   "widthArt": 86
+  },
+  "lower": {
+   "source": "Hibiki_V3_Lower_Teeth_Gums_Independent_REVIEW.png",
+   "sha256": "f3206691845da4c0337a29be6f33c67d6fa521c95b9015f81a03636810d89272",
+   "file": "oral/jaw-lower.png",
+   "srcBox": [
+    45,
+    44,
+    1558,
+    407
+   ],
+   "scale": 0.05126181179574955,
+   "width": 319,
+   "height": 83,
+   "centreX": 159.5,
+   "crownTop": 38,
+   "crownBottom": 68,
+   "crownHeightArt": 7.5,
+   "widthArt": 79.75
+  }
+ }
+}
