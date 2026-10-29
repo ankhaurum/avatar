@@ -1,0 +1,12 @@
+{
+ "hair_side_R": {
+  "before": "4086aa22fd1fa26af333caacc110bbdea1f0d46b16bfc6c56705bb255235a094",
+  "after": "37d300ce84a1817bf740af2b2b34ce1f427a4f0277b17c6d105c33e4f4306b4d",
+  "pixels": 6749
+ },
+ "hair_side_L": {
+  "before": "ba99b3b92164f2391775e6f1d89034a53bb9f14fc4fec7489485740b7b7c09a1",
+  "after": "77228664b4b2057401bf8dc0b8d4effa30f98bea7ffe3bcb83f01145348bac29",
+  "pixels": 4858
+ }
+}

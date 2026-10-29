@@ -28,7 +28,7 @@ class Spring {
 
 export const EXPRESSIONS = {
   // default: a natural smile, lips parted a little so the upper teeth show
-  neutral: { EyeSmile: 0.55, MouthForm: 1, BrowY: 0.1, BrowAngle: 0, eye: 1, mouth: 0.6 },
+  neutral: { EyeSmile: 0.55, MouthForm: 1, BrowY: 0.1, BrowAngle: 0, eye: 1, mouth: 0.7 },
   smile: { EyeSmile: 0.75, MouthForm: 1, BrowY: 0.25, BrowAngle: 0.1, eye: 0.92, mouth: 0.55 },
   surprise: { EyeSmile: 0, MouthForm: 0, BrowY: 1, BrowAngle: 0.3, eye: 1, mouth: 0.45 },
   think: { EyeSmile: 0, MouthForm: -0.2, BrowY: 0.2, BrowAngle: -0.8, eye: 0.85, lookY: 0.6, lookX: -0.5 },
@@ -342,7 +342,8 @@ export class MotionController {
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0) + talkNod * 0.12, -1, 1),
       BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * bodyIdle + shiftX + (pose.BodyAngleX || 0) * bodyAccent, -10, 10),
       BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12 + eLean + talkNod * 1.2, -10, 10),
-      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + shiftZ + (pose.BodyAngleZ || 0) * bodyAccent - bodyX * 2.5 + eRoll, -10, 10),
+      // the body leans a little into its turn (toward the page centre when placed at a side), so the near arm stays inside the frame
+      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + shiftZ + (pose.BodyAngleZ || 0) * bodyAccent + bodyX * 1.5 + eRoll, -10, 10),
       Breath: breath,
       ShoulderUp: eShrug,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,

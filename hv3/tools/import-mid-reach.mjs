@@ -22,7 +22,7 @@ const [src] = process.argv.slice(2);
 const here = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
 const out = path.resolve(here, '../parts/pose'), mf = path.join(out, 'manifest.json');
 const S = [382, 318];                 // arm_R_upper socket (rig units)
-export const SCALE = 1.18, ROT = 30;  // to R3's sleeve width; outward, clockwise on screen
+export const SCALE = 1.06, ROT = 30;  // as seen beside the everyday arm (the puff looked a size large at 1.18); outward, clockwise on screen
 // drawn joints (rig units, before the transform): elbow, wrist, middle fingertip
 export const DRAWN = { E: [418, 445], W: [482, 545], T: [520, 612] };
 const inPoly = (p, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[i], b = poly[j]; if ((a[1] > p[1]) !== (b[1] > p[1]) && p[0] < (b[0] - a[0]) * (p[1] - a[1]) / (b[1] - a[1]) + a[0]) c = !c; } return c; };
@@ -75,10 +75,15 @@ for (let j = 0; j < TH; j++) for (let i = 0; i < TW; i++) {
   if (o[3] < 0.002) continue;
   const col = [o[0] / o[3], o[1] / o[3], o[2] / o[3]], lum = (col[0] + col[1] + col[2]) / 3, sat = Math.max(...col) - Math.min(...col);
   const d = cutAt(X, Y);
-  // the flounce hangs 20 units below the elbow: white there stays with the upper layer
-  const upper = d < 18 || (d < 40 && lum > 190 && sat < 40);
-  const dst = layers[upper ? 'upper' : 'lower'], k = (j * TW + i) * 4;
-  for (let c = 0; c < 3; c++) dst[k + c] = Math.round(col[c]); dst[k + 3] = Math.round(o[3] * 255);
+  // the flounce hangs 20 units below the elbow: white there stays with the
+  // upper layer. The navy forearm goes to both layers over a band of 20 units
+  // (the upper layer keeps it down to 34, the lower layer starts at 14 with a
+  // soft edge), so when the two layers deform differently no gap opens at the
+  // elbow: the lower layer is drawn over the upper one's navy
+  const flounce = d < 40 && lum > 190 && sat < 40;
+  const k = (j * TW + i) * 4;
+  if (d < 34 || flounce) { const dst = layers.upper; for (let c = 0; c < 3; c++) dst[k + c] = Math.round(col[c]); dst[k + 3] = Math.round(o[3] * 255); }
+  if (d >= 14 && !flounce) { const dst = layers.lower, soft = Math.min(1, (d - 14) / 6); for (let c = 0; c < 3; c++) dst[k + c] = Math.round(col[c]); dst[k + 3] = Math.round(o[3] * 255 * soft); }
 }
 fs.mkdirSync(out, { recursive: true });
 const manifest = JSON.parse(fs.readFileSync(mf));
