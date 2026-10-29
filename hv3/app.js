@@ -5,7 +5,7 @@ const $ = s => document.querySelector(s);
 const status = $('#status');
 try {
   const stage = $('#stage'), box = $('#avatar');
-  const avatar = await mountHibikiAvatar(box, { view: 'bust', viewToggle: true, rememberView: 'hibiki-view', scrollFade: { enabled: true, opacity: 0.35, restoreMs: 600 } });
+  const avatar = await mountHibikiAvatar(box, { view: 'bust', viewToggle: true, rememberView: 'hibiki-view', scrollFade: { enabled: true, opacity: 0.35, restoreMs: 600 }, facing: 0 });
   const { model, motion, renderer } = avatar;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let demo = !reduce, demoT = 0, demoStep = 0;
@@ -45,7 +45,7 @@ try {
   for (const el of document.querySelectorAll('[data-view]')) el.addEventListener('click', () => { avatar.setView(el.dataset.view); syncView(); });
   box.addEventListener('click', e => { if (e.target.closest('.hv3-view-toggle')) syncView(); });
   syncView();
-  for (const el of document.querySelectorAll('[data-place]')) el.addEventListener('click', () => { stage.dataset.place = el.dataset.place; pressed('[data-place]', el); renderer.app.resize(); });
+  for (const el of document.querySelectorAll('[data-place]')) el.addEventListener('click', () => { stage.dataset.place = el.dataset.place; pressed('[data-place]', el); avatar.setFacing({ left: -1, center: 0, right: 1 }[el.dataset.place]); renderer.app.resize(); });
   for (const el of document.querySelectorAll('[data-size]')) el.addEventListener('click', () => { stage.dataset.size = el.dataset.size; pressed('[data-size]', el); renderer.app.resize(); });
   $('#fade').addEventListener('change', e => avatar.setScrollFade({ enabled: e.target.checked }));
   $('#toggleBtn').addEventListener('change', e => avatar.setViewToggle(e.target.checked));

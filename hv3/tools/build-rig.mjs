@@ -8,7 +8,7 @@ import path from 'node:path';
 import { RigBuilder, smooth } from './rig-builder.mjs';
 import { buildFace } from './face-rig.mjs';
 import { skinRef, handStats, toneHand } from './hand-tone.mjs';
-import { planPose } from './pose-enter.mjs';
+import { planPose, LIFT } from './pose-enter.mjs';
 
 const dir = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
 const out = path.resolve(dir, '..');
@@ -151,6 +151,20 @@ const LB = [180, 480, 680, 560];
 b.warp('lower_turn', 'body', LB, 8, 6, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => turnXY(ax, x, y) });
 // legs (not under the body rotation): a small shift the same way, fading toward the feet
 b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['LowerAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [turnX(ax, 512 + (x - 512) * 0.4, 800) * f, 0]; } });
+// each leg turns with the hips (LowerAngleX), as a full-body Live2D model does:
+// the far leg (the side the body turns toward) is seen narrower (-5 %), moves
+// in toward the centre and a little up (behind), the near leg comes forward
+// (+4 %, a little out and down) so the weight is on it; both feet turn their
+// toes toward the turn (the foot sheared about the ankle, up to 10 deg)
+for (const s of ['R', 'L']) {
+  const hip = joint('leg_' + s + '_upper'), ankle = joint('foot_' + s), side = s === 'R' ? -1 : 1;
+  const rect = s === 'R' ? [330, 730, 240, 806] : [450, 730, 240, 806];
+  b.warp('leg_' + s + '_turn', 'legs_turn', rect, 4, 12, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => {
+    const m = ax / 10, far = Math.max(0, side * m), near = Math.max(0, -side * m), k = 0.04 * near - 0.05 * far;
+    const toe = smooth((y - ankle[1] + 12) / 24) * (y - ankle[1] + 12) * Math.tan(10 * Math.PI / 180) * m;
+    return [(x - hip[0]) * k - side * 12 * far + side * 4 * near + toe, (y - hip[1]) * k + 4 * near - 6 * far];
+  } });
+}
 // shoulder frills swing about their seams
 for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 * (s === 'R' ? 1 : -1) }) });
 // ---- head and neck
@@ -249,13 +263,13 @@ for (const s of ['R', 'L']) {
   b.rotation('drape_charm_' + s + '_swing', 'drape_' + s + '_swing', r3.get('drape_charm_' + s).pivot, { params: ['CharmSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 16 }) });
 }
 // leg ornaments (full view): the garter bow and jewel, the boot ribbons
-for (const id of ['garter_bow_L', 'garter_jewel_L', 'boot_bow_L', 'boot_bow_R']) b.rotation(id + '_swing', 'legs_turn', r3.get(id).pivot, { params: ['LegSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * (id.startsWith('boot') ? 7 : 12) }) });
+for (const id of ['garter_bow_L', 'garter_jewel_L', 'boot_bow_L', 'boot_bow_R']) b.rotation(id + '_swing', 'leg_' + id.slice(-1) + '_turn', r3.get(id).pivot, { params: ['LegSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * (id.startsWith('boot') ? 7 : 12) }) });
 
 // ---- parts
 const parentOf = p => {
   const id = p.id;
   if (/^(garter_bow_L|garter_jewel_L|boot_bow_L|boot_bow_R)$/.test(id)) return id + '_swing';
-  if (/^(thigh|stocking|garter|boot)/.test(id)) return 'legs_turn';
+  if (/^(thigh|stocking|garter|boot)/.test(id)) return 'leg_' + id.match(/_(R|L)(_|$)/)[1] + '_turn';
   if (/^drape_charm_/.test(id)) return 'drape_charm_' + id.slice(-1) + '_swing';
   if (/^drape_/.test(id)) return 'drape_' + id.slice(-1) + '_swing';
   if (/^(skirt_ruffle_lower|skirt_navy_lower|skirt_lining)$/.test(id)) return 'skirt_sway2';
@@ -349,7 +363,7 @@ const poseLayers = async (name, prefix, layersDef, keys, fields, opacityParam) =
   }
 };
 for (const [name, pz] of Object.entries(poseM.poses)) {
-  const plan = planPose(name, pz.mid ? pz.mid.joints.placed : null); b.rig.poseApproach[name] = plan.approach; b.rig.poseStages[name] = pz.mid ? 2 : 1;
+  const plan = planPose(name, pz.mid ? pz.mid.joints.placed : null, LIFT[name] || null); b.rig.poseApproach[name] = plan.approach; b.rig.poseStages[name] = pz.mid ? 2 : 1;
   console.log('pose', name, JSON.stringify(plan.approach), Object.entries(plan.fits).map(([s, f]) => s + ' elbow/wrist/tip off by ' + Object.values(f.err).map(v => v.toFixed(0)).join('/') + ' scales ' + JSON.stringify(f.scales) + (f.midScales ? ' mid ' + JSON.stringify(f.midScales) : '')).join('; '));
   await poseLayers(name, 'pose_' + name, pz.layers, plan.keys, plan.fields, poseParam[name]);
   if (pz.mid) await poseLayers(name, 'pose_' + name + '_mid', pz.mid.layers, plan.midKeys, plan.midFields, poseParam[name] + 'Mid');

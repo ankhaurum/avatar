@@ -70,8 +70,9 @@ export class AvatarRenderer {
     // the face (art A, 1 texture px per unit) is never shown above ~2x
     // bust-up keeps its framing (head to below the chest) in a narrow box: the
     // sides (the outer arms) may be cut, down to the head and shoulders
-    const core = this.viewName === 'bust' ? 0.64 : 1;
-    const s = Math.min(W / (w * core), H / h, (this.model.json.views ? 2 : 3.6) / this.app.renderer.resolution);
+    // the bust-up is sized by the frame's height only: a narrow frame (a phone,
+    // or a placement at a side) never shrinks it, the sides are cut instead
+    const s = Math.min(this.viewName === 'bust' ? Infinity : W / w, H / h, (this.model.json.views ? 2 : 3.6) / this.app.renderer.resolution);
     this.root.scale.set(s);
     this.root.position.set((W - w * s) / 2 - x * s, (H - h * s) / 2 - y * s);
   }

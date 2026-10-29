@@ -187,6 +187,8 @@ export async function mountHibikiAvatar(host, options = {}) {
     model, motion, renderer,
     get view() { return view; },
     setView,
+    // -1 (placed at the left) .. 1 (right), or 'auto' (from the place on the page)
+    setFacing(f) { o.facing = f; },
     states: [...STATES],
     setState,
     setEmotion: (name, intensity) => perf.setEmotion(name, intensity),
