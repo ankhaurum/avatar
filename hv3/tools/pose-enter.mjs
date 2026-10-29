@@ -27,6 +27,15 @@
 import { smooth } from './rig-builder.mjs';
 
 export const MID_SWITCH = 0.85;
+// The drawn reach pose hangs the hand down to y 600 (fingers toward the viewer,
+// seen from a little above): in the bust-up (to y 524) only the sleeve shows.
+// The arm is lifted from the shoulder instead: the upper arm swings a little
+// out, the forearm rises and the hand is turned up toward the viewer, so the
+// forearm and the hand are foreshortened (shorter along their axis, not
+// narrower) and the palm sits under the chest with the fingertips at y 518.
+// This is the pose's final shape (PoseEnter 1); the in-between drawing leads
+// to it. Keyed in rig units.
+export const LIFT = { reach: { R: { E: [372, 418], W: [356, 470], T: [334, 518] } } };
 // drawn joints of each pose, rig units (1024x1536): elbow, wrist, fingertip
 // (read on the cut layers; the shoulder is the R3 socket of the everyday arm)
 export const POSE_JOINTS = {
@@ -80,14 +89,23 @@ function similarity(p0, p1, q0, q1, smin, smax) {
   const f = p => [q0[0] + (p[0] - p0[0]) * c - (p[1] - p0[1]) * sn, q0[1] + (p[0] - p0[0]) * sn + (p[1] - p0[1]) * c];
   return { f, end: f(p1), s, r };
 }
+// the drawn segment p0->p1 laid on q0->q1 scaled along its axis only (its
+// width is kept): a limb turning toward the viewer
+function foreshorten(p0, p1, q0, q1, smin = 0.35) {
+  const lp = Math.max(1, dist(p0, p1)), lq = dist(q0, q1), sa = Math.max(smin, lq / lp), r = ang(q0, q1) - ang(p0, p1);
+  const ux = (p1[0] - p0[0]) / lp, uy = (p1[1] - p0[1]) / lp, c = Math.cos(r), sn = Math.sin(r);
+  const f = p => { const dx = p[0] - p0[0], dy = p[1] - p0[1], al = dx * ux + dy * uy, pe = -dx * uy + dy * ux; const x = al * sa * ux - pe * uy, y = al * sa * uy + pe * ux; return [q0[0] + x * c - y * sn, q0[1] + x * sn + y * c]; };
+  return { f, end: f(p1), s: sa, r };
+}
 const segDist = (p, a, b) => { const vx = b[0] - a[0], vy = b[1] - a[1], L = vx * vx + vy * vy; const t = Math.min(1, Math.max(0, ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / L)); return Math.hypot(p[0] - a[0] - vx * t, p[1] - a[1] - vy * t); };
 // the segments (upper arm, forearm, hand) of a drawn arm `d` (joints E, W, T,
 // shoulder S) laid onto the joints `a` of another arm: similarity per segment,
 // each starting where the previous one ends, so the arm stays whole
-function laySegments(S, d, a, clamp = { up: [0.7, 1.4], fa: [0.6, 1.5], hd: [0.8, 1.25] }) {
+function laySegments(S, d, a, clamp = { up: [0.7, 1.4], fa: [0.6, 1.5], hd: [0.8, 1.25] }, fore = false) {
   const up = similarity(S, d.E, S, a.E, ...clamp.up);
-  const fa = similarity(d.E, d.W, up.end, a.W, ...clamp.fa);
-  const hd = similarity(d.W, d.T, fa.end, [fa.end[0] + (a.T[0] - a.W[0]), fa.end[1] + (a.T[1] - a.W[1])], ...clamp.hd);
+  const fa = fore ? foreshorten(d.E, d.W, up.end, a.W) : similarity(d.E, d.W, up.end, a.W, ...clamp.fa);
+  const hdT = [fa.end[0] + (a.T[0] - a.W[0]), fa.end[1] + (a.T[1] - a.W[1])];
+  const hd = fore ? foreshorten(d.W, d.T, fa.end, hdT) : similarity(d.W, d.T, fa.end, hdT, ...clamp.hd);
   return {
     upper: [{ a: S, b: d.E, sigma: 60, map: up.f, top: S[1] }],
     lower: [{ a: d.E, b: d.W, sigma: 42, map: fa.f }, { a: d.W, b: d.T, sigma: 40, map: hd.f }],
@@ -111,7 +129,7 @@ const zero = () => [0, 0];
 // joints {E, W, T} of the in-between drawing of the right arm; then the
 // pose's keys are [0, 0.5, MID_SWITCH, 1] and `midFields` gives the
 // in-between layers' fields for the keys [0, 0.5, 1].
-export function planPose(name, mid = null) {
+export function planPose(name, mid = null, lift = null) {
   const J = POSE_JOINTS[name], approach = {}, fits = {}, S = { R: CHAIN.R.S, L: CHAIN.L.S };
   for (const side of ['R', 'L']) {
     const target = side === 'R' && mid ? mid : J[side];
@@ -123,10 +141,14 @@ export function planPose(name, mid = null) {
   }
   const onApproach = side => laySegments(S[side], J[side], fits[side].arm);
   const layers = ['upper', 'lower'];
+  // the final shape of the right arm: the drawn pose, or the lifted one
+  const Rfinal = lift && lift.R ? laySegments(S.R, J.R, lift.R, { up: [0.7, 1.4], fa: [0.3, 1.5], hd: [0.3, 1.3] }, true) : null;
+  const finalField = l => Rfinal ? field(Rfinal[l]) : zero;
+  if (Rfinal) fits.R.lift = { scales: Rfinal.scales, residual: Rfinal.residual };
   if (!mid) {
     const segs = { R: onApproach('R'), L: onApproach('L') };
     for (const side of ['R', 'L']) { fits[side].scales = segs[side].scales; fits[side].residual = segs[side].residual; }
-    const fields = Object.fromEntries(layers.map(l => [l, { 0: field([...segs.R[l], ...segs.L[l]]), 1: zero }]));
+    const fields = Object.fromEntries(layers.map(l => [l, { 0: field([...segs.R[l], ...segs.L[l]]), 1: finalField(l) }]));
     return { keys: [0, 1], approach, fits, fields };
   }
   // two stages: the pose layers lie on the everyday approach (0), on the
@@ -134,14 +156,15 @@ export function planPose(name, mid = null) {
   // the left arm lies on its approach up to MID_SWITCH
   const R0 = onApproach('R'), L0 = onApproach('L'), Rmid = laySegments(S.R, J.R, mid, { up: [0.5, 1.6], fa: [0.5, 2.0], hd: [0.8, 1.3] });
   fits.R.scales = Rmid.scales; fits.R.residual = Rmid.residual; fits.L.scales = L0.scales; fits.L.residual = L0.residual;
-  const k = (1 - MID_SWITCH) / 0.5;
+  // at MID_SWITCH the right arm is 70 % of the way from the in-between joints to its final shape (the mid layers get there by the same interpolation)
+  const k = (1 - MID_SWITCH) / 0.5, mix = (fa, fb, wa, wb) => (x, y) => { const p = fa(x, y), q = fb(x, y); return [p[0] * wa + q[0] * wb, p[1] * wa + q[1] * wb]; };
   const fields = Object.fromEntries(layers.map(l => [l, {
     0: field([...R0[l], ...L0[l]]), 0.5: field([...Rmid[l], ...L0[l]]),
-    [MID_SWITCH]: field([...Rmid[l].map(s => ({ ...s, k })), ...L0[l]]), 1: zero
+    [MID_SWITCH]: mix(mix(field(Rmid[l]), finalField(l), k, 1 - k), field(L0[l]), 1, 1), 1: finalField(l)
   }]));
   // the in-between layers: on the everyday approach (0), as drawn (0.5), on the drawn pose's joints (1)
   const midAppr = laySegments(S.R, mid, fits.R.arm, { up: [0.7, 1.35], fa: [0.7, 1.35], hd: [0.8, 1.25] });
-  const midFinal = laySegments(S.R, mid, J.R, { up: [0.5, 1.4], fa: [0.4, 1.4], hd: [0.8, 1.3] });
+  const midFinal = lift && lift.R ? laySegments(S.R, mid, lift.R, { up: [0.5, 1.4], fa: [0.3, 1.4], hd: [0.3, 1.3] }, true) : laySegments(S.R, mid, J.R, { up: [0.5, 1.4], fa: [0.4, 1.4], hd: [0.8, 1.3] });
   fits.R.midScales = { toApproach: midAppr.scales, toPose: midFinal.scales };
   const midFields = Object.fromEntries(layers.map(l => [l, { 0: field(midAppr[l]), 0.5: zero, 1: field(midFinal[l]) }]));
   return { keys: [0, 0.5, MID_SWITCH, 1], midKeys: [0, 0.5, 1], approach, fits, fields, midFields };

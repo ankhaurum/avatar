@@ -234,7 +234,7 @@ export class MotionController {
     // and the swaying parts carry the extra motion of a small display.
     const g = this.calm ? 0 : this.size, calm = this.calm ? 0.5 : 1, idle = 0.9 * calm, bodyIdle = lerp(0.9, 2.2, g) * calm, accent = 1, bodyAccent = lerp(1, 1.8, g), snap = lerp(1, 1.3, g);
     // placement: the body carries the turn (to the full range when small), the head adds a little
-    const placeBody = lerp(0.92, 1, g), placeHead = 0.2, follow = 0.33;
+    const placeBody = lerp(0.92, 1, g), placeHead = 0.3, follow = 0.33;
     const pose = {};
     for (const x of this.gestures) if (t >= x.start) x.g.track.call(x.g, t - x.start, pose);
     this.gestures = this.gestures.filter(x => t - x.start < x.g.duration);
