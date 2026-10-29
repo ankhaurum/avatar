@@ -38,7 +38,8 @@ const smooth = t => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t
   const out = S + '/face/parts', meta = JSON.parse(fs.readFileSync(out + '/meta.json'));
   const hull = await svgMask(poly.skinHull, 0), hullSoft = await svgMask(poly.skinHull, 1.2), hullWide = await svgMask(poly.skinHull, 7), area = await svgMask(poly.hairArea, 1), neckM = await svgMask(poly.neck, 8), neckSideM = await svgMask(poly.neckSide, 4), fr = await svgMask(poly.fringe, 5);
   const inFeature = new Uint8Array(W * H);
-  for (const n of FEATURES) { const m = meta[n]; for (let y = m.y; y < m.y + m.h; y++) for (let x = m.x; x < m.x + m.w; x++) inFeature[y * W + x] = 1; }
+  // inside the feature boxes only the hair pixels are filled (strands over a brow or a lid belong to the hair layer)
+  for (const n of FEATURES) { const m = meta[n]; for (let y = m.y; y < m.y + m.h; y++) for (let x = m.x; x < m.x + m.w; x++) inFeature[y * W + x] = /brow/.test(n) ? 2 : 1; }
   // hair amount; inside the skin it is judged on the filled base, so the eyes and brows do not count as hair
   const hair = new Float32Array(W * H), warm = new Float32Array(W * H);
   // hair tips (below y 405, outside the skin): the hair masses down to the
@@ -68,8 +69,15 @@ const smooth = t => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t
     }
   }
   // skin: harmonic fill where hair covers the skin hull and on the whole forehead
+  // thin dark streaks on the neck (the hair strands' shadows): darker than the
+  // local skin (a wide blur) by more than a little
+  const streak = new Uint8Array(W * H);
+  { const L = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) L[i] = (O[i * 4] + O[i * 4 + 1] + O[i * 4 + 2]) / 3;
+    const Lb = await sharp(L, { raw: { width: W, height: H, channels: 1 } }).blur(5).extractChannel(0).raw().toBuffer();
+    // only on the sides of the neck (the chin's own shading in the middle is kept)
+    for (let i = 392 * W; i < 470 * W; i++) { const x = i % W; if (Math.abs(x - 527) < 45) continue; if (Lb[i] - L[i] > 6) { streak[i] = 1; for (const j of [i - 1, i + 1]) streak[j] = 1; } } }
   const F = new Float32Array(W * H * 3), fill = [];
-  for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) F[i * 3 + c] = B[i * 4 + c]; if (hull[i] > 0.5 && !inFeature[i] && (hair[i] > 0.03 || O[i * 4 + 3] < 250 || (warm[i] < 0.97 && (B[i * 4] + B[i * 4 + 1] + B[i * 4 + 2]) / 3 < 225) || i < 236 * W)) fill.push(i); }
+  for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) F[i * 3 + c] = B[i * 4 + c]; if (hull[i] > 0.5 && (!inFeature[i] || hair[i] > 0.15) && (hair[i] > 0.03 || O[i * 4 + 3] < 250 || (i > 385 * W && streak[i]))) fill.push(i); /* below the jaw: the thin shadows of the hair strands are filled too */ }
   const inFill = new Uint8Array(W * H); for (const i of fill) inFill[i] = 1;
   const known = j => hull[j] > 0.5 && !inFill[j];
   let m = [0, 0, 0], n = 0; for (let i = 0; i < W * H; i++) if (known(i)) { for (let c = 0; c < 3; c++) m[c] += F[i * 3 + c]; n++; }
@@ -140,7 +148,8 @@ const smooth = t => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t
   for (let i = 0; i < W * H; i++) {
     const r = O[i * 4], g = O[i * 4 + 1], b = O[i * 4 + 2], blue = smooth((b - Math.max(r, g) - 10) / 50), shirt = smooth(((r + g + b) / 3 - 196) / 20) * (1 - warm[i]);
     for (let c = 0; c < 3; c++) N[i * 3 + c] = O[i * 4 + c];
-    skinOK[i] = neckM[i] > 0.5 && blue < 0.1 && shirt < 0.1 && warm[i] > 0.5 && O[i * 4 + 3] > 240 ? 1 : 0;
+    // (the thin bluish shadows of the hair strands on the neck are not kept: they would stay on the neck when the hair moves)
+    skinOK[i] = neckM[i] > 0.5 && blue < 0.03 && shirt < 0.1 && warm[i] > 0.85 && !streak[i] && O[i * 4 + 3] > 240 ? 1 : 0;
     if (Math.max(neckM[i], neckSide[i]) > 0.01 && !skinOK[i]) nf.push(i);
   }
   const inN = new Uint8Array(W * H); for (const i of nf) inN[i] = 1;
@@ -195,7 +204,7 @@ const smooth = t => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t
     }
     const under = Buffer.alloc(W * H * 4);
     for (let i = 0; i < W * H; i++) if (known[i] && SD[i] < 255) { const v = shadeAt(i, [C[i * 3], C[i * 3 + 1], C[i * 3 + 2]]); for (let c = 0; c < 3; c++) C[i * 3 + c] = v[c]; }
-    for (let i = 0; i < W * H; i++) { if (!known[i]) continue; const a = hull[i] > 0.5 ? 1 : 1 - smooth((dist[i] - 26) / 8); if (a <= 0.004) continue; const y = Math.floor(i / W); for (let c = 0; c < 3; c++) under[i * 4 + c] = Math.round(C[i * 3 + c]); under[i * 4 + 3] = Math.round(255 * a * (1 - smooth((y - 432) / 14)) * (hull[i] > 0.5 ? 1 : 1 - neck[i * 4 + 3] / 255)); } // the neck layer shows its own skin there
+    for (let i = 0; i < W * H; i++) { if (!known[i]) continue; const a = hull[i] > 0.5 ? 1 : 1 - smooth((dist[i] - 26) / 8); if (a <= 0.004) continue; const y = Math.floor(i / W); for (let c = 0; c < 3; c++) under[i * 4 + c] = Math.round(C[i * 3 + c]); under[i * 4 + 3] = Math.round(255 * a * (1 - smooth((y - 422) / 26)) * (hull[i] > 0.5 ? 1 : 1 - neck[i * 4 + 3] / 255)); } // the neck layer shows its own skin there
     await save('head_under', under);
   }
   await save('neck_skin', neck); await save('head_skin', skin); for (const [k, v] of Object.entries(layers)) await save(k, v);
