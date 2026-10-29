@@ -62,17 +62,45 @@ const beat = (t, a, b, hz, phase = 0) => Math.sin((t - a) * TAU * hz - phase) * 
 // unfold into the drawn pose over 0.3 s. On the way back the pose arms fold
 // back onto the approach (0.3 s), the everyday arms take over in one frame and
 // return to rest.
-const SWITCH = 0.5, UNFOLD = 0.3;
+// A pose with an in-between drawing of the right arm (reach; the rig's
+// poseStages is 2) takes two stages: at 0.5 s the right everyday arm is
+// replaced by the in-between layer (PoseEnter 0 -> 0.5 over 0.3 s, unfolding
+// to the drawing), which then deforms on toward the pose (0.5 -> 1 over
+// 0.3 s); at PoseEnter 0.85 (MID_SWITCH) both arms are replaced in one frame
+// by the pose layers, laid on the same joints. The left everyday arm, which
+// has no in-between drawing, reaches its approach just before that switch.
+// The way back is the reverse.
+const SWITCH = 0.5, UNFOLD = 0.3, MID_SWITCH = 0.85;
+const seg = (t, a, b, from, to) => from + (to - from) * ease((t - a) / (b - a));
 function poseTrack(param, extra) {
   return function (t, p) {
-    const d = this.duration, out = d - 0.75, back = out + UNFOLD;
-    const near = keys(t, [[0, 0], [0.12, -0.04], [0.42, 1], [back, 1], [back + 0.45, 0]]);
-    // angles start from 0, the foreshortening (UpperShort / ForeShort) from 1
-    for (const [k, v] of Object.entries(this.approach || {})) p[k] = /Short/.test(k) ? 1 + (v - 1) * near : v * near;
-    const on = t >= SWITCH && t < back ? 1 : 0;
-    p[param] = on;
-    p.ArmsDefault = 1 - on;
-    p.PoseEnter = on ? ease((t - SWITCH) / UNFOLD) * (1 - ease((t - out) / UNFOLD)) : 0;
+    const d = this.duration, staged = this.stages === 2;
+    const appr = this.approach || {};
+    const set = (side, near) => { for (const [k, v] of Object.entries(appr)) if (k.endsWith(side)) p[k] = /Short/.test(k) ? 1 + (v - 1) * near : v * near; };
+    if (!staged) {
+      const out = d - 0.75, back = out + UNFOLD;
+      const near = keys(t, [[0, 0], [0.12, -0.04], [0.42, 1], [back, 1], [back + 0.45, 0]]);
+      set('R', near); set('L', near);
+      const on = t >= SWITCH && t < back ? 1 : 0;
+      p[param] = on; p.ArmsDefaultR = 1 - on; p.ArmsDefaultL = 1 - on;
+      p.PoseEnter = on ? ease((t - SWITCH) / UNFOLD) * (1 - ease((t - out) / UNFOLD)) : 0;
+      extra(ease(t / 0.5) * (1 - ease((t - out) / 0.6)), p);
+      return;
+    }
+    // stage times on the way in: in-between shown from SWITCH; PoseEnter
+    // 0 -> 0.5 by t1, 0.5 -> 1 by t2; the pose layers from PoseEnter MID_SWITCH (tm)
+    const t1 = SWITCH + UNFOLD, t2 = t1 + UNFOLD, tm = t1 + UNFOLD * (MID_SWITCH - 0.5) / 0.5;
+    // on the way out: PoseEnter 1 -> 0.5 by o1 (the pose layers until om), 0.5 -> 0 by o2, then the everyday arms return
+    const out = d - (2 * UNFOLD + 0.45), o1 = out + UNFOLD, o2 = o1 + UNFOLD, om = out + UNFOLD * (1 - MID_SWITCH) / 0.5;
+    set('R', keys(t, [[0, 0], [0.12, -0.04], [0.42, 1], [o2, 1], [o2 + 0.45, 0]]));
+    set('L', keys(t, [[0, 0], [0.3, -0.04], [tm - 0.06, 1], [om, 1], [om + 0.45, 0]]));
+    let pe = 0;
+    if (t < SWITCH) pe = 0; else if (t < t1) pe = seg(t, SWITCH, t1, 0, 0.5); else if (t < t2) pe = seg(t, t1, t2, 0.5, 1); else if (t < out) pe = 1;
+    else if (t < o1) pe = seg(t, out, o1, 1, 0.5); else if (t < o2) pe = seg(t, o1, o2, 0.5, 0); else pe = 0;
+    const mid = (t >= SWITCH && t < tm) || (t >= om && t < o2), pose = t >= tm && t < om;
+    p[param] = pose ? 1 : 0; p[param + 'Mid'] = mid ? 1 : 0;
+    p.ArmsDefaultR = mid || pose ? 0 : 1; p.ArmsDefaultL = pose ? 0 : 1;
+    p.PoseEnter = pe;
     extra(ease(t / 0.5) * (1 - ease((t - out) / 0.6)), p);
   };
 }
@@ -189,7 +217,7 @@ export class MotionController {
     const start = pose.length ? Math.max(...pose.map(x => x.start + x.g.duration)) : this.t;
     this.gestures = this.gestures.filter(x => !clash(x) || x.g.pose);
     // the pose gestures take their approach angles from the rig
-    if (g.pose && this.model.json?.poseApproach) g.approach = this.model.json.poseApproach[g.pose];
+    if (g.pose && this.model.json?.poseApproach) { g.approach = this.model.json.poseApproach[g.pose]; g.stages = this.model.json.poseStages?.[g.pose] || 1; }
     this.gestures.push({ g, start });
   }
   spring(id, target, dt, hz) { if (!this.springs[id]) this.springs[id] = new Spring(target, hz); return this.springs[id].step(target, dt, hz); }
@@ -337,7 +365,7 @@ export class MotionController {
     if (m.physics) m.physics.gain = lerp(0.9, 1.7, g) * (this.calm ? 0.6 : 1);
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
     // pose arm cross-fading and arrival are set directly; their timing is in the gesture track
-    if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach', 'PoseHands']) if (this.has(k)) m.set(k, pose[k] || 0); }
+    if (this.has('ArmsDefault')) { m.set('ArmsDefault', 1); for (const s of ['R', 'L']) if (this.has('ArmsDefault' + s)) m.set('ArmsDefault' + s, pose['ArmsDefault' + s] ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach', 'PoseHands', 'PoseReachMid']) if (this.has(k)) m.set(k, pose[k] || 0); }
     if (this.has('PoseEnter')) m.set('PoseEnter', pose.PoseEnter ?? 1);
     // while talking the syllables open and close the mouth from fully closed;
     // otherwise it rests at the expression's opening

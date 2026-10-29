@@ -37,7 +37,9 @@ for (const s of ['R', 'L']) {
 const SHORT_KEYS = [0.3, 0.4, 0.5, 0.6, 0.7, 0.85, 1];
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
-for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕'], ['PoseHands', '両手を体の前で重ねる腕']]) b.param(id, 0, 1, 0, label);
+// per side (a pose with an in-between drawing switches one arm at a time)
+b.param('ArmsDefaultR', 0, 1, 1, 'ふだんの右腕の表示'); b.param('ArmsDefaultL', 0, 1, 1, 'ふだんの左腕の表示');
+for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕'], ['PoseHands', '両手を体の前で重ねる腕'], ['PoseReachMid', '差し出す途中の右腕']]) b.param(id, 0, 1, 0, label);
 // the pose arms are deformed onto the everyday arms' approach pose (0) and
 // unfold from there into the drawn pose (1), see tools/pose-enter.mjs; the
 // hand shapes cross-fade (0 = the resting hand, 1 = the chosen shape)
@@ -288,9 +290,9 @@ for (const p of r3m.parts) {
     const s = p.id[5], k = handShapes.indexOf(p.id.slice(6));
     o.spacing = 6;
     // one shape per hand; while HandFade rises the resting hand gives way to the chosen shape
-    o.opacity = { params: ['Hand' + s, 'ArmsDefault', 'HandFade' + s], keys: [[0, 1, 2, 3, 4], [0, 1], [0, 1]], fn: (v, d, f) => d * (k === 0 ? (v === 0 ? 1 : 1 - f) : (v === k ? f : 0)) };
+    o.opacity = { params: ['Hand' + s, 'ArmsDefault', 'HandFade' + s, 'ArmsDefault' + s], keys: [[0, 1, 2, 3, 4], [0, 1], [0, 1], [0, 1]], fn: (v, d, f, ds) => d * ds * (k === 0 ? (v === 0 ? 1 : 1 - f) : (v === k ? f : 0)) };
   }
-  if (/^(upper_arm|sleeve)_/.test(p.id)) o.opacity = { params: ['ArmsDefault'], keys: [[0, 1]], fn: d => d };
+  if (/^(upper_arm|sleeve)_/.test(p.id)) o.opacity = { params: ['ArmsDefault', 'ArmsDefault' + p.id.match(/_(R|L)$/)[1]], keys: [[0, 1], [0, 1]], fn: (d, ds) => d * ds };
   // shoulder: the top of the upper arm stays with the torso so the joint bends
   let m = p.id.match(/^(upper_arm|sleeve_upper)_(R|L)$/);
   if (m) {
@@ -332,16 +334,23 @@ const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach', ha
 // arriving: at PoseEnter 0 each layer is laid on the everyday arms' approach
 // pose segment by segment (one warp lattice per layer, see pose-enter.mjs);
 // the approach angles are written into the rig (poseApproach) for the motion
-b.rig.poseApproach = {};
-for (const [name, pz] of Object.entries(poseM.poses)) {
-  const plan = planPose(name); b.rig.poseApproach[name] = plan.approach;
-  console.log('pose', name, JSON.stringify(plan.approach), Object.entries(plan.fits).map(([s, f]) => s + ' elbow/wrist/tip off by ' + Object.values(f.err).map(v => v.toFixed(0)).join('/')).join('; '));
-  for (const [layer, L] of Object.entries(pz.layers)) {
-    const m = 12, rect = [L.x - m, L.y - m, L.w + 2 * m, L.h + 2 * m], f = plan.fields[layer];
-    b.warp(`pose_${name}_${layer}_enter`, 'torso', rect, Math.max(4, Math.round(rect[2] / 14)), Math.max(4, Math.round(rect[3] / 14)), { params: ['PoseEnter'], keys: [[0, 1]], fn: v => (x, y) => { if (v >= 1) return [0, 0]; const d = f(x, y); return [d[0] * (1 - v), d[1] * (1 - v)]; } });
-    await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: `pose_${name}_${layer}_enter`, order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
-      opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
+b.rig.poseApproach = {}; b.rig.poseStages = {};
+// a pose with an in-between drawing (manifest poses.<name>.mid, see
+// pose-enter.mjs) gets the keys [0, 0.5, MID_SWITCH, 1] and its in-between
+// layers [0, 0.5, 1]; the others [0, 1]
+const poseLayers = async (name, prefix, layersDef, keys, fields, opacityParam) => {
+  for (const [layer, L] of Object.entries(layersDef)) {
+    const m = 12, rect = [L.x - m, L.y - m, L.w + 2 * m, L.h + 2 * m], f = fields[layer];
+    b.warp(`${prefix}_${layer}_enter`, 'torso', rect, Math.max(4, Math.round(rect[2] / 14)), Math.max(4, Math.round(rect[3] / 14)), { params: ['PoseEnter'], keys: [keys], fn: v => f[v] });
+    await b.part(`${prefix}_${layer}`, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: `${prefix}_${layer}_enter`, order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
+      opacity: { params: [opacityParam], keys: [[0, 1]], fn: v => v } });
   }
+};
+for (const [name, pz] of Object.entries(poseM.poses)) {
+  const plan = planPose(name, pz.mid ? pz.mid.joints.placed : null); b.rig.poseApproach[name] = plan.approach; b.rig.poseStages[name] = pz.mid ? 2 : 1;
+  console.log('pose', name, JSON.stringify(plan.approach), Object.entries(plan.fits).map(([s, f]) => s + ' elbow/wrist/tip off by ' + Object.values(f.err).map(v => v.toFixed(0)).join('/') + ' scales ' + JSON.stringify(f.scales) + (f.midScales ? ' mid ' + JSON.stringify(f.midScales) : '')).join('; '));
+  await poseLayers(name, 'pose_' + name, pz.layers, plan.keys, plan.fields, poseParam[name]);
+  if (pz.mid) await poseLayers(name, 'pose_' + name + '_mid', pz.mid.layers, plan.midKeys, plan.midFields, poseParam[name] + 'Mid');
 }
 // art A head: skin under the face features, side hair over the face edge, fringe over the brows
 const aPart = (id, parent, order, o = {}) => b.part(id, { file: id + '.png', offset: [artA.offset[0] + metaA[id].x * artA.scale, artA.offset[1] + metaA[id].y * artA.scale], texScale: 1 / artA.scale, parent, order, spacing: 8, dilate: 2, ...o });
