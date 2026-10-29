@@ -100,8 +100,40 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   const openUpper = (x, open, form = 0) => { const t = sOf(x); return -(1.3 + 8 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.55); };
   const openLower = (x, open, form = 0) => { const t = sOf(x); return (14 - 2 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.8); };
   const mouthKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 1], [-1, 0, 1]] };
-  const upperD = (open, form) => (x, y) => { const f = formD(x, form), up = Math.max(0, Math.min(1, (M(x) - y) / (9 * s))); return [f[0], f[1] * (y > M(x) - 3 * s ? 1 : 0.6) + openUpper(x, open, form) * (1 - 0.7 * up * Math.max(0, form))]; };
-  const lowerD = (open, form) => (x, y) => { const f = formD(x, form); const below = Math.max(0, Math.min(1, (y - M(x)) / (14 * s))); return [f[0] * (1 - below * 0.5), f[1] * (1 - below * 0.6) + openLower(x, open, form) * (1 - below * 0.15)]; };
+  const upperN = (open, form) => (x, y) => { const f = formD(x, form), up = Math.max(0, Math.min(1, (M(x) - y) / (9 * s))); return [f[0], f[1] * (y > M(x) - 3 * s ? 1 : 0.6) + openUpper(x, open, form) * (1 - 0.7 * up * Math.max(0, form))]; };
+  const lowerN = (open, form) => (x, y) => { const f = formD(x, form); const below = Math.max(0, Math.min(1, (y - M(x)) / (14 * s))); return [f[0] * (1 - below * 0.5), f[1] * (1 - below * 0.6) + openLower(x, open, form) * (1 - below * 0.15)]; };
+  // Smile (form > 0): the lip edges are placed on the contours of Codex's
+  // reference smile (studies/continuity/evidence/default-smile-close.png),
+  // registered to art A by the two iris centres (scale 0.609, -0.7 deg). At
+  // the default opening (REF_OPEN) the lips lie exactly on the reference;
+  // with the mouth closed the same lips meet on one seam (each lip keeps its
+  // shape and is moved to the seam), so the smile still closes fully. Each
+  // lip vertex keeps its relative place between its outer edge and the seam.
+  const REF_OPEN = 0.6;
+  const ref = { cL: [485.2, 344.9], cR: [569.9, 336.8],
+    utop: [[497.9, 341.7], [513.1, 337.5], [521.2, 336.4], [529.3, 337.3], [538.4, 335.1], [551.6, 336], [563.8, 336.9]],
+    uin: [[492.8, 345.9], [503, 346.2], [518.2, 345.6], [529.4, 344.9], [543.6, 343.2], [558.8, 341]],
+    lin: [[492.9, 349.4], [508.2, 354.3], [518.4, 355.7], [529.5, 355.6], [543.7, 352.4], [558.9, 347.1]],
+    lbot: [[498.1, 360], [513.4, 368], [528.7, 369.3], [543.9, 366.6], [559, 357.3]] };
+  const curveOf = pts => { const q = [ref.cL, ...pts, ref.cR].map(P); return x => curveY(q, x); };
+  const R = { utop: curveOf(ref.utop), uin: curveOf(ref.uin), lin: curveOf(ref.lin), lbot: curveOf(ref.lbot) };
+  const rcL = P(ref.cL), rcR = P(ref.cR);
+  const lu = def.lipU.poly.map(P), ll = def.lipL.poly.map(P);
+  const Utop0 = x => curveY(lu.slice(0, 11), x), Lbot0 = x => curveY([...ll.slice(10), ll[0]], x);
+  const seamC = x => (R.uin(x) + R.lin(x)) / 2;
+  const smileD = (open, lip) => (x, y) => {
+    const u = Math.min(1, Math.max(0, (x - mx0) / (mx1 - mx0))), X = rcL[0] + u * (rcR[0] - rcL[0]);
+    const k = open / REF_OPEN, sm = seamC(X);
+    let outer0, outerR, innerR;
+    if (lip === 'u') { outer0 = Utop0(x); innerR = R.uin(X); outerR = R.utop(X); }
+    else { outer0 = Lbot0(x); innerR = R.lin(X); outerR = R.lbot(X); }
+    const inner = sm + (innerR - sm) * k, outer = outerR + (sm - innerR) * (1 - k);
+    const den = M(x) - outer0, v = Math.abs(den) < 0.8 * s ? (lip === 'u' ? (y < M(x) ? 0 : 1) : (y > M(x) ? 0 : 1)) : Math.max(-1.5, Math.min(2, (y - outer0) / den));
+    return [X - x, outer + v * (inner - outer) - y];
+  };
+  const mix = (a, b, w) => [a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w];
+  const upperD = (open, form) => (x, y) => form > 0 ? mix(upperN(open, 0)(x, y), smileD(open, 'u')(x, y), form) : upperN(open, form)(x, y);
+  const lowerD = (open, form) => (x, y) => form > 0 ? mix(lowerN(open, 0)(x, y), smileD(open, 'l')(x, y), form) : lowerN(open, form)(x, y);
   // cavity: a strip between the lips' inner edges, zero height when closed
   const cols = 24, rows = 4, cav0 = P([478, 330]);
   const cavityMesh = (tw, th) => {
@@ -136,7 +168,7 @@ export async function buildFace(b, { parent, z, dir, tf, r3 }) {
   // the row follows a smooth (quadratic) fit of the mouth line, so it does not step at its kinks
   const Ms = (() => { const n = ml.length; let A = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], v = [0, 0, 0]; for (const [x, y] of ml) { const t = (x - mxc) / mhw, r = [1, t, t * t]; for (let i = 0; i < 3; i++) { v[i] += r[i] * y; for (let j = 0; j < 3; j++) A[i][j] += r[i] * r[j]; } } const det = m => m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]); const D = det(A), c = [0, 1, 2].map(k => det(A.map((row, i) => row.map((e, j) => j === k ? v[i] : e))) / D); return x => { const t = (x - mxc) / mhw; return c[0] + c[1] * t + c[2] * t * t; }; })();
   const follow = (fnOf, k, top, rel) => ({ ...mouthKey, fn: (open, form) => (x) => { const d = fnOf(open, form)(Math.min(mx1, Math.max(mx0, x)), M(x)); return [d[0], d[1] * k + Ms(x) + rel * s - P([0, top])[1]]; } });
-  await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow((o, fm) => (x, y) => { const d = upperD(o, fm)(x, y); return [d[0], d[1] - openUpper(x, o, fm) * 0.15]; }, 1, 340, -1 - 1.5 / teethK) });
+  await b.part('mouth_teeth_upper', { ...opart('teeth-upper.png', mxA - 82 / teethK, 340, teethK), parent, order: z + 89, spacing: 2 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(upperD, 1, 340, -1.2) });
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });
   const lipDetail = [{ x: mx0, y: M(mx0), r: 9 * s, spacing: 1.5 * s }, { x: mx1, y: M(mx1), r: 9 * s, spacing: 1.5 * s }];
   await b.part('lip_lower', { file: 'lip_lower.png', offset: off('lip_lower'), texScale: tex, parent, order: z + 91, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: lowerD } });
