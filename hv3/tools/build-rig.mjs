@@ -38,7 +38,7 @@ for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横�
 const hips = joint('hips');
 // the whole body leans about the hips; BodySwayX/Z come from physics (the upper
 // body follows the head a little later)
-b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: x * 0.8 + sx * 4 }) });
+b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX', 'BodySwayX', 'BodySwayZ'], keys: [[-10, 0, 10], [-10, 0, 10], [-1.5, 0, 1.5], [-1.5, 0, 1.5]], fn: (z, x, sx, sz) => ({ angle: z * 0.9 + sz * 1.6, dx: sx * 4 }) });
 // torso: turning (BodyAngleX) rotates the upper body about a vertical axis
 // through the hips. Each point has a depth: the chest front (ribbon, buttons,
 // front ornaments) is nearest, the shoulders and arms sit behind it. Rotated by
@@ -58,7 +58,11 @@ const depth = (x, y) => { const nx = Math.min(1, Math.abs(x - tc[0]) / 280), che
 // the hips upward. BodyAngleX 10 turns the chest about 12 deg: the torso moves
 // about 13 % of its width (reference samples: 11-13 %).
 const upOf = y => Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-const turnAt = (ax, x, y) => { const th = ax / 10 * 12 * Math.PI / 180 * (0.35 + 0.65 * upOf(y)), rx = x - tc[0]; return rx * (Math.cos(th) - 1) + depth(x, y) * Math.sin(th); };
+// Shape of the turn, as measured on the official samples at BodyAngleX 10: the
+// centre line moves about 15 % of the torso half-width, the outer edges hardly
+// move (the near half widens, the far half narrows); it is a turn, not a slide.
+const HW = 175; // torso half-width at the chest (authored units)
+const turnAt = (ax, x, y) => { const nx = (x - tc[0]) / HW, a = ax / 10 * (0.45 + 0.55 * upOf(y)); const c = Math.abs(nx) < 1 ? Math.cos(nx * Math.PI / 2) ** 1.3 : 0; return a * (0.155 * HW * c + 0.02 * HW * Math.max(-1, Math.min(1, -nx)) * (1 - c)); };
 b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
   params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, -5, 0, 5, 10], [-10, -5, 0, 5, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
     const nx = (x - tc[0]) / (T.w / 2), up = upOf(y), rx = x - tc[0];
@@ -73,7 +77,7 @@ b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 12, 10, {
 const LB = [180, 480, 680, 560];
 b.warp('lower_turn', 'body', LB, 8, 6, { params: ['BodyAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => [turnAt(ax, x, y), 0] });
 // legs (not under the body rotation): a small shift the same way, fading toward the feet
-b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['BodyAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [(turnAt(ax, x, 800) + ax * 0.8) * f, 0]; } });
+b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['BodyAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [turnAt(ax, x, 800) * f, 0]; } });
 // shoulder frills swing about their seams
 for (const s of ['R', 'L']) b.rotation('shoulder_frill_' + s + '_swing', 'torso', r3.get('shoulder_frill_' + s).pivot, { params: ['FrillSway'], keys: [[-1.5, 0, 1.5]], fn: v => ({ angle: v * 7 * (s === 'R' ? 1 : -1) }) });
 // ---- head and neck

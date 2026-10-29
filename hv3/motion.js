@@ -174,7 +174,8 @@ export class MotionController {
     const pointer = t < this.look.until && !pose.LookX;
     // Placement: the body and head turn toward the screen centre and keep that
     // orientation (a placement at the side of the page, about 0.42 from the
-    // centre, gives the full turn: head about 22 of 30, body about 7.5 of 10).
+    // centre, gives the full turn: head about 22 of 30, body about 9.5 of 10,
+// which reads on the samples as standing turned toward the centre).
     // The idle glances happen around it. Look targets are in screen terms
     // (-1 left .. 1 right, 0 = straight at the viewer).
     const place = this.spring('facing', clamp(-this.facing / 0.42, -1, 1), dt, 0.8);
@@ -187,7 +188,7 @@ export class MotionController {
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
     const headX = this.spring('headX', keepSide(place * 0.74 + (lx - place * 0.3) * 0.35), dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
-    const bodyX = this.spring('bodyX', keepSide(place * 0.75 + (lx - place * 0.3) * 0.15), dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
+    const bodyX = this.spring('bodyX', keepSide(place * 0.95 + (lx - place * 0.3) * 0.1), dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
