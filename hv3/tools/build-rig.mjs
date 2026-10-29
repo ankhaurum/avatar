@@ -31,6 +31,10 @@ for (const s of ['R', 'L']) {
 // pose arm sets drawn from ChatGPT's pose images replace both everyday arms
 b.param('ArmsDefault', 0, 1, 1, 'ふだんの腕の表示');
 for (const [id, label] of [['PoseChest', '胸に手を当てる腕'], ['PoseChin', '顎に手を添える腕'], ['PoseReach', '手を前に差し出す腕'], ['PoseHands', '両手を体の前で重ねる腕']]) b.param(id, 0, 1, 0, label);
+// the pose arms slide the last bit into place while they fade in (0 = a little
+// below and smaller, 1 = in place); the hand shapes cross-fade (0 = the resting hand, 1 = the chosen shape)
+b.param('PoseEnter', 0, 1, 1, 'ポーズの腕の到着');
+for (const s of ['R', 'L']) b.param('HandFade' + s, 0, 1, 1, (s === 'R' ? '右' : '左') + '手の形の切り替わり');
 for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横髪の揺れ'], ['BowSway', 'リボンの揺れ'], ['SkirtSway', 'スカートの揺れ'], ['DrapeSway', '垂れ布の揺れ'], ['SleeveSwayR', '右袖飾りの揺れ'], ['SleeveSwayL', '左袖飾りの揺れ'],
   ['HairBack', '後ろ髪・毛先の揺れ'], ['FrillSway', '肩のフリルの揺れ'], ['HipBowSway', '腰のリボンの揺れ'], ['SkirtSway2', 'スカート下段の揺れ'],
   ['CharmSway', '垂れ布の先の飾りの揺れ'], ['LegSway', '脚の飾り・ブーツのリボンの揺れ'], ['BodySwayX', '上半身の遅れ（左右）'], ['BodySwayZ', '上半身の遅れ（傾き）']]) b.param(id, -1.5, 1.5, 0, label);
@@ -246,7 +250,8 @@ for (const p of r3m.parts) {
   if (/^hand_/.test(p.id)) {
     const s = p.id[5], k = handShapes.indexOf(p.id.slice(6));
     o.spacing = 6;
-    o.opacity = { params: ['Hand' + s, 'ArmsDefault'], keys: [[0, 1, 2, 3, 4], [0, 1]], fn: (v, d) => (v === k ? d : 0) };
+    // one shape per hand; while HandFade rises the resting hand gives way to the chosen shape
+    o.opacity = { params: ['Hand' + s, 'ArmsDefault', 'HandFade' + s], keys: [[0, 1, 2, 3, 4], [0, 1], [0, 1]], fn: (v, d, f) => d * (k === 0 ? (v === 0 ? 1 : 1 - f) : (v === k ? f : 0)) };
   }
   if (/^(upper_arm|sleeve)_/.test(p.id)) o.opacity = { params: ['ArmsDefault'], keys: [[0, 1]], fn: d => d };
   // shoulder: the top of the upper arm stays with the torso so the joint bends
@@ -287,8 +292,10 @@ for (const p of r3m.parts) {
 // lower (forearm sleeve, cuff, hands) in front of the chest ribbons and the face
 const poseM = JSON.parse(fs.readFileSync(path.join(out, 'parts/pose/manifest.json')));
 const poseParam = { chest: 'PoseChest', chin: 'PoseChin', reach: 'PoseReach', hands: 'PoseHands' };
+// arriving: from a little lower and smaller (as if still coming up) into place
+b.rotation('pose_enter', 'torso', [512, 430], { params: ['PoseEnter'], keys: [[0, 1]], fn: v => ({ dy: 28 * (1 - v), scale: -0.03 * (1 - v) }) });
 for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of Object.entries(pz.layers))
-  await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: 'torso', order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
+  await b.part('pose_' + name + '_' + layer, { file: L.file, offset: [L.x, L.y], texScale: 2, parent: 'pose_enter', order: layer === 'upper' ? 56 : 92, spacing: 12, dilate: 2,
     opacity: { params: [poseParam[name]], keys: [[0, 1]], fn: v => v } });
 // art A head: skin under the face features, side hair over the face edge, fringe over the brows
 const aPart = (id, parent, order, o = {}) => b.part(id, { file: id + '.png', offset: [artA.offset[0] + metaA[id].x * artA.scale, artA.offset[1] + metaA[id].y * artA.scale], texScale: 1 / artA.scale, parent, order, spacing: 8, dilate: 2, ...o });

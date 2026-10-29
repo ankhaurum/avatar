@@ -54,19 +54,26 @@ function arm(p, side, t, S, E, W) {
 const beat = (t, a, b, hz, phase = 0) => Math.sin((t - a) * TAU * hz - phase) * ease((t - a) / 0.2) * (1 - ease((t - b + 0.25) / 0.25));
 
 // Gesture tracks: time (s) -> partial pose. Arm angles in degrees.
-// Pose arms: the everyday arms move toward the drawn pose; at the moment they
-// cover the same place the pose arms replace them in one frame, and the reverse
-// on the way back.
+// Pose arms: the everyday arms move toward the drawn pose (0.45 s); while they
+// are still moving the pose arms fade in over 0.15 s and slide the last bit
+// into place (PoseEnter), so the motion carries through the change instead of
+// cutting; on the way back the pose arms fade out while sliding down and the
+// everyday arms come back from the same place.
 function poseTrack(param, approach, extra) {
   return function (t, p) {
     const d = this.duration, out = d - 0.75;
-    const near = keys(t, [[0, 0], [0.12, -0.04], [0.45, 1], [out + 0.15, 1], [out + 0.7, 0]]);
+    const near = keys(t, [[0, 0], [0.12, -0.04], [0.45, 1], [out + 0.25, 1], [out + 0.75, 0]]);
     for (const [k, v] of Object.entries(approach)) p[k] = v * near;
-    const on = t >= 0.36 && t < out + 0.2 ? 1 : 0;
+    const on = ease((t - 0.34) / 0.15) * (1 - ease((t - out - 0.1) / 0.15));
     p[param] = on;
     p.ArmsDefault = 1 - on;
+    p.PoseEnter = ease((t - 0.3) / 0.25) * (1 - ease((t - out - 0.05) / 0.25));
     extra(ease(t / 0.5) * (1 - ease((t - out) / 0.6)), p);
   };
+}
+// a hand shape held from a to b, cross-faded in and out over f seconds
+function handShape(p, side, shape, t, a, b, f = 0.12) {
+  if (t > a - f && t < b + f) { p['Hand' + side] = shape; p['HandFade' + side] = ease((t - (a - f)) / f) * (1 - ease((t - b) / f)); }
 }
 
 export const GESTURES = {
@@ -78,7 +85,7 @@ export const GESTURES = {
       [[0, 0], [0.2, -8], [0.66, 152], [0.82, 144], [2.6, 144], [3.1, -5], [3.4, 0]],
       [[0, 0], [0.22, 6], [0.7, -12], [0.88, 4], [1.0, 0], [2.6, 0], [3.12, 8], [3.4, 0]]);
     p.ElbowR += 4 * beat(t, 0.85, 2.55, 1.9); p.WristR += 15 * beat(t, 0.85, 2.55, 1.9, 1.0);
-    if (t > 0.42 && t < 3.0) p.HandR = 2;
+    handShape(p, 'R', 2, t, 0.42, 3.0);
     const up = keys(t - 0.1, [[0, 0], [0.7, 1], [2.7, 1], [3.3, 0]]);
     p.BodyAngleZ = -1.5 * up; p.AngleZ = -5 * up; p.AngleX = -4 * up; p.EyeSmileAdd = 0.5 * up;
   } },
@@ -88,7 +95,7 @@ export const GESTURES = {
       [[0, 0], [0.18, -6], [0.66, 52], [0.8, 48], [3.0, 48], [3.55, -4], [3.8, 0]],
       [[0, 0], [0.2, 5], [0.7, -20], [0.85, -14], [3.0, -15], [3.6, 4], [3.8, 0]]);
     p.ElbowL += 7 * beat(t, 0.8, 3.0, 0.9); p.WristL += 6 * beat(t, 0.8, 3.0, 0.9, 0.8);
-    if (t > 0.35 && t < 3.4) p.HandL = 1;
+    handShape(p, 'L', 1, t, 0.35, 3.4);
     const up = keys(t - 0.08, [[0, 0], [0.7, 1], [3.1, 1], [3.8, 0]]), b = beat(t, 0.8, 3.0, 0.9, 0.4);
     p.BodyAngleX = 3 * up; p.AngleX = 5 * up + 2 * b; p.AngleZ = 3 * up;
   } },
@@ -96,13 +103,14 @@ export const GESTURES = {
   // both hands laid one over the other in front of the skirt, backs of the
   // hands to the front (pose arms from the drawn pose: the hand shapes needed
   // cannot be made by turning or mirroring the hand images)
-  both: { pose: true, duration: 3.6, hand: 'both', track: poseTrack('PoseHands', { ShoulderR: 6, ElbowR: -28, ShoulderL: 6, ElbowL: -28 }, (k, p) => { p.EyeSmileAdd = 0.4 * k; p.AngleY = -3 * k; p.AngleZ = 2 * k; }) },
+  // the everyday hands reach the drawn place here (within a few px), so the change is nearly a morph
+  both: { pose: true, duration: 3.6, hand: 'both', track: poseTrack('PoseHands', { ShoulderR: 20, ElbowR: -92, WristR: 20, ShoulderL: 20, ElbowL: -84, WristL: -20 }, (k, p) => { p.EyeSmileAdd = 0.4 * k; p.AngleY = -3 * k; p.AngleZ = 2 * k; }) },
   // left arm raised from the shoulder, index finger pointing outward
   point: { duration: 3.0, hand: 'L', track: (t, p) => {
     arm(p, 'L', t, [[0, 0], [0.2, -4], [0.7, 64], [0.85, 59], [2.3, 60], [2.8, -3], [3.0, 0]],
       [[0, 0], [0.22, -8], [0.72, 6], [0.9, 11], [2.3, 10], [2.85, -4], [3.0, 0]],
       [[0, 0], [0.25, 5], [0.78, -10], [0.95, -5], [2.3, -6], [2.9, 3], [3.0, 0]]);
-    if (t > 0.4 && t < 2.6) p.HandL = 3;
+    handShape(p, 'L', 3, t, 0.4, 2.6);
     const up = keys(t - 0.12, [[0, 0], [0.75, 1], [2.4, 1], [3.0, 0]]);
     p.BodyAngleX = 4 * up; p.AngleX = 12 * up; p.EyeBallXAdd = 0.6 * keys(t, [[0, 0], [0.3, 1], [2.3, 1], [2.7, 0]]);
   } },
@@ -116,7 +124,7 @@ export const GESTURES = {
     arm(p, 'R', t, [[0, 0], [0.18, -2], [0.7, 30], [0.85, 28], [2.9, 28], [3.35, -2], [3.6, 0]],
       [[0, 0], [0.2, 5], [0.72, -130], [0.88, -124], [2.9, -125], [3.4, 4], [3.6, 0]],
       [[0, 0], [0.25, -4], [0.78, 24], [0.95, 19], [2.9, 20], [3.45, -3], [3.6, 0]]);
-    if (t > 0.4 && t < 3.2) p.HandR = 4;
+    handShape(p, 'R', 4, t, 0.4, 3.2);
     const up = keys(t - 0.15, [[0, 0], [0.8, 1], [3.0, 1], [3.6, 0]]);
     p.AngleZ = 7 * up; p.AngleY = 4 * up;
   } },
@@ -266,12 +274,13 @@ export class MotionController {
     // swaying parts: larger swings when shown small, calmer with reduced motion
     if (m.physics) m.physics.gain = lerp(0.9, 1.7, g) * (this.calm ? 0.6 : 1);
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
-    // pose arm switching is set directly; its timing is in the gesture track
+    // pose arm cross-fading and arrival are set directly; their timing is in the gesture track
     if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach', 'PoseHands']) if (this.has(k)) m.set(k, pose[k] || 0); }
+    if (this.has('PoseEnter')) m.set('PoseEnter', pose.PoseEnter ?? 1);
     // while talking the syllables open and close the mouth from fully closed;
     // otherwise it rests at the expression's opening
     m.set('MouthOpen', clamp(this.spring('mouth', talking ? mouth : ex.mouth ?? 0, dt, talking ? 14 : 5), 0, 1));
-    // hand shapes switch directly (one shape per hand is visible at a time)
-    for (const s of ['L', 'R']) if (this.has('Hand' + s)) m.set('Hand' + s, pose['Hand' + s] || 0);
+    // hand shapes: the chosen shape, cross-faded with the resting hand by HandFade (timed in the track)
+    for (const s of ['L', 'R']) if (this.has('Hand' + s)) { m.set('Hand' + s, pose['Hand' + s] || 0); if (this.has('HandFade' + s)) m.set('HandFade' + s, pose['HandFade' + s] ?? 1); }
   }
 }
