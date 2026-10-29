@@ -110,6 +110,7 @@ export class Physics {
   // lagged, inverted copy of its input so hair and fabric trail the motion.
   constructor(groups) {
     this.groups = groups.map(g => ({ ...g, x: 0, v: 0, prevInput: 0 }));
+    this.gain = 1;
   }
   step(values, dt) {
     const h = Math.min(dt, 1 / 30);
@@ -124,7 +125,8 @@ export class Physics {
       g.v += acc * h;
       g.x += g.v * h;
       g.x = Math.max(-1.5, Math.min(1.5, g.x));
-      values[g.output] = g.x;
+      // gain: how far the swaying parts swing (set by the motion layer from the display size)
+      values[g.output] = Math.max(-1.5, Math.min(1.5, target + (g.x - target) * this.gain)); // only the swing grows; the resting lean stays
     }
   }
 }

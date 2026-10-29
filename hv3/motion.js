@@ -5,6 +5,7 @@
 
 const TAU = Math.PI * 2;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
 const ease = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
 
 // smooth value noise for idle drift
@@ -142,9 +143,14 @@ export class MotionController {
     this.gestures = [];
     this.n = [1, 2, 3, 4, 5, 6, 7].map(noise1);
     this.has = id => model.parameters.some(p => p.id === id);
+    // Motion size: 0 = shown large (amounts near Live2D's usual ones), 1 = shown
+    // small (larger nods, gestures, glances and sway, crisper timing, so the
+    // motion still reads). Set from the shown size; reduced motion keeps it calm.
+    this.size = 0; this.calm = false;
   }
   // where the avatar sits on the screen (-1 left .. 1 right); the body and face
   // turn toward the screen centre from there
+  setMotionSize(v, calm = false) { this.size = clamp(v, 0, 1); this.calm = calm; }
   setFacing(f) { this.facing = clamp(f, -1, 1); }
   lookAt(x, y, hold = 1.5) { this.look.x = clamp(x, -1, 1); this.look.y = clamp(y, -1, 1); this.look.until = this.t + hold; }
   setExpression(name) { if (EXPRESSIONS[name]) this.expression = name; }
@@ -162,6 +168,10 @@ export class MotionController {
   spring(id, target, dt, hz) { if (!this.springs[id]) this.springs[id] = new Spring(target, hz); return this.springs[id].step(target, dt, hz); }
   update(dt) {
     const t = (this.t += dt), m = this.model, n = this.n, ex = EXPRESSIONS[this.expression];
+    // amounts by display size (g); reduced motion halves the idle motion
+    const g = this.calm ? 0 : this.size, idle = lerp(0.8, 1.6, g) * (this.calm ? 0.5 : 1), accent = lerp(0.85, 1.5, g), snap = lerp(1, 1.3, g);
+    // placement: the body carries the turn (to the full range when small), the head adds a little
+    const placeBody = lerp(0.75, 1, g), placeHead = lerp(0.2, 0.3, g), follow = lerp(0.3, 0.45, g);
     const pose = {};
     for (const x of this.gestures) if (t >= x.start) x.g.track.call(x.g, t - x.start, pose);
     this.gestures = this.gestures.filter(x => t - x.start < x.g.duration);
@@ -180,7 +190,7 @@ export class MotionController {
 // eyes look at the viewer.
     // The idle glances happen around it. Look targets are in screen terms
     // (-1 left .. 1 right, 0 = straight at the viewer).
-    const place = this.spring('facing', clamp(-this.facing / 0.42, -1, 1), dt, 0.8);
+    const place = this.spring('facing', clamp(-this.facing / 0.42, -1, 1), dt, 0.8 * snap);
     let lx = pointer ? this.look.x : this.auto.x * 0.35, ly = pointer ? this.look.y : this.auto.y * 0.8;
     if (ex.lookX !== undefined && !pointer) { lx = place * 0.5 + ex.lookX * 0.6; ly = ex.lookY; }
     if (pose.LookX) { lx = pose.LookX; ly = pose.LookY || 0; }
@@ -189,8 +199,8 @@ export class MotionController {
     // head: the placement turn plus part of the way to the target (slower);
     // body: most of the placement turn plus a little of the target (slowest);
     // eyes: whatever is left, so they look at the viewer or the pointer
-    const headX = this.spring('headX', keepSide(place * 0.27 + (lx - place * 0.3) * 0.35), dt, 1.6), headY = this.spring('headY', ly * 0.5, dt, 1.6);
-    const bodyX = this.spring('bodyX', keepSide(place * 1.0 + (lx - place * 0.3) * 0.1), dt, 0.6), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6);
+    const headX = this.spring('headX', keepSide(place * placeHead + (lx - place * 0.3) * follow), dt, 1.6 * snap), headY = this.spring('headY', ly * lerp(0.4, 0.6, g), dt, 1.6 * snap);
+    const bodyX = this.spring('bodyX', keepSide(place * placeBody + (lx - place * 0.3) * follow * 0.3), dt, 0.6 * snap), bodyY = this.spring('bodyY', ly * 0.45, dt, 0.6 * snap);
     const eyeX = this.spring('eyeX', clamp((lx - headX) * 1.1, -1, 1), dt, 7), eyeY = this.spring('eyeY', ly - headY * 0.6, dt, 7);
     // speech: syllables with varied length, height and lip shape
     const talking = t < this.talkUntil;
@@ -214,13 +224,13 @@ export class MotionController {
     const smile = this.spring('eyeSmile', clamp((ex.EyeSmile ?? 0) + (pose.EyeSmileAdd || 0), 0, 1), dt, 2.5);
     const breath = (Math.sin(t * TAU / 3.6) + 1) / 2;
     const out = {
-      AngleX: clamp((headX * 30 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0), -24, 24),
-      AngleY: (-headY * 24 + n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0),
-      AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
+      AngleX: clamp((headX * 30 + (n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0) * accent, -24, 24),
+      AngleY: clamp((-headY * 24 + (n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * idle) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0) * accent, -24, 24),
+      AngleZ: clamp(n[2](t * 0.17) * 3 * idle + (pose.AngleZ || 0) * accent - headX * 2, -20, 20),
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
-      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 + (pose.BodyAngleX || 0), -10, 10),
-      BodyAngleY: n[6](t * 0.11) * 1.5 + (pose.BodyAngleY || 0) - bodyY * 12,
-      BodyAngleZ: n[5](t * 0.09 + 3) * 1.5 + (pose.BodyAngleZ || 0) - bodyX * 2.5,
+      BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * idle + (pose.BodyAngleX || 0) * accent, -10, 10),
+      BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * idle + (pose.BodyAngleY || 0) * accent - bodyY * 12, -10, 10),
+      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * idle + (pose.BodyAngleZ || 0) * accent - bodyX * 2.5, -10, 10),
       Breath: breath,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,
       BrowAngle: ex.BrowAngle ?? 0,
@@ -229,7 +239,9 @@ export class MotionController {
       ShoulderR: pose.ShoulderR || 0, ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
-    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : k === 'AngleY' ? 9 : 4));
+    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : (k === 'AngleY' ? 9 : 4) * snap));
+    // swaying parts: larger swings when shown small, calmer with reduced motion
+    if (m.physics) m.physics.gain = lerp(0.9, 1.7, g) * (this.calm ? 0.6 : 1);
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
     // pose arm switching is set directly; its timing is in the gesture track
     if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach', 'PoseHands']) if (this.has(k)) m.set(k, pose[k] || 0); }
