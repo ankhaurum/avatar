@@ -26,8 +26,9 @@ class Spring {
 }
 
 export const EXPRESSIONS = {
-  neutral: { EyeSmile: 0, MouthForm: 0.35, BrowY: 0, BrowAngle: 0, eye: 1 },
-  smile: { EyeSmile: 0.75, MouthForm: 1, BrowY: 0.25, BrowAngle: 0.1, eye: 0.92 },
+  // default: a natural smile, lips parted a little so the upper teeth show
+  neutral: { EyeSmile: 0.35, MouthForm: 0.85, BrowY: 0.1, BrowAngle: 0, eye: 1, mouth: 0.3 },
+  smile: { EyeSmile: 0.75, MouthForm: 1, BrowY: 0.25, BrowAngle: 0.1, eye: 0.92, mouth: 0.4 },
   surprise: { EyeSmile: 0, MouthForm: 0, BrowY: 1, BrowAngle: 0.3, eye: 1, mouth: 0.45 },
   think: { EyeSmile: 0, MouthForm: -0.2, BrowY: 0.2, BrowAngle: -0.8, eye: 0.85, lookY: 0.6, lookX: -0.5 },
   sad: { EyeSmile: 0, MouthForm: -0.8, BrowY: -0.2, BrowAngle: 1, eye: 0.8 }
@@ -123,7 +124,11 @@ export const GESTURES = {
     const up = keys(t - 0.15, [[0, 0], [0.8, 1], [3.0, 1], [3.6, 0]]);
     p.AngleZ = 7 * up; p.AngleY = 4 * up;
   } },
-  nod: { duration: 1.4, track: (t, p) => { const k = Math.sin(clamp(t / 1.2, 0, 1) * TAU * 1.5) * (1 - ease(t / 1.3)); p.AngleY = -10 * Math.max(0, k); p.BodyAngleY = -2 * Math.max(0, k); } },
+  // nod twice: down quickly, a small bounce back, down again, then back up and settle; the eyes drop a little
+  nod: { duration: 1.5, track: (t, p) => {
+    const k = keys(t, [[0, 0], [0.06, 0.08], [0.22, -1], [0.36, -0.25], [0.52, -0.85], [0.78, 0.1], [0.98, -0.04], [1.2, 0]]);
+    p.AngleY = 16 * k; p.BodyAngleY = 2.5 * k; p.EyeBallYAdd = 0.35 * Math.min(0, k);
+  } },
   tilt: { duration: 2.2, track: (t, p) => { const k = ease(t / 0.5) * (1 - ease((t - 1.6) / 0.6)); p.AngleZ = 11 * k; p.AngleX = 6 * k; p.BodyAngleZ = 2 * k; } }
 };
 
@@ -188,7 +193,8 @@ export class MotionController {
     if (talking) {
       const s = this.syll; s.t += dt;
       if (s.t > s.len) { s.t = 0; s.len = 0.09 + Math.random() * 0.16; s.peak = Math.random() < 0.15 ? 0.05 : 0.3 + Math.random() * 0.6; s.form = (Math.random() * 2 - 1) * 0.35; }
-      mouth = s.peak * Math.sin(Math.PI * clamp(s.t / s.len, 0, 1)); formAdd = s.form;
+      // each syllable opens and shuts; the last 20 % of it the lips stay together
+      mouth = s.peak * Math.sin(Math.PI * clamp(s.t / (s.len * 0.8), 0, 1)); formAdd = s.form * 0.5;
     }
     const talkAmt = this.spring('talkAmt', talking ? 1 : 0, dt, 2);
     // blinking: quick close, short hold, slower open; sometimes twice
@@ -206,8 +212,8 @@ export class MotionController {
       AngleX: (headX * 20 + n[0](t * 0.23) * 3 + talkAmt * n[3](t * 1.3) * 2) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleX || 0),
       AngleY: (-headY * 24 + n[1](t * 0.19) * 2.5 + talkAmt * Math.max(0, n[4](t * 1.7)) * -3) * (1 - 0.8 * (pose.HeadHold || 0)) + (pose.AngleY || 0),
       AngleZ: n[2](t * 0.17) * 3 + (pose.AngleZ || 0) - headX * 2,
-      EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: eyeY,
-      BodyAngleX: bodyX * 6 + n[5](t * 0.13) * 2 + (pose.BodyAngleX || 0),
+      EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0), -1, 1),
+      BodyAngleX: bodyX * 13 + n[5](t * 0.13) * 2 + (pose.BodyAngleX || 0),
       BodyAngleY: n[6](t * 0.11) * 1.5 + (pose.BodyAngleY || 0) - headY * 1.5,
       BodyAngleZ: n[5](t * 0.09 + 3) * 1.5 + (pose.BodyAngleZ || 0),
       Breath: breath,
@@ -218,11 +224,13 @@ export class MotionController {
       ShoulderR: pose.ShoulderR || 0, ElbowR: pose.ElbowR || 0, WristR: pose.WristR || 0, ForearmR: pose.ForearmR || 0
     };
     const fast = { EyeBallX: 0, EyeBallY: 0 };
-    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : 4));
+    for (const [k, v] of Object.entries(out)) if (this.has(k)) m.set(k, k in fast ? v : this.spring('p_' + k, v, dt, k.startsWith('Shoulder') || k.startsWith('Elbow') || k.startsWith('Wrist') || k.startsWith('Forearm') ? 6 : k === 'AngleY' ? 9 : 4));
     m.set('EyeLOpen', eyeOpen); m.set('EyeROpen', eyeOpen); m.set('EyeSmile', smile);
     // pose arm switching is set directly; its timing is in the gesture track
     if (this.has('ArmsDefault')) { m.set('ArmsDefault', pose.ArmsDefault ?? 1); for (const k of ['PoseChest', 'PoseChin', 'PoseReach']) m.set(k, pose[k] || 0); }
-    m.set('MouthOpen', clamp(this.spring('mouth', Math.max(mouth, ex.mouth ?? 0), dt, 9), 0, 1));
+    // while talking the syllables open and close the mouth from fully closed;
+    // otherwise it rests at the expression's opening
+    m.set('MouthOpen', clamp(this.spring('mouth', talking ? mouth : ex.mouth ?? 0, dt, talking ? 14 : 5), 0, 1));
     // hand shapes switch directly (one shape per hand is visible at a time)
     for (const s of ['L', 'R']) if (this.has('Hand' + s)) m.set('Hand' + s, pose['Hand' + s] || 0);
   }

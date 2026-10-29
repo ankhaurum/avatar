@@ -7,6 +7,7 @@ import sharp from 'sharp';
 import path from 'node:path';
 import { RigBuilder, smooth } from './rig-builder.mjs';
 import { buildFace } from './face-rig.mjs';
+import { skinRef, handStats, toneHand } from './hand-tone.mjs';
 
 const dir = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
 const out = path.resolve(dir, '..');
@@ -34,24 +35,35 @@ for (const [id, label] of [['HairFront', '前髪の揺れ'], ['HairSide', '横�
 // ---- body
 const hips = joint('hips');
 b.rotation('body', null, hips, { params: ['BodyAngleZ', 'BodyAngleX'], keys: [[-10, 0, 10], [-10, 0, 10]], fn: (z, x) => ({ angle: z * 0.45, dx: x * 0.6 }) });
-// torso: turning moves the chest centre more than its sides; breathing lifts the chest and shoulders
-const T = { x: 260, y: 200, w: 504, h: 640 }, tc = [512, 360];
-b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 8, 8, {
+// torso: turning (BodyAngleX) rotates the upper body about a vertical axis
+// through the hips. Each point has a depth: the chest front (ribbon, buttons,
+// front ornaments) is nearest, the shoulders and arms sit behind it. Rotated by
+// x' = x cos(th) + z sin(th), the front centre line moves toward the turn, the
+// far side narrows, the near side widens and the shoulders shift the other way
+// by less. The turn grows from the hips upward. Breathing lifts the chest.
+const T = { x: 230, y: 200, w: 564, h: 640 }, tc = [512, 360];
+const depth = (x, y) => { const nx = (x - tc[0]) / 140, chest = Math.max(0, 1 - Math.abs(y - 330) / 220); return (95 * Math.max(0, 1 - nx * nx) - 30) * (0.55 + 0.45 * chest); };
+b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 10, 8, {
   params: ['BodyAngleX', 'BodyAngleY', 'Breath'], keys: [[-10, 0, 10], [-10, 0, 10], [0, 1]], fn: (ax, ay, br) => (x, y) => {
     const nx = (x - tc[0]) / (T.w / 2), up = Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-    const z = Math.sqrt(Math.max(0, 1 - Math.min(1, nx * nx)));
+    const th = ax / 10 * 16 * Math.PI / 180 * (0.35 + 0.65 * up), rx = x - tc[0];
+    const turn = rx * (Math.cos(th) - 1) + depth(x, y) * Math.sin(th);
     const chest = Math.max(0, 1 - Math.abs(y - 330) / 150);
-    return [ax / 10 * (3 + 7 * z) * up + br * nx * 1.6 * chest, -ay / 10 * 7 * up * up + ay / 10 * 2 * Math.abs(nx) * up - br * 2.2 * chest * (0.6 + 0.4 * up)];
+    return [turn + br * nx * 1.6 * chest, -ay / 10 * 7 * up * up + ay / 10 * 2 * Math.abs(nx) * up - br * 2.2 * chest * (0.6 + 0.4 * up)];
   }
 });
 // ---- head and neck
 const headPivot = joint('head');
-b.rotation('head', 'torso', headPivot, { params: ['AngleZ'], keys: [[-30, 0, 30]], fn: zz => ({ angle: zz * 0.4 }) });
+// the whole head turns about the base of the neck: tilting rotates it, turning
+// moves it a little sideways, nodding down lowers it and brings it forward
+b.rotation('head', 'torso', headPivot, { params: ['AngleZ', 'AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30], [-30, 0, 30]], fn: (zz, xx, yy) => ({ angle: zz * 0.4 - xx * 0.06, dx: xx / 30 * 5, dy: -yy / 30 * (yy < 0 ? 9 : 4), scale: yy < 0 ? -yy / 30 * 0.015 : 0 }) });
 const H = { x: 372, y: 14, w: 280, h: 262 }, hc = [511, 152];
 const turn = (a, bulge) => (ax, ay) => (x, y) => {
   const nx = (x - hc[0]) / (H.w / 2), ny = (y - hc[1]) / (H.h / 2);
   const z = Math.sqrt(Math.max(0, 1 - Math.min(1, nx * nx + ny * ny)));
-  return [ax / 30 * (a + bulge * z), -ay / 30 * (a * 0.5 + bulge * 0.45 * z)];
+  // looking down: features slide down over the skull (more forehead shows) and the chin tucks up
+  const chin = Math.max(0, ny) ** 1.5;
+  return [ax / 30 * (a + bulge * z), -ay / 30 * (a * 0.5 + bulge * 0.45 * z) + ay / 30 * 9 * chin];
 };
 b.warp('head_turn', 'head', [H.x, H.y, H.w, H.h], 8, 8, { params: ['AngleX', 'AngleY'], keys: [[-30, 0, 30], [-30, 0, 30]], fn: turn(5, 12) });
 // hair sway: tips move most, roots stay
@@ -117,6 +129,9 @@ const parentOf = p => {
   throw Error('No parent for ' + id);
 };
 const handShapes = ['', '_open', '_wave', '_point', '_relaxed_fist'];
+const metaA0 = JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json'))).head_skin;
+await skinRef(path.join(out, 'parts/head_skin.png'), { cheekL: [455 - metaA0.x, 290 - metaA0.y, 495 - metaA0.x, 330 - metaA0.y], cheekR: [560 - metaA0.x, 285 - metaA0.y, 600 - metaA0.x, 325 - metaA0.y] }, path.join(out, 'parts/neck_skin.png'), (n => [495 - n.x, 385 - n.y, 555 - n.x, 425 - n.y])(JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json'))).neck_skin));
+const handRef = await handStats(r3m.parts.filter(p => /^hand_/.test(p.id)).map(p => path.join(out, 'parts', p.file)));
 for (const p of r3m.parts) {
   const parent = parentOf(p);
   if (parent === 'skip') continue;
@@ -148,14 +163,19 @@ for (const p of r3m.parts) {
   // the elbow frill wraps the joint, so it stays above a raised forearm
   m = p.id.match(/^sleeve_elbow_frill_(R|L)$/);
   if (m) o.orderSwitch = [{ param: 'Elbow' + m[1], above: 95, add: 30 }];
-  // waving hands: the drawn hand hangs with its thumb toward the body, so raised
-  // past horizontal its thumb would point outward. Mirrored about the wrist, the
-  // raised palm faces forward with the thumb toward the body, as a person waves.
-  if (/_wave$/.test(p.id)) {
-    const file = p.file.replace('.png', '_mirror.png');
-    await sharp(path.join(out, 'parts', p.file)).flop().toFile(path.join(out, 'parts', file));
-    const pv = r3m.rig['hand_' + p.id[5]].pivot;
-    Object.assign(o, { file, offset: [2 * pv[0] - (p.x + p.w), p.y] });
+  // Hands: toned to art A's skin. The hands are drawn hanging with the thumb
+  // toward the body; a flat rotation cannot turn the forearm, so each shape is
+  // used as drawn or mirrored about the wrist line, by where its gesture puts
+  // the palm and thumb: waving (palm forward, thumb toward the body when
+  // raised), presenting to the side (palm up, thumb up), both hands in front of
+  // the waist (palm out, fingers toward the centre, thumb down) and pointing
+  // (index finger on the upper side) are mirrored; resting and the loose fist
+  // stay as drawn.
+  if (/^hand_/.test(p.id)) {
+    const mirror = /_(wave|open|point)$/.test(p.id), file = p.file.replace('.png', mirror ? '_mirror.png' : '_tone.png');
+    await toneHand(path.join(out, 'parts', p.file), path.join(out, 'parts', file), handRef, { mirror });
+    if (mirror) { const pv = r3m.rig['hand_' + p.id[5]].pivot; o.offset = [2 * pv[0] - (p.x + p.w), p.y]; }
+    o.file = file;
   }
   await b.part(p.id, o);
 }
@@ -170,12 +190,22 @@ for (const [name, pz] of Object.entries(poseM.poses)) for (const [layer, L] of O
 const aPart = (id, parent, order, o = {}) => b.part(id, { file: id + '.png', offset: [artA.offset[0] + metaA[id].x * artA.scale, artA.offset[1] + metaA[id].y * artA.scale], texScale: 1 / artA.scale, parent, order, spacing: 8, dilate: 2, ...o });
 // neck: under the R3 collar; the top follows the head, the bottom stays with the torso
 await aPart('neck_skin', 'head', 57.5, { spacing: 8, blend: { parent: 'torso', weight: (x, y) => smooth((y - 222) / 40) } });
-await aPart('head_skin', 'head_turn', 80);
+// cheeks and jaw: the smile lifts the cheeks, opening the mouth lowers the chin
+// with the lower lip (art A px converted to rig units)
+const A_ = (x, y) => [artA.offset[0] + x * artA.scale, artA.offset[1] + y * artA.scale];
+const fr0 = A_(380, 230), fr1 = A_(670, 440);
+const gauss = (x, y, c, r) => Math.exp(-(((x - c[0]) ** 2 + (y - c[1]) ** 2) / (r * r)));
+b.warp('face_expr', 'head_turn', [fr0[0], fr0[1], fr1[0] - fr0[0], fr1[1] - fr0[1]], 10, 10, { params: ['MouthForm', 'MouthOpen'], keys: [[-1, 0, 1], [0, 1]], fn: (form, open) => (x, y) => {
+  const k = artA.scale, cheek = Math.max(0, form) * 2.2 * k * (gauss(x, y, A_(478, 305), 34 * k) + gauss(x, y, A_(574, 298), 34 * k));
+  const [mx, my] = A_(527, 349), jaw = open * 6 * k * Math.max(0, 1 - Math.abs(x - mx) / (70 * k)) * smooth((y - my) / (25 * k)) * (1 - smooth((y - A_(0, 412)[1]) / (16 * k)));
+  return [0, -cheek + jaw];
+} });
+await aPart('head_skin', 'face_expr', 80);
 await aPart('hair_side_R', 'side_sway_R', 83, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_side_L', 'side_sway_L', 83.1, { spacing: 9, tips: { spacing: 3.5, at: 0.92 } });
 await aPart('hair_front', 'fringe_sway', 94, { spacing: 7, tips: { spacing: 3, at: 0.9 } });
 // face: art A features placed on the R3 head (similarity: eye and mouth centres)
-await buildFace(b, { parent: 'head_turn', z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
+await buildFace(b, { parent: 'face_expr', z: 0, dir, r3, tf: { scale: 0.551, offset: [223.5, 6.4] } });
 
 // ---- physics (inputs are normalised parameter values)
 b.physics({ output: 'HairFront', inputs: [['AngleX', 1 / 30], ['AngleZ', 1 / 30], ['BodyAngleX', 1 / 10], ['BodyAngleZ', 0.5 / 10]], follow: 0.6, frequency: 1.6, damping: 0.22, inertia: 0.08 });

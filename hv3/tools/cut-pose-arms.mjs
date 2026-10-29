@@ -59,7 +59,7 @@ function refine(G, W, H, anchors) {
   for (let k = 0; k < anchors.length; k++) {
     const a = anchors[k], b = anchors[(k + 1) % anchors.length];
     pts.push([a[0], a[1]]);
-    if (a[2] === 0) continue; // straight seam
+    if (a[2] === 0) { const L = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1])); for (let i = 1; i < L; i++) pts.push([a[0] + (b[0] - a[0]) * i / L, a[1] + (b[1] - a[1]) * i / L]); continue; } // straight seam
     const L = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.ceil(L / 10), nx = -(b[1] - a[1]) / L, ny = (b[0] - a[0]) / L;
     let from = [a[0], a[1]];
     for (let i = 1; i <= n; i++) {
@@ -83,11 +83,13 @@ for (const [name, d] of Object.entries(defs)) {
   const blurred = await sharp(img, { raw: { width: W, height: H, channels: 3 } }).blur(0.7).raw().toBuffer();
   const G = edgeMap(blurred, W, H);
   for (const layer of ['upper', 'lower']) {
-    const shapes = d[layer].map(poly => refine(G, W, H, poly));
+    // the pixel path is smoothed (moving average over 5 points) so the edge has no stair steps
+    const shapes = d[layer].map(poly => { const p = refine(G, W, H, poly), n = p.length; return p.map((_, i) => { let x = 0, y = 0; for (let k = -2; k <= 2; k++) { const q = p[(i + k + n) % n]; x += q[0]; y += q[1]; } return [x / 5, y / 5]; }); });
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${shapes.map(s => `<polygon points="${s.map(p => p[0].toFixed(2) + ',' + p[1].toFixed(2)).join(' ')}" fill="#fff"/>`).join('')}</svg>`;
-    const { data: mask } = await sharp(Buffer.from(svg)).blur(0.5).greyscale().raw().toBuffer({ resolveWithObject: true });
+    // soft edge about 1.5 px wide, set about 0.7 px inside the outline so no colour from beyond it bleeds in
+    const { data: mask } = await sharp(Buffer.from(svg)).blur(0.9).greyscale().raw().toBuffer({ resolveWithObject: true });
     const out = Buffer.alloc(W * H * 4);
-    for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = img[i * 3 + c]; out[i * 4 + 3] = mask[i]; }
+    for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = img[i * 3 + c]; out[i * 4 + 3] = Math.round(255 * Math.min(1, Math.max(0, (mask[i] / 255 - 0.4) / 0.55))); }
     await sharp(out, { raw: { width: W, height: H, channels: 4 } }).png().toFile(path.join(outDir, `${name}_${layer}_cut.png`));
   }
   console.log('cut', name);
