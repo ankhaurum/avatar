@@ -108,7 +108,7 @@ const metaA = JSON.parse(fs.readFileSync(path.join(out, 'parts/meta.json')));
 const aBox = n => { const m = metaA[n]; return [artA.offset[0] + m.x * artA.scale, artA.offset[1] + m.y * artA.scale, m.w * artA.scale, m.h * artA.scale]; };
 const fr = pad(aBox('hair_front'), 6);
 // parallax: the fringe is in front of the face, so it moves more with the head turn
-b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: (v, ax, ay) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), p = depthShift(4 + 36 * t, ax, ay); return [d[0] + p[0], d[1] + p[1]]; }; } });
+b.warp('fringe_sway', 'head_turn', fr, 6, 4, { params: ['HairFront', 'AngleX', 'AngleY'], keys: [[-1.5, 0, 1.5], [-30, 0, 30], [-30, 0, 30]], fn: (v, ax, ay) => { const f = sway(fr[1] + 10, fr[3] - 10, 6)(v); return (x, y) => { const d = f(x, y), t = Math.max(0, Math.min(1, (y - fr[1] - fr[3] * 0.25) / (fr[3] * 0.65))), e = 1 - smooth((Math.abs(x - (fr[0] + fr[2] / 2)) - (fr[2] / 2 - 50)) / 40), p = depthShift((4 + 36 * t) * e, ax, ay); /* toward its left and right ends the fringe meets the side hair at the same depth */ return [d[0] + p[0], d[1] + p[1]]; }; } });
 const sideR = pad(aBox('hair_side_R'), 4), sideL = pad(aBox('hair_side_L'), 4);
 // side hair (the back hair is drawn in the same layers): the whole length sways
 // with HairSide, the tips trail more with HairBack; it lies behind the face, so
@@ -258,6 +258,8 @@ b.warp('skin_turn', 'face_expr', [H.x, H.y, H.w, H.h], 12, 12, { params: ['Angle
   const p = depthShift(zSkin(x, y), ax, ay), ny = (y - hc[1]) / (H.h / 2), chin = Math.max(0, ny) ** 1.5;
   return [p[0], p[1] + Math.max(0, -ay) / 30 * 9 * chin];
 } });
+// underlay under the whole head (contour depth): no background between moved parts
+await aPart('head_under', 'head_turn', 79, { spacing: 10 });
 await aPart('head_skin', 'skin_turn', 80);
 // eyes, brows and mouth: moved as wholes by their depth (no stretching); the
 // eye on the far side gets a little smaller, the near one a little larger
