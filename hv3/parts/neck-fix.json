@@ -2,26 +2,27 @@
  "tool": "rebuild-neck",
  "neck_skin": {
   "before": "831638734725a4774a2c9853b22cd6a5030627248c442d4476c4bec4a93edc89",
-  "after": "e3bbd54328703390878edd6a93eea6f7f8a669fbaaeff3587c5bbb4433247609"
+  "after": "7db14738526d80575966b120c64d3e97cc8de0ce7db7dfccf50049e7a4209866"
  },
  "head_under": {
   "before": "fc1c2326a204a08b0e5b80de77c8dbc9e2c497081af3f31dcc8142266b8ff547",
-  "after": "182c346ab4f2a3ac035aa89dd4165c37747c256493cff7953b738cc959870e52",
+  "after": "7d17164e75c0a9b5b215d414d0aaf24540cd4b3b5f40d7c792a138b111c1d033",
   "cut": 9048,
-  "sideFade": 8115
+  "sideFade": 8109
  },
  "head_skin": {
   "before": "0703ccde593015a001508de63749e8dc894547e0421ca1923b8a23a13aa5300f",
-  "after": "d72bded709c70ca9c1b2d323e3efb8ca7c99883b843f418b7d7ff219a8f37c0f",
+  "after": "9f4bcf4a240b5aa2a7115f92d0d4103a7381f6f943227d1528ade7435f9cb0a0",
   "cut": 5441,
-  "sideFade": 3730
+  "sideFade": 3877
  },
  "linePixels": 611,
- "wispPixels": 7089,
- "coverPixels": 7124,
- "opaqueAdded": 4303,
+ "wispPixels": 7222,
+ "coverPixels": 7598,
+ "opaqueAdded": 4124,
  "silhouette": "r3 neck + head_skin, the right contour the mirror of the left about x 527.5, eroded 2 px, soft 1.5 px",
- "edgeShadedPixels": 4094,
+ "edgeShadedPixels": 7303,
+ "grownPixels": 359,
  "underHairDarkenMax": 0.1,
  "jaw": [
   [
