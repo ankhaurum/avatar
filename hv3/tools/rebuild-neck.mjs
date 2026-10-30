@@ -192,7 +192,10 @@ const xr = xl.map(v => v === null ? null : 2 * xcN - v);
 // darkening toward the contour. The boundary is the row's end of visible skin
 // (the first 4 px without skin outward from the axis, smoothed), blended over
 // 4 px, so the hair strands' ragged edge does not make the mix blotchy. A thin
-// line (15 % over the last 3 px) marks the contour. The strip beside the
+// line (15 % over the last 3 px) marks the contour. The mirror is darkened toward the contour (by
+// up to 28 % at it): art A's left neck brightens again just before its own
+// contour (the lit side's rim), and mirrored unshaded that rim became a pale
+// band along the right contour whenever the hair swung off it. The strip beside the
 // jaw's corner (under the ear), hidden too, takes the mirror as well. Flat
 // fills (the extraction's mean colour, a tone match, a shading ramp) and the
 // raw mirror (too light, and with the left collar's edge line) all read as a
@@ -208,7 +211,7 @@ for (let y = 0; y < H; y++) { if (xs[y] === null) continue; let a = [0, 0, 0], m
 const kMir = smoothRows(kMirRaw);
 const MIRROR_TOP = 345; // art A y: the mirror runs from just above the jaw's corners down; the rows above belong to the face parts
 for (let y = 0; y < H; y++) { if (xr[y] === null || xs[y] === null || !kMir[y] || mN.y + y < MIRROR_TOP) continue; for (let x = Math.ceil(xcN); x < W; x++) { const i = y * W + x; if (alpha[i] < 8) continue; if (faceW[i] > 0.5 && x < xs[y] + 2) continue; /* the face zone beside the jaw's corner is hidden skin too, beyond the visible skin */
-  const w = smooth((x - xs[y] + 2) / 4); if (w > 0) { const p = mirrorAt(x, y); if (p) { for (let c = 0; c < 3; c++) F[i * 3 + c] = F[i * 3 + c] * (1 - w) + p[c] * kMir[y][c] * w; mirrored++; } else { const t = (x - xs[y]) / Math.max(1, xr[y] - xs[y]); const k = 1 - 0.30 * smooth(t) * w; for (let c = 0; c < 3; c++) F[i * 3 + c] *= k; } }
+  const w = smooth((x - xs[y] + 2) / 4); if (w > 0) { const p = mirrorAt(x, y); if (p) { const shade = 1 - 0.28 * smooth((x - xs[y]) / Math.max(1, xr[y] - xs[y])); for (let c = 0; c < 3; c++) F[i * 3 + c] = F[i * 3 + c] * (1 - w) + p[c] * kMir[y][c] * shade * w; mirrored++; } else { const t = (x - xs[y]) / Math.max(1, xr[y] - xs[y]); const k = 1 - 0.30 * smooth(t) * w; for (let c = 0; c < 3; c++) F[i * 3 + c] *= k; } }
   if (!artSkin(x, y)) { const t = (x - (xr[y] - 3)) / 3; if (t > 0) { const k = 1 - 0.15 * smooth(t); for (let c = 0; c < 3; c++) F[i * 3 + c] *= k; edgeShaded++; } } } }
 // 4. the alpha below the face: R3's neck and the face, eroded 2 px, soft 1.5 px, within the old texture's extent
 const sil = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; sil[i] = (r3Neck(x, y) > 128 || headA(x, y) > 128) ? 255 : 0; }
