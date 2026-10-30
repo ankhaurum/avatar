@@ -106,8 +106,10 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // (smile: the corners 3 px out and 2.5 px up at most; art A's mouth is already a slight smile)
   const formD = (x, form) => { const t = sOf(x), c = t * t, c4 = c * c; return form >= 0 ? [t * (1.5 + 1.5 * c) * s * form, (-1.5 * c - 1.0 * c4) * s * form] : [-Math.sign(t) * 3.5 * s * form * c, -9.5 * s * form * c]; };
   // opening: the upper lip rises a little (more in the middle when smiling), the jaw takes the lower lip down
-  // near the corners the lips stay together (as in the smile), so no dark wedge shows at a corner
-  const cornerShut = t => smooth((1 - Math.abs(t)) / 0.3);
+  // near the corners the lips stay together: the opening fades out from 55 % of
+  // the half width and is closed from 80 % on (the preview's lips meet over the
+  // outer 30 %), so no dark wedge runs out to a corner
+  const cornerShut = t => smooth((0.8 - Math.abs(t)) / 0.25);
   const openUpper = (x, open, form = 0) => { const t = sOf(x); return -(1.3 + 8 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.55) * cornerShut(t); };
   const openLower = (x, open, form = 0) => { const t = sOf(x); return (14 - 2 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.8) * cornerShut(t); };
   const mouthKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 1], [-1, 0, 1]] };
@@ -145,7 +147,7 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     const t = sOf(x), mid = Math.max(0, 1 - t * t * t * t);
     // edges 1 px under each lip (the lips' soft inner edges cover them), only
     // where the lips are apart (none in the closed quarter at each corner)
-    const apart = Math.min(1, open * 4) * smooth((1 - Math.abs(t)) / 0.28);
+    const apart = Math.min(1, open * 4) * smooth((0.8 - Math.abs(t)) / 0.25);
     let top = M(x) + up[1] - 0.3 * s * apart, bottom = M(x) + lo[1] + 0.5 * s * apart;
     // the dark opening closes a little before the lip corners (the corners keep
     // art A's own lip line and no cavity shows beyond it)
