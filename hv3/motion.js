@@ -342,8 +342,7 @@ export class MotionController {
       EyeBallX: clamp(eyeX + (pose.EyeBallXAdd || 0), -1, 1), EyeBallY: clamp(eyeY + (pose.EyeBallYAdd || 0) + talkNod * 0.12, -1, 1),
       BodyAngleX: clamp(bodyX * 10 + n[5](t * 0.13) * 1.2 * bodyIdle + shiftX + (pose.BodyAngleX || 0) * bodyAccent, -10, 10),
       BodyAngleY: clamp(n[6](t * 0.11) * 1.5 * bodyIdle + (pose.BodyAngleY || 0) * bodyAccent - bodyY * 12 + eLean + talkNod * 1.2, -10, 10),
-      // the body leans a little into its turn (toward the page centre when placed at a side), so the near arm stays inside the frame
-      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + shiftZ + (pose.BodyAngleZ || 0) * bodyAccent + bodyX * 1.5 + eRoll, -10, 10),
+      BodyAngleZ: clamp(n[5](t * 0.09 + 3) * 1.5 * bodyIdle + shiftZ + (pose.BodyAngleZ || 0) * bodyAccent + eRoll, -10, 10),
       Breath: breath,
       ShoulderUp: eShrug,
       BrowY: (ex.BrowY ?? 0) + talkAmt * Math.max(0, n[3](t * 2.1)) * 0.3,

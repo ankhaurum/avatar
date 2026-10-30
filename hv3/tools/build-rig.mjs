@@ -66,59 +66,32 @@ const T = { x: 230, y: 200, w: 564, h: 640 }, tc = [512, 360];
 // (lower_turn: LowerAngleX) -> parts. The turn of a point is one function of
 // its place, used by both warps, so the waist seam is continuous at rest.
 const upOf = y => Math.max(0, Math.min(1, (hips[1] - y) / (hips[1] - T.y)));
-// Shape of the turn, keyed the way a modeller sets the ends (BodyAngleX +-10:
-// the body clearly turned, about 40 deg). The body section at each height is
-// taken as a flattened ellipse (half-width a from the table below, half-depth
-// 0.6 a) turned about its own axis, so the body reads as a solid turned round,
-// not a sheet sheared sideways: the front centre line (ribbon, button row)
-// moves 0.40 a toward the turn; the near half (the side the body turns away
-// from) is seen wider, stretched most beside the centre line and
-// foreshortened again toward its edge, which keeps its place (0.02 a in); the
-// far half narrows to 0.38 a, compressed most toward its edge, which moves
-// 0.22 a inward, and never folds over. Beyond the body's edges (shoulders,
-// arms, hands) nothing is squeezed: the far arm moves inward with the far edge
-// and keeps its drawn width (6 % narrower at most), the near arm keeps its
-// drawn place, shape and size. There is no vertical shear: only a small
-// perspective (2 %) above the chest, so the near shoulder sits a touch lower.
-// The neck and collar (y < 268) move as one piece with the centre line.
+// Shape of the turn (BodyAngleX +-10), calibrated on the Live2D demo models
+// (natori_pro_t06, mao_pro; measured through the public Core API, see
+// docs/live2d-demo-analysis-20261030.md). The body is a cylinder: at
+// BodyAngleX 10 the front centre line slides TURN_C = 0.2 of the body's
+// half-width a toward the turn, the edges only TURN_E = 0.03 (the whole
+// section drifts a little), and in between a parabola, so the near half is
+// stretched (the near half widens about 17 %) and the far half compressed
+// (about 17 %, most toward the far edge), never folded. (The demo models'
+// chest band moves 0.15-0.17 of the half-width on average, which is this
+// parabola's average; the far edge is never pulled in.) Nothing is
+// sheared and nothing moves up or down. The outline (the edges) is not bent.
+// Down the body the amount follows the demo models: shoulders 0.85, chest 1,
+// waist 0.5, hips 0.3, hem 0.25 (the legs take their own small share, below).
+// The neck and the middle of the collar move as one piece at a third of the
+// centre line (the demo models' heads move 0.3-0.5 of their chest centre).
 const table = (tab, y) => { if (y <= tab[0][0]) return tab[0][1]; for (let i = 1; i < tab.length; i++) if (y <= tab[i][0]) { const [y0, a0] = tab[i - 1], [y1, a1] = tab[i]; return a0 + (a1 - a0) * (y - y0) / (y1 - y0); } return tab[tab.length - 1][1]; };
 // half-width of the body by height (neck, collar, chest, waist, skirt), measured on the R3 parts
 const halfW = y => table([[220, 40], [262, 44], [296, 66], [322, 108], [450, 110], [505, 86], [566, 97], [620, 118], [700, 158], [1040, 200]], y);
-// the chest turns fully, the hips about half
-const turnShare = y => 0.5 + 0.5 * Math.max(0, Math.min(1, (800 - y) / 350));
-const EYE_Y = 240, DEPTH = 0.02, TURN_DEG = 40, BD = 0.6;
-// screen x (in units of a) of the ellipse surface point at angle phi (0 = the
-// front centre) when the section is turned by th
-const ellipseX = (phi, th) => Math.sin(phi) * Math.cos(th) + BD * Math.cos(phi) * Math.sin(th);
+const turnShare = y => table([[236, 0.85], [330, 1], [450, 1], [505, 0.5], [566, 0.3], [840, 0.25]], y);
+const TURN_C = 0.2, TURN_E = 0.03, HEAD_SHARE = 0.3;
+const cylinder = (a, s, rx) => { const u = Math.max(-1, Math.min(1, rx / a)); return a * s * (TURN_E + (TURN_C - TURN_E) * (1 - u * u)); };
 const turnXY = (ax, x, y) => {
   const s = ax / 10 * turnShare(y); if (!s) return [0, 0];
-  const a = halfW(y), rx = x - tc[0], sg = Math.sign(s), m = Math.abs(s);
-  const xc = 0.33 * a * s;                                                 // front centre line
-  const near = -sg * a * (1 - 0.05 * m), far = sg * a * (1 - 0.22 * m);  // the two edges
-  // the drawn body is the projection of the section at rest (texture u = sin
-  // phi); turned, the visible front runs from the centre to the silhouette at
-  // phiE on the far side and to the silhouette at phiE - pi on the near side
-  const th = TURN_DEG * Math.PI / 180 * m, phiE = Math.atan2(Math.cos(th), BD * Math.sin(th));
-  const x0 = ellipseX(0, th), xF = ellipseX(phiE, th), xN = ellipseX(phiE - Math.PI, th);
-  let X, z;                                                                // z: +1 toward the viewer
-  if (rx * sg >= 0) { // far half: compressed toward the edge, most near it, never folding
-    const u = Math.min(1, rx * sg / a), q = (ellipseX(Math.asin(u) * phiE / (Math.PI / 2), th) - x0) / (xF - x0);
-    X = xc + (far - xc) * q; z = -u;
-    if (rx * sg > a) { X += (rx * sg - a) * (1 - 0.06 * m) * sg; z = -1; }
-  } else { // near half: stretched evenly from the centre line to its edge (no
-    // foreshortening at the edge, so the shoulder beside it keeps its width and
-    // the contour does not bulge)
-    const u = Math.min(1, -rx * sg / a);
-    X = xc + (near - xc) * u; z = u;
-    if (-rx * sg > a) { X += (-rx * sg - a) * -sg; z = 1; }
-  }
-  // the neck and the middle of the collar move as one piece with the centre
-  // line; the shoulders beside them (from 60 units out) turn with the body
+  const a = halfW(y), rx = x - tc[0];
   const rigid = (1 - smooth((y - 268) / 40)) * (1 - smooth((Math.abs(rx) - 60) / 40));
-  // a small perspective about the eye level on the upper body only (the near
-  // shoulder a touch lower), none from the chest down: no shear of the body
-  const depth = DEPTH * (1 - smooth((y - 380) / 180));
-  return [(X - rx) * (1 - rigid) + xc * rigid, (y - EYE_Y) * depth * m * z * (1 - rigid)];
+  return [cylinder(a, s, rx) * (1 - rigid) + halfW(400) * s * TURN_C * HEAD_SHARE * rigid, 0]; // the head: 0.3 of the chest centre line (natori: 22 px of 95)
 };
 const turnX = (ax, x, y) => turnXY(ax, x, y)[0];
 // the far arm hangs a little behind the body: it swings 4 deg toward the body
@@ -148,21 +121,22 @@ b.warp('torso', 'body', [T.x, T.y, T.w, T.h], 24, 14, { ...torsoKeys, fn: torsoD
 const LB = [180, 480, 680, 560];
 // LowerAngleX follows BodyAngleX a little later (set by the motion), so the
 // hips and skirt come round after the chest
-b.warp('lower_turn', 'body', LB, 8, 6, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => turnXY(ax, x, y) });
+b.warp('lower_turn', 'body', LB, 16, 12, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => turnXY(ax, x, y) });
 // legs (not under the body rotation): a small shift the same way, fading toward the feet
-b.warp('legs_turn', null, [300, 700, 430, 840], 4, 6, { params: ['LowerAngleX'], keys: [[-10, 0, 10]], fn: ax => (x, y) => { const f = 1 - 0.7 * Math.max(0, Math.min(1, (y - 760) / 700)); return [turnX(ax, 512 + (x - 512) * 0.4, 800) * f, 0]; } });
-// each leg turns with the hips (LowerAngleX), as a full-body Live2D model does:
-// the far leg (the side the body turns toward) is seen narrower (-5 %), moves
-// in toward the centre and a little up (behind), the near leg comes forward
-// (+4 %, a little out and down) so the weight is on it; both feet turn their
-// toes toward the turn (the foot sheared about the ankle, up to 10 deg)
+// legs: the hips' turn carried down with a small share (0.25 at the hips, 0.08 at the feet: the demo models' legs hardly move), as the same cylinder about the hips, so both legs slide the same way (no crossing, no tilt)
+const legShare = y => table([[800, 0.25], [1500, 0.08]], y);
+b.warp('legs_turn', null, [300, 700, 430, 840], 6, 10, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => [cylinder(110, ax / 10 * legShare(y), x - 512), 0] });
+// each leg is a small cylinder of its own (half-width 38 about its own axis):
+// the front of the stocking slides toward the turn as the body does; the toes
+// turn toward the turn a little (the foot sheared about the ankle, 5 deg at
+// most). No up / down, no size change, no stepping apart.
 for (const s of ['R', 'L']) {
-  const hip = joint('leg_' + s + '_upper'), ankle = joint('foot_' + s), side = s === 'R' ? -1 : 1;
+  const hip = joint('leg_' + s + '_upper'), ankle = joint('foot_' + s);
   const rect = s === 'R' ? [330, 730, 240, 806] : [450, 730, 240, 806];
   b.warp('leg_' + s + '_turn', 'legs_turn', rect, 4, 12, { params: ['LowerAngleX'], keys: [[-10, -5, 0, 5, 10]], fn: ax => (x, y) => {
-    const m = ax / 10, far = Math.max(0, side * m), near = Math.max(0, -side * m), k = 0.04 * near - 0.05 * far;
-    const toe = smooth((y - ankle[1] + 12) / 24) * (y - ankle[1] + 12) * Math.tan(10 * Math.PI / 180) * m;
-    return [(x - hip[0]) * k - side * 12 * far + side * 4 * near + toe, (y - hip[1]) * k + 4 * near - 6 * far];
+    const sh = ax / 10 * legShare(y), axisX = hip[0] + (ankle[0] - hip[0]) * Math.max(0, Math.min(1, (y - hip[1]) / (ankle[1] - hip[1])));
+    const toe = smooth((y - ankle[1] + 12) / 24) * (y - ankle[1] + 12) * Math.tan(5 * Math.PI / 180) * ax / 10;
+    return [cylinder(38, sh, x - axisX) + toe, 0];
   } });
 }
 // shoulder frills swing about their seams
@@ -246,8 +220,8 @@ for (const s of ['R', 'L']) {
 // ---- chest and hip ornaments, skirt, drapes
 const bow = pad([395, 280, 230, 160], 6);
 // the chest ribbon and charm stand a little in front of the chest: they move a little further with the turn (parallax)
-b.warp('chest_bow_sway', 'torso', bow, 4, 4, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => { const f = sway(bow[1] + 40, bow[3] - 40, 7, 0.15)(v); return (x, y) => { const d = f(x, y); return [d[0] + ax / 10 * 1.5, d[1]]; }; } });
-b.rotation('chest_charm_swing', 'torso', r3.get('chest_charm').pivot, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 12, dx: ax / 10 * 2 }) });
+b.warp('chest_bow_sway', 'torso', bow, 4, 4, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => { const f = sway(bow[1] + 40, bow[3] - 40, 7, 0.15)(v); return (x, y) => { const d = f(x, y); return [d[0] + ax / 10 * 4.5, d[1]]; }; } }); // + 0.3 x the centre line's slide (the ribbon stands in front of the chest)
+b.rotation('chest_charm_swing', 'torso', r3.get('chest_charm').pivot, { params: ['BowSway', 'BodyAngleX'], keys: [[-1.5, 0, 1.5], [-10, 0, 10]], fn: (v, ax) => ({ angle: v * 12, dx: ax / 10 * 6 }) });
 const hipBow = pad([505, 515, 240, 345], 6);
 b.warp('hip_bow_sway', 'lower_turn', hipBow, 4, 6, { params: ['HipBowSway'], keys: [[-1.5, 0, 1.5]], fn: sway(hipBow[1] + 40, hipBow[3] - 40, 10, 0.15) });
 const skirt = pad([295, 527, 425, 300], 8);
