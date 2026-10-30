@@ -219,7 +219,18 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // The lower row's visible edge grows with the opening (4.9 px of its 7.9 px
   // crown at MouthOpen 1), its gums always under the lower lip.
   const GAP_SHARE = 0.10, LOWER_SHARE = 0.21;
-  const rowsAt = (open, form) => { const L = lipsAt(open, form), G = Math.max(0, L.lowerIn - L.upperIn), gap = GAP_SHARE * G, lower = LOWER_SHARE * G; return { ...L, G, gap, lower, upperTips: Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn - gap - lower), lowerTips: L.lowerIn - lower }; }; // (all in the head's units, like lipsAt)
+  // The upper row hangs from the upper lip only as far as the smile needs: at
+  // the resting smile (MouthOpen 0.52, form 1) the lip has risen and the whole
+  // crown shows, which puts the incisal edge DROP_SMILE under the mouth line.
+  // The teeth do not move with the jaw, so the edge never goes further down
+  // than that; with a mouth that is not smiling (form 0 and below: the
+  // troubled mouth, the surprise) the lip hardly rises and the edge stays
+  // close to the mouth line (30 % of DROP_SMILE), so the opening shows the
+  // tips of the upper teeth, the dark of the mouth and the tongue, not a
+  // row of teeth that followed the jaw down. The smile is unchanged.
+  const rowsAt0 = (open, form) => { const L = lipsAt(open, form), G = Math.max(0, L.lowerIn - L.upperIn), gap = GAP_SHARE * G, lower = LOWER_SHARE * G; return { ...L, G, gap, lower, upperTips: Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn - gap - lower), lowerTips: L.lowerIn - lower }; }; // (all in the head's units, like lipsAt)
+  let dropSmile = null; const DROP_SMILE = () => dropSmile ?? (dropSmile = rowsAt0(0.52, 1).upperTips - M(mxc)); // (COVER is defined below; evaluated at the first key)
+  const rowsAt = (open, form) => { const R = rowsAt0(open, form); return { ...R, upperTips: Math.min(R.upperTips, M(mxc) + DROP_SMILE() * (0.3 + 0.7 * Math.max(0, form))) }; };
   // the teeth's keys: more MouthOpen keys than the lips (the upper row follows a min() of two lip edges, which a 0 / 1 key pair would blend wrongly in between; the kink is near 0.52)
   const jawKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 0.12, 0.25, 0.4, 0.52, 0.65, 0.8, 1], [-1, 0, 1]] };
   // the crown height hidden under the upper lip comes from the set itself: how
@@ -256,15 +267,23 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     await (await import('sharp')).default(buf, { raw: { width: sw, height: sh, channels: 4 } }).png().toFile(dir + '/../parts/oral/mouth-shade.png');
     await b.part('mouth_shade', { ...opart('mouth-shade.png', 478, 330), parent, order: z + 89.6, mesh: cavityMesh, key: cavityKey });
   }
-  // the tongue: behind the lower row, its top 1 px under the lower incisors'
-  // edges (hidden: the gap under the upper tips stays dark at the resting
-  // smile) and, as the mouth opens past about 0.45 (vowels, surprise), rising
-  // by up to 5 px, so it shows pink above the lower row, under the dark of
-  // the mouth (1.5 px above the lower edges at MouthOpen 0.65, 3.6 px at 0.82,
-  // 4 px at 1), never nearer than 3 px to the upper tips (a dark band stays
-  // under the upper teeth); keyed like the rows, tilted with them
-  const TG = oral.tongue, tgTop = 348;
-  const tongueKey = { ...jawKey, fn: (open, form) => { const L = rowsAt(open, form), top = Math.max(L.upperTips + 3 * s, L.lowerTips + 1 * s - 5 * s * smooth((open - 0.4) / 0.5)); return () => [L.dx, top - P([0, tgTop])[1]]; } };
+  // the tongue: behind the lower row, its top (the two humps of the dorsum;
+  // the median groove at the centre is 2.4 px lower) 1.5 px under the lower
+  // incisors' edges (hidden: the gap under the upper tips stays dark at the
+  // resting smile) and, as the mouth opens past 0.5 (vowels, the
+  // surprise), rising until its top is TONGUE_BEHIND px above the upper tips,
+  // behind the upper row. The material is painted from the front and above:
+  // its top 3 px are the dorsum receding into the mouth's shadow (RGB about
+  // 112,54,48), then 3 px of half-shadow, and the pink lit surface begins 6 px
+  // from its top (about 190,108,106). With the shadowed back behind the upper
+  // teeth, what shows under the upper tips is the half-shadow darkening
+  // toward the teeth (the dark band stays) and, above the lower teeth, the
+  // lit surface in the material's own colour: at MouthOpen 0.82 (6 px between
+  // the rows) about 1 px of pink, at 1 (10 px) 7 px, at the surprise (the
+  // upper row no longer hangs down into the opening) about 6 px. Keyed like
+  // the rows, tilted with them.
+  const TG = oral.tongue, tgTop = 348, TONGUE_BEHIND = 3;
+  const tongueKey = { ...jawKey, fn: (open, form) => { const L = rowsAt(open, form), top = Math.max(L.upperTips - TONGUE_BEHIND * s, L.lowerTips + 1.5 * s - 14 * s * smooth((open - 0.5) / 0.25)); return () => [L.dx, top - P([0, tgTop])[1]]; } };
   await b.part('mouth_tongue', { ...opart(path.basename(TG.file), mxA - TG.centreX / jt, tgTop - TG.topY / jt, jt), parent: 'jaw_tilt', order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: tongueKey });
   await b.part('mouth_jaw_lower', { ...opart(path.basename(JL.file), lowerLeftA, lowerTopA, jt), parent: 'jaw_tilt', order: z + 89.3, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawLowerKey });
   await b.part('mouth_jaw_upper', { ...opart(path.basename(JU.file), upperLeftA, upperTopA, jt), parent: 'jaw_tilt', order: z + 89.4, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawUpperKey });
