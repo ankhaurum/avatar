@@ -1,9 +1,10 @@
 {
  "units": "art A px",
  "texturePxPerArtPx": 4,
- "artPerCanvasPx": 0.052485248871041716,
+ "artPerCanvasPx": 0.03728838362974464,
  "mouthWidthArt": 82.0344439854382,
- "mouthWidthCanvas": 1563,
+ "incisorRatio": 0.11,
+ "incisorWidthArt": 9.023788838398202,
  "sources": {
   "upper": {
    "file": "Hibiki_V3_upper_teeth_gums_HibikiRef_tidy_v3.png",
@@ -47,46 +48,48 @@
     1605,
     490
    ],
-   "width": 337,
-   "height": 103,
-   "centreX": 168.26770788055975,
-   "rowLeft": 17.215161629701683,
-   "rowRight": 319.3202541314178,
-   "crownTop": 9.237403801303342,
-   "crownBottom": 102.24126480078927,
-   "crownHeightArt": 23.25096524987148,
-   "widthArt": 84.23882443802195,
-   "rowWidthArt": 75.52627312542903,
+   "width": 239,
+   "height": 73,
+   "centreX": 119.54655791696132,
+   "rowLeft": 12.230589830556243,
+   "rowRight": 226.86252600336638,
+   "crownTop": 30.576474576390606,
+   "crownBottom": 72.63777131074256,
+   "crownHeightArt": 10.515324183587989,
+   "gumDepthArt": 1.6034004960790196,
+   "gumDepthMaxArt": 3.61697321208523,
+   "widthArt": 59.847855725740146,
+   "rowWidthArt": 53.65798404320254,
    "teeth": [
     {
-     "widthArt": 15.69,
-     "topArt": 4.46,
-     "bottomArt": 20.05
+     "widthArt": 11.15,
+     "topArt": -0.89,
+     "bottomArt": 8.24
     },
     {
-     "widthArt": 9.34,
-     "topArt": 7.98,
-     "bottomArt": 21.41
+     "widthArt": 6.64,
+     "topArt": -0.34,
+     "bottomArt": 9.21
     },
     {
-     "widthArt": 12.86,
+     "widthArt": 9.14,
      "topArt": 0,
-     "bottomArt": 23.2
+     "bottomArt": 10.48
     },
     {
-     "widthArt": 12.54,
-     "topArt": 0.37,
-     "bottomArt": 23.25
+     "widthArt": 8.91,
+     "topArt": 0,
+     "bottomArt": 10.52
     },
     {
-     "widthArt": 9.45,
-     "topArt": 3.99,
-     "bottomArt": 21.41
+     "widthArt": 6.71,
+     "topArt": -0.56,
+     "bottomArt": 9.21
     },
     {
-     "widthArt": 15.64,
-     "topArt": 3.1,
-     "bottomArt": 20.15
+     "widthArt": 11.11,
+     "topArt": -1.08,
+     "bottomArt": 8.32
     }
    ]
   },
@@ -98,46 +101,48 @@
     1625,
     436
    ],
-   "width": 341,
-   "height": 92,
-   "centreX": 170.5770588308856,
-   "rowLeft": 72.84952543300591,
-   "rowRight": 268.3045922287653,
-   "crownTop": 32.75079529553003,
-   "crownBottom": 77.2582863381734,
-   "crownHeightArt": 11.126872760660843,
-   "widthArt": 85.2885294154428,
-   "rowWidthArt": 48.86376669893984,
+   "width": 242,
+   "height": 65,
+   "centreX": 121.18724679667008,
+   "rowLeft": 51.75627647808556,
+   "rowRight": 190.6182171152546,
+   "crownTop": 23.267951384960654,
+   "crownBottom": 54.88850070298411,
+   "crownHeightArt": 7.905137329505863,
+   "gumDepthArt": 6.823774204243269,
+   "gumDepthMaxArt": 7.867848945876119,
+   "widthArt": 60.59362339833504,
+   "rowWidthArt": 34.71548515929226,
    "teeth": [
     {
-     "widthArt": 6.3,
-     "topArt": -3.99,
-     "bottomArt": 7.14
+     "widthArt": 4.47,
+     "topArt": -2.83,
+     "bottomArt": 5.07
     },
     {
-     "widthArt": 9.18,
-     "topArt": -0.58,
-     "bottomArt": 9.66
+     "widthArt": 6.53,
+     "topArt": -0.41,
+     "bottomArt": 6.86
     },
     {
-     "widthArt": 8.92,
+     "widthArt": 6.34,
      "topArt": 0,
-     "bottomArt": 10.86
+     "bottomArt": 7.72
     },
     {
-     "widthArt": 8.92,
+     "widthArt": 6.34,
      "topArt": 0,
-     "bottomArt": 11.13
+     "bottomArt": 7.91
     },
     {
-     "widthArt": 9.24,
-     "topArt": -0.58,
-     "bottomArt": 9.5
+     "widthArt": 6.56,
+     "topArt": -0.41,
+     "bottomArt": 6.75
     },
     {
-     "widthArt": 6.3,
-     "topArt": -3.99,
-     "bottomArt": 7.14
+     "widthArt": 4.47,
+     "topArt": -2.83,
+     "bottomArt": 5.07
     }
    ]
   }
@@ -150,8 +155,8 @@
    1621,
    711
   ],
-  "width": 340,
-  "height": 149,
+  "width": 242,
+  "height": 106,
   "rim": [
    142,
    56,
@@ -170,10 +175,10 @@
    932,
    592
   ],
-  "width": 196,
-  "height": 124,
-  "centreX": 97.83250389562176,
-  "topY": 0.6298229864525006,
-  "widthArt": 48.91625194781088
+  "width": 139,
+  "height": 88,
+  "centreX": 69.50554708584401,
+  "topY": 0.4474606035569357,
+  "widthArt": 34.75277354292201
  }
 }
