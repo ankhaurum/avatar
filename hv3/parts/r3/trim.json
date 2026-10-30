@@ -1,20 +1,20 @@
 {
  "chest_charm.png": {
   "before": "2ae17e9cd8bc1a0148c3ea6300cabe0f66ebae33ae435caeea3452007f613e0a",
-  "after": "113e1ee716f45525c9548ccb2cdc7923de852597e73244587887a40b6fd4c077",
-  "removedPixels": 2626,
-  "rule": "border-connected shirt white (lum > 236, sat < 18) and bow navy (b > r + 20, lum < 110), then the shirt shade (lum > 212, sat < 22) touching it except within 2 px of gold and gems, made transparent; edge softened 0.8 px"
+  "after": "8dd312935279a4342f1703db7c5e32cb090d7e9812453d7db1dd08aa9093e3a6",
+  "removedPixels": 2659,
+  "rule": "border-connected shirt white (lum > 236, sat < 18) and bow navy (b > r + 20, lum < 110), then the shirt shade (lum > 212, sat < 22) touching it except within 2 px of gold and gems, made transparent; islands under 24 px dropped; the edge a soft matte (kept mask closed 1 px, blurred 1.2 px)"
  },
  "bodice.png": {
   "before": "36dbb24ae8c46a0434577b8cc88613394e26ff376817540d47f6bbb4009c4701",
-  "after": "61ae206077af53079332276e0806e7b695dca295fa7a2803ecc0c611540436bb",
-  "filledPixels": 13226,
+  "after": "345b3f591d56bf7e788ff2c0bddf1d95ff27e6ff13f447d47decb2149df13a06",
+  "filledPixels": 23799,
   "box": [
    192,
    162,
    314,
    422
   ],
-  "rule": "under the charm (its rest box + 6 units sideways, from 14 units below its top (under the knot) to 10 units below its bottom): every pixel that is not shirt white (lum > 212, sat < 24) filled from the shirt around by repeated neighbour averaging"
+  "rule": "under the charm (its rest box + 6 units sideways, from 14 units below its top (under the knot) to 10 units below its bottom): every pixel that is not plain shirt white (lum > 224, sat < 16) filled by repeated neighbour averaging seeded from the shirt pixels only"
  }
 }

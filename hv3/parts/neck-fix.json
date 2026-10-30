@@ -2,7 +2,7 @@
  "tool": "rebuild-neck",
  "neck_skin": {
   "before": "831638734725a4774a2c9853b22cd6a5030627248c442d4476c4bec4a93edc89",
-  "after": "43be773efc61bbe86181e2b079382d2fecfc8251d9f7c120506faf5d9986f476"
+  "after": "e3bbd54328703390878edd6a93eea6f7f8a669fbaaeff3587c5bbb4433247609"
  },
  "head_under": {
   "before": "fc1c2326a204a08b0e5b80de77c8dbc9e2c497081af3f31dcc8142266b8ff547",
@@ -17,10 +17,11 @@
   "sideFade": 3730
  },
  "linePixels": 611,
- "wispPixels": 5867,
- "coverPixels": 5772,
- "opaqueAdded": 3999,
- "silhouette": "r3 neck + head_skin, eroded 2 px, soft 1.5 px",
+ "wispPixels": 7089,
+ "coverPixels": 7124,
+ "opaqueAdded": 4303,
+ "silhouette": "r3 neck + head_skin, the right contour the mirror of the left about x 527.5, eroded 2 px, soft 1.5 px",
+ "edgeShadedPixels": 4094,
  "underHairDarkenMax": 0.1,
  "jaw": [
   [
