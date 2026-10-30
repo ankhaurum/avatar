@@ -1,0 +1,133 @@
+// Rebuilds the neck skin (parts/neck_skin.png, cut from art A by extract-head.cjs)
+// and trims head_under's neck block, so the neck looks like art A's skin
+// whichever way the body turns and whatever the side hair does. Replaces
+// fix-neck.mjs (#86), whose darkening of the skin under the hair read as dirt.
+// What was wrong (seen by drawing the parts one at a time, 2026-10-30):
+// 1. the part's alpha was a wide feather (about 15 px at the sides, 20 px at
+//    the collar): under the side hair it faded out over the shirt's shoulders
+//    and beyond the body's outline, and once the hair moved against the
+//    body (a turn, the sway) the faded skin showed as a grey smear outside
+//    the neck, and the body's lighter neck showed through the feather;
+// 2. art A's hair tips over the neck were baked into the skin (the hair parts
+//    carry the same tips), and darkened 22 % by fix-neck they looked like
+//    blue-grey streaks on the neck, doubled when the hair moved;
+// 3. head_under (drawn over the neck skin) kept a block of neck under the
+//    chin with straight cut edges that showed when the hair moved;
+// 4. the thin shaded edges of art A's shirt collar remained in the skin (the
+//    one thing fix-neck got right; done again here).
+// What it does, in the part's own pixel grid (1 px per art A px):
+// - starts from the texture before #86 (its SHA256 is checked);
+// - fills the collar's edge lines from the skin around them;
+// - takes the hair tips out of the skin below the jaw (bluish pixels, dilated
+//   2 px, filled by repeated neighbour averaging), so the hair parts alone draw them;
+// - under the side hair (the hair's alpha at rest, blurred 4 px) the skin,
+//   which extract-head had filled with a flat mean colour, continues each
+//   row's own skin from where the hair begins, darkening by at most 10 %
+//   over 30 px (the neck turning away under the hair), so what shows when the
+//   hair moves is the neck's own shading, not a flat patch and not a shadow;
+// - the alpha below the face becomes the neck's silhouette: R3's own neck
+//   part (the body under the collar, in art A's coordinates through the
+//   build's art A transform) and the face (head_skin), eroded 2 px, with a
+//   1.5 px soft edge; opaque inside (the body's lighter neck no longer shows
+//   through), nothing over the shirt's shoulders or outside the body;
+// - head_skin and head_under (the face, warped by the head's turn) kept a
+//   block of neck below the jaw with straight edges; their alpha is cut 3 px
+//   under the jaw line (art A's chin and jaw, measured as the edge of the
+//   chin's shadow: JAW), soft 2 px, so the neck below the jaw is the neck
+//   skin alone (its own pixels there are the same) and the chin moves over
+//   it as in Live2D;
+// - head_skin and head_under also kept, beside the jaw and cheeks under the
+//   side hair, a wedge of filled skin with straight cut edges (the texture's
+//   hull), which showed as a flat patch when the hair swung away during a
+//   turn; below the cheekbones (art A y 300 and down) their alpha now fades
+//   out 10 px outside the skin that art A shows (each row from its first to
+//   its last skin pixel, so the hair's strands over the cheeks are not gaps;
+//   soft 5 px), so a little
+//   shadowed skin remains under the hair's edge and the hair's swing reveals
+//   a rounded cheek, not a cut; and that remaining skin continues each row's
+//   own skin colour from the face's edge (darkening by up to 10 % over 12
+//   px) instead of the flat grey-mauve fill, so it reads as the cheek in the
+//   hair's shadow, not a grey patch.
+// Recorded in parts/neck-fix.json (SHA256 before / after; idempotent).
+// Usage: node rebuild-neck.mjs   (parts/neck_skin.png must be the pre-#86
+// texture: git show 22d5144:hv3/parts/neck_skin.png)
+import sharp from 'sharp';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+
+const here = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
+const parts = path.resolve(here, '../parts'), log = path.join(parts, 'neck-fix.json');
+const metaAll = JSON.parse(fs.readFileSync(path.join(parts, 'meta.json')));
+const r3m = JSON.parse(fs.readFileSync(path.join(parts, 'r3/manifest.json')));
+const artA = { scale: 0.551, offset: [223.5, 6.4] }; // build-rig.mjs: art A px -> rig units (R3 px / 4)
+const BEFORE_NECK = '831638734725a4774a2c9853b22cd6a5030627248c442d4476c4bec4a93edc89'; // neck_skin.png before #86
+const sha = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+const smooth = t => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t); };
+const load = async f => { const { data, info } = await sharp(f).ensureAlpha().raw().toBuffer({ resolveWithObject: true }); return { d: data, W: info.width, H: info.height }; };
+const blur1 = async (buf, W, H, sigma) => sharp(buf, { raw: { width: W, height: H, channels: 1 } }).blur(sigma).extractChannel(0).raw().toBuffer();
+// min / max filters of radius r on a 0..255 single-channel buffer
+const morph = (src, W, H, r, isMax) => { const out = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { let v = isMax ? 0 : 255; for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) { if (dx * dx + dy * dy > r * r + r) continue; const xx = x + dx, yy = y + dy; const s = (xx < 0 || yy < 0 || xx >= W || yy >= H) ? 0 : src[yy * W + xx]; v = isMax ? Math.max(v, s) : Math.min(v, s); } out[y * W + x] = v; } return out; };
+// fill the masked pixels from their unmasked neighbours by repeated averaging
+const fillFrom = (F, W, H, mask, alpha, iters) => { const fill = []; for (let i = 0; i < W * H; i++) if (mask[i]) fill.push(i); for (let it = 0; it < iters; it++) for (const i of fill) { const x = i % W; let t = [0, 0, 0], k = 0; for (const j of [x > 0 ? i - 1 : -1, x < W - 1 ? i + 1 : -1, i - W, i + W]) { if (j < 0 || j >= W * H || alpha[j] < 150) continue; for (let c = 0; c < 3; c++) t[c] += F[j * 3 + c]; k++; } if (k) for (let c = 0; c < 3; c++) F[i * 3 + c] = t[c] / k; } return fill.length; };
+
+const done = fs.existsSync(log) ? JSON.parse(fs.readFileSync(log)) : null;
+const neckFile = path.join(parts, 'neck_skin.png'), underFile = path.join(parts, 'head_under.png');
+const s0 = sha(neckFile);
+if (done && done.tool === 'rebuild-neck' && done.neck_skin.after === s0) { console.log('already rebuilt'); process.exit(0); }
+if (s0 !== BEFORE_NECK) { console.error('parts/neck_skin.png is not the texture before #86 (' + s0.slice(0, 12) + '); restore it with: git show 22d5144:hv3/parts/neck_skin.png > hv3/parts/neck_skin.png'); process.exit(1); }
+const mN = metaAll.neck_skin, neck = await load(neckFile), W = neck.W, H = neck.H;
+// samplers in the neck part's grid (x, y) -> alpha of other parts at the same art A point
+const headSkin = await load(path.join(parts, 'head_skin.png')), mHS = metaAll.head_skin;
+const headA = (x, y) => { const hx = mN.x + x - mHS.x, hy = mN.y + y - mHS.y; return (hx < 0 || hy < 0 || hx >= headSkin.W || hy >= headSkin.H) ? 0 : headSkin.d[(hy * headSkin.W + hx) * 4 + 3]; };
+const r3Alpha = async id => { const p = r3m.parts.find(p => p.id === id), im = await load(path.join(parts, p.file)), ts = r3m.textureScale; return (x, y) => { const wx = artA.offset[0] + (mN.x + x) * artA.scale, wy = artA.offset[1] + (mN.y + y) * artA.scale; const tx = Math.round((wx - p.x) * ts), ty = Math.round((wy - p.y) * ts); return (tx < 0 || ty < 0 || tx >= im.W || ty >= im.H) ? 0 : im.d[(ty * im.W + tx) * 4 + 3]; }; };
+const r3Neck = await r3Alpha('neck');
+// the side hair's cover at rest
+const cover = Buffer.alloc(W * H);
+for (const name of ['hair_side_R', 'hair_side_L']) { const hm = metaAll[name], h = await load(path.join(parts, name + '.png')); for (let y = 0; y < h.H; y++) for (let x = 0; x < h.W; x++) { const nx = hm.x + x - mN.x, ny = hm.y + y - mN.y; if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue; const a = h.d[(y * h.W + x) * 4 + 3]; const i = ny * W + nx; if (a > cover[i]) cover[i] = a; } }
+const coverB = await blur1(cover, W, H, 4);
+const d = neck.d, alpha = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) alpha[i] = d[i * 4 + 3];
+const F = new Float32Array(W * H * 3); for (let i = 0; i < W * H; i++) for (let c = 0; c < 3; c++) F[i * 3 + c] = d[i * 4 + c];
+// the neck zone: below the face
+const faceW = new Float32Array(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) faceW[y * W + x] = smooth(headA(x, y) / 60);
+// 1. the collar's edge lines (as fix-neck): thin lines below art A y 440, darker than a 6 px blur of their surroundings
+const L = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) L[i] = (d[i * 4] + d[i * 4 + 1] + d[i * 4 + 2]) / 3;
+const Lb = await blur1(L, W, H, 6);
+const lines = new Uint8Array(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; if (alpha[i] < 200 || mN.y + y < 440) continue; if (Lb[i] - L[i] > 6) lines[i] = 1; }
+const linesD = morph(Buffer.from(lines.map(v => v * 255)), W, H, 1, true); const lineMask = new Uint8Array(W * H); for (let i = 0; i < W * H; i++) lineMask[i] = linesD[i] > 0 && alpha[i] >= 200 ? 1 : 0;
+const linePixels = fillFrom(F, W, H, lineMask, alpha, 400);
+// 2. the hair tips baked into the skin below the jaw: bluish pixels (red hardly above blue), not the white of the collar
+const wisp = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; if (alpha[i] < 150 || faceW[i] > 0.5) continue; const r = F[i * 3], g = F[i * 3 + 1], b = F[i * 3 + 2]; if (r - b < 32 && !(r > 200 && g > 190)) wisp[i] = 255; }
+const wispD = morph(wisp, W, H, 2, true); const wispMask = new Uint8Array(W * H); for (let i = 0; i < W * H; i++) wispMask[i] = wispD[i] > 0 && alpha[i] >= 150 && faceW[i] <= 0.5 ? 1 : 0;
+const wispPixels = fillFrom(F, W, H, wispMask, alpha, 900);
+// 3. the skin under the side hair: each row continues its own skin from where the hair begins (toward the mouth's centre), darkening by up to 10 % over 30 px
+const cx = 527.5 - mN.x; let coverPixels = 0;
+for (let y = 0; y < H; y++) {
+  for (const side of [-1, 1]) {
+    // the edge of the cover on this side: the first covered pixel going outward from the centre
+    let e = -1; for (let x = Math.round(cx); x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 150) break; if (coverB[i] > 128) { e = x; break; } }
+    if (e < 0) continue;
+    // the reference: the nearest uncovered skin of this row, inward from the edge (up to 10 px; the face's own pixels beside the jaw count too); a row without one is left as it is
+    let ref = [0, 0, 0], k = 0; for (let x = e - side; Math.abs(x - e) <= 10 && x >= 0 && x < W && k < 4; x -= side) { const i = y * W + x; if (alpha[i] < 150 || coverB[i] > 128) continue; for (let c = 0; c < 3; c++) ref[c] += F[i * 3 + c]; k++; }
+    if (!k) continue; ref = ref.map(v => v / k);
+    for (let x = e; x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 8 || faceW[i] > 0.5) continue; const w = smooth((coverB[i] / 255 - 0.3) / 0.4); if (w <= 0) continue; const dist = Math.abs(x - e), kk = 1 - 0.10 * smooth((dist - 2) / 30); for (let c = 0; c < 3; c++) F[i * 3 + c] = F[i * 3 + c] * (1 - w) + ref[c] * kk * w; coverPixels++; }
+  }
+}
+// 4. the alpha below the face: R3's neck and the face, eroded 2 px, soft 1.5 px, within the old texture's extent
+const sil = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; sil[i] = (r3Neck(x, y) > 128 || headA(x, y) > 128) ? 255 : 0; }
+const silE = morph(sil, W, H, 2, false), silS = await blur1(silE, W, H, 1.5);
+const ext = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) ext[i] = alpha[i] > 12 ? 255 : 0; const extS = await blur1(ext, W, H, 1.5);
+const out = Buffer.alloc(W * H * 4); let opaqueAdded = 0;
+for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(Math.min(255, Math.max(0, F[i * 3 + c]))); const aNew = Math.min(silS[i], extS[i]); const a = Math.round(alpha[i] * faceW[i] + aNew * (1 - faceW[i])); if (a > alpha[i] + 20) opaqueAdded++; out[i * 4 + 3] = a; }
+await sharp(out, { raw: { width: W, height: H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(neckFile);
+// 5. head_skin and head_under: nothing below the jaw line (3 px under it, soft 2 px)
+const JAW = [[440, 360], [455, 368], [460, 372], [475, 384], [490, 394], [505, 402], [527, 408], [550, 402], [565, 389], [580, 376], [590, 370], [610, 360]]; // art A px: the chin's shadow edge, measured 2026-10-30
+const jawY = x => { for (let i = 1; i < JAW.length; i++) if (x <= JAW[i][0]) { const [x0, y0] = JAW[i - 1], [x1, y1] = JAW[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); } return JAW[JAW.length - 1][1]; };
+const cutBelowJaw = async (file, m) => { const before = sha(file), im = await load(file); const keep = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) keep[y * im.W + x] = (m.y + y) < jawY(m.x + x) + 3 ? 255 : 0; const keepS = await blur1(keep, im.W, im.H, 2); const o = Buffer.from(im.d); let cut = 0; for (let i = 0; i < im.W * im.H; i++) { const a = im.d[i * 4 + 3], a2 = Math.min(a, keepS[i]); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return { before, after: sha(file), cut }; };
+// 6. the sides of the face under the hair: fade out 10 px beyond art A's visible skin (below y 300)
+const artIm = await load(path.resolve(here, '../../v3/artwork/hibiki-static-a.png'));
+const fadeSides = async (file, m) => { const im = await load(file); const skin = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) { const ax = m.x + x, ay = m.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) continue; const i = (ay * artIm.W + ax) * 4, r = artIm.d[i], g = artIm.d[i + 1], b = artIm.d[i + 2]; if (artIm.d[i + 3] > 200 && r - b > 25 && (r + g + b) / 3 > 90) skin[y * im.W + x] = 255; } for (let y = 0; y < im.H; y++) { let a = -1, b = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a < 0) a = x; b = x; } for (let x = a; x >= 0 && x <= b; x++) skin[y * im.W + x] = 255; } /* the hair's strands over the cheeks are not gaps in the face: each row's skin spans from its first to its last skin pixel */ const keepS = await blur1(morph(skin, im.W, im.H, 10, true), im.W, im.H, 5); const o = Buffer.from(im.d); let cut = 0; for (let y = 0; y < im.H; y++) { const w = smooth((m.y + y - 290) / 20); if (w <= 0) continue; /* the filled skin beside the face (a flat grey-mauve) continues the row's own skin from its edge, darkening by up to 10 % over 12 px */ let a0 = -1, b0 = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a0 < 0) a0 = x; b0 = x; } if (a0 >= 0) for (const [edge, side] of [[a0, -1], [b0, 1]]) { let ref = [0, 0, 0], k = 0; for (let x = edge; Math.abs(x - edge) < 4 && x >= 0 && x < im.W; x -= side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) ref[c] += im.d[i * 4 + c]; k++; } if (!k) continue; ref = ref.map(v => v / k); for (let x = edge + side; x >= 0 && x < im.W; x += side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 8) break; const dist = Math.abs(x - edge), kk = 1 - 0.10 * smooth(dist / 12); for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(im.d[i * 4 + c] * (1 - w) + ref[c] * kk * w); } } for (let x = 0; x < im.W; x++) { const i = y * im.W + x, a = o[i * 4 + 3], a2 = Math.round(a * (1 - w) + Math.min(a, keepS[i]) * w); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return cut; };
+const headUnder = await cutBelowJaw(underFile, metaAll.head_under), headSkinRec = await cutBelowJaw(path.join(parts, 'head_skin.png'), mHS);
+headUnder.sideFade = await fadeSides(underFile, metaAll.head_under); headSkinRec.sideFade = await fadeSides(path.join(parts, 'head_skin.png'), mHS); headUnder.after = sha(underFile); headSkinRec.after = sha(path.join(parts, 'head_skin.png'));
+fs.writeFileSync(log, JSON.stringify({ tool: 'rebuild-neck', neck_skin: { before: s0, after: sha(neckFile) }, head_under: headUnder, head_skin: headSkinRec, linePixels, wispPixels, coverPixels, opaqueAdded, silhouette: 'r3 neck + head_skin, eroded 2 px, soft 1.5 px', underHairDarkenMax: 0.10, jaw: JAW }, null, 1));
+console.log('neck skin rebuilt: collar lines', linePixels, 'px; hair tips taken out', wispPixels, 'px; skin under the hair continued', coverPixels, 'px; made opaque', opaqueAdded, 'px; cut below the jaw: head_under', headUnder.cut, 'px, head_skin', headSkinRec.cut, 'px; faded beside the cheeks and jaw: head_under', headUnder.sideFade, 'px, head_skin', headSkinRec.sideFade, 'px');
