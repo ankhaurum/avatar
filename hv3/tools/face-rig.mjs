@@ -221,8 +221,10 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   const upperTopA = tipsRestA - JU.crownBottom / jt, upperLeftA = mxA - JU.centreX / jt;
   const lowerTopA = tipsRestA - JL.crownTop / jt, lowerLeftA = mxA - JL.centreX / jt;
   const lipsAt = (open, form) => { const up = upperD(open, form)(mxc, M(mxc) - 0.05), lo = lowerD(open, form)(mxc, M(mxc) + 0.05); return { dx: up[0], upperIn: M(mxc) + up[1], lowerIn: M(mxc) + lo[1] }; };
-  const jawUpperKey = { ...mouthKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(M(mxc) + 0.5 * s + 0.8 * (L.lowerIn - M(mxc)), L.upperIn + (JU.crownHeightArt - 2) * s); return () => [L.dx, tips - M(mxc)]; } };
-  const jawLowerKey = { ...mouthKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn - 1.5 * s; return () => [L.dx, tips - M(mxc)]; } };
+  // the upper incisal edge stays about 2 px above the lower lip's inner edge at the smile, so the dark of the mouth shows under the teeth, as in the reference smile
+  const jawUpperKey = { ...mouthKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(M(mxc) + 0.5 * s + 0.68 * (L.lowerIn - M(mxc)), L.upperIn + (JU.crownHeightArt - 2) * s); return () => [L.dx, tips - M(mxc)]; } };
+  // the lower row stays under the lower lip (1 px below its inner edge) and rises to peep 1.5 px above it only with a wide opening (vowels, surprise)
+  const jawLowerKey = { ...mouthKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + 1 * s - 2.5 * s * smooth((open - 0.72) / 0.28); return () => [L.dx, tips - M(mxc)]; } };
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });
   await b.part('mouth_jaw_lower', { ...opart(path.basename(JL.file), lowerLeftA, lowerTopA, jt), parent: 'jaw_tilt', order: z + 89.3, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawLowerKey });
   await b.part('mouth_jaw_upper', { ...opart(path.basename(JU.file), upperLeftA, upperTopA, jt), parent: 'jaw_tilt', order: z + 89.4, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawUpperKey });
