@@ -7,7 +7,8 @@
 // dark pixels take the lit blue of the opaque hair next to them (the
 // transparency is kept), so the inside of the hair beside the jaw is the light
 // blue of art A's lit hair. Only the lower part of the side layers (below the
-// eyes) is touched; the fringe and the hair over the face are not.
+// eyes, down to the jaw) is touched; the fringe, the hair over the face and
+// the strands over the neck below the jaw are not.
 // Recorded in parts/hair-inner.json (idempotent). Usage: node lighten-hair-inner.mjs
 import sharp from 'sharp';
 import fs from 'node:fs';
@@ -42,8 +43,10 @@ for (const name of ['hair_side_R', 'hair_side_L']) {
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const i = y * W + x, a = data[i * 4 + 3] / 255;
     if (a < 0.04) continue;
-    // below the eyes (art A y > 300) only, within 40 px of the layer's edge, and where the dark navy is
-    const ay = m.y + y, dark = 1 - smooth((lum(i) - 70) / 50), below = smooth((ay - 300) / 40), edge = 1 - smooth((dist[i] - 28) / 20);
+    // beside the cheek and the jaw only (art A y 300 .. 410, fading out by 430): the strands over the neck
+    // below the jaw keep their dark translucent colour from art A, so at rest the neck recomposes art A and when
+    // the hair moves against the neck (the body turned at a side of the page) they read as strands, not as a pale smear
+    const ay = m.y + y, dark = 1 - smooth((lum(i) - 70) / 50), below = smooth((ay - 300) / 40) * (1 - smooth((ay - 410) / 20)), edge = 1 - smooth((dist[i] - 28) / 20);
     const k = dark * below * edge;
     if (k < 0.02 || bl[i * 4 + 3] < 12) continue; // (sharp gives the blurred colour back un-premultiplied)
     for (let c = 0; c < 3; c++) { const litC = bl[i * 4 + c]; out[i * 4 + c] = Math.max(0, Math.min(255, Math.round(data[i * 4 + c] + (litC - data[i * 4 + c]) * 0.75 * k))); }
