@@ -21,10 +21,11 @@
 // - takes the hair tips out of the skin below the jaw (bluish pixels, dilated
 //   2 px, filled by repeated neighbour averaging), so the hair parts alone draw them;
 // - under the side hair (the hair's alpha at rest, blurred 4 px) the skin,
-//   which extract-head had filled with a flat mean colour, continues each
-//   row's own skin from where the hair begins, darkening by at most 10 %
-//   over 30 px (the neck turning away under the hair), so what shows when the
-//   hair moves is the neck's own shading, not a flat patch and not a shadow;
+//   which extract-head had filled with a flat light mean colour, keeps its
+//   smooth fill but is matched in tone to the neck at the hair's edge (a
+//   per-row ratio smoothed over the rows), darkening by at most 8 % over 30
+//   px (the neck turning away under the hair), so what shows when the hair
+//   moves is the neck's own shading, not a pale patch and not a shadow;
 // - the alpha below the face becomes the neck's silhouette: R3's own neck
 //   part (the body under the collar, in art A's coordinates through the
 //   build's art A transform) and the face (head_skin), eroded 2 px, with a
@@ -44,10 +45,10 @@
 //   its last skin pixel, so the hair's strands over the cheeks are not gaps;
 //   soft 5 px), so a little
 //   shadowed skin remains under the hair's edge and the hair's swing reveals
-//   a rounded cheek, not a cut; and that remaining skin continues each row's
-//   own skin colour from the face's edge (darkening by up to 10 % over 12
-//   px) instead of the flat grey-mauve fill, so it reads as the cheek in the
-//   hair's shadow, not a grey patch.
+//   a rounded cheek, not a cut; and that remaining skin is matched in tone
+//   to the face's edge the same way as the neck's (a smoothed per-row ratio,
+//   darkening by up to 8 % over 12 px) instead of the flat grey-mauve fill,
+//   so it reads as the cheek in the hair's shadow, not a grey patch.
 // Recorded in parts/neck-fix.json (SHA256 before / after; idempotent).
 // Usage: node rebuild-neck.mjs   (parts/neck_skin.png must be the pre-#86
 // texture: git show 22d5144:hv3/parts/neck_skin.png)
@@ -100,18 +101,37 @@ const linePixels = fillFrom(F, W, H, lineMask, alpha, 400);
 const wisp = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; if (alpha[i] < 150 || faceW[i] > 0.5) continue; const r = F[i * 3], g = F[i * 3 + 1], b = F[i * 3 + 2]; if (r - b < 32 && !(r > 200 && g > 190)) wisp[i] = 255; }
 const wispD = morph(wisp, W, H, 2, true); const wispMask = new Uint8Array(W * H); for (let i = 0; i < W * H; i++) wispMask[i] = wispD[i] > 0 && alpha[i] >= 150 && faceW[i] <= 0.5 ? 1 : 0;
 const wispPixels = fillFrom(F, W, H, wispMask, alpha, 900);
-// 3. the skin under the side hair: each row continues its own skin from where the hair begins (toward the mouth's centre), darkening by up to 10 % over 30 px
+// 3. the skin under the side hair: extract-head's fill there is smooth but flat
+// and light (the mean of the visible neck). It keeps its own gradient and is
+// matched in tone to the neck beside it: per row and side, the ratio of the
+// visible skin at the hair's edge (up to 10 px inward; the face's own pixels
+// beside the jaw count) to the fill just inside the edge, smoothed over the
+// rows (sigma 6; rows without a reference take their neighbours'), multiplies
+// the fill, darkening further by up to 8 % over 30 px into the hair. (A
+// per-row replacement by the reference colour, an earlier try, left
+// horizontal and vertical steps where the reference changed.)
 const cx = 527.5 - mN.x; let coverPixels = 0;
-for (let y = 0; y < H; y++) {
-  for (const side of [-1, 1]) {
-    // the edge of the cover on this side: the first covered pixel going outward from the centre
-    let e = -1; for (let x = Math.round(cx); x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 150) break; if (coverB[i] > 128) { e = x; break; } }
-    if (e < 0) continue;
-    // the reference: the nearest uncovered skin of this row, inward from the edge (up to 10 px; the face's own pixels beside the jaw count too); a row without one is left as it is
-    let ref = [0, 0, 0], k = 0; for (let x = e - side; Math.abs(x - e) <= 10 && x >= 0 && x < W && k < 4; x -= side) { const i = y * W + x; if (alpha[i] < 150 || coverB[i] > 128) continue; for (let c = 0; c < 3; c++) ref[c] += F[i * 3 + c]; k++; }
-    if (!k) continue; ref = ref.map(v => v / k);
-    for (let x = e; x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 8 || faceW[i] > 0.5) continue; const w = smooth((coverB[i] / 255 - 0.3) / 0.4); if (w <= 0) continue; const dist = Math.abs(x - e), kk = 1 - 0.10 * smooth((dist - 2) / 30); for (let c = 0; c < 3; c++) F[i * 3 + c] = F[i * 3 + c] * (1 - w) + ref[c] * kk * w; coverPixels++; }
-  }
+const smoothRows = rows => { const n = rows.length, out = new Array(n); // gaps from the nearest valid row, then a gaussian over the rows (sigma 6)
+  const valid = rows.map((r, y) => r ? y : -1).filter(y => y >= 0); if (!valid.length) return rows.map(() => null);
+  const filled = rows.map((r, y) => r || rows[valid.reduce((b, v) => Math.abs(v - y) < Math.abs(b - y) ? v : b, valid[0])]);
+  for (let y = 0; y < n; y++) { const acc = [0, 0, 0]; let wsum = 0; for (let d = -18; d <= 18; d++) { const yy = y + d; if (yy < 0 || yy >= n) continue; const w = Math.exp(-d * d / 72); for (let c = 0; c < 3; c++) acc[c] += filled[yy][c] * w; wsum += w; } out[y] = acc.map(v => v / wsum); }
+  return out; };
+const kRows = [[], []];
+for (let y = 0; y < H; y++) for (const [si, side] of [[0, -1], [1, 1]]) {
+  kRows[si][y] = null;
+  let e = -1; for (let x = Math.round(cx); x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 150) break; if (coverB[i] > 128) { e = x; break; } }
+  if (e < 0) continue;
+  let ref = [0, 0, 0], k = 0; for (let x = e - side; Math.abs(x - e) <= 10 && x >= 0 && x < W && k < 4; x -= side) { const i = y * W + x; if (alpha[i] < 150 || coverB[i] > 128) continue; for (let c = 0; c < 3; c++) ref[c] += F[i * 3 + c]; k++; }
+  let fe = [0, 0, 0], kf = 0; for (let x = e; Math.abs(x - e) < 4 && x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 150) continue; for (let c = 0; c < 3; c++) fe[c] += F[i * 3 + c]; kf++; }
+  if (!k || !kf) continue;
+  kRows[si][y] = [0, 1, 2].map(c => Math.min(1.4, Math.max(0.6, (ref[c] / k) / Math.max(1, fe[c] / kf))));
+}
+const kS = [smoothRows(kRows[0]), smoothRows(kRows[1])];
+for (let y = 0; y < H; y++) for (const [si, side] of [[0, -1], [1, 1]]) {
+  const kk0 = kS[si][y]; if (!kk0) continue;
+  let e = -1; for (let x = Math.round(cx); x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 8) break; if (coverB[i] > 128) { e = x; break; } }
+  if (e < 0) continue;
+  for (let x = e - 4 * side; x >= 0 && x < W; x += side) { const i = y * W + x; if (alpha[i] < 8 || faceW[i] > 0.5) continue; const w = smooth((coverB[i] / 255 - 0.3) / 0.4); if (w <= 0) continue; const dist = Math.max(0, (x - e) * side), kk = 1 - 0.08 * smooth((dist - 2) / 30); for (let c = 0; c < 3; c++) F[i * 3 + c] = F[i * 3 + c] * (1 - w) + F[i * 3 + c] * kk0[c] * kk * w; coverPixels++; }
 }
 // 4. the alpha below the face: R3's neck and the face, eroded 2 px, soft 1.5 px, within the old texture's extent
 const sil = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; sil[i] = (r3Neck(x, y) > 128 || headA(x, y) > 128) ? 255 : 0; }
@@ -126,7 +146,10 @@ const jawY = x => { for (let i = 1; i < JAW.length; i++) if (x <= JAW[i][0]) { c
 const cutBelowJaw = async (file, m) => { const before = sha(file), im = await load(file); const keep = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) keep[y * im.W + x] = (m.y + y) < jawY(m.x + x) + 3 ? 255 : 0; const keepS = await blur1(keep, im.W, im.H, 2); const o = Buffer.from(im.d); let cut = 0; for (let i = 0; i < im.W * im.H; i++) { const a = im.d[i * 4 + 3], a2 = Math.min(a, keepS[i]); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return { before, after: sha(file), cut }; };
 // 6. the sides of the face under the hair: fade out 10 px beyond art A's visible skin (below y 300)
 const artIm = await load(path.resolve(here, '../../v3/artwork/hibiki-static-a.png'));
-const fadeSides = async (file, m) => { const im = await load(file); const skin = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) { const ax = m.x + x, ay = m.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) continue; const i = (ay * artIm.W + ax) * 4, r = artIm.d[i], g = artIm.d[i + 1], b = artIm.d[i + 2]; if (artIm.d[i + 3] > 200 && r - b > 25 && (r + g + b) / 3 > 90) skin[y * im.W + x] = 255; } for (let y = 0; y < im.H; y++) { let a = -1, b = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a < 0) a = x; b = x; } for (let x = a; x >= 0 && x <= b; x++) skin[y * im.W + x] = 255; } /* the hair's strands over the cheeks are not gaps in the face: each row's skin spans from its first to its last skin pixel */ const keepS = await blur1(morph(skin, im.W, im.H, 10, true), im.W, im.H, 5); const o = Buffer.from(im.d); let cut = 0; for (let y = 0; y < im.H; y++) { const w = smooth((m.y + y - 290) / 20); if (w <= 0) continue; /* the filled skin beside the face (a flat grey-mauve) continues the row's own skin from its edge, darkening by up to 10 % over 12 px */ let a0 = -1, b0 = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a0 < 0) a0 = x; b0 = x; } if (a0 >= 0) for (const [edge, side] of [[a0, -1], [b0, 1]]) { let ref = [0, 0, 0], k = 0; for (let x = edge; Math.abs(x - edge) < 4 && x >= 0 && x < im.W; x -= side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) ref[c] += im.d[i * 4 + c]; k++; } if (!k) continue; ref = ref.map(v => v / k); for (let x = edge + side; x >= 0 && x < im.W; x += side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 8) break; const dist = Math.abs(x - edge), kk = 1 - 0.10 * smooth(dist / 12); for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(im.d[i * 4 + c] * (1 - w) + ref[c] * kk * w); } } for (let x = 0; x < im.W; x++) { const i = y * im.W + x, a = o[i * 4 + 3], a2 = Math.round(a * (1 - w) + Math.min(a, keepS[i]) * w); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return cut; };
+const fadeSides = async (file, m) => { const im = await load(file); const skin = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) { const ax = m.x + x, ay = m.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) continue; const i = (ay * artIm.W + ax) * 4, r = artIm.d[i], g = artIm.d[i + 1], b = artIm.d[i + 2]; if (artIm.d[i + 3] > 200 && r - b > 25 && (r + g + b) / 3 > 90) skin[y * im.W + x] = 255; } for (let y = 0; y < im.H; y++) { let a = -1, b = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a < 0) a = x; b = x; } for (let x = a; x >= 0 && x <= b; x++) skin[y * im.W + x] = 255; } /* the hair's strands over the cheeks are not gaps in the face: each row's skin spans from its first to its last skin pixel */ const keepS = await blur1(morph(skin, im.W, im.H, 10, true), im.W, im.H, 5); const o = Buffer.from(im.d); let cut = 0;
+  // the filled skin beside the face (a flat grey-mauve) is matched in tone to the face's edge as the neck's is: per row and side, the ratio of the last 4 skin pixels to the first 4 filled pixels, smoothed over the rows
+  const spanOf = [], kRaw = [[], []]; for (let y = 0; y < im.H; y++) { let a0 = -1, b0 = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a0 < 0) a0 = x; b0 = x; } spanOf[y] = [a0, b0]; for (const [si, edge, side] of [[0, a0, -1], [1, b0, 1]]) { kRaw[si][y] = null; if (edge < 0) continue; let ref = [0, 0, 0], k = 0; for (let x = edge; Math.abs(x - edge) < 4 && x >= 0 && x < im.W; x -= side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) ref[c] += im.d[i * 4 + c]; k++; } let fe = [0, 0, 0], kf = 0; for (let x = edge + side; Math.abs(x - edge) <= 4 && x >= 0 && x < im.W; x += side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) fe[c] += im.d[i * 4 + c]; kf++; } if (k && kf) kRaw[si][y] = [0, 1, 2].map(c => Math.min(1.4, Math.max(0.6, (ref[c] / k) / Math.max(1, fe[c] / kf)))); } }
+  const kFace = [smoothRows(kRaw[0]), smoothRows(kRaw[1])]; for (let y = 0; y < im.H; y++) { const w = smooth((m.y + y - 290) / 20); if (w <= 0) continue; for (let x = 0; x < im.W; x++) { const i = y * im.W + x; if (skin[i]) continue; const sp = spanOf[y]; const sideK = sp[0] >= 0 && x < sp[0] ? kFace[0][y] : (sp[1] >= 0 && x > sp[1] ? kFace[1][y] : null); if (!sideK) continue; const dist = x < sp[0] ? sp[0] - x : x - sp[1], kk = 1 - 0.08 * smooth(dist / 12); for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(Math.min(255, im.d[i * 4 + c] * (1 - w) + im.d[i * 4 + c] * sideK[c] * kk * w)); } for (let x = 0; x < im.W; x++) { const i = y * im.W + x, a = o[i * 4 + 3], a2 = Math.round(a * (1 - w) + Math.min(a, keepS[i]) * w); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return cut; };
 const headUnder = await cutBelowJaw(underFile, metaAll.head_under), headSkinRec = await cutBelowJaw(path.join(parts, 'head_skin.png'), mHS);
 headUnder.sideFade = await fadeSides(underFile, metaAll.head_under); headSkinRec.sideFade = await fadeSides(path.join(parts, 'head_skin.png'), mHS); headUnder.after = sha(underFile); headSkinRec.after = sha(path.join(parts, 'head_skin.png'));
 fs.writeFileSync(log, JSON.stringify({ tool: 'rebuild-neck', neck_skin: { before: s0, after: sha(neckFile) }, head_under: headUnder, head_skin: headSkinRec, linePixels, wispPixels, coverPixels, opaqueAdded, silhouette: 'r3 neck + head_skin, eroded 2 px, soft 1.5 px', underHairDarkenMax: 0.10, jaw: JAW }, null, 1));
