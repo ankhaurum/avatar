@@ -126,8 +126,8 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   const cavityMeshUV = (u0, u1, v0, v1) => (tw, th) => {
     const positions = [], triangles = [], uvPositions = [];
     for (let j = 0; j <= rows; j++) for (let i = 0; i <= cols; i++) {
-      // the cavity stops 7 % of the mouth width short of each corner (the recut lips end about 5 px inside the corners of the mouth line) (the lips are closed there anyway), so no dark sliver reaches the corner
-      const x = mx0 + (mx1 - mx0) * (0.07 + 0.86 * i / cols), y = M(x) - 0.2 + 0.4 * j / rows;
+      // the cavity reaches to 1.5 % of the mouth width from each corner: where the lips part near a corner the dark of the mouth shows between them, as in the preview, not the skin; at the corner itself the lips meet and the strip has no height
+      const x = mx0 + (mx1 - mx0) * (0.015 + 0.97 * i / cols), y = M(x) - 0.2 + 0.4 * j / rows;
       positions.push((x - cav0[0]) * tex, (y - cav0[1]) * tex);
       uvPositions.push(tw * (u0 + (u1 - u0) * i / cols), th * (v0 + (v1 - v0) * j / rows));
     }
@@ -199,19 +199,23 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // the upper row: its crown tops COVER px above the upper lip's inner edge (the
   // gum line, the papillae and the lower necks of the lateral incisors under the
   // lip), so its incisal edge is crown height - COVER under that edge when the mouth is open; with a small opening the row
-  // follows the lower lip instead, its edge 0.6 px under the lower lip's inner
-  // edge (the lip's drawn edge, 1 px of darker red, lies on the tips: no dark band of the cavity under them). At the reference smile the lower lip's
+  // follows the lower lip instead, its edge 0.3 px above the lower lip's inner
+  // edge (1.2 px above the lip's drawn edge): as in the preview, a slight dark
+  // gap under the tips, in which the lower incisors' edges show as a thin row (the lower row, below). At the reference smile the lower lip's
   // inner edge lies just under the incisal edge, as in smile-local.png.
   // the teeth's keys: more MouthOpen keys than the lips (the rows follow a min() of two lip edges, which a 0 / 1 key pair would blend wrongly in between)
   const jawKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 0.12, 0.25, 0.4, 0.55, 0.75, 1], [-1, 0, 1]] };
-  // the crown height hidden under the upper lip comes from the set itself: the
-  // lowest crown top in the row (a lateral incisor's neck, 8 px under the
-  // centrals') plus 2 px for the lip's soft edge, so no gum shows at any opening
-  const COVER = Math.max(...JU.teeth.map(t => t.topArt)) + 2;
-  const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn + 0.6 * s); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
-  // the lower row stays under the lower lip (its canines' edges, the highest in the row, 0.5 px below the lip's inner edge) and rises so its incisors peep 1.5 px above it only with a wide opening (vowels, surprise)
-  const lowRise = -Math.min(...JL.teeth.map(t => t.topArt)); // the lower canines' edges above the incisors' (4 px in the set)
-  const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + (lowRise + 0.5) * s - (lowRise + 2) * s * smooth((open - 0.72) / 0.28); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
+  // the crown height hidden under the upper lip comes from the set itself: how
+  // far the gum reaches below the central incisors' crown top along the row
+  // (the 90th percentile over the columns: the side teeth's necks and most
+  // papillae; a few deeper gum wedges between the teeth stay visible, as in the preview) plus 1 px
+  // for the lip's soft edge, so no gum shows at any opening; the lip's edge
+  // lies at the gum line, as in the preview, and the crowns show almost whole
+  const COVER = JU.gumDepthArt + 1;
+  const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn - 0.3 * s); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
+  // the lower row: its incisors' edges 0.2 px under the lower lip's inner edge, 0.7 px above the lip's drawn edge (a thin row under the upper tips, as in the preview), rising by 2 px more with a wide opening (vowels, surprise). The row is bent down toward its ends (2.5 px at the ends, as the lower arch turns down and away in perspective), so its canines, 3 px taller than its incisors, do not stand up at the sides where the lower lip's edge rises toward the corners
+  const lowArchY = x => { const u = (x - mxc) / (JL.rowWidthArt / 2 * s); return 2.5 * s * u * u; };
+  const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + 0.2 * s - 2 * s * smooth((open - 0.72) / 0.28); return (x, y) => [L.dx + archX(x), tips - M(mxc) + lowArchY(x)]; } };
   if (!lipsImp) {
   // the corners: a small soft shadow (the mouth's depth) at each corner, moving with it; it replaces the crease that was drawn beyond the corners (taken out of the skin by recut-lips)
   {
