@@ -12,14 +12,14 @@
     1613,
     347
    ],
-   "scale": 0.05787037037037037,
-   "width": 373,
-   "height": 80,
-   "centreX": 186.5,
-   "crownTop": 22,
-   "crownBottom": 78,
-   "crownHeightArt": 14,
-   "widthArt": 93.25
+   "scale": 0.0625,
+   "width": 403,
+   "height": 87,
+   "centreX": 201.5,
+   "crownTop": 24,
+   "crownBottom": 85,
+   "crownHeightArt": 15.25,
+   "widthArt": 100.75
   },
   "lower": {
    "source": "Hibiki_V3_Lower_Teeth_Gums_Independent_REVIEW.png",
@@ -31,14 +31,14 @@
     1558,
     407
    ],
-   "scale": 0.055719360647553846,
-   "width": 347,
-   "height": 91,
-   "centreX": 173.5,
-   "crownTop": 41,
-   "crownBottom": 73,
-   "crownHeightArt": 8,
-   "widthArt": 86.75
+   "scale": 0.06017690949935816,
+   "width": 375,
+   "height": 98,
+   "centreX": 187.5,
+   "crownTop": 45,
+   "crownBottom": 79,
+   "crownHeightArt": 8.5,
+   "widthArt": 93.75
   }
  }
 }
