@@ -19,7 +19,10 @@
 // - starts from the texture before #86 (its SHA256 is checked);
 // - fills the collar's edge lines from the skin around them;
 // - takes the hair tips out of the skin below the jaw (bluish pixels, dilated
-//   2 px, filled by repeated neighbour averaging), so the hair parts alone draw them;
+//   2 px, filled by repeated neighbour averaging, then darkened to art A's own
+//   luminance there: the skin under the tips is in the hair's shadow, and a
+//   fill of the lit skin's tone showed as a lighter band with a straight edge
+//   along the tips' extent), so the hair parts alone draw them;
 // - under the side hair (the hair's alpha at rest, blurred 4 px) the skin,
 //   which extract-head had filled with a flat light mean colour, keeps its
 //   smooth fill but is matched in tone to the neck at the hair's edge (a
@@ -126,6 +129,15 @@ const linePixels = fillFrom(F, W, H, lineMask, alpha, 400);
 const wisp = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; if (alpha[i] < 150 || faceW[i] > 0.5) continue; const r = F[i * 3], g = F[i * 3 + 1], b = F[i * 3 + 2]; if (r - b < 32 && !(r > 200 && g > 190)) wisp[i] = 255; }
 const wispD = morph(wisp, W, H, 2, true); const wispMask = new Uint8Array(W * H); for (let i = 0; i < W * H; i++) wispMask[i] = wispD[i] > 0 && alpha[i] >= 150 && faceW[i] <= 0.5 ? 1 : 0;
 const wispPixels = fillFrom(F, W, H, wispMask, alpha, 900);
+// the filled pixels take the surrounding lit skin's tone, but in art A the skin
+// under the hair tips is in the hair's shadow (darker toward the hair), so the
+// fill stood out as a lighter band with a straight edge along the tips'
+// extent (seen on the phone as a seam beside the neck). The fill keeps the
+// skin's hue and follows art A's own luminance there (blurred 2 px, floored
+// at 55 % of the fill's), so it darkens toward the hair as the skin around it does.
+{ const LA = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const ax = mN.x + x, ay = mN.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) continue; const i = (ay * artIm.W + ax) * 4; LA[y * W + x] = Math.round((artIm.d[i] + artIm.d[i + 1] + artIm.d[i + 2]) / 3); }
+  const LAb = await blur1(LA, W, H, 2);
+  for (let i = 0; i < W * H; i++) { if (!wispMask[i]) continue; const fl = (F[i * 3] + F[i * 3 + 1] + F[i * 3 + 2]) / 3; if (fl < 1) continue; const k = Math.min(1, Math.max(0.55, LAb[i] / fl)); for (let c = 0; c < 3; c++) F[i * 3 + c] *= k; } }
 // 3. the skin under the side hair: extract-head's fill there is smooth but flat
 // and light (the mean of the visible neck). It keeps its own gradient and is
 // matched in tone to the neck beside it: per row and side, the ratio of the
