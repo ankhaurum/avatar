@@ -4,6 +4,13 @@
   "before": "831638734725a4774a2c9853b22cd6a5030627248c442d4476c4bec4a93edc89",
   "after": "20bb8bb28802b16b38fe971b0b4eef3a906366efbc53ba8522499a6bc2031994"
  },
+ "r3_neck": {
+  "before": "0afff1d082bef66dfb52b704df04802b29d0ffdc8152a6e7df5c7ba75d32e6f3",
+  "after": "95d15639e9a9f2e7b88cc3568ad1e5a8537767506b6330934aae17cc42cae088",
+  "trimmedPixels": 3109,
+  "trimArtPx": 8,
+  "rows": "art A y < 470, fading to 0 by 490"
+ },
  "head_under": {
   "before": "fc1c2326a204a08b0e5b80de77c8dbc9e2c497081af3f31dcc8142266b8ff547",
   "after": "8157ebfb9f2d205b3efb4b7273722780909aaace877df3c63552ef0f0c3eb888",

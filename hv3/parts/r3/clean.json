@@ -157,7 +157,8 @@
  },
  "neck.png": {
   "source": "4da8299b11a5293d1e8b45afa4ed71145e94984ea4ce1aa60b15844f761b927d",
-  "cleaned": "0afff1d082bef66dfb52b704df04802b29d0ffdc8152a6e7df5c7ba75d32e6f3"
+  "cleaned": "95d15639e9a9f2e7b88cc3568ad1e5a8537767506b6330934aae17cc42cae088",
+  "trimmedBy": "rebuild-neck.mjs"
  },
  "shoulder_frill_L.png": {
   "source": "26e5c90fc0641e3fa7481687cfbd3faf48cec4a5ad192968f073b4b9c51a316a",
