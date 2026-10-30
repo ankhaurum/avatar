@@ -33,8 +33,10 @@
 //   R3's neck is wider on the right), eroded 2 px,
 //   with a 1.5 px soft edge; opaque inside (the body's lighter neck no longer
 //   shows through), nothing over the shirt's shoulders or outside the body;
-// - the skin on the right that art A hides under the hair darkens by up to
-//   12 % over the 8 px before that contour, so the neck has an edge there;
+// - the skin on the right that art A hides under the hair darkens toward
+//   that contour (up to 10 % over 20 px) and ends in a clear line (up to 20 %
+//   more over the last 3 px), so when the hair swings off it the neck's side
+//   turns away and ends in a line instead of a flat dark band;
 // - head_skin and head_under (the face, warped by the head's turn) kept a
 //   block of neck below the jaw with straight edges; their alpha is cut 3 px
 //   under the jaw line (art A's chin and jaw, measured as the edge of the
@@ -45,9 +47,11 @@
 //   side hair, a wedge of filled skin with straight cut edges (the texture's
 //   hull), which showed as a flat patch when the hair swung away during a
 //   turn; below the cheekbones (art A y 300 and down) their alpha now fades
-//   out 10 px outside the skin that art A shows (each row from its first to
-//   its last skin pixel, so the hair's strands over the cheeks are not gaps;
-//   soft 5 px), so a little
+//   out 5 px outside the skin that art A shows (each row from its first to
+//   its last skin pixel, so the hair's strands over the cheeks are not gaps),
+//   with a crisp 1.2 px edge and up to 14 % darker toward it (a cheek's
+//   contour; a 10 px margin blurred 5 px read as a smudge when the hair
+//   swung), so a little
 //   shadowed skin remains under the hair's edge and the hair's swing reveals
 //   a rounded cheek, not a cut; and that remaining skin is matched in tone
 //   to the face's edge the same way as the neck's (a smoothed per-row ratio,
@@ -100,7 +104,12 @@ const F = new Float32Array(W * H * 3); for (let i = 0; i < W * H; i++) for (let 
 // tone match (it showed while the hair swung)
 const JAW = [[440, 360], [455, 368], [460, 372], [475, 384], [490, 394], [505, 402], [527, 408], [550, 402], [565, 389], [580, 376], [590, 370], [610, 360]]; // art A px: the chin's shadow edge, measured 2026-10-30
 const jawY = x => { for (let i = 1; i < JAW.length; i++) if (x <= JAW[i][0]) { const [x0, y0] = JAW[i - 1], [x1, y1] = JAW[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); } return JAW[JAW.length - 1][1]; };
-const faceW = new Float32Array(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const ax = mN.x + x, ay = mN.y + y; const x0 = Math.max(JAW[0][0], Math.min(JAW[JAW.length - 1][0], ax)); faceW[y * W + x] = smooth(headA(x, y) / 60) * (1 - smooth((ay - jawY(x0) - 1) / 4)); }
+// art A's visible face per row: the span from its first to its last skin pixel (the hair strands over
+// the cheeks are not gaps), 5 px wider on each side (the cheek turns away behind the hair's edge)
+const artSkinA = (ax, ay) => { if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) return false; const i = (ay * artIm.W + ax) * 4, r = artIm.d[i], g = artIm.d[i + 1], b = artIm.d[i + 2]; return artIm.d[i + 3] > 200 && r - b > 25 && (r + g + b) / 3 > 95; };
+const FACE_MARGIN = 5;
+const faceSpan = ay => { let a0 = -1, b0 = -1; for (let ax = 380; ax < 680; ax++) if (artSkinA(ax, ay)) { if (a0 < 0) a0 = ax; b0 = ax; } return a0 < 0 ? null : [a0 - FACE_MARGIN, b0 + FACE_MARGIN]; };
+const faceW = new Float32Array(W * H); for (let y = 0; y < H; y++) { const ay = mN.y + y; const sp = ay >= 300 ? faceSpan(ay) : null; for (let x = 0; x < W; x++) { const ax = mN.x + x; const x0 = Math.max(JAW[0][0], Math.min(JAW[JAW.length - 1][0], ax)); const above = 1 - smooth((ay - jawY(x0) - 1) / 4); const inSpan = ay < 300 ? smooth(headA(x, y) / 60) : (sp ? smooth((ax - sp[0] + 1) / 2) * smooth((sp[1] - ax + 1) / 2) : 0); faceW[y * W + x] = inSpan * above; } }
 // 1. the collar's edge lines (as fix-neck): thin lines below art A y 440, darker than a 6 px blur of their surroundings
 const L = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) L[i] = (d[i * 4] + d[i * 4 + 1] + d[i * 4 + 2]) / 3;
 const Lb = await blur1(L, W, H, 6);
@@ -147,15 +156,17 @@ for (let y = 0; y < H; y++) for (const [si, side] of [[0, -1], [1, 1]]) {
 // neck part (the body under the collar) is wide on that side, so the skin
 // spread under the hair to the shoulder with no contour, and once the hair
 // moved the neck had no edge. The neck is taken as symmetric about its axis
-// (x 527.5): the right contour is the mirror of the left contour of R3's
-// neck and the face (smoothed over the rows), and, where art A shows no skin
-// (under the hair), the skin darkens by up to 12 % over the 8 px before the
-// contour, as a cylinder's edge does, so the neck has a line there too.
+// (x 527.5): from the ear's level down (art A y 318; behind the jaw's corner and beside the jaw too,
+// where the skin had spread widest), the right contour is the mirror of the
+// left contour of R3's neck (smoothed over the rows), both sides are cut to
+// it. Where art A shows no skin (under the hair), the skin darkens toward
+// that contour as a cylinder's side does and ends in a clear line.
 const xcN = 527.5 - mN.x;
 const artAt = (x, y) => { const ax = mN.x + x, ay = mN.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) return null; const i = (ay * artIm.W + ax) * 4; return [artIm.d[i], artIm.d[i + 1], artIm.d[i + 2], artIm.d[i + 3]]; };
 const artSkin = (x, y) => { const p = artAt(x, y); return !!p && p[3] > 200 && p[0] - p[2] > 25 && (p[0] + p[1] + p[2]) / 3 > 95; };
-const neckRow = y => faceW[y * W + Math.round(xcN)] < 0.5; // below the face at the axis
-const inSil = (x, y) => r3Neck(x, y) > 128 || headA(x, y) > 128;
+const NECK_TOP = 318; // art A y at the ear (the neck's top edge then lies behind the cheek's contour): the neck's contour runs from there down, behind the jaw's corner and beside the jaw (not only below the chin)
+const neckRow = y => mN.y + y >= NECK_TOP;
+const inSil = (x, y) => r3Neck(x, y) > 128; // R3's neck only: the head's hull spreads beside the jaw under the hair
 const xlRaw = new Array(H).fill(null);
 for (let y = 0; y < H; y++) { if (!neckRow(y)) continue; for (let x = 0; x <= Math.round(xcN); x++) if (inSil(x, y)) { xlRaw[y] = x; break; } }
 const validL = xlRaw.map((v, y) => v !== null ? y : -1).filter(y => y >= 0);
@@ -163,24 +174,33 @@ const xl = new Array(H).fill(null);
 if (validL.length) { for (let y = 0; y < H; y++) { if (!neckRow(y)) continue; const near = validL.reduce((b, v) => Math.abs(v - y) < Math.abs(b - y) ? v : b, validL[0]); xl[y] = xlRaw[y] !== null ? xlRaw[y] : xlRaw[near]; }
   for (let pass = 0; pass < 3; pass++) for (let y = 1; y < H - 1; y++) if (xl[y] !== null && xl[y - 1] !== null && xl[y + 1] !== null) xl[y] = (xl[y - 1] + 2 * xl[y] + xl[y + 1]) / 4; }
 const xr = xl.map(v => v === null ? null : 2 * xcN - v);
+// the right side's contour as a cylinder's edge: where art A shows no skin
+// (under the hair), the skin keeps the tone matched above and darkens by up
+// to 10 % over the 20 px before the contour, then by up to 20 % more over the
+// last 3 px, a clear line, so when the hair swings off the neck's side the
+// neck turns away and ends in a line instead of a flat dark band
 let edgeShaded = 0;
-for (let y = 0; y < H; y++) { if (xr[y] === null) continue; for (let x = Math.ceil(xcN); x < W; x++) { const i = y * W + x; if (alpha[i] < 8 || faceW[i] > 0.5 || artSkin(x, y)) continue; const t = (x - (xr[y] - 8)) / 8; if (t <= 0) continue; const k = 1 - 0.12 * smooth(t); for (let c = 0; c < 3; c++) F[i * 3 + c] *= k; edgeShaded++; } }
+for (let y = 0; y < H; y++) { if (xr[y] === null) continue; for (let x = Math.ceil(xcN); x < W; x++) { const i = y * W + x; if (alpha[i] < 8 || faceW[i] > 0.5 || artSkin(x, y)) continue; const k = 1 - 0.10 * smooth((x - (xr[y] - 20)) / 20) - 0.20 * smooth((x - (xr[y] - 3)) / 3); if (k >= 0.999) continue; for (let c = 0; c < 3; c++) F[i * 3 + c] *= k; edgeShaded++; } }
 // 4. the alpha below the face: R3's neck and the face, eroded 2 px, soft 1.5 px, within the old texture's extent
 const sil = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; sil[i] = (r3Neck(x, y) > 128 || headA(x, y) > 128) ? 255 : 0; }
 for (let y = 0; y < H; y++) { if (xl[y] === null) continue; for (let x = 0; x < W; x++) if (x < xl[y] - 1 || x > xr[y] + 1) sil[y * W + x] = 0; }
 const silE = morph(sil, W, H, 2, false), silS = await blur1(silE, W, H, 1.5);
 const ext = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) ext[i] = alpha[i] > 12 ? 255 : 0; const extS = await blur1(ext, W, H, 1.5);
+// in the neck's rows the contour may reach past the extent extract-head painted (behind the jaw's corner): those pixels are filled from the neck skin beside them, and the extent does not cut the contour there
+const grown = new Uint8Array(W * H); for (let y = 0; y < H; y++) { if (!neckRow(y)) continue; for (let x = 0; x < W; x++) { const i = y * W + x; if (silS[i] > 20 && alpha[i] <= 12) grown[i] = 1; } }
+const grownPixels = fillFrom(F, W, H, grown, alpha, 300);
+for (let y = 0; y < H; y++) { if (!neckRow(y)) continue; for (let x = 0; x < W; x++) { const i = y * W + x; if (grown[i]) extS[i] = 255; } }
 const out = Buffer.alloc(W * H * 4); let opaqueAdded = 0;
 for (let i = 0; i < W * H; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(Math.min(255, Math.max(0, F[i * 3 + c]))); const aNew = Math.min(silS[i], extS[i]); const a = Math.round(alpha[i] * faceW[i] + aNew * (1 - faceW[i])); if (a > alpha[i] + 20) opaqueAdded++; out[i * 4 + 3] = a; }
 await sharp(out, { raw: { width: W, height: H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(neckFile);
 // 5. head_skin and head_under: nothing below the jaw line (3 px under it, soft 2 px)
 const cutBelowJaw = async (file, m) => { const before = sha(file), im = await load(file); const keep = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) keep[y * im.W + x] = (m.y + y) < jawY(m.x + x) + 3 ? 255 : 0; const keepS = await blur1(keep, im.W, im.H, 2); const o = Buffer.from(im.d); let cut = 0; for (let i = 0; i < im.W * im.H; i++) { const a = im.d[i * 4 + 3], a2 = Math.min(a, keepS[i]); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return { before, after: sha(file), cut }; };
 // 6. the sides of the face under the hair: fade out 10 px beyond art A's visible skin (below y 300)
-const fadeSides = async (file, m) => { const im = await load(file); const skin = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) { const ax = m.x + x, ay = m.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) continue; const i = (ay * artIm.W + ax) * 4, r = artIm.d[i], g = artIm.d[i + 1], b = artIm.d[i + 2]; if (artIm.d[i + 3] > 200 && r - b > 25 && (r + g + b) / 3 > 90) skin[y * im.W + x] = 255; } for (let y = 0; y < im.H; y++) { let a = -1, b = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a < 0) a = x; b = x; } for (let x = a; x >= 0 && x <= b; x++) skin[y * im.W + x] = 255; } /* the hair's strands over the cheeks are not gaps in the face: each row's skin spans from its first to its last skin pixel */ const keepS = await blur1(morph(skin, im.W, im.H, 10, true), im.W, im.H, 5); const o = Buffer.from(im.d); let cut = 0;
+const fadeSides = async (file, m) => { const im = await load(file); const skin = Buffer.alloc(im.W * im.H); for (let y = 0; y < im.H; y++) for (let x = 0; x < im.W; x++) { const ax = m.x + x, ay = m.y + y; if (ax < 0 || ay < 0 || ax >= artIm.W || ay >= artIm.H) continue; const i = (ay * artIm.W + ax) * 4, r = artIm.d[i], g = artIm.d[i + 1], b = artIm.d[i + 2]; if (artIm.d[i + 3] > 200 && r - b > 25 && (r + g + b) / 3 > 90) skin[y * im.W + x] = 255; } for (let y = 0; y < im.H; y++) { let a = -1, b = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a < 0) a = x; b = x; } for (let x = a; x >= 0 && x <= b; x++) skin[y * im.W + x] = 255; } /* the hair's strands over the cheeks are not gaps in the face: each row's skin spans from its first to its last skin pixel */ const keepS = await blur1(morph(skin, im.W, im.H, FACE_MARGIN, true), im.W, im.H, 1.2); const o = Buffer.from(im.d); let cut = 0;
   // the filled skin beside the face (a flat grey-mauve) is matched in tone to the face's edge as the neck's is: per row and side, the ratio of the last 4 skin pixels to the first 4 filled pixels, smoothed over the rows
   const spanOf = [], kRaw = [[], []]; for (let y = 0; y < im.H; y++) { let a0 = -1, b0 = -1; for (let x = 0; x < im.W; x++) if (skin[y * im.W + x]) { if (a0 < 0) a0 = x; b0 = x; } spanOf[y] = [a0, b0]; for (const [si, edge, side] of [[0, a0, -1], [1, b0, 1]]) { kRaw[si][y] = null; if (edge < 0) continue; let ref = [0, 0, 0], k = 0; for (let x = edge; Math.abs(x - edge) < 4 && x >= 0 && x < im.W; x -= side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) ref[c] += im.d[i * 4 + c]; k++; } let fe = [0, 0, 0], kf = 0; for (let x = edge + side; Math.abs(x - edge) <= 4 && x >= 0 && x < im.W; x += side) { const i = y * im.W + x; if (im.d[i * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) fe[c] += im.d[i * 4 + c]; kf++; } if (k && kf) kRaw[si][y] = [0, 1, 2].map(c => Math.min(1.4, Math.max(0.6, (ref[c] / k) / Math.max(1, fe[c] / kf)))); } }
-  const kFace = [smoothRows(kRaw[0]), smoothRows(kRaw[1])]; for (let y = 0; y < im.H; y++) { const w = smooth((m.y + y - 290) / 20); if (w <= 0) continue; for (let x = 0; x < im.W; x++) { const i = y * im.W + x; if (skin[i]) continue; const sp = spanOf[y]; const sideK = sp[0] >= 0 && x < sp[0] ? kFace[0][y] : (sp[1] >= 0 && x > sp[1] ? kFace[1][y] : null); if (!sideK) continue; const dist = x < sp[0] ? sp[0] - x : x - sp[1], kk = 1 - 0.08 * smooth(dist / 12); for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(Math.min(255, im.d[i * 4 + c] * (1 - w) + im.d[i * 4 + c] * sideK[c] * kk * w)); } for (let x = 0; x < im.W; x++) { const i = y * im.W + x, a = o[i * 4 + 3], a2 = Math.round(a * (1 - w) + Math.min(a, keepS[i]) * w); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return cut; };
+  const kFace = [smoothRows(kRaw[0]), smoothRows(kRaw[1])]; for (let y = 0; y < im.H; y++) { const w = smooth((m.y + y - 290) / 20); if (w <= 0) continue; for (let x = 0; x < im.W; x++) { const i = y * im.W + x; if (skin[i]) continue; const sp = spanOf[y]; const sideK = sp[0] >= 0 && x < sp[0] ? kFace[0][y] : (sp[1] >= 0 && x > sp[1] ? kFace[1][y] : null); if (!sideK) continue; const dist = x < sp[0] ? sp[0] - x : x - sp[1], kk = 1 - 0.14 * smooth(dist / FACE_MARGIN); for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(Math.min(255, im.d[i * 4 + c] * (1 - w) + im.d[i * 4 + c] * sideK[c] * kk * w)); } for (let x = 0; x < im.W; x++) { const i = y * im.W + x, a = o[i * 4 + 3], a2 = Math.round(a * (1 - w) + Math.min(a, keepS[i]) * w); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return cut; };
 const headUnder = await cutBelowJaw(underFile, metaAll.head_under), headSkinRec = await cutBelowJaw(path.join(parts, 'head_skin.png'), mHS);
 headUnder.sideFade = await fadeSides(underFile, metaAll.head_under); headSkinRec.sideFade = await fadeSides(path.join(parts, 'head_skin.png'), mHS); headUnder.after = sha(underFile); headSkinRec.after = sha(path.join(parts, 'head_skin.png'));
-fs.writeFileSync(log, JSON.stringify({ tool: 'rebuild-neck', neck_skin: { before: s0, after: sha(neckFile) }, head_under: headUnder, head_skin: headSkinRec, linePixels, wispPixels, coverPixels, opaqueAdded, silhouette: 'r3 neck + head_skin, the right contour the mirror of the left about x 527.5, eroded 2 px, soft 1.5 px', edgeShadedPixels: edgeShaded, underHairDarkenMax: 0.10, jaw: JAW }, null, 1));
+fs.writeFileSync(log, JSON.stringify({ tool: 'rebuild-neck', neck_skin: { before: s0, after: sha(neckFile) }, head_under: headUnder, head_skin: headSkinRec, linePixels, wispPixels, coverPixels, opaqueAdded, silhouette: 'r3 neck + head_skin, the right contour the mirror of the left about x 527.5, eroded 2 px, soft 1.5 px', edgeShadedPixels: edgeShaded, grownPixels, underHairDarkenMax: 0.10, jaw: JAW }, null, 1));
 console.log('neck skin rebuilt: collar lines', linePixels, 'px; hair tips taken out', wispPixels, 'px; skin under the hair continued', coverPixels, 'px; made opaque', opaqueAdded, 'px; cut below the jaw: head_under', headUnder.cut, 'px, head_skin', headSkinRec.cut, 'px; faded beside the cheeks and jaw: head_under', headUnder.sideFade, 'px, head_skin', headSkinRec.sideFade, 'px');
