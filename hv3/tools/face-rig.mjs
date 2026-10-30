@@ -197,16 +197,31 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // functions' own curve, or the rows would sit off the lips between the keys
   const lipsAtEnd = (open, form) => { const up = upperD(open, form)(mxc, M(mxc) - 0.05), lo = lowerD(open, form)(mxc, M(mxc) + 0.05); return { dx: up[0], upperIn: M(mxc) + up[1], lowerIn: M(mxc) + lo[1] }; };
   const lipsAt = (open, form) => { const a = lipsAtEnd(0, form), b = lipsAtEnd(1, form), l = (p, q) => p + (q - p) * open; return { dx: l(a.dx, b.dx), upperIn: l(a.upperIn, b.upperIn), lowerIn: l(a.lowerIn, b.lowerIn) }; };
-  // the upper incisal edge stays about 2 px above the lower lip's inner edge at the smile, so the dark of the mouth shows under the teeth, as in the reference smile
-  // the upper row: its crown tops COVER px above the upper lip's inner edge (the
-  // gum line, the papillae and the lower necks of the lateral incisors under the
-  // lip), so its incisal edge is crown height - COVER under that edge when the mouth is open; with a small opening the row
-  // follows the lower lip instead, its edge 0.3 px above the lower lip's inner
-  // edge (1.2 px above the lip's drawn edge): as in the preview, a slight dark
-  // gap under the tips, in which the lower incisors' edges show as a thin row (the lower row, below). At the reference smile the lower lip's
-  // inner edge lies just under the incisal edge, as in smile-local.png.
-  // the teeth's keys: more MouthOpen keys than the lips (the rows follow a min() of two lip edges, which a 0 / 1 key pair would blend wrongly in between)
-  const jawKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 0.12, 0.25, 0.4, 0.55, 0.75, 1], [-1, 0, 1]] };
+  // The rows between the lips, as in Live2D: the upper row hangs from the
+  // upper lip (its crown tops COVER px above the lip's inner edge: the gum
+  // line, the papillae and the lower necks of the lateral incisors under the
+  // lip, so its incisal edge is crown height - COVER under that edge), the
+  // lower row stands on the jaw with the lower lip, its incisors' edges above
+  // the lower lip's inner edge. The opening between the lips' inner edges (G)
+  // is shared out in the preview's order, top to bottom: the upper crowns, a
+  // dark gap, the lower incisors' edges, the lower lip. In the preview
+  // (Hibiki_V3_assembly_GENERATED_PREVIEW_20261030.png, centre column) the
+  // dark line under the upper tips and the lower incisors' edges in the
+  // mouth's shadow are 0.15 and 0.85 px at Hibiki's scale, under one pixel of
+  // the bust-up on a phone (0.63 px per art px at 390 x 844), so the shares are
+  // set to the smallest amounts that read there: the gap GAP_SHARE and the
+  // lower edges LOWER_SHARE of the opening (1.2 and 2.4 px at the resting
+  // smile), in the preview's order. With a small opening the upper row
+  // follows the lower lip (its edge GAP + LOWER above the lip's inner edge,
+  // so the smooth tips show, never the gum line); once the whole crown is out
+  // from under the upper lip the row stays with the upper lip and the extra
+  // opening goes to the dark of the mouth, where the tongue rises (below).
+  // The lower row's visible edge grows with the opening (4.9 px of its 7.9 px
+  // crown at MouthOpen 1), its gums always under the lower lip.
+  const GAP_SHARE = 0.10, LOWER_SHARE = 0.21;
+  const rowsAt = (open, form) => { const L = lipsAt(open, form), G = Math.max(0, L.lowerIn - L.upperIn), gap = GAP_SHARE * G, lower = LOWER_SHARE * G; return { ...L, G, gap, lower, upperTips: Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn - gap - lower), lowerTips: L.lowerIn - lower }; }; // (all in the head's units, like lipsAt)
+  // the teeth's keys: more MouthOpen keys than the lips (the upper row follows a min() of two lip edges, which a 0 / 1 key pair would blend wrongly in between; the kink is near 0.52)
+  const jawKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 0.12, 0.25, 0.4, 0.52, 0.65, 0.8, 1], [-1, 0, 1]] };
   // the crown height hidden under the upper lip comes from the set itself: how
   // far the gum reaches below the central incisors' crown top along the row
   // (the 90th percentile over the columns: the side teeth's necks and most
@@ -214,10 +229,10 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // for the lip's soft edge, so no gum shows at any opening; the lip's edge
   // lies at the gum line, as in the preview, and the crowns show almost whole
   const COVER = JU.gumDepthArt + 1;
-  const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn - 0.3 * s); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
-  // the lower row: its incisors' edges 0.2 px under the lower lip's inner edge, 0.7 px above the lip's drawn edge (a thin row under the upper tips, as in the preview), rising by 2 px more with a wide opening (vowels, surprise). The row is bent down toward its ends (2.5 px at the ends, as the lower arch turns down and away in perspective), so its canines, 3 px taller than its incisors, do not stand up at the sides where the lower lip's edge rises toward the corners
+  const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = rowsAt(open, form), tips = L.upperTips; return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
+  // the lower row: its incisors' edges LOWER_SHARE of the opening above the lower lip's inner edge (2.4 px at the resting smile, 4.9 px at MouthOpen 1), the rest of the row under the lip. The row is bent down toward its ends (2.5 px at the ends, as the lower arch turns down and away in perspective), so its canines, 3 px taller than its incisors, do not stand up at the sides where the lower lip's edge rises toward the corners
   const lowArchY = x => { const u = (x - mxc) / (JL.rowWidthArt / 2 * s); return 2.5 * s * u * u; };
-  const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + 0.2 * s - 2 * s * smooth((open - 0.72) / 0.28); return (x, y) => [L.dx + archX(x), tips - M(mxc) + lowArchY(x)]; } };
+  const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = rowsAt(open, form), tips = L.lowerTips; return (x, y) => [L.dx + archX(x), tips - M(mxc) + lowArchY(x)]; } };
   if (!lipsImp) {
   // the corners: a small soft shadow (the mouth's depth) at each corner, moving with it; it replaces the crease that was drawn beyond the corners (taken out of the skin by recut-lips)
   {
@@ -241,12 +256,15 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     await (await import('sharp')).default(buf, { raw: { width: sw, height: sh, channels: 4 } }).png().toFile(dir + '/../parts/oral/mouth-shade.png');
     await b.part('mouth_shade', { ...opart('mouth-shade.png', 478, 330), parent, order: z + 89.6, mesh: cavityMesh, key: cavityKey });
   }
-  // the tongue: behind the lower row, its tip 1.5 px under the lower lip's
-  // inner edge (hidden) and, with a wide opening (vowels, surprise), rising to
-  // 2 px above the lower incisors' edges, so the floor of the mouth shows pink
-  // under the dark cavity; keyed like the rows, tilted with them
+  // the tongue: behind the lower row, its top 1 px under the lower incisors'
+  // edges (hidden: the gap under the upper tips stays dark at the resting
+  // smile) and, as the mouth opens past about 0.45 (vowels, surprise), rising
+  // by up to 5 px, so it shows pink above the lower row, under the dark of
+  // the mouth (1.5 px above the lower edges at MouthOpen 0.65, 3.6 px at 0.82,
+  // 4 px at 1), never nearer than 3 px to the upper tips (a dark band stays
+  // under the upper teeth); keyed like the rows, tilted with them
   const TG = oral.tongue, tgTop = 348;
-  const tongueKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), top = L.lowerIn + 1.5 * s - 5 * s * smooth((open - 0.6) / 0.4); return () => [L.dx, top - P([0, tgTop])[1]]; } };
+  const tongueKey = { ...jawKey, fn: (open, form) => { const L = rowsAt(open, form), top = Math.max(L.upperTips + 3 * s, L.lowerTips + 1 * s - 5 * s * smooth((open - 0.4) / 0.5)); return () => [L.dx, top - P([0, tgTop])[1]]; } };
   await b.part('mouth_tongue', { ...opart(path.basename(TG.file), mxA - TG.centreX / jt, tgTop - TG.topY / jt, jt), parent: 'jaw_tilt', order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: tongueKey });
   await b.part('mouth_jaw_lower', { ...opart(path.basename(JL.file), lowerLeftA, lowerTopA, jt), parent: 'jaw_tilt', order: z + 89.3, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawLowerKey });
   await b.part('mouth_jaw_upper', { ...opart(path.basename(JU.file), upperLeftA, upperTopA, jt), parent: 'jaw_tilt', order: z + 89.4, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawUpperKey });
