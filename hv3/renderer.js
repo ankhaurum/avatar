@@ -30,7 +30,8 @@ export class AvatarRenderer {
     const textures = new Map();
     // mipmaps with trilinear filtering keep edges smooth when parts are shown smaller than their texture
     await Promise.all(files.map(async f => {
-      const tex = await Assets.load({ src: new URL('parts/' + f, baseURL).href, data: { autoGenerateMipmaps: true } });
+      // the texture version from the rig on the URL: an updated texture of the same name is never served from an old cache
+      const tex = await Assets.load({ src: new URL('parts/' + f + (model.json.textureVersion ? '?v=' + model.json.textureVersion : ''), baseURL).href, data: { autoGenerateMipmaps: true }, loadParser: 'loadTextures' });
       tex.source.style.mipmapFilter = 'linear';
       tex.source.style.maxAnisotropy = 4;
       tex.source.updateMipmaps();

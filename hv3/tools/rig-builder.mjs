@@ -4,6 +4,7 @@
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { autoMesh } from './automesh.mjs';
 
 export class RigBuilder {
@@ -94,6 +95,11 @@ export class RigBuilder {
     if (r.headCenter) r.headCenter = [round((r.headCenter[0] - origin[0]) * k), round((r.headCenter[1] - origin[1]) * k)];
   }
   write(name) {
+    // the version of the textures (a hash of all of them): the renderer puts it on
+    // every texture URL, so a browser or a CDN that cached an older texture of the
+    // same name fetches the new one after an update
+    const h = crypto.createHash('sha256'); for (const t of [...new Set(this.rig.parts.map(p => p.texture))].sort()) h.update(fs.readFileSync(path.join(this.outDir, 'parts', t)));
+    this.rig.textureVersion = h.digest('hex').slice(0, 12);
     fs.writeFileSync(path.join(this.outDir, name), JSON.stringify(this.rig));
     const v = this.rig.parts.reduce((a, p) => a + p.mesh.positions.length / 2, 0);
     return { parts: this.rig.parts.length, deformers: this.rig.deformers.length, vertices: v };

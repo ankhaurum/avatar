@@ -18,8 +18,8 @@ const [upperSrc, lowerSrc] = process.argv.slice(2);
 const here = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
 const out_dir = path.resolve(here, '../parts/oral'), out = out_dir;
 // art A px per source px: the upper central incisors are 216 px wide in the source
-// central incisors 12.5 px wide in art A (the reference smile shows them at about 11-12 px with the side teeth narrowing in perspective; the rig narrows the arch toward the corners)
-export const K_UPPER = 12.5 / 216, K_LOWER = 12.5 / 216 * (1613 / 1558) * 0.93; // the lower arch is drawn a little smaller and narrower
+// central incisors 13.5 px wide in art A (0.165 of the mouth width; the reference smile shows them at 0.13 but with a wide, tall opening and only 6-8 teeth in the light) (the reference smile shows them at about 11-12 px with the side teeth narrowing in perspective; the rig narrows the arch toward the corners)
+export const K_UPPER = 13.5 / 216, K_LOWER = 13.5 / 216 * (1613 / 1558) * 0.93; // the lower arch is drawn a little smaller and narrower
 const TEX = 4; // texture px per art A px
 const sha = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 const manifest = { units: 'art A px', texturePxPerArtPx: TEX, jaws: {} };
