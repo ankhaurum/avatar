@@ -27,6 +27,7 @@
 import { smooth } from './rig-builder.mjs';
 
 export const MID_SWITCH = 0.85;
+export const HAND_OVERSIZE = 1.05;
 // The drawn reach pose hangs the hand down to y 600 (fingers toward the viewer,
 // seen from a little above): in the bust-up (to y 524) only the sleeve shows.
 // The arm is lifted from the shoulder instead: the upper arm swings a little
@@ -143,7 +144,15 @@ export function planPose(name, mid = null, lift = null) {
   const layers = ['upper', 'lower'];
   // the final shape of the right arm: the drawn pose, or the lifted one
   const Rfinal = lift && lift.R ? laySegments(S.R, J.R, lift.R, { up: [0.7, 1.4], fa: [0.3, 1.5], hd: [0.3, 1.3] }, true) : null;
-  const finalField = l => Rfinal ? field(Rfinal[l]) : zero;
+  // the hands keep the everyday hand's size: a drawn hand longer (wrist to
+  // fingertip) than HAND_OVERSIZE x the everyday one is shrunk about its wrist
+  // to the everyday length at PoseEnter 1 (the chest pose's hands are drawn
+  // 1.21 x; laid on the everyday arms at PoseEnter 0 they already have that
+  // size, so they no longer swell as the pose arrives). The forearm and cuff
+  // stay (an identity segment), so the blend is smooth at the wrist.
+  const handShrink = [];
+  for (const side of ['R', 'L']) { const c = CHAIN[side], d = J[side], s = dist(c.W, c.T) / Math.max(1, dist(d.W, d.T)); if (s < 1 / HAND_OVERSIZE) { const W = d.W; handShrink.push({ a: d.E, b: d.W, sigma: 42, map: p => p }, { a: d.W, b: d.T, sigma: 40, map: p => [W[0] + (p[0] - W[0]) * s, W[1] + (p[1] - W[1]) * s] }); fits[side].handFinalScale = +s.toFixed(3); } }
+  const finalField = l => Rfinal ? field(Rfinal[l]) : (l === 'lower' && handShrink.length ? field(handShrink) : zero);
   if (Rfinal) fits.R.lift = { scales: Rfinal.scales, residual: Rfinal.residual };
   if (!mid) {
     const segs = { R: onApproach('R'), L: onApproach('L') };
