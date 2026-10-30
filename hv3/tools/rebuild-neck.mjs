@@ -61,6 +61,8 @@
 //   to the face's edge the same way as the neck's (a smoothed per-row ratio,
 //   darkening by up to 8 % over 12 px) instead of the flat grey-mauve fill,
 //   so it reads as the cheek in the hair's shadow, not a grey patch.
+// - R3's neck part is trimmed 8 px inward on both sides above the collar, so
+//   it never shows beside the neck skin (see step 7).
 // Recorded in parts/neck-fix.json (SHA256 before / after; idempotent).
 // Usage: node rebuild-neck.mjs   (parts/neck_skin.png must be the pre-#86
 // texture: git show 22d5144:hv3/parts/neck_skin.png)
@@ -235,5 +237,42 @@ const fadeSides = async (file, m) => { const im = await load(file); const skin =
   const kMirF = smoothRows(kMirFRaw); for (let y = 0; y < im.H; y++) { const w = smooth((m.y + y - 290) / 20); if (w <= 0) continue; for (let x = 0; x < im.W; x++) { const i = y * im.W + x; if (skin[i]) continue; const sp = spanOf[y]; const sideK = sp[0] >= 0 && x < sp[0] ? kFace[0][y] : (sp[1] >= 0 && x > sp[1] ? kFace[1][y] : null); if (!sideK) continue; const dist = x < sp[0] ? sp[0] - x : x - sp[1], kk = 1 - 0.14 * smooth(dist / FACE_MARGIN); const ax = m.x + x, ay = m.y + y; let mxA = Math.round(1055 - ax); for (let d = 0; d <= 8 && !artSkinA(mxA, ay); d++) mxA++; /* the nearest skin inward on the mirrored side (the left's own hair tips are skipped) */ if (x > sp[1] && artSkinA(mxA, ay) && kMirF[y]) { const j = (ay * artIm.W + mxA) * 4; for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(Math.min(255, im.d[i * 4 + c] * (1 - w) + artIm.d[j + c] * kMirF[y][c] * w)); } else for (let c = 0; c < 3; c++) o[i * 4 + c] = Math.round(Math.min(255, im.d[i * 4 + c] * (1 - w) + im.d[i * 4 + c] * sideK[c] * kk * w)); } for (let x = 0; x < im.W; x++) { const i = y * im.W + x, a = o[i * 4 + 3], a2 = Math.round(a * (1 - w) + Math.min(a, keepS[i]) * w); if (a2 < a) { o[i * 4 + 3] = a2; cut++; } } } await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file); return cut; };
 const headUnder = await cutBelowJaw(underFile, metaAll.head_under), headSkinRec = await cutBelowJaw(path.join(parts, 'head_skin.png'), mHS);
 headUnder.sideFade = await fadeSides(underFile, metaAll.head_under); headSkinRec.sideFade = await fadeSides(path.join(parts, 'head_skin.png'), mHS); headUnder.after = sha(underFile); headSkinRec.after = sha(path.join(parts, 'head_skin.png'));
-fs.writeFileSync(log, JSON.stringify({ tool: 'rebuild-neck', neck_skin: { before: s0, after: sha(neckFile) }, head_under: headUnder, head_skin: headSkinRec, linePixels, wispPixels, coverPixels, opaqueAdded, silhouette: 'r3 neck + head_skin, the right contour the mirror of the left about x 527.5, eroded 2 px, soft 1.5 px', edgeShadedPixels: edgeShaded, mirroredPixels: mirrored, grownPixels, underHairDarkenMax: 0.10, jaw: JAW }, null, 1));
+// 7. R3's own neck part (parts/r3/neck.png, the body's neck under the collar,
+// a child of the torso) is wider than the neck skin on both sides: at rest it
+// shows 2-4 px beyond the neck skin's contour, and up to 8 px when the head
+// turns (the neck skin follows the head, R3's neck the torso). That strip of
+// flat, lighter skin is what showed beside the neck whenever the side hair
+// swung off it. Where the neck skin covers it (above the collar: art A y <
+// 470, fading to no trim by y 490) its sides are trimmed R3_TRIM px inward
+// (soft 1.5 px), so it stays hidden under the neck skin at any head turn and
+// only fills between the neck skin and the collar lower down. Its cleaned
+// SHA256 in parts/r3/clean.json is updated to the trimmed file, so
+// clean-edges.mjs does not re-clean it.
+const R3_TRIM = 8;
+{
+  const r3neck = r3m.parts.find(p => p.id === 'neck'), r3File = path.join(parts, r3neck.file), ts = r3m.textureScale;
+  const cleanLog = path.join(parts, 'r3/clean.json'), clean = JSON.parse(fs.readFileSync(cleanLog));
+  const n0 = sha(r3File);
+  if (done && done.r3_neck && done.r3_neck.after === n0) console.log('R3 neck already trimmed');
+  else {
+    const im = await load(r3File); const o = Buffer.from(im.d); const al = Buffer.alloc(im.W * im.H); for (let i = 0; i < im.W * im.H; i++) al[i] = im.d[i * 4 + 3];
+    let trimmed = 0;
+    for (let ty = 0; ty < im.H; ty++) {
+      const ay = ((r3neck.y + ty / ts) - artA.offset[1]) / artA.scale; // art A row
+      const m = R3_TRIM * (1 - smooth((ay - 470) / 20)); if (m <= 0.01) continue;
+      const mt = m * artA.scale * ts; // in texture px
+      let l = -1, r = -1; for (let x = 0; x < im.W; x++) if (al[ty * im.W + x] > 128) { if (l < 0) l = x; r = x; } if (l < 0) continue;
+      for (let x = 0; x < im.W; x++) { const i = ty * im.W + x; if (x < l + mt || x > r - mt) { if (al[i]) { al[i] = 0; trimmed++; } } }
+    }
+    const alS = await blur1(al, im.W, im.H, 1.5);
+    for (let i = 0; i < im.W * im.H; i++) o[i * 4 + 3] = Math.min(im.d[i * 4 + 3], alS[i]);
+    await sharp(o, { raw: { width: im.W, height: im.H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(r3File);
+    const n1 = sha(r3File);
+    if (clean['neck.png']) { clean['neck.png'].cleaned = n1; clean['neck.png'].trimmedBy = 'rebuild-neck.mjs'; fs.writeFileSync(cleanLog, JSON.stringify(clean, null, 1)); }
+    globalThis.r3NeckRec = { before: n0, after: n1, trimmedPixels: trimmed, trimArtPx: R3_TRIM, rows: 'art A y < 470, fading to 0 by 490' };
+    console.log('R3 neck trimmed:', trimmed, 'px');
+  }
+  if (!globalThis.r3NeckRec) globalThis.r3NeckRec = done.r3_neck;
+}
+fs.writeFileSync(log, JSON.stringify({ tool: 'rebuild-neck', neck_skin: { before: s0, after: sha(neckFile) }, r3_neck: globalThis.r3NeckRec, head_under: headUnder, head_skin: headSkinRec, linePixels, wispPixels, coverPixels, opaqueAdded, silhouette: 'r3 neck + head_skin, the right contour the mirror of the left about x 527.5, eroded 2 px, soft 1.5 px', edgeShadedPixels: edgeShaded, mirroredPixels: mirrored, grownPixels, underHairDarkenMax: 0.10, jaw: JAW }, null, 1));
 console.log('neck skin rebuilt: collar lines', linePixels, 'px; hair tips taken out', wispPixels, 'px; skin under the hair continued', coverPixels, 'px; made opaque', opaqueAdded, 'px; cut below the jaw: head_under', headUnder.cut, 'px, head_skin', headSkinRec.cut, 'px; faded beside the cheeks and jaw: head_under', headUnder.sideFade, 'px, head_skin', headSkinRec.sideFade, 'px');
