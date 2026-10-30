@@ -3,10 +3,11 @@
 // at x 471-584, y 323-382; clean edges, the two meet exactly on their seam)
 // in place of the lips cut from art A. As drawn they are 13 % wider than art
 // A's mouth, their corner line is 2 deg flatter and the lower lip reaches a
-// little further down. Here they are fitted to art A's mouth: scaled along the
-// corner line so the corners sit on art A's corners (the thickness is kept),
-// rotated to art A's corner line, and placed so the seam lies on art A's mouth
-// line (within 0.3 px at the centre). The smile's corner lift stays a mesh
+// little further down. Here they are fitted to art A's mouth without any
+// distortion: one uniform scale (the same along and across the corner line) so
+// the corners sit on art A's corners, rotated to art A's corner line, and placed
+// so the seam lies on art A's mouth line at the corners. The lips keep their
+// drawn proportions (thickness 27 px at the centre instead of the material's 30.5). The smile's corner lift stays a mesh
 // deformation in the rig. Stored at 2 texture px per art A px (parts/lip_upper.png,
 // lip_lower.png, one canvas); the sources' SHA-256, the transform, the corners,
 // the seam and the outer contours (per column of art A) go to parts/lips-import.json.
@@ -35,13 +36,13 @@ const toArt = (x, y) => [SRC_ORIGIN[0] + x / SRC_SCALE, SRC_ORIGIN[1] + y / SRC_
 const mcL = toArt(x0, (sl.top[x0] + sl.bot[x0]) / 2), mcR = toArt(x1, (sl.top[x1] + sl.bot[x1]) / 2);
 // art A's corners (the ends of the mouth line traced on art A)
 const ml = def.mouthLine, aL = ml[0], aR = ml[ml.length - 1];
-// similarity along the corner line: scale kx along it (width), 1 across it (thickness), rotate to art A's line, corners onto corners
+// similarity: scale kx along and across the corner line (no distortion), rotate to art A's line, corners onto corners
 const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], sub = (a, b) => [a[0] - b[0], a[1] - b[1]], len = v => Math.hypot(v[0], v[1]);
 const dm = sub(mcR, mcL), da = sub(aR, aL), kx = len(da) / len(dm);
 const um = [dm[0] / len(dm), dm[1] / len(dm)], vm = [-um[1], um[0]], ua = [da[0] / len(da), da[1] / len(da)], va = [-ua[1], ua[0]];
 const midM = mid(mcL, mcR), midA = mid(aL, aR);
-const fwd = p => { const d = sub(p, midM), a = d[0] * um[0] + d[1] * um[1], b = d[0] * vm[0] + d[1] * vm[1]; return [midA[0] + a * kx * ua[0] + b * va[0], midA[1] + a * kx * ua[1] + b * va[1]]; };
-const inv = q => { const d = sub(q, midA), a = (d[0] * ua[0] + d[1] * ua[1]) / kx, b = d[0] * va[0] + d[1] * va[1]; return [midM[0] + a * um[0] + b * vm[0], midM[1] + a * um[1] + b * vm[1]]; };
+const fwd = p => { const d = sub(p, midM), a = d[0] * um[0] + d[1] * um[1], b = d[0] * vm[0] + d[1] * vm[1]; return [midA[0] + a * kx * ua[0] + b * kx * va[0], midA[1] + a * kx * ua[1] + b * kx * va[1]]; };
+const inv = q => { const d = sub(q, midA), a = (d[0] * ua[0] + d[1] * ua[1]) / kx, b = (d[0] * va[0] + d[1] * va[1]) / kx; return [midM[0] + a * um[0] + b * vm[0], midM[1] + a * um[1] + b * vm[1]]; };
 // output: 2 texture px per art A px over the mouth region
 const TEX = 2, R = { x: 468, y: 320, w: 128, h: 64 }, OW = R.w * TEX, OH = R.h * TEX;
 const sample = (img, x, y) => { // bilinear, premultiplied, source px
@@ -76,5 +77,5 @@ for (let i = 0; i < OW; i += TEX) {
 }
 const cornersArt = [fwd(mcL), fwd(mcR)];
 const seamC = seam.find(p => Math.abs(p[0] - 527.5) < 1), mlC = ml.find(p => Math.abs(p[0] - 528.9) < 1);
-fs.writeFileSync(path.join(parts, 'lips-import.json'), JSON.stringify({ sources: { upper: { file: path.basename(upperSrc), sha256: sha(upperSrc) }, lower: { file: path.basename(lowerSrc), sha256: sha(lowerSrc) } }, sourceFrame: { origin: SRC_ORIGIN, scale: SRC_SCALE }, transform: { scaleAlong: kx, scaleAcross: 1, rotateDeg: (Math.atan2(ua[1], ua[0]) - Math.atan2(um[1], um[0])) * 180 / Math.PI, materialCorners: [mcL, mcR], artCorners: [aL, aR] }, region: R, texPerArt: TEX, corners: cornersArt, seam, top, bottom }, null, 1));
+fs.writeFileSync(path.join(parts, 'lips-import.json'), JSON.stringify({ sources: { upper: { file: path.basename(upperSrc), sha256: sha(upperSrc) }, lower: { file: path.basename(lowerSrc), sha256: sha(lowerSrc) } }, sourceFrame: { origin: SRC_ORIGIN, scale: SRC_SCALE }, transform: { scaleAlong: kx, scaleAcross: kx, rotateDeg: (Math.atan2(ua[1], ua[0]) - Math.atan2(um[1], um[0])) * 180 / Math.PI, materialCorners: [mcL, mcR], artCorners: [aL, aR] }, region: R, texPerArt: TEX, corners: cornersArt, seam, top, bottom }, null, 1));
 console.log('lips imported: scale along', kx.toFixed(3), 'rotate', ((Math.atan2(ua[1], ua[0]) - Math.atan2(um[1], um[0])) * 180 / Math.PI).toFixed(2), 'deg; corners', cornersArt.map(c => c.map(v => v.toFixed(1))), '; seam at centre', seamC && seamC[1].toFixed(1), 'art A line', mlC && mlC[1], '; thickness at centre', (bottom.find(p => Math.abs(p[0] - 527.5) < 1)[1] - top.find(p => Math.abs(p[0] - 527.5) < 1)[1]).toFixed(1));

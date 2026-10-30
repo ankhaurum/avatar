@@ -103,80 +103,38 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // corners pulled down and a little out). The smile
   // pulls the corners out and up along a curve, so the closed smile is still a
   // closed line (both lips get the same offset on the mouth line).
-  const formD = (x, form) => { const t = sOf(x), c = t * t, c4 = c * c; return form >= 0 ? [t * (3.5 + 5 * c) * s * form, (-4.5 * c - 3 * c4) * s * form] : [-Math.sign(t) * 3.5 * s * form * c, -9.5 * s * form * c]; };
+  // (smile: the corners 3 px out and 2.5 px up at most; art A's mouth is already a slight smile)
+  const formD = (x, form) => { const t = sOf(x), c = t * t, c4 = c * c; return form >= 0 ? [t * (1.5 + 1.5 * c) * s * form, (-1.5 * c - 1.0 * c4) * s * form] : [-Math.sign(t) * 3.5 * s * form * c, -9.5 * s * form * c]; };
   // opening: the upper lip rises a little (more in the middle when smiling), the jaw takes the lower lip down
   // near the corners the lips stay together (as in the smile), so no dark wedge shows at a corner
   const cornerShut = t => smooth((1 - Math.abs(t)) / 0.3);
   const openUpper = (x, open, form = 0) => { const t = sOf(x); return -(1.3 + 8 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.55) * cornerShut(t); };
   const openLower = (x, open, form = 0) => { const t = sOf(x); return (14 - 2 * Math.max(0, form)) * s * open * Math.pow(Math.max(0, 1 - t * t), 0.8) * cornerShut(t); };
   const mouthKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 1], [-1, 0, 1]] };
-  const upperN = (open, form) => (x, y) => { const f = formD(x, form), up = Math.max(0, Math.min(1, (M(x) - y) / (9 * s))); return [f[0], f[1] * (y > M(x) - 3 * s ? 1 : 0.6) + openUpper(x, open, form) * (1 - 0.7 * up * Math.max(0, form))]; };
+  const upperN = (open, form) => (x, y) => { const f = formD(x, form), up = Math.max(0, Math.min(1, (M(x) - y) / (9 * s))); return [f[0], f[1] * (y > M(x) - 3 * s ? 1 : 0.6) + openUpper(x, open, form) * (1 - 0.4 * up * Math.max(0, form))]; };
   const lowerN = (open, form) => (x, y) => { const f = formD(x, form); const below = Math.max(0, Math.min(1, (y - M(x)) / (14 * s))); return [f[0] * (1 - below * 0.5), f[1] * (1 - below * 0.6) + openLower(x, open, form) * (1 - below * 0.15)]; };
-  // Smile (form > 0): the lip edges are placed on the contours of Codex's
-  // reference smile (studies/continuity/evidence/default-smile-close.png),
-  // registered to art A by the two iris centres (scale 0.609, -0.7 deg). At
-  // the default opening (REF_OPEN) the lips lie exactly on the reference;
-  // with the mouth closed the same lips meet on one seam (each lip keeps its
-  // shape and is moved to the seam), so the smile still closes fully. Each
-  // lip vertex keeps its relative place between its outer edge and the seam.
-  // The corners are set only a little above art A's own (about 1.2 px): the
-  // reference's corner points lie at the far ends of its corner creases, and
-  // lifting art A's crease that far bends it into a hook. The upper lip is
-  // drawn 1.5 px fuller in the middle than the reference contour (art A's
-  // upper lip is darker than the reference's, and compressed to the
-  // reference's height it reads as a thin dark line).
-  const REF_OPEN = 0.6;
-  const ref = { cL: [485.9, 346.6], cR: [568.1, 339.3],
-    utop: [[497.9, 341.7], [513.1, 337.5], [521.2, 336.4], [529.3, 337.3], [538.4, 335.1], [551.6, 336], [563.8, 336.9]],
-    uin: [[492.8, 345.9], [503, 346.2], [518.2, 345.6], [529.4, 344.9], [543.6, 343.2], [558.8, 341]],
-    lin: [[492.9, 349.4], [508.2, 354.3], [518.4, 355.7], [529.5, 355.6], [543.7, 352.4], [558.9, 347.1]],
-    lbot: [[498.1, 360], [513.4, 368], [528.7, 369.3], [543.9, 366.6], [559, 357.3]] };
-  // (a Catmull-Rom spline through the traced points, sampled finely, so the lips' contours and inner edges bend smoothly, with no corner at a knot)
-  const spline = q => { const out = []; for (let i = 0; i < q.length - 1; i++) { const p0 = q[Math.max(0, i - 1)], p1 = q[i], p2 = q[i + 1], p3 = q[Math.min(q.length - 1, i + 2)]; for (let k = 0; k < 8; k++) { const t = k / 8, t2 = t * t, t3 = t2 * t; out.push([0.5 * ((2 * p1[0]) + (-p0[0] + p2[0]) * t + (2 * p0[0] - 5 * p1[0] + 4 * p2[0] - p3[0]) * t2 + (-p0[0] + 3 * p1[0] - 3 * p2[0] + p3[0]) * t3), 0.5 * ((2 * p1[1]) + (-p0[1] + p2[1]) * t + (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * t2 + (-p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]) * t3)]); } } out.push(q[q.length - 1]); return out; };
-  const curveOf = pts => { const q = spline([ref.cL, ...pts, ref.cR].map(P)); return x => curveY(q, x); };
-  const utopR = curveOf(ref.utop);
-  const R = { utop: x => utopR(x) - 1.5 * s * Math.max(0, 1 - sOf(x) ** 2), uin: curveOf(ref.uin), lin: curveOf(ref.lin), lbot: curveOf(ref.lbot) };
-  const rcL = P(ref.cL), rcR = P(ref.cR);
-  const lu = def.lipU.poly.map(P), ll = def.lipL.poly.map(P);
-  // the lips' outer contours: from the recut (parts/lips-recut.json, per column of art A) when present, else the extraction polygons
-  const recut = lipsImp || (fs.existsSync(dir + '/../parts/lips-recut.json') ? JSON.parse(fs.readFileSync(dir + '/../parts/lips-recut.json')) : null);
-  const Utop0 = recut ? (x => curveY(recut.top.map(P), x)) : (x => curveY(lu.slice(0, 11), x)), Lbot0 = recut ? (x => curveY(recut.bottom.map(P), x)) : (x => curveY([...ll.slice(10), ll[0]], x));
-  const seamC = x => (R.uin(x) + R.lin(x)) / 2;
-  const smileD = (open, lip) => (x, y) => {
-    // beyond the corners the lip texture (the end of the crease) moves as one
-    // piece with its corner: the same shift for every pixel there, whatever
-    // its height, so nothing is squeezed onto one line and stuck out as a spike
-    if (x < mx0 || x > mx1) { const X = x < mx0 ? rcL[0] : rcR[0], xx = x < mx0 ? mx0 : mx1; return [X - xx, seamC(X) - M(xx)]; }
-    const xx = x;
-    const u = (xx - mx0) / (mx1 - mx0), X = rcL[0] + u * (rcR[0] - rcL[0]);
-    // the opening reaches almost to the corners, as in the reference (the
-    // lips meet again over the last tenth of the mouth width); past the
-    // reference opening the lower lip opens on a little further than
-    // linearly (the lip rolls out), so the lower teeth can show
-    const kk = open / REF_OPEN, k = (lip === 'l' ? kk + 0.6 * Math.max(0, kk - 1) ** 1.5 : kk) * smooth(Math.min(u, 1 - u) / 0.14), sm = seamC(X);
-    let outer0, outerR, innerR;
-    if (lip === 'u') { outer0 = Utop0(xx); innerR = R.uin(X); outerR = R.utop(X); }
-    else { outer0 = Lbot0(xx); innerR = R.lin(X); outerR = R.lbot(X); }
-    const inner = sm + (innerR - sm) * k, outer = outerR + (sm - innerR) * (1 - k);
-    const den = M(xx) - outer0, v = Math.abs(den) < 0.8 * s ? (lip === 'u' ? (y < M(xx) ? 0 : 1) : (y > M(xx) ? 0 : 1)) : Math.max(-1.5, Math.min(2, (y - outer0) / den));
-    return [X - xx, outer + v * (inner - outer) - y];
-  };
-  const mix = (a, b, w) => [a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w];
-  const upperD = (open, form) => (x, y) => form > 0 ? mix(upperN(open, 0)(x, y), smileD(open, 'u')(x, y), form) : upperN(open, form)(x, y);
-  const lowerD = (open, form) => (x, y) => form > 0 ? mix(lowerN(open, 0)(x, y), smileD(open, 'l')(x, y), form) : lowerN(open, form)(x, y);
+  // The lips are the imported material, undistorted (one uniform scale, see
+  // tools/import-lips.mjs): no keyform presses them onto another contour. The
+  // smile is only the corners' lift (formD) and the opening (openUpper /
+  // openLower), so the lips keep their drawn thickness and detail at every
+  // opening. (The earlier smile mapped the lips onto the traced contours of
+  // Codex's reference photo, which squeezed and blurred them.)
+  const upperD = upperN, lowerD = lowerN;
+  const recut = lipsImp;
   // cavity: a strip between the lips' inner edges, zero height when closed
   const cols = 96, rows = 4, cav0 = P([478, 330]);
-  const cavityMesh = (tw, th) => {
+  const cavityMeshUV = (u0, u1, v0, v1) => (tw, th) => {
     const positions = [], triangles = [], uvPositions = [];
     for (let j = 0; j <= rows; j++) for (let i = 0; i <= cols; i++) {
       // the cavity stops 7 % of the mouth width short of each corner (the recut lips end about 5 px inside the corners of the mouth line) (the lips are closed there anyway), so no dark sliver reaches the corner
       const x = mx0 + (mx1 - mx0) * (0.07 + 0.86 * i / cols), y = M(x) - 0.2 + 0.4 * j / rows;
       positions.push((x - cav0[0]) * tex, (y - cav0[1]) * tex);
-      uvPositions.push(tw * (0.04 + 0.92 * i / cols), th * (0.08 + 0.84 * j / rows));
+      uvPositions.push(tw * (u0 + (u1 - u0) * i / cols), th * (v0 + (v1 - v0) * j / rows));
     }
     for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const a = j * (cols + 1) + i; triangles.push(a, a + 1, a + cols + 2, a, a + cols + 2, a + cols + 1); }
     return { positions, triangles, uvPositions };
   };
+  const cavityMesh = cavityMeshUV(0.04, 0.96, 0.08, 0.92);
   const cavityKey = { ...mouthKey, fn: (open, form) => (x, y) => {
     const v = (y - (M(x) - 0.2)) / 0.4;
     const up = upperD(open, form)(x, M(x) - 0.05), lo = lowerD(open, form)(x, M(x) + 0.05);
@@ -195,23 +153,24 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
     top = c + (top - c) * taper; bottom = c + (bottom - c) * taper;
     return [up[0] * (1 - v) + lo[0] * v, top + (bottom - top) * v - y];
   } };
-  // mouth interior: the cavity and the tongue from Codex's rebuilt oral
-  // materials (studies/continuity, see prepare-oral.mjs), the teeth from
-  // ChatGPT's upper and lower jaws (tools/import-jaws.mjs, parts/oral/jaws.json).
+  // mouth interior: Codex's set of the cavity, the tongue and the two jaws on
+  // one canvas (tools/import-oral.mjs, parts/oral/oral.json), at one scale.
   // All are clipped by the cavity between the lips' inner edges.
-  const mxA = 527;
+  const oral = JSON.parse(fs.readFileSync(dir + '/../parts/oral/oral.json'));
+  const mxA = (mxc - tf.offset[0]) / s; // the rows and the tongue centred on the mouth
   const opart = (file, x, y, k = 1) => ({ file: 'oral/' + file, offset: P([x, y]), texScale: tex * k });
-  await b.part('mouth_cavity', { ...opart('oral-cavity.png', 478, 330), parent, order: z + 88, mesh: cavityMesh, key: cavityKey });
-  await b.part('mouth_cavity_mask', { ...opart('oral-cavity.png', 478, 330), parent, order: z + 88, maskOnly: true, mesh: cavityMesh, key: cavityKey });
-  // the tongue's top edge 2 px below the mouth line, following the jaw
-  const Ms = (() => { const n = ml.length; let A = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], v = [0, 0, 0]; for (const [x, y] of ml) { const t = (x - mxc) / mhw, r = [1, t, t * t]; for (let i = 0; i < 3; i++) { v[i] += r[i] * y; for (let j = 0; j < 3; j++) A[i][j] += r[i] * r[j]; } } const det = m => m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]); const D = det(A), c = [0, 1, 2].map(k => det(A.map((row, i) => row.map((e, j) => j === k ? v[i] : e))) / D); return x => { const t = (x - mxc) / mhw; return c[0] + c[1] * t + c[2] * t * t; }; })();
-  const follow = (fnOf, k, top, rel) => ({ ...mouthKey, fn: (open, form) => (x) => { const d = fnOf(open, form)(Math.min(mx1, Math.max(mx0, x)), M(x)); return [d[0], d[1] * k + Ms(x) + rel * s - P([0, top])[1]]; } });
-  // Teeth (ChatGPT's jaws, tools/import-jaws.mjs): each jaw is one piece,
+  // the strip between the lips maps the middle band of the cavity (its dark
+  // hole with the inner lips' red at the ends); the texture is opaque (flattened
+  // onto its rim colour), so the same mesh is the mask of the teeth and tongue
+  const cavityMeshC = cavityMeshUV(0.04, 0.96, 0.22, 0.78);
+  await b.part('mouth_cavity', { ...opart('cavity.png', 478, 330), parent, order: z + 88, mesh: cavityMeshC, key: cavityKey });
+  await b.part('mouth_cavity_mask', { ...opart('cavity.png', 478, 330), parent, order: z + 88, maskOnly: true, mesh: cavityMeshC, key: cavityKey });
+  // Teeth (Codex's jaws, tools/import-oral.mjs): each jaw is one piece,
   // never stretched, left-right symmetric in the head's own frame: both are
-  // children of jaw_tilt, a rotation by the head's tilt in art A (the eye
-  // line, -4.2 deg, the viewer's right up), so the row runs parallel to the
-  // mouth and the gum line keeps the same distance from the upper lip across
-  // the whole width. The upper row follows the lips, as in Live2D: its
+  // children of jaw_tilt, a rotation to the mouth's own corner line (about
+  // -5.2 deg, the viewer's right up), so the row runs parallel to the mouth,
+  // symmetric to it, and the gum line keeps the same distance from the upper
+  // lip across the whole width. The upper row follows the lips, as in Live2D: its
   // incisal edge sits just under the seam when the lips part a little (so a
   // small opening shows the smooth tips, not the gum line), and goes down with
   // the lower lip's inner edge (80 %) until the crown top would come within
@@ -220,30 +179,39 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // lower row hangs 1.5 px above the lower lip's inner edge, behind the upper
   // row: with a wide opening (vowels, surprise) the tips of the lower incisors
   // show, at the resting smile they are behind the upper teeth.
-  const jaws = JSON.parse(fs.readFileSync(dir + '/../parts/oral/jaws.json'));
-  const JU = jaws.jaws.upper, JL = jaws.jaws.lower, jt = jaws.texturePxPerArtPx;
-  const TILT = Math.atan2(247.09 - 255.0, 578.9 - 472.03) * 180 / Math.PI; // art A iris centres
+  const JU = oral.jaws.upper, JL = oral.jaws.lower, jt = oral.texturePxPerArtPx;
+  const TILT = Math.atan2(ml[ml.length - 1][1] - ml[0][1], ml[ml.length - 1][0] - ml[0][0]) * 180 / Math.PI; // the mouth's corner line
   b.rotation('jaw_tilt', parent, [mxc, M(mxc)], { params: ['MouthOpen'], keys: [[0, 1]], fn: () => ({ angle: TILT }) });
   const tipsRestA = (M(mxc) - tf.offset[1]) / s; // the incisal edges on the mouth line at rest
   const upperTopA = tipsRestA - JU.crownBottom / jt, upperLeftA = mxA - JU.centreX / jt;
   const lowerTopA = tipsRestA - JL.crownTop / jt, lowerLeftA = mxA - JL.centreX / jt;
-  // the arch seen from the front: the teeth narrow toward the corners (the
-  // reference smile shows the laterals at 0.75 and the canines at 0.35 of the
-  // central incisors' width; here a little more, 0.45, so the teeth turn away toward the corners): x' = cx + (x - cx) (1 - 0.45 u^2), u = (x - cx) / half width
-  const archX = x => { const u = (x - mxc) / (JU.widthArt / 2 * s); return -(x - mxc) * 0.45 * u * u; };
-  const lipsAt = (open, form) => { const up = upperD(open, form)(mxc, M(mxc) - 0.05), lo = lowerD(open, form)(mxc, M(mxc) + 0.05); return { dx: up[0], upperIn: M(mxc) + up[1], lowerIn: M(mxc) + lo[1] }; };
+  // the arch: the set is drawn for the mouth's width, with its own front-view
+  // arch (the side teeth narrow and turn away, the ends under the corners), so
+  // the rows are placed as drawn, not narrowed
+  const archX = () => 0;
+  // the lips' inner edges at the mouth's centre, as the rig draws them: the lips
+  // are keyed at MouthOpen 0 and 1 only (linear between), so the teeth, keyed
+  // more finely, take the same linear blend of the two ends, not the lip
+  // functions' own curve, or the rows would sit off the lips between the keys
+  const lipsAtEnd = (open, form) => { const up = upperD(open, form)(mxc, M(mxc) - 0.05), lo = lowerD(open, form)(mxc, M(mxc) + 0.05); return { dx: up[0], upperIn: M(mxc) + up[1], lowerIn: M(mxc) + lo[1] }; };
+  const lipsAt = (open, form) => { const a = lipsAtEnd(0, form), b = lipsAtEnd(1, form), l = (p, q) => p + (q - p) * open; return { dx: l(a.dx, b.dx), upperIn: l(a.upperIn, b.upperIn), lowerIn: l(a.lowerIn, b.lowerIn) }; };
   // the upper incisal edge stays about 2 px above the lower lip's inner edge at the smile, so the dark of the mouth shows under the teeth, as in the reference smile
-  // the upper row: its crown tops 6 px above the upper lip's inner edge (the
-  // gum line, the papillae and the shaded necks of the crowns under the lip),
-  // so its incisal edge is 9.5 px under that edge when the mouth is open; with a small opening the row
-  // follows the lower lip instead, its edge 0.6 px above the lower lip's inner
-  // edge (the tips peep, no dark band). At the reference smile the lower lip's
+  // the upper row: its crown tops COVER px above the upper lip's inner edge (the
+  // gum line, the papillae and the lower necks of the lateral incisors under the
+  // lip), so its incisal edge is crown height - COVER under that edge when the mouth is open; with a small opening the row
+  // follows the lower lip instead, its edge 0.6 px under the lower lip's inner
+  // edge (the lip's drawn edge, 1 px of darker red, lies on the tips: no dark band of the cavity under them). At the reference smile the lower lip's
   // inner edge lies just under the incisal edge, as in smile-local.png.
   // the teeth's keys: more MouthOpen keys than the lips (the rows follow a min() of two lip edges, which a 0 / 1 key pair would blend wrongly in between)
   const jawKey = { params: ['MouthOpen', 'MouthForm'], keys: [[0, 0.12, 0.25, 0.4, 0.55, 0.75, 1], [-1, 0, 1]] };
-  const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(L.upperIn + 9.5 * s, L.lowerIn - 0.6 * s); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
-  // the lower row stays under the lower lip (1 px below its inner edge) and rises to peep 1.5 px above it only with a wide opening (vowels, surprise)
-  const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + 1 * s - 2.5 * s * smooth((open - 0.72) / 0.28); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
+  // the crown height hidden under the upper lip comes from the set itself: the
+  // lowest crown top in the row (a lateral incisor's neck, 8 px under the
+  // centrals') plus 2 px for the lip's soft edge, so no gum shows at any opening
+  const COVER = Math.max(...JU.teeth.map(t => t.topArt)) + 2;
+  const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(L.upperIn + (JU.crownHeightArt - COVER) * s, L.lowerIn + 0.6 * s); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
+  // the lower row stays under the lower lip (its canines' edges, the highest in the row, 0.5 px below the lip's inner edge) and rises so its incisors peep 1.5 px above it only with a wide opening (vowels, surprise)
+  const lowRise = -Math.min(...JL.teeth.map(t => t.topArt)); // the lower canines' edges above the incisors' (4 px in the set)
+  const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + (lowRise + 0.5) * s - (lowRise + 2) * s * smooth((open - 0.72) / 0.28); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
   if (!lipsImp) {
   // the corners: a small soft shadow (the mouth's depth) at each corner, moving with it; it replaces the crease that was drawn beyond the corners (taken out of the skin by recut-lips)
   {
@@ -260,14 +228,20 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   // the depth of the mouth toward the corners: the side teeth turn away and
   // sink into the shadow of the cheeks (a real smile shows 6-8 teeth in the
   // light); a shade on the cavity's own mesh, transparent in the middle and
-  // dark from 40 % of the half width outward, drawn over the teeth
+  // dark from 55 % of the half width outward, drawn over the teeth
   {
     const sw = 180, sh = 100, buf = Buffer.alloc(sw * sh * 4);
-    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { const u = Math.abs((x + 0.5) / sw * 2 - 1) / 0.92, a = Math.min(1, Math.max(0, (u - 0.4) / 0.5)); const i = (y * sw + x) * 4; buf[i] = 48; buf[i + 1] = 18; buf[i + 2] = 20; buf[i + 3] = Math.round(255 * a * a * 0.92); }
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { const u = Math.abs((x + 0.5) / sw * 2 - 1) / 0.92, a = Math.min(1, Math.max(0, (u - 0.55) / 0.42)); const i = (y * sw + x) * 4; buf[i] = 48; buf[i + 1] = 18; buf[i + 2] = 20; buf[i + 3] = Math.round(255 * a * a * 0.92); }
     await (await import('sharp')).default(buf, { raw: { width: sw, height: sh, channels: 4 } }).png().toFile(dir + '/../parts/oral/mouth-shade.png');
     await b.part('mouth_shade', { ...opart('mouth-shade.png', 478, 330), parent, order: z + 89.6, mesh: cavityMesh, key: cavityKey });
   }
-  await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });
+  // the tongue: behind the lower row, its tip 1.5 px under the lower lip's
+  // inner edge (hidden) and, with a wide opening (vowels, surprise), rising to
+  // 2 px above the lower incisors' edges, so the floor of the mouth shows pink
+  // under the dark cavity; keyed like the rows, tilted with them
+  const TG = oral.tongue, tgTop = 348;
+  const tongueKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), top = L.lowerIn + 1.5 * s - 5 * s * smooth((open - 0.6) / 0.4); return () => [L.dx, top - P([0, tgTop])[1]]; } };
+  await b.part('mouth_tongue', { ...opart(path.basename(TG.file), mxA - TG.centreX / jt, tgTop - TG.topY / jt, jt), parent: 'jaw_tilt', order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: tongueKey });
   await b.part('mouth_jaw_lower', { ...opart(path.basename(JL.file), lowerLeftA, lowerTopA, jt), parent: 'jaw_tilt', order: z + 89.3, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawLowerKey });
   await b.part('mouth_jaw_upper', { ...opart(path.basename(JU.file), upperLeftA, upperTopA, jt), parent: 'jaw_tilt', order: z + 89.4, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawUpperKey });
   // fine vertices all along the mouth line, so the seam and the inner edges bend smoothly
