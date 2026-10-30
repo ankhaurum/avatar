@@ -16,9 +16,10 @@ import crypto from 'node:crypto';
 
 const [upperSrc, lowerSrc] = process.argv.slice(2);
 const here = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1');
-const out = path.resolve(here, '../parts/oral');
+const out_dir = path.resolve(here, '../parts/oral'), out = out_dir;
 // art A px per source px: the upper central incisors are 216 px wide in the source
-export const K_UPPER = 11.5 / 216, K_LOWER = 11.5 / 216 * (1613 / 1558) * 0.93; // the lower arch is drawn a little smaller and narrower
+// central incisors 12.5 px wide in art A (the reference smile shows them at about 11-12 px with the side teeth narrowing in perspective; the rig narrows the arch toward the corners)
+export const K_UPPER = 12.5 / 216, K_LOWER = 12.5 / 216 * (1613 / 1558) * 0.93; // the lower arch is drawn a little smaller and narrower
 const TEX = 4; // texture px per art A px
 const sha = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 const manifest = { units: 'art A px', texturePxPerArtPx: TEX, jaws: {} };
@@ -37,6 +38,27 @@ for (const [name, src, k] of [['upper', upperSrc, K_UPPER], ['lower', lowerSrc, 
   for (let x = 0; x < W; x++) { let top = -1, bot = -1; for (let y = 0; y < H; y++) if (tooth(y * W + x)) { if (top < 0) top = y; bot = y; } cols.push([top, bot]); }
   const mid = cols.slice(cx - 6, cx + 6);
   const crownTop = Math.min(...mid.map(c => c[0]).filter(v => v >= 0)), crownBottom = Math.max(...mid.map(c => c[1]));
+  // the gum between and below the crown tops (the papillae: pink, not tooth) is
+  // made transparent, so no orange lines show between the teeth under the lip;
+  // the gum above the crown tops stays (it is under the lip anyway)
+  if (name === 'upper') {
+    const out = Buffer.from(t.data); let n = 0;
+    // (painted with the nearest tooth pixel in the row, so the row stays whole; where no tooth is near, left as it is)
+    // gum / dark gap between the crowns: anything reddish that is not tooth,
+    // painted with the nearest tooth pixel in the row (left as it is when no tooth is within 8 px)
+    for (let y = crownTop - 1; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = y * W + x, r = t.data[i * 4], b = t.data[i * 4 + 2];
+      if (!(t.data[i * 4 + 3] > 20 && !tooth(i) && r - b > 28)) continue;
+      // between two crowns: a tooth within 12 px on both sides in this row (not the gum above a crown)
+      let L = 0, Rr = 0; for (let d = 1; d <= 12 && !(L && Rr); d++) { if (!L && x - d >= 0 && tooth(y * W + x - d)) L = 1; if (!Rr && x + d < W && tooth(y * W + x + d)) Rr = 1; } if (!(L && Rr)) continue;
+      let src = -1;
+      for (let d = 1; d <= 8 && src < 0; d++) for (const xx of [x - d, x + d]) { if (xx < 0 || xx >= W) continue; const j = y * W + xx; if (tooth(j)) { src = j; break; } }
+      if (src < 0) continue;
+      for (let c = 0; c < 3; c++) out[i * 4 + c] = t.data[src * 4 + c]; n++;
+    }
+    await sharp(out, { raw: { width: W, height: H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(path.join(out_dir, file));
+    console.log('  papillae painted', n, 'px');
+  }
   manifest.jaws[name] = { source: path.basename(src), sha256: sha(src), file: 'oral/' + file, srcBox: [x0, y0, w, h], scale: k, width: W, height: H,
     // in the stored texture (px): the centre column, the top and bottom of the central incisors' crowns
     centreX: W / 2, crownTop, crownBottom, crownHeightArt: (crownBottom - crownTop) / TEX, widthArt: W / TEX };

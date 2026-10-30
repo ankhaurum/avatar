@@ -60,18 +60,18 @@
   "h": 14
  },
  "lip_lower": {
-  "x": 481,
-  "y": 333,
-  "w": 93,
-  "h": 39,
-  "feathered": true
+  "x": 470,
+  "y": 322,
+  "w": 124,
+  "h": 58,
+  "recut": true
  },
  "lip_upper": {
-  "x": 481,
-  "y": 333,
-  "w": 93,
-  "h": 39,
-  "feathered": true
+  "x": 470,
+  "y": 322,
+  "w": 124,
+  "h": 58,
+  "recut": true
  },
  "head_skin": {
   "x": 370,
