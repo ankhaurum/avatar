@@ -1,0 +1,179 @@
+{
+ "units": "art A px",
+ "texturePxPerArtPx": 4,
+ "artPerCanvasPx": 0.052485248871041716,
+ "mouthWidthArt": 82.0344439854382,
+ "mouthWidthCanvas": 1563,
+ "sources": {
+  "upper": {
+   "file": "Hibiki_V3_upper_teeth_gums_HibikiRef_tidy_v3.png",
+   "sha256": "2d297506f512733a19fb537a86ad8a641e53eac0f61868fbd476dc7e20aac446",
+   "canvas": [
+    1736,
+    906
+   ]
+  },
+  "lower": {
+   "file": "Hibiki_V3_lower_teeth_gums_HibikiRef_tidy_v3.png",
+   "sha256": "9adde9c545234826d0dfa85767c61bdf2a516239863a0f1ee76e16e4091af80d",
+   "canvas": [
+    1736,
+    906
+   ]
+  },
+  "cavity": {
+   "file": "Hibiki_V3_mouth_cavity_20261030.png",
+   "sha256": "c12b0082e81a3f989caf3e88a36f83193a8351eeaf2734a5d0d02af5e63c1809",
+   "canvas": [
+    1735,
+    906
+   ]
+  },
+  "tongue": {
+   "file": "Hibiki_V3_tongue_20261030.png",
+   "sha256": "8a2516885d1ea626a1029da8ee8190d7278e6552eaa16cf121d7e39b34047e98",
+   "canvas": [
+    1735,
+    906
+   ]
+  }
+ },
+ "jaws": {
+  "upper": {
+   "file": "oral/jaw-upper.png",
+   "srcBox": [
+    66,
+    231,
+    1605,
+    490
+   ],
+   "width": 337,
+   "height": 103,
+   "centreX": 168.26770788055975,
+   "rowLeft": 17.215161629701683,
+   "rowRight": 319.3202541314178,
+   "crownTop": 9.237403801303342,
+   "crownBottom": 102.24126480078927,
+   "crownHeightArt": 23.25096524987148,
+   "widthArt": 84.23882443802195,
+   "rowWidthArt": 75.52627312542903,
+   "teeth": [
+    {
+     "widthArt": 15.69,
+     "topArt": 4.46,
+     "bottomArt": 20.05
+    },
+    {
+     "widthArt": 9.34,
+     "topArt": 7.98,
+     "bottomArt": 21.41
+    },
+    {
+     "widthArt": 12.86,
+     "topArt": 0,
+     "bottomArt": 23.2
+    },
+    {
+     "widthArt": 12.54,
+     "topArt": 0.37,
+     "bottomArt": 23.25
+    },
+    {
+     "widthArt": 9.45,
+     "topArt": 3.99,
+     "bottomArt": 21.41
+    },
+    {
+     "widthArt": 15.64,
+     "topArt": 3.1,
+     "bottomArt": 20.15
+    }
+   ]
+  },
+  "lower": {
+   "file": "oral/jaw-lower.png",
+   "srcBox": [
+    58,
+    255,
+    1625,
+    436
+   ],
+   "width": 341,
+   "height": 92,
+   "centreX": 170.5770588308856,
+   "rowLeft": 72.84952543300591,
+   "rowRight": 268.3045922287653,
+   "crownTop": 32.75079529553003,
+   "crownBottom": 77.2582863381734,
+   "crownHeightArt": 11.126872760660843,
+   "widthArt": 85.2885294154428,
+   "rowWidthArt": 48.86376669893984,
+   "teeth": [
+    {
+     "widthArt": 6.3,
+     "topArt": -3.99,
+     "bottomArt": 7.14
+    },
+    {
+     "widthArt": 9.18,
+     "topArt": -0.58,
+     "bottomArt": 9.66
+    },
+    {
+     "widthArt": 8.92,
+     "topArt": 0,
+     "bottomArt": 10.86
+    },
+    {
+     "widthArt": 8.92,
+     "topArt": 0,
+     "bottomArt": 11.13
+    },
+    {
+     "widthArt": 9.24,
+     "topArt": -0.58,
+     "bottomArt": 9.5
+    },
+    {
+     "widthArt": 6.3,
+     "topArt": -3.99,
+     "bottomArt": 7.14
+    }
+   ]
+  }
+ },
+ "cavity": {
+  "file": "oral/cavity.png",
+  "srcBox": [
+   57,
+   99,
+   1621,
+   711
+  ],
+  "width": 340,
+  "height": 149,
+  "rim": [
+   142,
+   56,
+   57
+  ],
+  "darkV": [
+   0.02109704641350211,
+   0.869198312236287
+  ]
+ },
+ "tongue": {
+  "file": "oral/tongue.png",
+  "srcBox": [
+   401,
+   164,
+   932,
+   592
+  ],
+  "width": 196,
+  "height": 124,
+  "centreX": 97.83250389562176,
+  "topY": 0.6298229864525006,
+  "widthArt": 48.91625194781088
+ }
+}
