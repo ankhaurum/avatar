@@ -14,10 +14,10 @@
 // and jagged fragments of the bow's tails, which showed as a grey block and
 // blue shards beside the pendant whenever the charm or the tails swung. The
 // strip under the charm (its rest box, 6 units wider, from 14 units below
-// its top, under the bow's knot, to 10 units below its bottom) is
-// filled from the white shirt around it (repeated neighbour averaging of
-// every pixel that is not shirt white there), so the shirt continues behind
-// the pendant. Both recorded in parts/r3/trim.json (idempotent by SHA256).
+// its top, under the bow's knot, to 10 units below its bottom) is filled:
+// every pixel there that is not plain shirt white (the cream placket shadow,
+// the bow's fragments) is replaced by repeated neighbour averaging seeded
+// from the shirt pixels only, so the plain shirt continues behind the pendant. Both recorded in parts/r3/trim.json (idempotent by SHA256).
 // Usage: node fix-chest.mjs
 import sharp from 'sharp';
 import fs from 'node:fs';
@@ -44,11 +44,16 @@ const removable2 = i => { if (near[i]) return false; const r = d[i * 4], g = d[i
 for (let i = 0; i < W * H; i++) if (vis[i]) stack.push(i);
 while (stack.length) { const i = stack.pop(), x = i % W, y = (i / W) | 0; for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; const j = yy * W + xx; if (vis[j] || !removable2(j)) continue; vis[j] = 1; stack.push(j); } }
 const out = Buffer.from(d); let removed = 0; for (let i = 0; i < W * H; i++) if (vis[i] && d[i * 4 + 3] > 0) { out[i * 4 + 3] = 0; removed++; }
-const al = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) al[i] = out[i * 4 + 3];
-const alB = await sharp(al, { raw: { width: W, height: H, channels: 1 } }).blur(0.8).extractChannel(0).raw().toBuffer();
-for (let i = 0; i < W * H; i++) out[i * 4 + 3] = Math.min(out[i * 4 + 3], alB[i]);
+// islands of fewer than 24 px left beside the chain (bits of shade and bow) are dropped
+{ const seen = new Uint8Array(W * H); for (let i0 = 0; i0 < W * H; i0++) { if (seen[i0] || out[i0 * 4 + 3] < 8) continue; const comp = [i0]; seen[i0] = 1; for (let k = 0; k < comp.length; k++) { const i = comp[k], x = i % W, y = (i / W) | 0; for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; const j = yy * W + xx; if (!seen[j] && out[j * 4 + 3] >= 8) { seen[j] = 1; comp.push(j); } } } if (comp.length < 24) for (const i of comp) { out[i * 4 + 3] = 0; removed++; } } }
+// the new edge as a soft matte: the kept pixels' mask, closed by 1 px (the chain's links join), blurred 1.2 px, limited by the original alpha; the chain's edge is then a smooth line rather than a pixel staircase
+const keepM = Buffer.alloc(W * H); for (let i = 0; i < W * H; i++) keepM[i] = out[i * 4 + 3] >= 8 ? 255 : 0;
+const grow = (src, r, isMax) => { const o = Buffer.alloc(W * H); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { let v = isMax ? 0 : 255; for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) { const xx = x + dx, yy = y + dy; const t = (xx < 0 || yy < 0 || xx >= W || yy >= H) ? 0 : src[yy * W + xx]; v = isMax ? Math.max(v, t) : Math.min(v, t); } o[y * W + x] = v; } return o; };
+const closed = grow(grow(keepM, 1, true), 1, false);
+const alB = await sharp(closed, { raw: { width: W, height: H, channels: 1 } }).blur(1.2).extractChannel(0).raw().toBuffer();
+for (let i = 0; i < W * H; i++) out[i * 4 + 3] = Math.min(d[i * 4 + 3], alB[i]);
 await sharp(out, { raw: { width: W, height: H, channels: 4 } }).png({ compressionLevel: 9 }).toFile(file);
-done['chest_charm.png'] = { before: s0, after: sha(file), removedPixels: removed, rule: 'border-connected shirt white (lum > 236, sat < 18) and bow navy (b > r + 20, lum < 110), then the shirt shade (lum > 212, sat < 22) touching it except within 2 px of gold and gems, made transparent; edge softened 0.8 px' };
+done['chest_charm.png'] = { before: s0, after: sha(file), removedPixels: removed, rule: 'border-connected shirt white (lum > 236, sat < 18) and bow navy (b > r + 20, lum < 110), then the shirt shade (lum > 212, sat < 22) touching it except within 2 px of gold and gems, made transparent; islands under 24 px dropped; the edge a soft matte (kept mask closed 1 px, blurred 1.2 px)' };
 fs.writeFileSync(log, JSON.stringify(done, null, 1));
 console.log('chest charm trimmed:', removed, 'px of shirt and bow removed');
 }
@@ -58,14 +63,16 @@ if (done['bodice.png'] && done['bodice.png'].after === b0) { console.log('bodice
   const r3m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'))), bod = r3m.parts.find(p => p.id === 'bodice'), ch = r3m.parts.find(p => p.id === 'chest_charm'), ts = r3m.textureScale;
   const bi = await sharp(bodFile).ensureAlpha().raw().toBuffer({ resolveWithObject: true }); const BW = bi.info.width, BH = bi.info.height, bd = bi.data;
   const x0 = Math.max(0, Math.round((ch.x - bod.x - 6) * ts)), x1 = Math.min(BW - 1, Math.round((ch.x + ch.w - bod.x + 6) * ts)), y0 = Math.max(0, Math.round((ch.y - bod.y + 14) * ts)), y1 = Math.min(BH - 1, Math.round((ch.y + ch.h - bod.y + 10) * ts));
-  const shirt = i => { const r = bd[i * 4], g = bd[i * 4 + 1], b = bd[i * 4 + 2]; const l = (r + g + b) / 3, sat = Math.max(r, g, b) - Math.min(r, g, b); return bd[i * 4 + 3] > 200 && l > 212 && sat < 24; };
+  // every pixel in the strip that is not plain shirt white (lum > 224, sat < 16: the cream placket shadow and the bow's fragments) is filled by repeated averaging of its neighbours, seeded from the shirt pixels around; the result is blended back over 2 px at the strip's edges
+  const shirt = i => { const r = bd[i * 4], g = bd[i * 4 + 1], b = bd[i * 4 + 2]; const l = (r + g + b) / 3, sat = Math.max(r, g, b) - Math.min(r, g, b); return bd[i * 4 + 3] > 200 && l > 224 && sat < 16; };
   const F = new Float32Array(BW * BH * 3); for (let i = 0; i < BW * BH; i++) for (let c = 0; c < 3; c++) F[i * 3 + c] = bd[i * 4 + c];
   const fill = []; for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) { const i = y * BW + x; if (bd[i * 4 + 3] > 200 && !shirt(i)) fill.push(i); }
   const inFill = new Uint8Array(BW * BH); for (const i of fill) inFill[i] = 1;
-  for (let it = 0; it < 600; it++) for (const i of fill) { const x = i % BW; let t = [0, 0, 0], k = 0; for (const j of [x > 0 ? i - 1 : -1, x < BW - 1 ? i + 1 : -1, i - BW, i + BW]) { if (j < 0 || j >= BW * BH || bd[j * 4 + 3] < 200) continue; for (let c = 0; c < 3; c++) t[c] += F[j * 3 + c]; k++; } if (k) for (let c = 0; c < 3; c++) F[i * 3 + c] = t[c] / k; }
+  // the fill's sources: shirt pixels (inside the strip too); the fill pixels take part once they have a value, so the strip fills inward from its shirt neighbours
+  for (let it = 0; it < 900; it++) for (const i of fill) { const x = i % BW; let t = [0, 0, 0], k = 0; for (const j of [x > 0 ? i - 1 : -1, x < BW - 1 ? i + 1 : -1, i - BW, i + BW]) { if (j < 0 || j >= BW * BH || bd[j * 4 + 3] < 200) continue; if (!inFill[j] && !shirt(j)) continue; for (let c = 0; c < 3; c++) t[c] += F[j * 3 + c]; k++; } if (k) for (let c = 0; c < 3; c++) F[i * 3 + c] = t[c] / k; }
   const bo = Buffer.from(bd); for (const i of fill) for (let c = 0; c < 3; c++) bo[i * 4 + c] = Math.round(F[i * 3 + c]);
   await sharp(bo, { raw: { width: BW, height: BH, channels: 4 } }).png({ compressionLevel: 9 }).toFile(bodFile);
-  done['bodice.png'] = { before: b0, after: sha(bodFile), filledPixels: fill.length, box: [x0, y0, x1, y1], rule: 'under the charm (its rest box + 6 units sideways, from 14 units below its top (under the knot) to 10 units below its bottom): every pixel that is not shirt white (lum > 212, sat < 24) filled from the shirt around by repeated neighbour averaging' };
+  done['bodice.png'] = { before: b0, after: sha(bodFile), filledPixels: fill.length, box: [x0, y0, x1, y1], rule: 'under the charm (its rest box + 6 units sideways, from 14 units below its top (under the knot) to 10 units below its bottom): every pixel that is not plain shirt white (lum > 224, sat < 16) filled by repeated neighbour averaging seeded from the shirt pixels only' };
   fs.writeFileSync(log, JSON.stringify(done, null, 1));
   console.log('bodice filled under the charm:', fill.length, 'px');
 }
