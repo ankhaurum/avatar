@@ -93,7 +93,9 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   }
   // mouth
   const parent = parents.mouth || base;
-  const ml = def.mouthLine.map(P), mx0 = ml[0][0], mx1 = ml[ml.length - 1][0], mxc = (mx0 + mx1) / 2, mhw = (mx1 - mx0) / 2;
+  // the lips: ChatGPT's independent lips when imported (parts/lips-import.json, tools/import-lips.mjs: their seam is the mouth line), else art A's cut
+  const lipsImp = fs.existsSync(dir + '/../parts/lips-import.json') ? JSON.parse(fs.readFileSync(dir + '/../parts/lips-import.json')) : null;
+  const ml = (lipsImp ? [lipsImp.corners[0], ...lipsImp.seam.filter(p => p[0] > lipsImp.corners[0][0] + 1 && p[0] < lipsImp.corners[1][0] - 1), lipsImp.corners[1]] : def.mouthLine).map(P), mx0 = ml[0][0], mx1 = ml[ml.length - 1][0], mxc = (mx0 + mx1) / 2, mhw = (mx1 - mx0) / 2;
   const M = x => curveY(ml, x);
   const sOf = x => Math.max(-1, Math.min(1, (x - mxc) / mhw));
   // Four keyforms over MouthOpen x MouthForm, built from art A's closed mouth:
@@ -135,7 +137,7 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   const rcL = P(ref.cL), rcR = P(ref.cR);
   const lu = def.lipU.poly.map(P), ll = def.lipL.poly.map(P);
   // the lips' outer contours: from the recut (parts/lips-recut.json, per column of art A) when present, else the extraction polygons
-  const recut = fs.existsSync(dir + '/../parts/lips-recut.json') ? JSON.parse(fs.readFileSync(dir + '/../parts/lips-recut.json')) : null;
+  const recut = lipsImp || (fs.existsSync(dir + '/../parts/lips-recut.json') ? JSON.parse(fs.readFileSync(dir + '/../parts/lips-recut.json')) : null);
   const Utop0 = recut ? (x => curveY(recut.top.map(P), x)) : (x => curveY(lu.slice(0, 11), x)), Lbot0 = recut ? (x => curveY(recut.bottom.map(P), x)) : (x => curveY([...ll.slice(10), ll[0]], x));
   const seamC = x => (R.uin(x) + R.lin(x)) / 2;
   const smileD = (open, lip) => (x, y) => {
@@ -240,6 +242,7 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
   const jawUpperKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = Math.min(L.upperIn + 8.0 * s, L.lowerIn - 0.6 * s); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
   // the lower row stays under the lower lip (1 px below its inner edge) and rises to peep 1.5 px above it only with a wide opening (vowels, surprise)
   const jawLowerKey = { ...jawKey, fn: (open, form) => { const L = lipsAt(open, form), tips = L.lowerIn + 1 * s - 2.5 * s * smooth((open - 0.72) / 0.28); return (x, y) => [L.dx + archX(x), tips - M(mxc)]; } };
+  if (!lipsImp) {
   // the corners: a small soft shadow (the mouth's depth) at each corner, moving with it; it replaces the crease that was drawn beyond the corners (taken out of the skin by recut-lips)
   {
     const cw = 8, chh = 5, buf = Buffer.alloc(cw * chh * 4);
@@ -251,13 +254,14 @@ export async function buildFace(b, { parent: base, parents = {}, z, dir, tf, r3 
         key: { ...mouthKey, fn: (open, form) => { const d = upperD(open, form)(P([c[0], c[1]])[0] + sideSign * 0.01, P([c[0], c[1]])[1] - 0.3); return () => [d[0], d[1]]; } } });
     }
   }
+  }
   await b.part('mouth_tongue', { ...opart('tongue.png', mxA - 35, 348, 176 / 70), parent, order: z + 89.2, spacing: 3 * s, dilate: 1, mask: 'mouth_cavity_mask', key: follow(lowerD, 0.85, 348, 2) });
   await b.part('mouth_jaw_lower', { ...opart(path.basename(JL.file), lowerLeftA, lowerTopA, jt), parent: 'jaw_tilt', order: z + 89.3, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawLowerKey });
   await b.part('mouth_jaw_upper', { ...opart(path.basename(JU.file), upperLeftA, upperTopA, jt), parent: 'jaw_tilt', order: z + 89.4, spacing: 2.5 * s, dilate: 1, mask: 'mouth_cavity_mask', key: jawUpperKey });
   // fine vertices all along the mouth line, so the seam and the inner edges bend smoothly
   const lipDetail = [{ x: mx0, y: M(mx0), r: 9 * s, spacing: 1.5 * s }, { x: mx1, y: M(mx1), r: 9 * s, spacing: 1.5 * s }];
   for (let x = mx0 + 4 * s; x < mx1; x += 4 * s) lipDetail.push({ x, y: M(x), r: 5 * s, spacing: 1.4 * s });
-  await b.part('lip_lower', { file: 'lip_lower.png', offset: off('lip_lower'), texScale: tex, parent, order: z + 91, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: lowerD } });
-  await b.part('lip_upper', { file: 'lip_upper.png', offset: off('lip_upper'), texScale: tex, parent, order: z + 91.1, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: upperD } });
+  await b.part('lip_lower', { file: 'lip_lower.png', offset: off('lip_lower'), texScale: tex * (meta.lip_lower.texPerArt || 1), parent, order: z + 91, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: lowerD } });
+  await b.part('lip_upper', { file: 'lip_upper.png', offset: off('lip_upper'), texScale: tex * (meta.lip_upper.texPerArt || 1), parent, order: z + 91.1, spacing: 4 * s, dilate: 2, detail: lipDetail, key: { ...mouthKey, fn: upperD } });
   return { M, mx0, mx1, mxc, openLower, s };
 }
