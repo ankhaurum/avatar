@@ -3,7 +3,7 @@
 // WebGL2 renderer, textures are premultiplied and stencil masks are drawn with
 // a discard threshold so a clip follows the mask's opaque pixels rather than
 // its triangles.
-import { Application, Container, Mesh, MeshGeometry, Shader, UniformGroup, Assets } from './vendor/pixi.min.mjs';
+import { Application, Container, Mesh, MeshGeometry, Shader, UniformGroup, Texture, ImageSource } from './vendor/pixi.min.mjs';
 
 const vertex = `in vec2 aPosition;in vec2 aUV;out vec2 vUV;
 uniform mat3 uProjectionMatrix;uniform mat3 uWorldTransformMatrix;uniform mat3 uTransformMatrix;
@@ -17,26 +17,48 @@ export const VIEWS = {
   full: [120, 0, 784, 1536]
 };
 
+// a lossless WebP decodes to the same pixels as its PNG at under half the size;
+// a browser that cannot decode it reads the PNGs
+const webpOK = new Promise(res => { const i = new Image(); i.onload = () => res(i.width === 1); i.onerror = () => res(false); i.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=='; });
+
 export class AvatarRenderer {
+  // the PixiJS application can be started before the rig has arrived
+  start(host) {
+    return this.started ||= (async () => {
+      this.app = new Application();
+      await this.app.init({ resizeTo: host, backgroundAlpha: 0, antialias: true, autoDensity: true, resolution: Math.min(2, window.devicePixelRatio || 1), preference: 'webgl' });
+      host.appendChild(this.app.canvas);
+    })();
+  }
   async init(host, model, baseURL) {
     this.model = model;
-    this.app = new Application();
-    await this.app.init({ resizeTo: host, backgroundAlpha: 0, antialias: true, autoDensity: true, resolution: Math.min(2, window.devicePixelRatio || 1), preference: 'webgl' });
-    host.appendChild(this.app.canvas);
-    this.root = new Container();
-    this.root.sortableChildren = true;
-    this.app.stage.addChild(this.root);
     const files = [...new Set(model.parts.map(p => p.texture))];
-    const textures = new Map();
+    const textures = new Map(), versions = model.json.textureFiles, webp = await webpOK;
+    // each texture's version from the rig on its URL: an updated texture of the
+    // same name is never served from an old cache, and the others stay cached
+    const url = f => {
+      const v = versions?.[f];
+      if (v) return 'parts/' + (webp ? f.replace(/\.png$/, '.webp') + '?v=' + v.webp : f + '?v=' + v.png);
+      return 'parts/' + f + (model.json.textureVersion ? '?v=' + model.json.textureVersion : '');
+    };
+    // the textures are fetched and decoded while the application starts
+    await Promise.all([this.start(host), ...files.map(async f => {
+      // decoded by an image element and premultiplied by WebGL on upload: Chrome
+      // premultiplies a WebP in its decoder with its own rounding (up to 3/255
+      // off on soft edges), while this path gives the PNG's pixels exactly
+      const img = new Image(); img.crossOrigin = 'anonymous'; img.src = new URL(url(f), baseURL).href;
+      await img.decode();
+      textures.set(f, new Texture({ source: new ImageSource({ resource: img, alphaMode: 'premultiply-alpha-on-upload', autoGenerateMipmaps: true }) }));
+    })]);
     // mipmaps with trilinear filtering keep edges smooth when parts are shown smaller than their texture
-    await Promise.all(files.map(async f => {
-      // the texture version from the rig on the URL: an updated texture of the same name is never served from an old cache
-      const tex = await Assets.load({ src: new URL('parts/' + f + (model.json.textureVersion ? '?v=' + model.json.textureVersion : ''), baseURL).href, data: { autoGenerateMipmaps: true }, loadParser: 'loadTextures' });
+    for (const tex of textures.values()) {
       tex.source.style.mipmapFilter = 'linear';
       tex.source.style.maxAnisotropy = 4;
       tex.source.updateMipmaps();
-      textures.set(f, tex);
-    }));
+    }
+    this.root = new Container();
+    this.root.sortableChildren = true;
+    this.app.stage.addChild(this.root);
     this.items = [];
     const byId = new Map(), maskGroups = new Map();
     const make = (p, cut) => {

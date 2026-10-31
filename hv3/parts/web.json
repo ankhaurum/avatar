@@ -1,0 +1,418 @@
+{
+ "brow_L.png": {
+  "png": "ba0e9ede1e8b",
+  "webp": "0a490ca23b82"
+ },
+ "brow_R.png": {
+  "png": "cc63c03fe970",
+  "webp": "b90ae91c2a02"
+ },
+ "eye_iris_L.png": {
+  "png": "de917aea7e36",
+  "webp": "7bbf72c749f3"
+ },
+ "eye_iris_R.png": {
+  "png": "7c5c8e810043",
+  "webp": "e4f287b0a4e5"
+ },
+ "eye_lash_lower_L.png": {
+  "png": "83fda480fcd0",
+  "webp": "e717cd748a06"
+ },
+ "eye_lash_lower_R.png": {
+  "png": "10f42a6cde71",
+  "webp": "623996051d58"
+ },
+ "eye_lash_upper_L.png": {
+  "png": "50efa6f4c2cc",
+  "webp": "5806bed63eed"
+ },
+ "eye_lash_upper_R.png": {
+  "png": "20b7a441d892",
+  "webp": "f39d5746b007"
+ },
+ "eye_white_L.png": {
+  "png": "9a3a4fc25bbf",
+  "webp": "3003655ae060"
+ },
+ "eye_white_R.png": {
+  "png": "344baf450b05",
+  "webp": "8d100014ff1a"
+ },
+ "hair_front.png": {
+  "png": "9ea4edb4e197",
+  "webp": "db1dca039291"
+ },
+ "hair_side_L.png": {
+  "png": "f52807f48d39",
+  "webp": "594b79483055"
+ },
+ "hair_side_R.png": {
+  "png": "2acbdc6a7f08",
+  "webp": "37cb1fa5830a"
+ },
+ "head_skin.png": {
+  "png": "1d4fec517a48",
+  "webp": "0c0e57328295"
+ },
+ "head_under.png": {
+  "png": "8157ebfb9f2d",
+  "webp": "f604d2d6091f"
+ },
+ "lip_lower.png": {
+  "png": "b21a748fe139",
+  "webp": "e172f3a882d3"
+ },
+ "lip_upper.png": {
+  "png": "fd26052d8be4",
+  "webp": "58b9b834ff04"
+ },
+ "neck_skin.png": {
+  "png": "f960698122ee",
+  "webp": "1979b9057eb3"
+ },
+ "oral/cavity.png": {
+  "png": "9ff8510cb1d2",
+  "webp": "06b105548849"
+ },
+ "oral/jaw-lower.png": {
+  "png": "054014438c92",
+  "webp": "270fbc0737c8"
+ },
+ "oral/jaw-upper.png": {
+  "png": "7dcd215e2f5c",
+  "webp": "d984babf33f9"
+ },
+ "oral/mouth-shade.png": {
+  "png": "3cc471df6d8b",
+  "webp": "925c2fcfe421"
+ },
+ "oral/tongue.png": {
+  "png": "79da0487f9c4",
+  "webp": "c96f04def682"
+ },
+ "pose/chest_lower.png": {
+  "png": "49e68fdd0d97",
+  "webp": "9fca48ed21e1"
+ },
+ "pose/chest_upper.png": {
+  "png": "d461dd9aa90e",
+  "webp": "195891e3203d"
+ },
+ "pose/chin_lower.png": {
+  "png": "72e475781731",
+  "webp": "9067dd00bf10"
+ },
+ "pose/chin_upper.png": {
+  "png": "1bed264e6fe7",
+  "webp": "8ef96af8d6d4"
+ },
+ "pose/hands_lower.png": {
+  "png": "8c893271fd57",
+  "webp": "e77960d0c41e"
+ },
+ "pose/hands_upper.png": {
+  "png": "4659c560329c",
+  "webp": "8d9f38d6e934"
+ },
+ "pose/reach_lower.png": {
+  "png": "257c11a03c3e",
+  "webp": "d9d102dca3b8"
+ },
+ "pose/reach_mid_lower.png": {
+  "png": "6827911701f5",
+  "webp": "7024ad0cf2e6"
+ },
+ "pose/reach_mid_upper.png": {
+  "png": "b2649abf1aa9",
+  "webp": "33c60bed24aa"
+ },
+ "pose/reach_upper.png": {
+  "png": "0b2498fc341f",
+  "webp": "e91acbc6a142"
+ },
+ "r3/bodice.png": {
+  "png": "345b3f591d56",
+  "webp": "5b98e18f6ea9"
+ },
+ "r3/boot_L.png": {
+  "png": "78383c469752",
+  "webp": "e97d1406affa"
+ },
+ "r3/boot_R.png": {
+  "png": "c2d2ef6eb44f",
+  "webp": "bc1fcd004948"
+ },
+ "r3/boot_bow_L.png": {
+  "png": "bc0dc993ca7b",
+  "webp": "441f15a5e2f8"
+ },
+ "r3/boot_bow_R.png": {
+  "png": "2ca2d9c19891",
+  "webp": "97977aebeed0"
+ },
+ "r3/boot_jewel_L.png": {
+  "png": "d7a393bd95f2",
+  "webp": "3f6fd4d39253"
+ },
+ "r3/boot_jewel_R.png": {
+  "png": "2b2c78c8c52e",
+  "webp": "1b2ec3e1bf6e"
+ },
+ "r3/chest_bow_knot.png": {
+  "png": "23ee3cbd34fc",
+  "webp": "c54056733186"
+ },
+ "r3/chest_bow_loop_L.png": {
+  "png": "6313f587ae0e",
+  "webp": "5fd34166e4c5"
+ },
+ "r3/chest_bow_loop_R.png": {
+  "png": "6796a4183724",
+  "webp": "c945ac544561"
+ },
+ "r3/chest_bow_tail_L.png": {
+  "png": "1c4001c04ec9",
+  "webp": "106c3df68177"
+ },
+ "r3/chest_bow_tail_R.png": {
+  "png": "7821447a9e89",
+  "webp": "8570d43e88fc"
+ },
+ "r3/chest_bow_under_L.png": {
+  "png": "4a68ad24baab",
+  "webp": "a706d68bbe06"
+ },
+ "r3/chest_bow_under_R.png": {
+  "png": "a550e55ead43",
+  "webp": "dba2ad87d2af"
+ },
+ "r3/chest_charm.png": {
+  "png": "8dd312935279",
+  "webp": "68aa237a2e4a"
+ },
+ "r3/collar.png": {
+  "png": "9b7be7d9e106",
+  "webp": "8f118ffe51d8"
+ },
+ "r3/drape_L.png": {
+  "png": "6305d5001724",
+  "webp": "72f86fc1083e"
+ },
+ "r3/drape_R.png": {
+  "png": "dcd0d5d944b7",
+  "webp": "19056606b194"
+ },
+ "r3/drape_charm_L.png": {
+  "png": "1dff3b6a96b3",
+  "webp": "df2aa7c8bd31"
+ },
+ "r3/drape_charm_R.png": {
+  "png": "8873a25e4799",
+  "webp": "a734a20d1387"
+ },
+ "r3/garter_band_L.png": {
+  "png": "34ba4138c934",
+  "webp": "2c63601d3592"
+ },
+ "r3/garter_bow_L.png": {
+  "png": "906b23c641bc",
+  "webp": "a137866fe220"
+ },
+ "r3/garter_jewel_L.png": {
+  "png": "3106f3bee344",
+  "webp": "31a0fe8639c6"
+ },
+ "r3/hand_L_open_mirror.png": {
+  "png": "20b07f0b187b",
+  "webp": "a1b6599ce377"
+ },
+ "r3/hand_L_point_mirror.png": {
+  "png": "8e246ed4b8a3",
+  "webp": "9f546eae0b13"
+ },
+ "r3/hand_L_relaxed_fist_tone.png": {
+  "png": "19b54cea7dab",
+  "webp": "e242dc316d7f"
+ },
+ "r3/hand_L_tone.png": {
+  "png": "8cfee7fb9389",
+  "webp": "bce695d95387"
+ },
+ "r3/hand_L_wave_mirror.png": {
+  "png": "81c0d3a3a04e",
+  "webp": "d87911fa0ecd"
+ },
+ "r3/hand_R_open_mirror.png": {
+  "png": "b2216fa94e5e",
+  "webp": "9d5b2871d2fe"
+ },
+ "r3/hand_R_point_mirror.png": {
+  "png": "88662ce62f1d",
+  "webp": "e7651aec3735"
+ },
+ "r3/hand_R_relaxed_fist_tone.png": {
+  "png": "b907bd19419e",
+  "webp": "8026c7cbc440"
+ },
+ "r3/hand_R_tone.png": {
+  "png": "39a29929b31e",
+  "webp": "2eca68bb8abc"
+ },
+ "r3/hand_R_wave_mirror.png": {
+  "png": "04dfe3d47905",
+  "webp": "cdf9e54faaa7"
+ },
+ "r3/hip_bow_charm.png": {
+  "png": "6a970bbde6bb",
+  "webp": "3e7dd23d3a11"
+ },
+ "r3/hip_bow_frill.png": {
+  "png": "ce6da4997831",
+  "webp": "be5c1df0b18a"
+ },
+ "r3/hip_bow_knot.png": {
+  "png": "1904392e8465",
+  "webp": "0138e20df51e"
+ },
+ "r3/hip_bow_long.png": {
+  "png": "1f6afba063a8",
+  "webp": "a1d8181ffd5f"
+ },
+ "r3/hip_bow_loop_L.png": {
+  "png": "bfcfa41d8819",
+  "webp": "49c28bec07f8"
+ },
+ "r3/hip_bow_loop_R.png": {
+  "png": "a68d5d0909d2",
+  "webp": "464e428599d3"
+ },
+ "r3/hip_bow_tail_L.png": {
+  "png": "f9de32bd153b",
+  "webp": "3b0adc68a6fc"
+ },
+ "r3/hip_bow_tail_R.png": {
+  "png": "6bac5b6259d5",
+  "webp": "2f20998b908d"
+ },
+ "r3/neck.png": {
+  "png": "95d15639e9a9",
+  "webp": "154c965de61e"
+ },
+ "r3/shoulder_frill_L.png": {
+  "png": "5a2b90fe18d8",
+  "webp": "c4e894a41e25"
+ },
+ "r3/shoulder_frill_R.png": {
+  "png": "a2266886b0a1",
+  "webp": "7453655d4bb9"
+ },
+ "r3/skirt_lining.png": {
+  "png": "23387bd5effa",
+  "webp": "1b99703011b0"
+ },
+ "r3/skirt_navy_lower.png": {
+  "png": "6799f27fd101",
+  "webp": "ad6c395a3d25"
+ },
+ "r3/skirt_navy_upper.png": {
+  "png": "eac5d3245a5a",
+  "webp": "7530e0708897"
+ },
+ "r3/skirt_ruffle_lower.png": {
+  "png": "cf33f1c5a11a",
+  "webp": "67a06595a9ec"
+ },
+ "r3/skirt_ruffle_middle.png": {
+  "png": "a6af99005773",
+  "webp": "d89fde69212a"
+ },
+ "r3/skirt_side_L.png": {
+  "png": "bb751e140d95",
+  "webp": "02b47824a498"
+ },
+ "r3/skirt_side_R.png": {
+  "png": "82c80a20db50",
+  "webp": "501641b164a8"
+ },
+ "r3/sleeve_bow_upper_L.png": {
+  "png": "23ced83fa9ce",
+  "webp": "dc949597e5f7"
+ },
+ "r3/sleeve_bow_upper_R.png": {
+  "png": "bcb7a29c80fc",
+  "webp": "4defda777976"
+ },
+ "r3/sleeve_bow_wrist_L.png": {
+  "png": "0c82a9345018",
+  "webp": "0a446016dd2b"
+ },
+ "r3/sleeve_bow_wrist_R.png": {
+  "png": "5aa8048b10fb",
+  "webp": "3c0afabc9bd9"
+ },
+ "r3/sleeve_cuff_L.png": {
+  "png": "6d09db1e7ade",
+  "webp": "5b25ee5bcc9c"
+ },
+ "r3/sleeve_cuff_R.png": {
+  "png": "e219cd4afedb",
+  "webp": "ed9adcef3bc4"
+ },
+ "r3/sleeve_elbow_frill_L.png": {
+  "png": "7d8df5d2787c",
+  "webp": "7e778a0ba778"
+ },
+ "r3/sleeve_elbow_frill_R.png": {
+  "png": "fd99590688c8",
+  "webp": "fdbaae6baf6e"
+ },
+ "r3/sleeve_forearm_L.png": {
+  "png": "25407c88adc0",
+  "webp": "b3864a411b08"
+ },
+ "r3/sleeve_forearm_R.png": {
+  "png": "0b28a6a71821",
+  "webp": "9c5c17b7cdca"
+ },
+ "r3/sleeve_upper_L.png": {
+  "png": "cb017cbdeb9f",
+  "webp": "3a7a21cd8623"
+ },
+ "r3/sleeve_upper_R.png": {
+  "png": "d39f6ef0ce86",
+  "webp": "dff0a494c213"
+ },
+ "r3/stocking_L_lower.png": {
+  "png": "b8bdcd78741d",
+  "webp": "8dfdd543ed43"
+ },
+ "r3/stocking_L_upper.png": {
+  "png": "08085e3bada9",
+  "webp": "a8b814c84807"
+ },
+ "r3/stocking_R_lower.png": {
+  "png": "5c4b22097a71",
+  "webp": "368179b2a19b"
+ },
+ "r3/stocking_R_upper.png": {
+  "png": "536a7cab8866",
+  "webp": "0e57a2aa1110"
+ },
+ "r3/thigh_L.png": {
+  "png": "6436eba6ffa6",
+  "webp": "a96e5a7ad662"
+ },
+ "r3/thigh_R.png": {
+  "png": "74f9c0524ef4",
+  "webp": "64e9c1eaab99"
+ },
+ "r3/upper_arm_L.png": {
+  "png": "b1aec4c78567",
+  "webp": "0482bc7c2e27"
+ },
+ "r3/upper_arm_R.png": {
+  "png": "88c2a27f4ec4",
+  "webp": "97f1b46284e0"
+ }
+}

@@ -94,16 +94,50 @@ export class RigBuilder {
     if (r.views) for (const v of Object.values(r.views)) { v[0] = round((v[0] - origin[0]) * k); v[1] = round((v[1] - origin[1]) * k); v[2] = round(v[2] * k); v[3] = round(v[3] * k); }
     if (r.headCenter) r.headCenter = [round((r.headCenter[0] - origin[0]) * k), round((r.headCenter[1] - origin[1]) * k)];
   }
-  write(name) {
-    // the version of the textures (a hash of all of them): the renderer puts it on
-    // every texture URL, so a browser or a CDN that cached an older texture of the
-    // same name fetches the new one after an update
-    const h = crypto.createHash('sha256'); for (const t of [...new Set(this.rig.parts.map(p => p.texture))].sort()) h.update(fs.readFileSync(path.join(this.outDir, 'parts', t)));
+  async write(name) {
+    // the version of the textures (a hash of all of them), kept as the overall
+    // version shown in the reports
+    const used = [...new Set(this.rig.parts.map(p => p.texture))].sort();
+    const h = crypto.createHash('sha256'); for (const t of used) h.update(fs.readFileSync(path.join(this.outDir, 'parts', t)));
     this.rig.textureVersion = h.digest('hex').slice(0, 12);
+    // each texture's own version (a hash of the file): the renderer puts it on
+    // that texture's URL, so a browser or a CDN that cached an older texture of
+    // the same name fetches the new one, and only the changed textures are fetched
+    this.rig.textureFiles = await webTextures(path.join(this.outDir, 'parts'), used);
     fs.writeFileSync(path.join(this.outDir, name), JSON.stringify(this.rig));
     const v = this.rig.parts.reduce((a, p) => a + p.mesh.positions.length / 2, 0);
     return { parts: this.rig.parts.length, deformers: this.rig.deformers.length, vertices: v };
   }
+}
+// The shipped textures: a lossless WebP next to each PNG (the PNG stays the
+// source the tools edit, and the fallback for a browser without WebP). Lossless
+// keeps every pixel the GPU receives (premultiplied RGBA) identical to the PNG at
+// under half the size. parts/web.json records the PNG each WebP was made from,
+// so only changed PNGs are encoded again.
+const hash12 = b => crypto.createHash('sha256').update(b).digest('hex').slice(0, 12);
+export async function webTextures(partsDir, files) {
+  const listFile = path.join(partsDir, 'web.json');
+  const old = fs.existsSync(listFile) ? JSON.parse(fs.readFileSync(listFile)) : {};
+  const list = {};
+  await Promise.all(files.map(async f => {
+    const png = fs.readFileSync(path.join(partsDir, f)), pngV = hash12(png);
+    const webpFile = path.join(partsDir, f.replace(/\.png$/, '.webp'));
+    let webp = fs.existsSync(webpFile) && old[f]?.png === pngV ? fs.readFileSync(webpFile) : null;
+    if (!webp || hash12(webp) !== old[f].webp) {
+      webp = await sharp(png).webp({ lossless: true, effort: 6 }).toBuffer();
+      const [a, b] = await Promise.all([png, webp].map(x => sharp(x).ensureAlpha().raw().toBuffer()));
+      // compare as the GPU sees them: premultiplied (RGB under alpha 0 is dropped)
+      for (let i = 0; i < a.length; i += 4) for (let c = 0; c < 4; c++) {
+        const pa = c === 3 ? a[i + 3] : Math.round(a[i + c] * a[i + 3] / 255), pb = c === 3 ? b[i + 3] : Math.round(b[i + c] * b[i + 3] / 255);
+        if (pa !== pb) throw new Error('lossless WebP differs from ' + f);
+      }
+      fs.writeFileSync(webpFile, webp);
+    }
+    list[f] = { png: pngV, webp: hash12(webp) };
+  }));
+  const sorted = Object.fromEntries(files.map(f => [f, list[f]]));
+  fs.writeFileSync(listFile, JSON.stringify(sorted, null, 1) + '\n');
+  return sorted;
 }
 export const round = v => Math.round(v * 100) / 100;
 // polyline y at x (clamped at the ends)
