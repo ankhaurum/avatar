@@ -58,9 +58,11 @@ export async function mountHibikiAvatar(host, options = {}) {
   local.textContent = `:where([data-hv3="${id}"]){--hv3-scroll-opacity:${+o.scrollFade.opacity}}`;
   document.head.prepend(local);
 
+  // the rig is fetched while the PixiJS application starts
+  const renderer = new AvatarRenderer(), started = renderer.start(host);
   const json = await (await fetch(new URL('hibiki.rig.json', o.baseURL), { cache: 'no-cache' })).json();
   const model = new RigModel(json);
-  const renderer = await new AvatarRenderer().init(host, model, o.baseURL);
+  await started; await renderer.init(host, model, o.baseURL);
   const motion = new MotionController(model);
   // one clock for the states and the chat timing, advanced by the frames (so
   // step(dt) recordings follow the same timing as the live page)

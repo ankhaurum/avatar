@@ -444,4 +444,4 @@ phys('BodySwayZ', [['AngleZ', 1 / 30], ['AngleX', 0.6 / 30]], -0.9, 0.9, 0.4, 0.
 b.rig.views = { bust: [244, 4, 536, 520], face: [432, 56, 160, 190], full: [120, 0, 784, 1536] };
 b.rig.headCenter = [511, 150];
 b.rescale(1 / artA.scale, artA.offset, [Math.round(1024 / artA.scale), Math.round(1536 / artA.scale)]);
-console.log(b.write('hibiki.rig.json'));
+console.log(await b.write('hibiki.rig.json'));
